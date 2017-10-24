@@ -1,8 +1,4 @@
 require "sinatra"
-
-get "/" do
-erb :landing
-endrequire "sinatra"
 require 'pg'
 require_relative 'login_func'
 enable :sessions 
