@@ -1,0 +1,5 @@
+ENV['host'] = 'phone-book-88.coywlz8nzq9w.us-east-2.rds.amazonaws.com'
+ENV['port'] = '5432'
+ENV['dbname'] = 'postgres'
+ENV['user'] = 'billyjack88'
+ENV['password'] = 'minerman2010'
