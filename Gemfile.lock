@@ -1,25 +1,36 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    pg (0.21.0-x86-mingw32)
-    rack (1.6.8)
-    rack-protection (1.5.3)
+    childprocess (0.8.0)
+      ffi (~> 1.0, >= 1.0.11)
+    ffi (1.9.18-x64-mingw32)
+    mustermann (1.0.1)
+    power_assert (1.1.0)
+    rack (2.0.3)
+    rack-protection (2.0.0)
       rack
-    sinatra (1.4.8)
-      rack (~> 1.5)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
+    rake (12.1.0)
+    rubyzip (1.2.1)
+    selenium-webdriver (3.6.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.0)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
+    test-unit (3.2.6)
+      power_assert
     tilt (2.0.8)
 
 PLATFORMS
-  x86-mingw32
+  x64-mingw32
 
 DEPENDENCIES
-  pg
-  sinatra (~> 1.4.0)
-
-RUBY VERSION
-   ruby 2.4.1p111
+  rake
+  selenium-webdriver
+  sinatra
+  test-unit
 
 BUNDLED WITH
-   1.15.3
+   1.15.4
