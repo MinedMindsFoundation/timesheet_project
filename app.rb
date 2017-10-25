@@ -12,10 +12,5 @@ end
 
 # comming from login.erb
 post "/login" do
-
-end
-
-# comming form login.erb
-post "/create_login" do
-
+"made it to post login"
 end
