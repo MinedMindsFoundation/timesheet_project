@@ -1,6 +1,6 @@
 window.fbAsyncInit = function() {
     FB.init({
-        appId: '1967285610179904', // Set YOUR APP ID
+        appId: '918081261676108', // Set YOUR APP ID
         channelUrl: '', // Channel File
         status: true, // check login status
         cookie: true, // enable cookies to allow the server to access the session
