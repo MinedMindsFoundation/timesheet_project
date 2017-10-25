@@ -7,6 +7,15 @@ load './local_env.rb' if File.exist?('./local_env.rb')
 
 # Initial "get" leads to login page
 get "/" do 
-"first page"
+erb :login
 end
 
+# comming from login.erb
+post "/login" do
+
+end
+
+# comming form login.erb
+post "/create_login" do
+
+end
