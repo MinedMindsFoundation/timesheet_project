@@ -1,14 +1,20 @@
-<!--addind user information page-->
+<!--user clock in and clockout page-->
 
 
-Howdy<br>
-We see you are new, wpuld you please input your information
-<br>
-<br>
-<form method="post" action="addinfo">
-    <input type="text" name="fname" placeholder="first name here" required><br>
-    <input type="text" name="lname" placeholder="last name here" required><br>
-    please give your job title<br>
-    <input type="text" name="job_title" placeholder="position" required><br>
-    <input type="submit"> 
+<!-- form for submiting your time in -->
+<form method = "post" action = "clock_in">
+<button type = "submit" name = "time_in" >Submit Time In</button><!-- still needs value to be set to the time -->
 </form>
+
+
+<!-- form for submiting yout time out -->
+<form method = "post" action = "clock_out">
+<button type = "submit" name = "time_out">Submit Time Out</button><!-- still needs value to be set to the time -->
+</form>
+
+<body onload="updateClock(); setInterval('updateClock()', 1000 )">
+<span id="clock">&nbsp;</span>
+</body>
+
+<script src = "/js/clock.js">
+</script>
