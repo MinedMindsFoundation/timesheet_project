@@ -1,5 +1,6 @@
 <!--user clock in and clockout page-->
 
+
 <!-- form for submiting your time in -->
 <form method = "post" action = "clock_in">
 <button type = "submit" name = "time_in" >Submit Time In</button><!-- still needs value to be set to the time -->
@@ -10,3 +11,10 @@
 <form method = "post" action = "clock_out">
 <button type = "submit" name = "time_out">Submit Time Out</button><!-- still needs value to be set to the time -->
 </form>
+
+<body onload="updateClock(); setInterval('updateClock()', 1000 )">
+<span id="clock">&nbsp;</span>
+</body>
+
+<script src = "/js/clock.js">
+</script>
