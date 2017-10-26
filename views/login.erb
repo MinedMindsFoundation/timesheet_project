@@ -1,12 +1,14 @@
 <!-- Login/First Page -->
 
+<!--FaceBook Button -->
+
 <div class="social-login">
     <img src="img/fb_button.jpg"  id="facebook_btn" onclick="FBLogin()"> 
-    <img src="img/googlelogin.png" class="google_button button_style" id="google_btn">
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
   
 </div>
+
+
 <script src = "/js/js.js">
 </script>
-
-
-
+<script src="/js/google_js.js" async defer></script>

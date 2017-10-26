@@ -14,3 +14,7 @@ end
 post "/login" do
 "made it to post login"
 end
+
+get '/next_page' do
+    "Hello World"
+  end

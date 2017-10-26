@@ -43,7 +43,7 @@ function FBLogin() {
                 //                    document.getElementById('email').value = email;
                 //                    document.getElementById('fb_id').value = fb_id;
 
-                window.location = "/hidden_page?email=" + email + "&a=" + avatar;
+                window.location = "next_page";
 
             });
 
@@ -71,7 +71,7 @@ function FBLogin2() {
                 //                    document.getElementById('last_name').value = last_name;
                 //                    document.getElementById('email').value = email;
                 //                    document.getElementById('fb_id').value = fb_id;
-                window.location = "/hidden_page?email=" + email;
+                window.location = "/next_page";
 
             });
 
