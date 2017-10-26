@@ -12,5 +12,11 @@ end
 
 # comming from login.erb
 post "/login" do
-"made it to post login"
+
+redirect "/to_landing?"
+end
+
+# leads to landing page 
+get "/to_landing" do
+erb :landing
 end
