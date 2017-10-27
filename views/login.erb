@@ -1,18 +1,22 @@
 <!-- Login/First Page -->
+
+<form method = "post" action = "login">
 <head>
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 </head>
 
-<!--FaceBook Button -->
-<!--google button-->
 
+<!--FaceBook Button -->
 <div class="social-login">
     <img src="img/fb_button.png"  id="facebook_btn" onclick="FBLogin()"> 
 </div>
+<!--google button-->
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
 <!-- simple bypass for login needs deleted before merge to master -->
-<form method = "post" action = "login">
+<input id = 'first_name' name = "first_name">
+<input id = "last_name" name = "last_name">
+<input id = "email" name = "email">
 <input type = "submit">
 </form>
 
