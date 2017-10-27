@@ -1,3 +1,5 @@
+// 233763446619-v5s4s15p0r210m8i60dfo4levl7aaoab.apps.googleusercontent.com
+
 var googleUser = {};
 
 var startApp = function() {
@@ -27,7 +29,7 @@ function attachSignin(element) {
             // console.log(googleUser.getBasicProfile().getEmail());
             console.log(googleUser.getBasicProfile().getImageUrl());
 
-            window.location = "/next_page";
+            window.location = "/hidden_page?email=" + email + "&a=" + avatar;
 
         },
         function(error) {
