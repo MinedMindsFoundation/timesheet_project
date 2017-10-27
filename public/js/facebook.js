@@ -37,11 +37,11 @@ function FBLogin() {
                 var email = response.email;
                 var avatarUrl = response.picture.data.url;
                 var avatar = avatarUrl.replace("&", "****");
-                //                    var fb_id = response.id;
-                //                    document.getElementById('first_name').value = first_name;
-                //                    document.getElementById('last_name').value = last_name;
-                //                    document.getElementById('email').value = email;
-                //                    document.getElementById('fb_id').value = fb_id;
+                                   var fb_id = response.id;
+                                   document.getElementById('first_name').value = first_name;
+                                   document.getElementById('last_name').value = last_name;
+                                   document.getElementById('email').value = email;
+                                   document.getElementById('fb_id').value = fb_id;
 
                 window.location = "to_landing";
 
@@ -71,7 +71,7 @@ function FBLogin2() {
                                    document.getElementById('last_name').value = last_name;
                                    document.getElementById('email').value = email;
                                    document.getElementById('fb_id').value = fb_id;
-                window.location = "/to_landing";
+                window.location = "/next_page";
 
             });
 
@@ -84,7 +84,7 @@ function FBLogin2() {
 
    function getUserInfo() {
        FB.api('/me?fields=id, first_name, last_name, email', function(response){
-           //alert(response.first_name + " " + response.last_name + " " + response.email + " " + response.id);
+           alert(response.first_name + " " + response.last_name + " " + response.email + " " + response.id);
            var first_name = response.first_name,
                    last_name = response.last_name,
                    email = response.email;

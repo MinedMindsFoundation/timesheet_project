@@ -1,36 +1,23 @@
 <!--user clock in and clockout page-->
 
+<!--signout function -->
+<a href="/" onclick="signOut();">Sign out</a>
 
 <!-- form for submiting your time in -->
 <form method = "post" action = "clock_in">
-<button type = "submit" name = "time_in" >Submit Time In</button><!-- still needs value to be set to the time -->
+<button type = "submit">Submit Time In</button>
 </form>
 
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
-<button id=" myBtn">Submit Time Out</button><!-- still needs value to be set to the time -->
+<button type = "submit" onclick="setTime()">Submit Time Out</button>
 </form>
 
+<!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()', 1000 )">
 <span id="clock">&nbsp;</span>
 </body>
 
 <script src = "/js/clock.js">
-document.getElementById("myBtn").addEventListener("click", function(){
-    var time = new Date();
-    var x = document.getElementById("time_submit");
-    var input = document.createElement("input");
-    input.type="hidden";
-    input.value=time.toString();
-    input.name="time";
-    var form = document.getElementById("time_submit");
-    form.appendChild("input");
-    form.submit();
-});
 </script>
-
-
-
-<!--log out section-->
-<button type="button" onclick="alert('Hello world!')">log out</button>
