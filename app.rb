@@ -20,3 +20,9 @@ end
 get "/to_landing" do
 erb :landing
 end
+
+# post comming from landing page
+post "/clock_out" do
+time = params[:time]
+"this is the time #{time}"
+end
