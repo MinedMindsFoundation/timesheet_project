@@ -22,4 +22,4 @@ db_params = {
 
 end
 
-add_info("scstew","scottmstewart2@gmail.com","Scott","Stewart","Yes")
+# add_info("scstew","scottmstewart2@gmail.com","Scott","Stewart","Yes")
