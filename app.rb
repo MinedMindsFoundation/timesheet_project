@@ -1,5 +1,6 @@
 require "sinatra"
 require 'pg'
+require_relative 'functions.rb'
 # require_relative 'login_func'
 enable :sessions 
 load './local_env.rb' if File.exist?('./local_env.rb')
@@ -22,7 +23,14 @@ erb :landing
 end
 
 # post comming from landing page
+post "/clock_in" do
+time = get_time()
+"this is the time #{time}"
+ end
+
+# post comming from landing page
 post "/clock_out" do
-time = params[:time]
+time = get_time()
 "this is the time #{time}"
 end
+
