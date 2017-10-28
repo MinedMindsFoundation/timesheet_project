@@ -12,16 +12,13 @@ erb :login
 end
 
 # comming from login.erb
-post '/login' do 
+post "/login" do
 first_name = params[:first_name]
 last_name = params[:last_name]
 email = params[:email]
 p first_name
 p last_name
 p email
-redirect "/to_landing?"
-end
-
 redirect "/to_landing?"
 end
 
@@ -41,4 +38,5 @@ post "/clock_out" do
 time = get_time()
 "this is the time #{time}"
 end
+
 
