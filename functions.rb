@@ -6,6 +6,19 @@ def get_time()
     DateTime.now
 end
 
+def login_check?(email)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    db.exec
+    
+end
+
 def add_info(user_id,email,first_name,last_name,admin)
 db_params = {
     host: ENV['host'],
