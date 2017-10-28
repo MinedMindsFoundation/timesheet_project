@@ -22,8 +22,7 @@ session[:email] = params[:email]
         redirect '/login?'
     end
 
-redirect "/to_landing?"
-end
+
 
 # leads to landing page 
 get "/to_landing" do
