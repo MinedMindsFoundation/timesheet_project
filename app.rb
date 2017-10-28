@@ -1,7 +1,6 @@
 require "sinatra"
 require 'pg'
 require_relative 'functions.rb'
-enable: "sessions"
 # require_relative 'login_func'
 enable :sessions 
 load './local_env.rb' if File.exist?('./local_env.rb')
@@ -21,8 +20,7 @@ session[:email] = params[:email]
 redirect "/to_landing?"
 end
 
-redirect "/to_landing?"
-end
+
 
 # leads to landing page 
 get "/to_landing" do

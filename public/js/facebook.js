@@ -43,7 +43,7 @@ function FBLogin() {
                 document.getElementById('email').value = email;
                 document.getElementById('fb_id').value = fb_id;
 
-                window.location = "next_page";
+                window.location = "/landing";
 
             });
 
@@ -71,7 +71,7 @@ function FBLogin2() {
                 document.getElementById('last_name').value = last_name;
                 document.getElementById('email').value = email;
                 document.getElementById('fb_id').value = fb_id;
-                window.location = "/next_page";
+                window.location = "/landing";
 
             });
 
@@ -82,8 +82,7 @@ function FBLogin2() {
     }, { scope: 'public_profile, email' });
 }
 
-<<
-<< << < HEAD
+
 
 function getUserInfo() {
     FB.api('/me?fields=id, first_name, last_name, email', function(response) {
@@ -105,28 +104,7 @@ function getPhoto() {
     });
 };
 
-===
-=== =
-function getUserInfo() {
-    FB.api('/me?fields=id, first_name, last_name, email', function(response) {
-        alert(response.first_name + " " + response.last_name + " " + response.email + " " + response.id);
-        var first_name = response.first_name,
-            last_name = response.last_name,
-            email = response.email;
 
-        document.getElementById('email').value = email;
-        document.getElementById('first_name').value = first_name;
-        document.getElementById('last_name').value = last_name;
-    });
-}
-
-function getPhoto() {
-    FB.api('/me/picture?type=normal', function(response) {
-        var str = "<br/><b>Pic</b> : <img src='" + response.data.url + "'/>";
-        document.getElementById("status").innerHTML += str;
-    });
-}; >>>
->>> > 266e fe7fc42828cdf0d7113269f8b7b003d84e14
 
 function logout() {
     FB.logout(function(response) {
