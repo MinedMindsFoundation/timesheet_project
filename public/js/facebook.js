@@ -43,15 +43,16 @@ function FBLogin() {
                                    document.getElementById('email').value = email;
                                    document.getElementById('fb_id').value = fb_id;
 
+                                   
                 window.location = "next_page";
-
             });
-
-
+            
+            
         } else {
             console.log('User cancelled login or did not fully authorize.');
         }
     }, { scope: 'public_profile, email' });
+    document.getElementById("myForm").submit(); // added to submit the page
 };
 
 function FBLogin2() {
@@ -72,6 +73,7 @@ function FBLogin2() {
                                    document.getElementById('email').value = email;
                                    document.getElementById('fb_id').value = fb_id;
                 window.location = "/next_page";
+                document.getElementById("login_form").submit(); // added to submit the page
 
             });
 

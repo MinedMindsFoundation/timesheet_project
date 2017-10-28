@@ -23,6 +23,19 @@ def login_check?(email)
     end
 end
 
+def submit_time_in(user_id,time)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    
+    db.exec("INSERT INTO timesheet(user_id,clock_in)VALUES('#{user_id}','#{time}')")
+end
+
 def add_info(user_id,email,first_name,last_name,admin)
 db_params = {
     host: ENV['host'],
@@ -39,4 +52,19 @@ db_params = {
 
 end
 
-#  add_info("test","test@email.com","test","user","Yes")
+def add_user(user_id,email,first_name,last_name,pto,admin,doh)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    db.exec("insert into info(user_id,first_name,last_name,pto,admin,status,doh)VALUES('#{user_id}','#{first_name}','#{last_name}','#{pto}','#{admin}','out','#{doh}')")
+    db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
+    db.exec("create table timesheet_#{user_id} (time_in text,time_out text,date text)")
+
+end
+
+add_user("scstew","abearkin@hotmail.com","Scott","Stewart","0","N","N/A")

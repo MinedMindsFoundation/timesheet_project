@@ -19,9 +19,9 @@ session[:email] = params[:email]
     if login_check?(session[:email])
         redirect "/to_landing?"
     else
-        redirect '/login?'
+        redirect '/?'
     end
-
+end
 
 
 # leads to landing page 
