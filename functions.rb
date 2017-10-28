@@ -15,8 +15,12 @@ def login_check?(email)
         password: ENV['password']
         }
         db = PG::Connection.new(db_params)
-    db.exec
-    
+    check = db.exec("SELECT * FROM emails WHERE emails = '#{email}'")
+    if check.num_tuples.zero? == false
+        true
+    else
+        false
+    end
 end
 
 def add_info(user_id,email,first_name,last_name,admin)
@@ -35,4 +39,4 @@ db_params = {
 
 end
 
-# add_info("scstew","scottmstewart2@gmail.com","Scott","Stewart","Yes")
+#  add_info("test","test@email.com","test","user","Yes")

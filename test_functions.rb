@@ -7,7 +7,13 @@ class Test_funcs < Minitest::Test
         assert_equal(1,1)
     end
 
-    def test_fb_login
+    def test_login
+        x = login_check?('test@email.com')
+        assert_equal(x,true)
+    end
 
+    def test_login_false
+        x = login_check?('no_email@email.com')
+        assert_equal(x,false)
     end
 end
