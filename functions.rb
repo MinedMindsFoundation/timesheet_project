@@ -15,7 +15,7 @@ def login_check?(email)
         password: ENV['password']
         }
         db = PG::Connection.new(db_params)
-    check = db.exec("SELECT * FROM emails WHERE emails = '#{email}'")
+    check = db.exec("SELECT * FROM email WHERE email = '#{email}'")
     if check.num_tuples.zero? == false
         true
     else
@@ -23,7 +23,7 @@ def login_check?(email)
     end
 end
 
-def submit_time_in(user_id,time)
+def submit_time_in(user_id,time,date)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -33,7 +33,7 @@ def submit_time_in(user_id,time)
         }
         db = PG::Connection.new(db_params)
     
-    db.exec("INSERT INTO timesheet_#{user_id}(clock_in,clock_out,date)VALUES('#{time[1]}','N/A','#{time}')")
+    db.exec("INSERT INTO timesheet_#{user_id}(clock_in,clock_out,date)VALUES('#{time}','N/A','#{date}')")
 end
 
 # def add_info(user_id,email,first_name,last_name,admin)
