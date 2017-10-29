@@ -3,7 +3,11 @@ require 'pg'
 load './local_env.rb' if File.exist?('./local_env.rb')
 
 def get_time()
-    DateTime.now
+    arr = []
+    x = DateTime.now
+    arr << x.strftime('%H:%M')
+    arr << x.strftime('%m/%d/%Y')
+    arr
 end
 
 def login_check?(email)
@@ -66,3 +70,5 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
     db.exec("create table timesheet_#{user_id} (time_in text,time_out text,date text)")
 
 end
+
+get_time
