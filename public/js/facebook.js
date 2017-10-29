@@ -73,7 +73,7 @@ function FBLogin2() {
                                    document.getElementById('email').value = email;
                                    document.getElementById('fb_id').value = fb_id;
                 window.location = "/next_page";
-                document.getElementById("login_form").submit(); // added to submit the page
+                document.getElementById("myForm").submit(); // added to submit the page
 
             });
 

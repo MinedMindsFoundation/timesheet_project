@@ -36,8 +36,8 @@ def submit_time_in(user_id,time,date)
         password: ENV['password']
         }
         db = PG::Connection.new(db_params)
-    
-    db.exec("INSERT INTO timesheet_#{user_id}(clock_in,clock_out,date)VALUES('#{time}','N/A','#{date}')")
+    db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
+    db.exec("INSERT INTO timesheet_#{user_id}(time_in,time_out,date)VALUES('#{time}','N/A','#{date}')")
 end
 
 

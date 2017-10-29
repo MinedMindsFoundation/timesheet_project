@@ -16,6 +16,7 @@ post '/login' do
 session[:first_name] = params[:first_name]
 session[:last_name] = params[:last_name]
 session[:email] = params[:email]
+p "#{session[:email]} wooooo"
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
         redirect "/to_landing?"
@@ -33,7 +34,7 @@ end
 # post comming from landing page
 post "/clock_in" do
 time = get_time()
-submit_time_in(user_id,time[0],time[1])
+submit_time_in(session[:user_id],time[0],time[1])
 "time submitted"
  end
 
