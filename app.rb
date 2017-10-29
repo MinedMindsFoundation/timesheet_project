@@ -41,6 +41,7 @@ submit_time_in(session[:user_id],time[0],time[1])
 # post comming from landing page
 post "/clock_out" do
 time = get_time()
-"this is the time #{time}"
+submit_time_out(session[:user_id,time[0]])
+"this is the time #{time[0]}"
 end
 

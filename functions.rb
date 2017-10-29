@@ -40,6 +40,20 @@ def submit_time_in(user_id,time,date)
     db.exec("INSERT INTO timesheet_#{user_id}(time_in,time_out,date)VALUES('#{time}','N/A','#{date}')")
 end
 
+def submit_time_out(user_id,time)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+        db.exec("UPDATE info SET  status= 'out' WHERE user_id = '#{user_id}'")
+        db.exec("UPDATE timesheet_#{user_id} SET time_out = '#{time}' WHERE time_out = 'N/A'")
+
+end
+
 
 def get_id(email)
     db_params = {
@@ -84,4 +98,3 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
 
 end
 
-get_id('scottmstewart2@gmail.com')
