@@ -16,10 +16,12 @@ post '/login' do
 session[:first_name] = params[:first_name]
 session[:last_name] = params[:last_name]
 session[:email] = params[:email]
-
-redirect "/to_landing?"
+    if login_check?(session[:email])
+        redirect "/to_landing?"
+    else
+        redirect '/?'
+    end
 end
-
 
 
 # leads to landing page 
