@@ -40,6 +40,19 @@ def submit_time_in(user_id,time,date)
     db.exec("INSERT INTO timesheet_#{user_id}(clock_in,clock_out,date)VALUES('#{time}','N/A','#{date}')")
 end
 
+
+def get_id(email)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    user_id = db.exec("SELECT user_id FROM email WHERE email = '#{email}'").values
+    user_id.flatten.first
+end
 # def add_info(user_id,email,first_name,last_name,admin)
 # db_params = {
 #     host: ENV['host'],
@@ -71,4 +84,4 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
 
 end
 
-get_time
+get_id('scottmstewart2@gmail.com')
