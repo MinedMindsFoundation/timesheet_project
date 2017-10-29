@@ -2,6 +2,7 @@ require 'date'
 require 'pg'
 load './local_env.rb' if File.exist?('./local_env.rb')
 
+#gets date & time from system
 def get_time()
     arr = []
     x = DateTime.now
@@ -10,6 +11,7 @@ def get_time()
     arr
 end
 
+#checks if email is in the database
 def login_check?(email)
     db_params = {
         host: ENV['host'],
@@ -27,6 +29,7 @@ def login_check?(email)
     end
 end
 
+#submits time and date into timesheet  
 def submit_time_in(user_id,time,date)
     db_params = {
         host: ENV['host'],
@@ -40,6 +43,7 @@ def submit_time_in(user_id,time,date)
     db.exec("INSERT INTO timesheet_#{user_id}(time_in,time_out,date)VALUES('#{time}','N/A','#{date}')")
 end
 
+#submits time out to timesheet table
 def submit_time_out(user_id,time)
     db_params = {
         host: ENV['host'],
@@ -54,7 +58,7 @@ def submit_time_out(user_id,time)
 
 end
 
-
+# Gets user_id from email table
 def get_id(email)
     db_params = {
         host: ENV['host'],
@@ -67,6 +71,7 @@ def get_id(email)
     user_id = db.exec("SELECT user_id FROM email WHERE email = '#{email}'").values
     user_id.flatten.first
 end
+
 # def add_info(user_id,email,first_name,last_name,admin)
 # db_params = {
 #     host: ENV['host'],
@@ -83,6 +88,7 @@ end
 
 # end
 
+# adds user to database
 def add_user(user_id,email,first_name,last_name,pto,admin,doh)
     db_params = {
         host: ENV['host'],
@@ -98,3 +104,39 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
 
 end
 
+# returns true if user isnt clocked in
+def time_in_check?(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    check = db.exec("SELECT * FROM timesheet_#{user_id} WHERE time_out = 'N/A'")
+    if check.num_tuples.zero? 
+        true
+    else
+        false
+    end
+    
+end
+
+#returns true if user is not clocked out
+def time_out_check?(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    check = db.exec("SELECT * FROM timesheet_#{user_id} WHERE time_out = 'N/A'")
+    if check.num_tuples.zero? == false
+        true
+    else
+        false
+    end
+end
