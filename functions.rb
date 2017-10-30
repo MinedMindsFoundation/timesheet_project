@@ -5,7 +5,8 @@ load './local_env.rb' if File.exist?('./local_env.rb')
 #gets date & time from system
 def get_time()
     arr = []
-    x = DateTime.now
+    x = Time.now.utc + Time.zone_offset('-0400')
+    # x.zone = "-04:00"
     arr << x.strftime('%H:%M')
     arr << x.strftime('%m/%d/%Y')
     arr
@@ -139,4 +140,33 @@ def time_out_check?(user_id)
         false
     end
 end
- 
+
+def database_info(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_first = db.exec("SELECT first_name FROM info WHERE user_id = '#{user_id}'").values
+        user_last = db.exec("SELECT last_name FROM info WHERE user_id = '#{user_id}'").values
+        user_name = []
+        user_name << user_first.flatten.first
+        user_name << user_last.flatten.first
+        user_name
+end
+
+def database_email_check(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_email = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
+        user_email.flatten.first
+end

@@ -25,9 +25,9 @@ function attachSignin(element) {
             email = googleUser.getBasicProfile().getEmail();
             avatarUrl = googleUser.getBasicProfile().getImageUrl();
             avatar = avatarUrl.replace("&", "****");
-            // console.log(googleUser.getBasicProfile().getGivenName());
-            // console.log(googleUser.getBasicProfile().getFamilyName());
-            // console.log(googleUser.getBasicProfile().getEmail());
+            console.log(googleUser.getBasicProfile().getGivenName());
+            console.log(googleUser.getBasicProfile().getFamilyName());
+            console.log(googleUser.getBasicProfile().getEmail());
             console.log(googleUser.getBasicProfile().getImageUrl());
             
             window.location = "/hidden_page?email=" + email + "&a=" + avatar;
@@ -46,7 +46,7 @@ function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function() {
         console.log('User signed out.');
-    });
+    });    
 }
             function onSignIn(googleUser) {
                 var profile = googleUser.getBasicProfile();
