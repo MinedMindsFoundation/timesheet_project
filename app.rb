@@ -3,7 +3,7 @@ require 'pg'
 require_relative 'functions.rb'
 # require_relative 'login_func'
 enable :sessions 
-load './local_env.rb' if File.exist?('./local_env.rb')
+load './local_ENV.rb' if File.exist?('./local_ENV.rb')
 
 
 # Initial "get" leads to login page
@@ -29,7 +29,9 @@ end
 
 # leads to landing page 
 get "/to_landing" do
-erb :landing
+user_info =  database_info(session[:user_id])
+user_email = database_email_check(session[:user_id]) 
+erb :landing, locals:{user_info:user_info, user_email:user_email}
 end
 
 # post comming from landing page
