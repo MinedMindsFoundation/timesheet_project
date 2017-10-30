@@ -169,3 +169,8 @@ def database_email_check(user_id)
         user_email = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
         user_email.flatten.first
 end
+
+
+def pay_period(date)
+    startdate = "10/30/2017"
+end
