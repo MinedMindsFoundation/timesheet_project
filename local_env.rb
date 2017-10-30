@@ -1,5 +1,0 @@
-ENV['host'] 		= 'timeclockdatabase.czdamu7i2psi.us-east-2.rds.amazonaws.com'
-ENV['port'] 		= '5432'
-ENV['dbname'] 		= 'timeclock_database'
-ENV['user'] 		= 'wvtimeclockdev'
-ENV['password'] 	= 'Min3dMinds'
