@@ -1,0 +1,16 @@
+
+<%user_info.each do |row|%>
+    <%=row%>
+<%end%>,<br> 
+<%=user_email%><br><br></div>
+
+
+
+
+<form action="/to_landing">
+start of PTO request:
+<input type="date" name="start_vac" min="<%=vac_time%>"><br><br>
+end of PTO request:
+<input type="date" name="end_vac" min="<%=vac_time%>"><br><br>
+<input type="submit"> 
+</form>

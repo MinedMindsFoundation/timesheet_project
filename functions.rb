@@ -12,6 +12,12 @@ def get_time()
     arr
 end
 
+def vac_time()
+    arr = []
+    x = Time.now.utc + Time.zone_offset('-0400')
+    x.strftime('%Y-%m-%d')
+end
+
 #checks if email is in the database
 def login_check?(email)
     db_params = {

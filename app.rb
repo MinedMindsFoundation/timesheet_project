@@ -34,6 +34,13 @@ user_email = database_email_check(session[:user_id])
 erb :landing, locals:{user_info:user_info, user_email:user_email}
 end
 
+#post coming from landing page for vac request
+post '/vac_time_request' do
+    user_info =  database_info(session[:user_id])
+    user_email = database_email_check(session[:user_id])
+    erb :pto_request, locals:{user_info:user_info, user_email:user_email}
+end
+
 # post comming from landing page
 post "/clock_in" do
     
