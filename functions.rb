@@ -1,5 +1,6 @@
 require 'date'
 require 'pg'
+require 'net/smtp'
 load './local_env.rb' if File.exist?('./local_env.rb')
 
 #gets date & time from system
@@ -175,3 +176,18 @@ def database_email_check(user_id)
         user_email = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
         user_email.flatten.first
 end
+
+#func to send email to admin
+    # message = <<MESSAGE_END
+    # From: Private Person <daddyof22006@yahoo.com>
+    # To: A Test User <billyjacktattoos@gmail.com>
+    # MIME-Version: 1.0
+    # Content-type: text/html
+    # Subject: SMTP e-mail test
+    # <b>This is HTML message.</b>
+    # <h1>This is headline.</h1>
+    # MESSAGE_ENd
+
+    # Net::SMTP.start('localhost') do |smtp|
+    #    smtp.send_message message, 'daddyof22006@yahoo.com', 'billyjacktattoos@gmail.com'
+    # end

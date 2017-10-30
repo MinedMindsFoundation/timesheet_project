@@ -4,6 +4,11 @@ GEM
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
     ffi (1.9.18-x64-mingw32)
+    mail (2.6.6)
+      mime-types (>= 1.16, < 4)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mustermann (1.0.1)
     pg (0.21.0-x64-mingw32)
     power_assert (1.1.0)
@@ -28,6 +33,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  mail
   pg
   rake
   selenium-webdriver

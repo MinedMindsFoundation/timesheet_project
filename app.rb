@@ -1,6 +1,7 @@
 require "sinatra"
 require 'pg'
 require_relative 'functions.rb'
+require 'net/smtp'
 # require_relative 'login_func'
 enable :sessions 
 load './local_ENV.rb' if File.exist?('./local_ENV.rb')
