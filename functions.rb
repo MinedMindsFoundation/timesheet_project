@@ -47,7 +47,7 @@ def submit_time_in(user_id,time,date)
         }
         db = PG::Connection.new(db_params)
     db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
-    db.exec("INSERT INTO timesheet_#{user_id}(time_in,time_out,date)VALUES('#{time}','N/A','#{date}')")
+    db.exec("INSERT INTO timesheet(user_id,time_in,time_out,date)VALUES('#{user_id}','#{time}','N/A','#{date}')")
 end
 
 #submits time out to timesheet table
@@ -61,7 +61,7 @@ def submit_time_out(user_id,time)
         }
         db = PG::Connection.new(db_params)
         db.exec("UPDATE info SET  status= 'out' WHERE user_id = '#{user_id}'")
-        db.exec("UPDATE timesheet_#{user_id} SET time_out = '#{time}' WHERE time_out = 'N/A'")
+        db.exec("UPDATE timesheet SET time_out = '#{time}' WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
 
 end
 
@@ -106,7 +106,6 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
     db = PG::Connection.new(db_params)
     db.exec("insert into info(user_id,first_name,last_name,pto,admin,status,doh)VALUES('#{user_id}','#{first_name}','#{last_name}','#{pto}','#{admin}','out','#{doh}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
-    db.exec("create table timesheet_#{user_id} (time_in text,time_out text,date text)")
     
 end
 
@@ -120,7 +119,7 @@ def time_in_check?(user_id)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    check = db.exec("SELECT * FROM timesheet_#{user_id} WHERE time_out = 'N/A'")
+    check = db.exec("SELECT * FROM timesheet WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
     if check.num_tuples.zero? 
         true
     else
@@ -139,7 +138,7 @@ def time_out_check?(user_id)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    check = db.exec("SELECT * FROM timesheet_#{user_id} WHERE time_out = 'N/A'")
+    check = db.exec("SELECT * FROM timesheet WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
     if check.num_tuples.zero? == false
         true
     else
