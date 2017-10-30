@@ -3,3 +3,5 @@ ENV['port'] 		= '5432'
 ENV['dbname'] 		= 'sms_database'
 ENV['user'] 		= 'smsbearkin'
 ENV['password'] 	= 'Beet2ivo7'
+
+
