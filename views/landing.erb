@@ -1,5 +1,10 @@
 <!--user clock in and clockout page-->
 
+<%user_info.each do |row|%>
+    <%=row%>
+<%end%>, welcome back!<br>
+<%=user_email%><br>
+
 <!--signout function -->
 <%=session[:message]%><br>
 <a href="/" onclick="signOut();">Sign out</a>
@@ -17,6 +22,8 @@
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()', 1000 )">
 <span id="clock">&nbsp;</span>
+
+
 </body>
 
 <script src = "/js/clock.js">

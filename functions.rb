@@ -140,3 +140,33 @@ def time_out_check?(user_id)
         false
     end
 end
+
+def database_info(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_first = db.exec("SELECT first_name FROM info WHERE user_id = '#{user_id}'").values
+        user_last = db.exec("SELECT last_name FROM info WHERE user_id = '#{user_id}'").values
+        user_name = []
+        user_name << user_first.flatten.first
+        user_name << user_last.flatten.first
+        user_name
+end
+
+def database_email_check(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_email = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
+        user_email.flatten.first
+end
