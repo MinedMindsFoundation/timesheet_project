@@ -15,18 +15,6 @@ var startApp = function() {
     });
 };
 
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    var name = profile.getName();
-    var email = profile.getEmail();
-    document.getElementById('email').value = email;
-    document.getElementById('first_name').value = name;
-    // document.getElementById('last_name').value = last_name;
-  }
 
 function attachSignin(element) {
     // console.log(element.id);
@@ -41,7 +29,7 @@ function attachSignin(element) {
             // console.log(googleUser.getBasicProfile().getFamilyName());
             // console.log(googleUser.getBasicProfile().getEmail());
             console.log(googleUser.getBasicProfile().getImageUrl());
-
+            
             window.location = "/hidden_page?email=" + email + "&a=" + avatar;
 
         },
@@ -49,8 +37,8 @@ function attachSignin(element) {
             // alert(JSON.stringify(error, undefined, 2));
         });
 
-};
-
+    };
+    
 
 startApp();
 
@@ -60,3 +48,19 @@ function signOut() {
         console.log('User signed out.');
     });
 }
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                console.log('Full Name: ' + profile.getName());
+                console.log('Given Name: ' + profile.getGivenName());
+                console.log('Family Name: ' + profile.getFamilyName());
+                console.log("Image URL: " + profile.getImageUrl());
+                console.log("Email: " + profile.getEmail());
+                var first_name = profile.getGivenName();
+                var last_name = profile.getFamilyName();
+                var email = profile.getEmail();
+                document.getElementById('email').value = email;
+                document.getElementById('first_name').value = first_name;
+                document.getElementById('last_name').value = last_name;
+                document.getElementById('myform').submit();
+              }

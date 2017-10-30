@@ -32,19 +32,20 @@ function FBLogin() {
                 console.log(response.email);
                 console.log(response.id);
                 console.log(response.picture);
-                var first_name = response.first_name;
-                var last_name = response.last_name;
-                var email = response.email;
-                var avatarUrl = response.picture.data.url;
-                var avatar = avatarUrl.replace("&", "****");
-                                   var fb_id = response.id;
-                                   document.getElementById('first_name').value = first_name;
-                                   document.getElementById('last_name').value = last_name;
-                                   document.getElementById('email').value = email;
-                                   document.getElementById('fb_id').value = fb_id;
-
-                                   
-                window.location = "login";
+                // var first_name = response.first_name;
+                // var last_name = response.last_name;
+                // var email = response.email;
+                // var avatarUrl = response.picture.data.url;
+                // var avatar = avatarUrl.replace("&", "****");
+                // var fb_id = response.id;
+                // document.getElementById('first_name').value = first_name;
+                // document.getElementById('last_name').value = last_name;
+                // document.getElementById('email').value = email;
+                // document.getElementById('fb_id').value = fb_id;
+                // document.getElementById("myform").submit(); // added to submit the page
+                
+                
+                // window.location = "/to_landing";
             });
             
             
@@ -52,41 +53,41 @@ function FBLogin() {
             console.log('User cancelled login or did not fully authorize.');
         }
     }, { scope: 'public_profile, email' });
-    document.getElementById("myform").submit(); // added to submit the page
+    getUserInfo();
 };
 
-function FBLogin2() {
-    FB.login(function(response) {
-        if (response.authResponse) {
-            FB.api('/me?fields=first_name,last_name,email,id', function(response) {
-                console.log(response.first_name);
-                console.log(response.last_name);
-                console.log(response.email);
-                console.log(response.id);
-                var first_name = response.first_name;
-                var last_name = response.last_name;
-                var email = response.email;
-                email = response.email;
-                                   var fb_id = response.id;
-                                   document.getElementById('first_name').value = first_name;
-                                   document.getElementById('last_name').value = last_name;
-                                   document.getElementById('email').value = email;
-                                   document.getElementById('fb_id').value = fb_id;
-                window.location = "/login";
-                document.getElementById("myform").submit(); // added to submit the page
+// function FBLogin2() {
+//     FB.login(function(response) {
+//         if (response.authResponse) {
+//             FB.api('/me?fields=first_name,last_name,email,id', function(response) {
+//                 console.log(response.first_name);
+//                 console.log(response.last_name);
+//                 console.log(response.email);
+//                 console.log(response.id);
+//                 var first_name = response.first_name;
+//                 var last_name = response.last_name;
+//                 var email = response.email;
+//                 email = response.email;
+//                                    var fb_id = response.id;
+//                                    document.getElementById('first_name').value = first_name;
+//                                    document.getElementById('last_name').value = last_name;
+//                                    document.getElementById('email').value = email;
+//                                    document.getElementById('fb_id').value = fb_id;
+//                 window.location = "/login";
 
-            });
+//             });
 
 
-        } else {
-            console.log('User cancelled login or did not fully authorize.');
-        }
-    }, { scope: 'public_profile, email' });
-}
+//         } else {
+//             console.log('User cancelled login or did not fully authorize.');
+//         }
+//     }, { scope: 'public_profile, email' });
+   
+// }
 
    function getUserInfo() {
        FB.api('/me?fields=id, first_name, last_name, email', function(response){
-           alert(response.first_name + " " + response.last_name + " " + response.email + " " + response.id);
+        //    alert(response.first_name + " " + response.last_name + " " + response.email + " " + response.id);
            var first_name = response.first_name,
                    last_name = response.last_name,
                    email = response.email;
@@ -94,6 +95,7 @@ function FBLogin2() {
            document.getElementById('email').value = email;
            document.getElementById('first_name').value = first_name;
            document.getElementById('last_name').value = last_name;
+           document.getElementById("myform").submit(); // added to submit the page
        });
    }
    function getPhoto()

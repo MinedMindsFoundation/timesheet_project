@@ -139,4 +139,3 @@ def time_out_check?(user_id)
         false
     end
 end
-
