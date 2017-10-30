@@ -169,3 +169,16 @@ def database_email_check(user_id)
         user_email = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
         user_email.flatten.first
 end
+
+def database_admin_check(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_admin = db.exec("SELECT admin FROM info WHERE user_id = '#{user_id}'").values
+        user_admin.flatten.first
+end

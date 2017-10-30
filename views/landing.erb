@@ -20,13 +20,17 @@
 </form>
 
 <!-- clock -->
-<body onload="updateClock(); setInterval('updateClock()', 1000 )">
+<body onload="updateClock(); setInterval('updateClock()', 1000 ); admin_toggle(<%=admin_check%>)">
 <span id="clock">&nbsp;</span>
-
-
+<div id="admin_div">
+"Yes"
+</div>
 </body>
 
+
 <script src = "/js/clock.js">
+</script>
+<script src = "/js/toggle.js">
 </script>
 
 <!--sign out section--><br>
