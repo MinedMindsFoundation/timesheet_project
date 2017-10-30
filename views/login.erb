@@ -6,15 +6,16 @@
 </head>
 
 
+
+<form id = "myform" method = "post" action = "login">
 <!--FaceBook Button -->
 <div class="social-login">
-    <img src="img/fb_button.png"  id="facebook_btn" onclick="FBLogin()"> 
+    <img src="img/fb_button.png"  id="facebook_btn" onclick="Facebooklogin()">
 </div>
 <!--google button-->
 <div class="g-signin2" data-onsuccess="onSignIn"></div>
 
 <!-- simple bypass for login needs deleted before merge to master -->
-<form method = "post" action = "login">
 <input id = 'first_name' name = "first_name">
 <input id = "last_name" name = "last_name">
 <input id = "email" name = "email">
@@ -22,5 +23,8 @@
 </form>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+</script>
+<script src= "/js/google_js.js">
+</script>
 <script src = "/js/facebook.js">
 </script>
