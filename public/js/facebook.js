@@ -23,7 +23,7 @@ window.fbAsyncInit = function() {
     });
 };
 
-function FBLogin() {
+function Facebooklogin() {
     FB.login(function(response) {
         if (response.authResponse) {
             FB.api('/me?fields=first_name,last_name,email,id, picture', function(response) {
