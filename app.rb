@@ -1,6 +1,7 @@
 require "sinatra"
 require 'pg'
 require_relative 'functions.rb'
+require 'net/smtp'
 # require_relative 'login_func'
 enable :sessions 
 load './local_ENV.rb' if File.exist?('./local_ENV.rb')
@@ -33,6 +34,13 @@ user_info =  database_info(session[:user_id])
 user_email = database_email_check(session[:user_id])
 admin_check = database_admin_check(session[:user_id])
 erb :landing, locals:{user_info:user_info, user_email:user_email, admin_check:admin_check}
+end
+
+#post coming from landing page for vac request
+post '/vac_time_request' do
+    user_info =  database_info(session[:user_id])
+    user_email = database_email_check(session[:user_id])
+    erb :pto_request, locals:{user_info:user_info, user_email:user_email}
 end
 
 # post comming from landing page
