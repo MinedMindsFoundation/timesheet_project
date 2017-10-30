@@ -17,7 +17,7 @@ post '/login' do
 session[:first_name] = params[:first_name]
 session[:last_name] = params[:last_name]
 session[:email] = params[:email]
-p "#{session[:email]} email address being used"
+p "#{session[:email]} email address is here"
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
         redirect "/to_landing?"

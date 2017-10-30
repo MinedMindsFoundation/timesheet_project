@@ -87,7 +87,6 @@ end
 #     db.exec("insert into admin(user_id,admin)VALUES('#{user_id}','#{admin}')")
 
 # end
-
 # adds user to database
 def add_user(user_id,email,first_name,last_name,pto,admin,doh)
     db_params = {
@@ -96,12 +95,12 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
         dbname: ENV['dbname'],
         user: ENV['user'],
         password: ENV['password']
-        }
-        db = PG::Connection.new(db_params)
+    }
+    db = PG::Connection.new(db_params)
     db.exec("insert into info(user_id,first_name,last_name,pto,admin,status,doh)VALUES('#{user_id}','#{first_name}','#{last_name}','#{pto}','#{admin}','out','#{doh}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
     db.exec("create table timesheet_#{user_id} (time_in text,time_out text,date text)")
-
+    
 end
 
 # returns true if user isnt clocked in
@@ -112,8 +111,8 @@ def time_in_check?(user_id)
         dbname: ENV['dbname'],
         user: ENV['user'],
         password: ENV['password']
-        }
-        db = PG::Connection.new(db_params)
+    }
+    db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM timesheet_#{user_id} WHERE time_out = 'N/A'")
     if check.num_tuples.zero? 
         true
@@ -131,8 +130,8 @@ def time_out_check?(user_id)
         dbname: ENV['dbname'],
         user: ENV['user'],
         password: ENV['password']
-        }
-        db = PG::Connection.new(db_params)
+    }
+    db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM timesheet_#{user_id} WHERE time_out = 'N/A'")
     if check.num_tuples.zero? == false
         true
