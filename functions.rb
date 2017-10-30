@@ -170,6 +170,11 @@ def database_email_check(user_id)
         user_email.flatten.first
 end
 
+
+def pay_period(date)
+    startdate = "10/30/2017"
+end
+
 def database_admin_check(user_id)
     db_params = {
         host: ENV['host'],
