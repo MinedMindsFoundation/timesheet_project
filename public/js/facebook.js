@@ -50,7 +50,7 @@ function fbLogin() {
                 document.getElementById("myform").submit(); // added to submit the page
                 
                 
-                // window.location = "/to_landing";
+                window.location = "/to_landing";
             });
             
             
