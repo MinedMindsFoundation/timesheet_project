@@ -1,8 +1,8 @@
 // function to call both logouts at same time
 
-def log_me_out() {
+def logmeout() {
     logout();
-    signOut();
+    // signOut();
 }
 
 // Facebook logout

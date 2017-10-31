@@ -8,17 +8,17 @@ window.fbAsyncInit = function() {
     });
     FB.Event.subscribe('auth.authResponseChange', function(response) {
         if (response.status === 'connected') {
-            // document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
-            // console.log("Connected to Facebook");
-            //                getUserInfo();
+            document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
+            console.log("Connected to Facebook");
+                           getUserInfo();
 
-            //SUCCESS
+            SUCCESS
         } else if (response.status === 'not_authorized') {
             document.getElementById("message").innerHTML += "<br>Failed to Connect";
-            //FAILED
+            FAILED
         } else {
             document.getElementById("message").innerHTML += "<br>Logged Out";
-            //UNKNOWN ERROR
+            UNKNOWN ERROR
         }
     });
 };
@@ -107,8 +107,8 @@ function Facebooklogin() {
    };
 function logout() {
     FB.logout(function(response) {
-        // user is now logged out
-    });
+        // Person is now logged out
+     });
 }
 // Load the SDK asynchronously
 (function(d) {
