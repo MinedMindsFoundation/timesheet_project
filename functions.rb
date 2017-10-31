@@ -234,5 +234,5 @@ def pull_data_for_pay_period(user_id,date_range)
 end
 
 
-pull_data_for_pay_period("devid",pay_period(Time.new))
+# pull_data_for_pay_period("devid",pay_period(Time.new))
 # database_email_check('devid')
