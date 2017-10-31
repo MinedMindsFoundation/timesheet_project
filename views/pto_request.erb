@@ -13,6 +13,8 @@ start of PTO request:
 <input type="date" name="start_vac" min="<%=vac_time%>"><br><br>
 end of PTO request:
 <input type="date" name="end_vac" min="<%=vac_time%>"><br><br>
-<input type="submit"> 
+<input type="email" value = "<%=user_email%>">
+<button onclick="sendemail()"> Submit </button> 
 </form>
-
+<script src = "/js/email.js">
+</script>
