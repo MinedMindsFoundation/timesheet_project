@@ -32,8 +32,8 @@ end
 get "/to_landing" do
 user_info =  database_info(session[:user_id])
 user_email = database_email_check(session[:user_id])
-admin_check = database_admin_check(session[:user_id])
-erb :landing, locals:{user_info:user_info, user_email:user_email, admin_check:admin_check}
+# admin_check = database_admin_check(session[:user_id])
+erb :landing, locals:{user_info:user_info, user_email:user_email,} # admin_check:admin_check
 end
 
 #post coming from landing page for vac request
@@ -67,5 +67,4 @@ post "/clock_out" do
     end
     redirect "/to_landing"
 end
-
 

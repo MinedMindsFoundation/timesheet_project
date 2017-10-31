@@ -183,7 +183,7 @@ end
 
 
 
-def add_email(userid,email)
+def add_email(user_id,email)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -203,3 +203,5 @@ def pay_period()
     p end_date
     
 end
+
+add_email("scottid","abearkin@hotmail.com")
