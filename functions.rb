@@ -207,8 +207,27 @@ def pay_period(now)
             start_date += add_2weeks   
             end_date = start_date + endday
         end
-    arr = ["#{start_date.strftime('%Y-%m-%d')}","#{end_date.strftime('%Y-%m-%d')}"]
+    arr = [start_date,end_date]
     arr
 end
 
 
+def pull_data_for_pay_period(user_id,date_range)
+    
+    # p start_date = date_range[0].strftime('%Y-%m-%d')\
+    start_date = "2017-10-31"
+    p end_date = date_range[1].strftime('%Y-%m-%d')
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        info = db.exec("SELECT *  FROM timesheet WHERE user_id = '#{user_id}' AND date BETWEEN #{start_date}'AND '#{end_date}'").values
+    p info
+end
+
+
+pull_data_for_pay_period("devid",pay_period(Time.new))
