@@ -171,6 +171,12 @@ def database_email_check(user_id)
 end
 
 
-def pay_period(date)
-    startdate = "10/30/2017"
+def pay_period()
+    startdate = Time.utc(2017,10,30)
+    now = Time.now
+    end_date = startdate + (60 * 60 * 24 * 14)
+    p end_date
+    
 end
+
+pay_period
