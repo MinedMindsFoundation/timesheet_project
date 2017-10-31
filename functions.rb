@@ -198,14 +198,16 @@ end
 
 def pay_period(now)
     
-    add_2weeks = (13 * 60 * 60 * 24) + (23 * 60 *60 ) +(59*60) + 59
+    add_2weeks = (14 * 60 * 60 * 24)
+    endday = (13 * 60 * 60 * 24)  + (23 * 60 *60 ) +(59*60) + 59
+
     start_date = Time.utc(2017,10,30)
-    end_date = start_date + add_2weeks
+    end_date = start_date + endday
         until now < end_date do
             start_date += add_2weeks   
-            end_date += add_2weeks
+            end_date = start_date + endday
         end
-    arr =["#{start_date}","#{end_date}"]
+    arr = ["#{start_date.strftime('%Y-%m-%d')}","#{end_date.strftime('%Y-%m-%d')}"]
     arr
 end
 
