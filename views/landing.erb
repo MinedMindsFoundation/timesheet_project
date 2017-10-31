@@ -1,9 +1,12 @@
 <!--user clock in and clockout page-->
 
+<div>
 <%user_info.each do |row|%>
     <%=row%>
 <%end%>, welcome back!<br>
-<%=user_email%><br>
+<%=user_email%><br></div>
+
+
 
 <!--signout function -->
 <%=session[:message]%><br>
@@ -20,13 +23,25 @@
 </form>
 
 <!-- clock -->
-<body onload="updateClock(); setInterval('updateClock()', 1000 )">
+<body onload="updateClock(); setInterval('updateClock()', 1000 ); admin_toggle(<%=admin_check%>)">
 <span id="clock">&nbsp;</span>
+<<<<<<< HEAD
+<div id="admin_div">
+"Yes"
+</div>
+=======
 
-
+<!--submit button fo vac request-->
+<form method = "post" action = "vac_time_request">
+    <button type = "submit">PTO Request</button>
+</form> 
+>>>>>>> a0d41dec1e7056567034600f4a3145361b1582d4
 </body>
 
+
 <script src = "/js/clock.js">
+</script>
+<script src = "/js/toggle.js">
 </script>
 
 <!--sign out section--><br>

@@ -1,5 +1,6 @@
 require 'date'
 require 'pg'
+require 'net/smtp'
 load './local_env.rb' if File.exist?('./local_env.rb')
 
 #gets date & time from system
@@ -10,6 +11,12 @@ def get_time()
     arr << x.strftime('%H:%M')
     arr << x.strftime('%m/%d/%Y')
     arr
+end
+
+def vac_time()
+    arr = []
+    x = Time.now.utc + Time.zone_offset('-0400')
+    x.strftime('%Y-%m-%d')
 end
 
 #checks if email is in the database
@@ -171,12 +178,28 @@ def database_email_check(user_id)
 end
 
 
+
+
+
+
+
+def add_email(userid,email)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        db.exec("INSERT INTO email(user_id,email)VALUES('#{user_id}','#{email}')")
+end
+
 def pay_period()
     startdate = Time.utc(2017,10,30)
     now = Time.now
-    end_date = startdate + (60 * 60 * 24 * 14)
+    add_2_weeks = (60 * 60 * 24 * 14)
+    end_date = startdate + add_2_weeks
     p end_date
     
 end
-
-pay_period
