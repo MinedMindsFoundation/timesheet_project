@@ -2,18 +2,18 @@
 
 var googleUser = {};
 
-var startApp = function() {
-    gapi.load('auth2', function() {
-        // Retrieve the singleton for the GoogleAuth library and set up the client.
-        auth2 = gapi.auth2.init({
-            client_id: '529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com',
-            cookiepolicy: 'single_host_origin',
-            // Request scopes in addition to 'profile' and 'email'
-            //scope: 'additional_scope'
-        });
-        attachSignin(document.getElementById('google_btn'));
-    });
-};
+// var startApp = function() {
+//     gapi.load('auth2', function() {
+//         // Retrieve the singleton for the GoogleAuth library and set up the client.
+//         auth2 = gapi.auth2.init({
+//             client_id: '529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com',
+//             cookiepolicy: 'single_host_origin',
+//             // Request scopes in addition to 'profile' and 'email'
+//             //scope: 'additional_scope'
+//         });
+//         attachSignin(document.getElementById('google_btn'));
+//     });
+// };
 
 
 function attachSignin(element) {
@@ -40,7 +40,7 @@ function attachSignin(element) {
     };
     
 
-startApp();
+// startApp();
 
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
