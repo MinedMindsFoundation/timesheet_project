@@ -177,24 +177,7 @@ def database_email_check(user_id)
         user_email.flatten.first
 end
 
-<<<<<<< HEAD
-#func to send email to admin
-    # message = <<MESSAGE_END
-    # From: Private Person <daddyof22006@yahoo.com>
-    # To: A Test User <billyjacktattoos@gmail.com>
-    # MIME-Version: 1.0
-    # Content-type: text/html
-    # Subject: SMTP e-mail test
-    # <b>This is HTML message.</b>
-    # <h1>This is headline.</h1>
-    # MESSAGE_ENd
-
-    # Net::SMTP.start('localhost') do |smtp|
-    #    smtp.send_message message, 'daddyof22006@yahoo.com', 'billyjacktattoos@gmail.com'
-    # end
-=======
 
 def pay_period(date)
     startdate = "10/30/2017"
 end
->>>>>>> c28bba308e93829096774e85fe9cdf2f16d3b307
