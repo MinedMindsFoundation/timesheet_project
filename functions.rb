@@ -196,12 +196,16 @@ def add_email(user_id,email)
 end
 
 def pay_period()
-    startdate = Time.utc(2017,10,30)
-    now = Time.now
+    
+    start_date = Time.utc(2017,10,30,"-0400")
+    now = Time.utc()
     add_2_weeks = (60 * 60 * 24 * 14)
     end_date = startdate + add_2_weeks
-    p end_date
-    
+        until now < end_date do
+            start_date += add_2weeks   
+            end_date += add_2_weeks
+        end
+    p [start_date,end_date]
 end
 
-add_email("scottid","abearkin@hotmail.com")
+pay_period
