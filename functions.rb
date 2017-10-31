@@ -178,12 +178,12 @@ def database_email_check(user_id)
 end
 
 
-def pay_period(date)
-    startdate = "10/30/2017"
-end
 
 
-def database_admin_check(user_id)
+
+
+
+def add_email(userid,email)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -192,7 +192,14 @@ def database_admin_check(user_id)
         password: ENV['password']
             }
         db = PG::Connection.new(db_params)
-        user_admin = db.exec("SELECT admin FROM info WHERE user_id = '#{user_id}'").values
-        user_admin.flatten.first
+        db.exec("INSERT INTO email(user_id,email)VALUES('#{user_id}','#{email}')")
 end
 
+def pay_period()
+    startdate = Time.utc(2017,10,30)
+    now = Time.now
+    add_2_weeks = (60 * 60 * 24 * 14)
+    end_date = startdate + add_2_weeks
+    p end_date
+    
+end
