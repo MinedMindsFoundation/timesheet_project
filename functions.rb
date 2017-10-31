@@ -208,4 +208,3 @@ def pay_period()
     p [start_date,end_date]
 end
 
-pay_period
