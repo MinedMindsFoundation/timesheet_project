@@ -5,7 +5,18 @@
 </head>
 
 <% if admin_check =="y"|| admin_check == "Y" %>
-yes<br>
+<div>
+<%user_info.each do |row|%>
+    <%=row%>
+<%end%>, welcome back!<br>
+<%=user_email%><br></div><br>
+Users Checked In:<br>
+<div>
+<%user_checked.each do |row|%>
+    <%row.each do |item|%>
+        <%=item%>
+        <%end%><br>
+<%end%></div>
 <% else %>
 
 <div>
@@ -14,7 +25,7 @@ yes<br>
 <%end%>, welcome back!<br>
 <%=user_email%><br></div>
 
-
+<% end %> 
 <!--signout function -->
 <%=session[:message]%><br>
 
@@ -32,7 +43,6 @@ yes<br>
 <form method = "post" action = "vac_time_request">
     <button type = "submit">PTO Request</button>
 </form>
-<% end %> 
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
 <span id="clock">&nbsp;</span>
