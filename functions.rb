@@ -2,6 +2,7 @@ require 'date'
 require "time"
 require 'pg'
 require 'net/smtp'
+require 'mail'
 load './local_env.rb' if File.exist?('./local_env.rb')
 
 #gets date & time from system
@@ -232,7 +233,6 @@ def pull_data_for_pay_period(user_id,date_range)
         db.close()
     p info
 end
-
 
 # pull_data_for_pay_period("devid",pay_period(Time.new))
 # database_email_check('devid')
