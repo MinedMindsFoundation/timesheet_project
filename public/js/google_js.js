@@ -34,7 +34,7 @@ function onLoad() {
          auth2.signOut().then(function() {
              console.log('User signed out.');
         });
-        // window.location.href = "/";    
+         window.location.href = "/";    
     });
 
 }
