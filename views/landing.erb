@@ -1,11 +1,14 @@
 <!--user clock in and clockout page-->
 
+<head>
+<meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
+</head>
+
 <div>
 <%user_info.each do |row|%>
     <%=row%>
 <%end%>, welcome back!<br>
 <%=user_email%><br></div>
-
 
 
 <!--signout function -->
@@ -21,9 +24,13 @@
 <form id = "time_submit" method = "post" action = "clock_out">
 <button type = "submit" onclick="setTime()">Submit Time Out</button>
 </form>
-
+ <!-- admin_toggle(<%=admin_check)>-->
 <!-- clock -->
+<<<<<<< HEAD
 <body onload="updateClock(); setInterval('updateClock()', 1000 ); ">
+=======
+<body onload="updateClock(); setInterval('updateClock()',1000)";>
+>>>>>>> 5bdf7c1210a510903c6e0730a8e0647313c336b4
 <span id="clock">&nbsp;</span>
 
 <!--submit button fo vac request-->
@@ -32,6 +39,7 @@
 </form> 
 </body>
 
+<<<<<<< HEAD
 
 <script src = "/js/clock.js">
 </script>
@@ -42,3 +50,20 @@
 
 <!--sign out section--><br>
 <a href="#" onclick="signOut();">Sign out</a>
+=======
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src = "/js/clock.js"></script>
+<script src = "/js/facebook.js"></script>
+<script src = "/js/toggle.js"></script>
+<script src= "js/google_js.js"></script>
+
+<!--sign out section--><br>
+<!--facebook sign out--><br>
+<button id = 'sign_out' onclick= 'logout()' >Sign out</button>
+<!-- src = "/js/logout.js"-->
+
+<!--google sign out--><br>
+
+<!-- scr ="/js/google_js.js"-->
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+>>>>>>> 5bdf7c1210a510903c6e0730a8e0647313c336b4

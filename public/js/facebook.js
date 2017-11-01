@@ -10,20 +10,25 @@ window.fbAsyncInit = function() {
         if (response.status === 'connected') {
             // document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
             // console.log("Connected to Facebook");
-            //                getUserInfo();
+                           getUserInfo();
 
-            //SUCCESS
+            // SUCCESS
         } else if (response.status === 'not_authorized') {
-            document.getElementById("message").innerHTML += "<br>Failed to Connect";
-            //FAILED
+            // document.getElementById("message").innerHTML += "<br>Failed to Connect";
+            // FAILED
         } else {
-            document.getElementById("message").innerHTML += "<br>Logged Out";
-            //UNKNOWN ERROR
+            // document.getElementById("message").innerHTML += "<br>Logged Out";
+            // // UNKNOWN ERROR
         }
     });
+    
 };
+function work() {
+    alert("fired");
 
-function Facebooklogin() {
+}
+
+function fbLogin() {
     FB.login(function(response) {
         if (response.authResponse) {
             FB.api('/me?fields=first_name,last_name,email,id, picture', function(response) {
@@ -32,20 +37,20 @@ function Facebooklogin() {
                 console.log(response.email);
                 console.log(response.id);
                 console.log(response.picture);
-                // var first_name = response.first_name;
-                // var last_name = response.last_name;
-                // var email = response.email;
-                // var avatarUrl = response.picture.data.url;
-                // var avatar = avatarUrl.replace("&", "****");
-                // var fb_id = response.id;
-                // document.getElementById('first_name').value = first_name;
-                // document.getElementById('last_name').value = last_name;
-                // document.getElementById('email').value = email;
-                // document.getElementById('fb_id').value = fb_id;
-                // document.getElementById("myform").submit(); // added to submit the page
+                var first_name = response.first_name;
+                var last_name = response.last_name;
+                var email = response.email;
+                var avatarUrl = response.picture.data.url;
+                var avatar = avatarUrl.replace("&", "****");
+                var fb_id = response.id;
+                document.getElementById('first_name').value = first_name;
+                document.getElementById('last_name').value = last_name;
+                document.getElementById('email').value = email;
+                document.getElementById('fb_id').value = fb_id;
+                document.getElementById("myform").submit(); // added to submit the page
                 
                 
-                // window.location = "/to_landing";
+                window.location = "/to_landing";
             });
             
             
@@ -54,6 +59,7 @@ function Facebooklogin() {
         }
     }, { scope: 'public_profile, email' });
     getUserInfo();
+    
 };
 
 // function FBLogin2() {
@@ -105,9 +111,28 @@ function Facebooklogin() {
            document.getElementById("status").innerHTML+=str;
        });
    };
-function logout() {
-    FB.logout(function(response) {
-        // user is now logged out
+
+
+function logout(){
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          // the user is logged in and has authenticated your
+          // app, and response.authResponse supplies
+          // the user's ID, a valid access token, a signed
+          // request, and the time the access token 
+          // and signed request each expire
+          var uid = response.authResponse.userID;
+          var accessToken = response.authResponse.accessToken;
+            FB.logout(function(response) {
+                // Person is now logged out
+            });
+            console.log('User signed out facebook.');
+        } else if (response.status === 'not_authorized') {
+          // the user is logged in to Facebook, 
+          // but has not authenticated your app
+        } else {
+          // the user isn't logged in to Facebook.
+        }
     });
 }
 // Load the SDK asynchronously
@@ -121,3 +146,5 @@ function logout() {
     js.src = "https://connect.facebook.net/en_US/all.js";
     ref.parentNode.insertBefore(js, ref);
 }(document));
+
+

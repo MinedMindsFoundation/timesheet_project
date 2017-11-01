@@ -1,4 +1,5 @@
 require 'date'
+require "time"
 require 'pg'
 require 'net/smtp'
 load './local_env.rb' if File.exist?('./local_env.rb')
@@ -158,6 +159,7 @@ def database_info(user_id)
         db = PG::Connection.new(db_params)
         user_first = db.exec("SELECT first_name FROM info WHERE user_id = '#{user_id}'").values
         user_last = db.exec("SELECT last_name FROM info WHERE user_id = '#{user_id}'").values
+        db.close            
         user_name = []
         user_name << user_first.flatten.first
         user_name << user_last.flatten.first
@@ -174,6 +176,7 @@ def database_email_check(user_id)
             }
         db = PG::Connection.new(db_params)
         user_email = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
+        db.close()
         user_email.flatten.first
 end
 
@@ -183,7 +186,7 @@ end
 
 
 
-def add_email(userid,email)
+def add_email(user_id,email)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -193,13 +196,43 @@ def add_email(userid,email)
             }
         db = PG::Connection.new(db_params)
         db.exec("INSERT INTO email(user_id,email)VALUES('#{user_id}','#{email}')")
+        db.close()
 end
 
-def pay_period()
-    startdate = Time.utc(2017,10,30)
-    now = Time.now
-    add_2_weeks = (60 * 60 * 24 * 14)
-    end_date = startdate + add_2_weeks
-    p end_date
+def pay_period(now)
     
+    add_2weeks = (14 * 60 * 60 * 24)
+    endday = (13 * 60 * 60 * 24)  + (23 * 60 *60 ) +(59*60) + 59
+
+    start_date = Time.utc(2017,10,30)
+    end_date = start_date + endday
+        until now < end_date do
+            start_date += add_2weeks   
+            end_date = start_date + endday
+        end
+    arr = [start_date,end_date]
+    arr
 end
+
+
+def pull_data_for_pay_period(user_id,date_range)
+    
+    # p start_date = date_range[0].strftime('%Y-%m-%d')\
+    start_date = "2017-10-31"
+    p end_date = date_range[1].strftime('%Y-%m-%d')
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        info = db.exec("SELECT *  FROM timesheet WHERE user_id = '#{user_id}' AND date = BETWEEN #{start_date}'AND '#{end_date}'").values
+        db.close()
+    p info
+end
+
+
+# pull_data_for_pay_period("devid",pay_period(Time.new))
+# database_email_check('devid')

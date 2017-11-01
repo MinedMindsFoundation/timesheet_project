@@ -21,9 +21,9 @@ session[:email] = params[:email]
 
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
-        redirect "/to_landing?"
+        redirect "/to_landing"
     else
-        redirect '/?'
+        redirect '/'
     end
 end
 
@@ -32,8 +32,9 @@ end
 get "/to_landing" do
 user_info =  database_info(session[:user_id])
 user_email = database_email_check(session[:user_id])
+pay_period = pay_period(Time.now.utc)
 # admin_check = database_admin_check(session[:user_id])
-erb :landing, locals:{user_info:user_info, user_email:user_email,}#admin_check:admin_check
+erb :landing, locals:{user_info:user_info, user_email:user_email,} # admin_check:admin_check
 end
 
 #post coming from landing page for vac request
@@ -67,5 +68,4 @@ post "/clock_out" do
     end
     redirect "/to_landing"
 end
-
 
