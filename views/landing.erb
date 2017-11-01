@@ -23,7 +23,7 @@
 </form>
 
 <!-- clock -->
-<body onload="updateClock(); setInterval('updateClock()', 1000 ); admin_toggle(<%=admin_check%>)">
+<body onload="updateClock(); setInterval('updateClock()', 1000 ); ">
 <span id="clock">&nbsp;</span>
 
 <!--submit button fo vac request-->
@@ -37,6 +37,8 @@
 </script>
 <script src = "/js/toggle.js">
 </script>
+<script src= "/js/google_js.js">
+</script>
 
 <!--sign out section--><br>
-<a href="/" onclick="log_me_out();">Sign out</a>
+<a href="#" onclick="signOut();">Sign out</a>
