@@ -125,7 +125,7 @@ function logout() {
             FB.logout(function(response) {
                 // Person is now logged out
             });
-            console.log('User signed out.');
+            console.log('User signed out facebook.');
         } else if (response.status === 'not_authorized') {
           // the user is logged in to Facebook, 
           // but has not authenticated your app
