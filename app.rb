@@ -21,9 +21,9 @@ session[:email] = params[:email]
 
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
-        redirect "/to_landing?"
+        redirect "/to_landing"
     else
-        redirect '/?'
+        redirect '/'
     end
 end
 
