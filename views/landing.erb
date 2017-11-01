@@ -4,6 +4,10 @@
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 </head>
 
+<% if admin_check =="y"|| admin_check == "Y" %>
+yes<br>
+<% else %>
+
 <div>
 <%user_info.each do |row|%>
     <%=row%>
@@ -24,15 +28,14 @@
 <form id = "time_submit" method = "post" action = "clock_out">
 <button type = "submit" onclick="setTime()">Submit Time Out</button>
 </form>
- <!-- admin_toggle(<%=admin_check)>-->
-<!-- clock -->
-<body onload="updateClock(); setInterval('updateClock()',1000)";>
-<span id="clock">&nbsp;</span>
-
 <!--submit button fo vac request-->
 <form method = "post" action = "vac_time_request">
     <button type = "submit">PTO Request</button>
-</form> 
+</form>
+<% end %> 
+<!-- clock -->
+<body onload="updateClock(); setInterval('updateClock()',1000)";>
+<span id="clock">&nbsp;</span>
 </body>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
