@@ -2,6 +2,7 @@ require 'date'
 require "time"
 require 'pg'
 require 'net/smtp'
+require 'mail'
 load './local_env.rb' if File.exist?('./local_env.rb')
 
 #gets date & time from system
@@ -236,3 +237,29 @@ end
 
 # pull_data_for_pay_period("devid",pay_period(Time.new))
 # database_email_check('devid')
+
+# fuction that send the admin an email for pto request
+
+Mail.defaults do
+    delivery_method :smtp,
+    address: "email-smtp.us-east-1.amazonaws.com",
+    port: 587,
+    :user_name  => ENV['a3smtpuser'],
+    :password   => ENV['a3smtppass'],
+    :enable_ssl => true
+  end
+  def send_email() 
+    email_body = "this is a test email"
+  mail = Mail.new do
+      from         ENV['from']
+      to           'billyjacktattoos@gmail.com'
+      subject      "Test email"
+
+      html_part do
+        content_type 'text/html'
+        body       email_body
+      end
+  end
+  mail.deliver!
+  "Email has been sent"
+end

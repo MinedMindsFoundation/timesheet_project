@@ -1,21 +1,22 @@
 
 
 <%user_info.each do |row|%>
-    <%=row%>
+<%=row%>
 <%end%>,<br> 
 <%=user_email%><br><br></div>
 
 
 
 
-<form action="/to_landing">
+<form method = "post" action = "/pto_email">
 start of PTO request:
 <input type="date" name="start_vac" min="<%=vac_time%>"><br><br>
 end of PTO request:
 <input type="date" name="end_vac" min="<%=vac_time%>"><br><br>
-<input type="email" value = "<%=user_email%>">
-<button onclick="sendemail()"> Submit </button> 
+<input type="submit" >
+
 </form>
+
 <script src = "/js/email.js">
 </script>
 

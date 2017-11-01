@@ -44,6 +44,11 @@ post '/vac_time_request' do
     erb :pto_request, locals:{user_info:user_info, user_email:user_email}
 end
 
+post '/pto_email' do 
+    send_email()
+    redirect "/to_landing"
+end
+
 # post comming from landing page
 post "/clock_in" do
     
