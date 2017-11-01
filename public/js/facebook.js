@@ -112,7 +112,8 @@ function fbLogin() {
        });
    };
 
-function logout() {
+
+function logout(){
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
           // the user is logged in and has authenticated your
@@ -132,7 +133,7 @@ function logout() {
         } else {
           // the user isn't logged in to Facebook.
         }
-       });
+    });
 }
 // Load the SDK asynchronously
 (function(d) {

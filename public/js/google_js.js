@@ -36,7 +36,6 @@ function onLoad() {
         });
          window.location.href = "/";    
     });
-
 }
 
 function attachSignin(element) {
