@@ -15,6 +15,11 @@ var googleUser = {};
 //     });
 // };
 
+function onLoad() {
+    gapi.load('auth2', function() {
+      gapi.auth2.init();
+    });
+  }
 
 function attachSignin(element) {
     // console.log(element.id);

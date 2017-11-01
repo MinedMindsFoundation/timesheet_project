@@ -1,11 +1,14 @@
 <!--user clock in and clockout page-->
 
+<head>
+<meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
+</head>
+
 <div>
 <%user_info.each do |row|%>
     <%=row%>
 <%end%>, welcome back!<br>
 <%=user_email%><br></div>
-
 
 
 <!--signout function -->
@@ -46,3 +49,5 @@
 <!--google sign out--><br>
 <button onclick="signOut()">Sign out</button>
 <!-- scr ="/js/google_js.js"-->
+
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
