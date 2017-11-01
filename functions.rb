@@ -261,12 +261,12 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-  def send_email() 
-    email_body = "this is a test email"
+  def send_email(start_vec, end_vac, full_name) 
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
-      subject      "Test email"
+      subject      "PTO Request"
 
       html_part do
         content_type 'text/html'
@@ -274,5 +274,4 @@ Mail.defaults do
       end
   end
   mail.deliver!
-  "Email has been sent"
 end

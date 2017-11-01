@@ -14,9 +14,9 @@ start of PTO request:
 end of PTO request:
 <input type="date" name="end_vac" min="<%=vac_time%>"><br><br>
 <input type="submit" >
-
+<input type= "hidden" name= "full_name" value= "<%user_info.each do |row|%> <%=row%> <%end%>">
+<input type= "hidden" name= "email" value= "<%=user_email%>"
 </form>
 
-<script src = "/js/email.js">
-</script>
+
 

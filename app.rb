@@ -45,7 +45,13 @@ post '/vac_time_request' do
 end
 
 post '/pto_email' do 
-    send_email()
+    start_date = params[:start_vac]
+    end_date = params[:end_vac]
+    user_info =  database_info(session[:user_id])
+    # p start_date
+    # p end_date
+    # p user_info
+    send_email(start_date, end_date, user_info)
     redirect "/to_landing"
 end
 
