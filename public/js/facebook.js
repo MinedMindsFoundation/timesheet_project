@@ -112,8 +112,8 @@ function fbLogin() {
        });
    };
 
-function logout() {
-    FB.getLoginStatus(function(response) {
+   
+FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
           // the user is logged in and has authenticated your
           // app, and response.authResponse supplies
@@ -132,8 +132,8 @@ function logout() {
         } else {
           // the user isn't logged in to Facebook.
         }
-       });
-}
+})
+
 // Load the SDK asynchronously
 (function(d) {
     var js, id = 'facebook-jssdk',
