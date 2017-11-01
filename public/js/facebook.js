@@ -111,6 +111,7 @@ function fbLogin() {
            document.getElementById("status").innerHTML+=str;
        });
    };
+
 function logout() {
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
