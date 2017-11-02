@@ -34,7 +34,21 @@ Users Checked In:<br>
 <%end%>, welcome back!<br>
 <%=user_email%><br></div>
 
-<% end %> 
+<% end %>
+<!-- tabel of time in and out --> 
+<table>
+<th>Time in</th>
+<th>Time put</th>
+<th>Date</th>
+<%times.each do |item|%>
+<tr>
+<%item.each do |time|%>
+<td><%=time%></td>
+<%end%>
+</tr>
+<%end%>
+</table>
+
 <!--signout function -->
 <%=session[:message]%><br>
 

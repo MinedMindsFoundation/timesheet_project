@@ -246,7 +246,7 @@ def pay_period(now)
 end
 
 
-def pull_data_for_pay_period(user_id,date_range)
+def pull_in_and_out_times(user_id,date_range)
     
     # p start_date = date_range[0].strftime('%Y-%m-%d')\
     start_date = date_range[0]
