@@ -253,16 +253,17 @@ def pay_period(now)
             start_date += add_2weeks   
             end_date = start_date + endday
         end
-    arr = [start_date,end_date]
+    arr = [start_date.strftime('%Y-%m-%d'),end_date.strftime('%Y-%m-%d')]
     arr
 end
 
 
-def pull_data_for_pay_period(user_id,date_range)
+def pull_in_and_out_times(user_id,date_range)
     
     # p start_date = date_range[0].strftime('%Y-%m-%d')\
-    start_date = "2017-10-31"
-    p end_date = date_range[1].strftime('%Y-%m-%d')
+    start_date = date_range[0]
+    end_date = date_range[1]
+    end_date
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -271,13 +272,13 @@ def pull_data_for_pay_period(user_id,date_range)
         password: ENV['password']
             }
         db = PG::Connection.new(db_params)
-        info = db.exec("SELECT *  FROM timesheet WHERE user_id = '#{user_id}' AND date = BETWEEN #{start_date}'AND '#{end_date}'").values
+       
+        info = db.exec("SELECT time_in, time_out, date  FROM timesheet WHERE user_id = '#{user_id}' AND date >= '#{start_date}'::date AND date <= '#{end_date}'::date").values
         db.close()
-    p info
+     info
 end
 
-
-# pull_data_for_pay_period("devid",pay_period(Time.new))
+#  pull_data_for_pay_period("lukeid",pay_period(Time.new))
 # database_email_check('devid')
 
 # fuction that send the admin an email for pto request
