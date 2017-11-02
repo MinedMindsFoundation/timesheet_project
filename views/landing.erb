@@ -12,11 +12,20 @@
 <%=user_email%><br></div><br>
 Users Checked In:<br>
 <div>
+<!--Users who are clocked in-->
 <%user_checked.each do |row|%>
     <%row.each do |item|%>
         <%=item%>
         <%end%><br>
-<%end%></div>
+<%end%></div><br>
+<!--Form to add users-->
+<form method = "post" action = "add_user">
+<button type = "submit">Add User</button>
+</form>
+<!--Form to Change or Delete Users-->
+<form method = "post" action = "edit_user">
+<button type = "submit">Edit Users</button>
+</form>
 <% else %>
 
 <div>
