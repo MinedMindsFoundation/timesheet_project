@@ -34,7 +34,9 @@ user_info =  database_info(session[:user_id])
 user_email = database_email_check(session[:user_id])
 pay_period = pay_period(Time.now.utc)
 admin_check = database_admin_check(session[:user_id])
-erb :landing, locals:{user_info:user_info, user_email:user_email, admin_check:admin_check}
+user_checked = database_emp_checked()
+p user_checked
+erb :landing, locals:{user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
 end
 
 #post coming from landing page for vac request
@@ -42,6 +44,17 @@ post '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     erb :pto_request, locals:{user_info:user_info, user_email:user_email}
+end
+
+post '/pto_email' do 
+    start_date = params[:start_vac]
+    end_date = params[:end_vac]
+    user_info =  database_info(session[:user_id])
+    # p start_date
+    # p end_date
+    # p user_info
+    send_email(start_date, end_date, user_info)
+    redirect "/to_landing"
 end
 
 # post comming from landing page

@@ -177,7 +177,24 @@ def database_admin_check(user_id)
         }
     db = PG::Connection.new(db_params)
     user_admin = db.exec("SELECT admin FROM info WHERE user_id = '#{user_id}'").values
+    db.close 
     user_admin.flatten.first
+end
+
+def database_emp_checked()
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    inorout = "in"
+    db = PG::Connection.new(db_params)
+    user_checked = db.exec("SELECT first_name, last_name FROM info WHERE status = '#{inorout}'").values
+    db.close
+    next_checked = user_checked.flatten
+    next_checked.each_slice(2)
 end
 
 def database_email_check(user_id)
@@ -249,3 +266,28 @@ end
 
 # pull_data_for_pay_period("devid",pay_period(Time.new))
 # database_email_check('devid')
+
+# fuction that send the admin an email for pto request
+
+Mail.defaults do
+    delivery_method :smtp,
+    address: "email-smtp.us-east-1.amazonaws.com",
+    port: 587,
+    :user_name  => ENV['a3smtpuser'],
+    :password   => ENV['a3smtppass'],
+    :enable_ssl => true
+  end
+  def send_email(start_vec, end_vac, full_name) 
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}"
+  mail = Mail.new do
+      from         ENV['from']
+      to           'billyjacktattoos@gmail.com'
+      subject      "PTO Request"
+
+      html_part do
+        content_type 'text/html'
+        body       email_body
+      end
+  end
+  mail.deliver!
+end
