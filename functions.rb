@@ -51,6 +51,7 @@ def submit_time_in(user_id,time,date)
         db = PG::Connection.new(db_params)
     db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
     db.exec("INSERT INTO timesheet(user_id,time_in,time_out,date)VALUES('#{user_id}','#{time}','N/A','#{date}')")
+    db.close
 end
 
 #submits time out to timesheet table
@@ -65,6 +66,7 @@ def submit_time_out(user_id,time)
         db = PG::Connection.new(db_params)
         db.exec("UPDATE info SET  status= 'out' WHERE user_id = '#{user_id}'")
         db.exec("UPDATE timesheet SET time_out = '#{time}' WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+        db.close
 
 end
 
@@ -79,6 +81,7 @@ def get_id(email)
         }
         db = PG::Connection.new(db_params)
     user_id = db.exec("SELECT user_id FROM email WHERE email = '#{email}'").values
+    db.close
     user_id.flatten.first
 end
 
@@ -109,6 +112,7 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
     db = PG::Connection.new(db_params)
     db.exec("insert into info(user_id,first_name,last_name,pto,admin,status,doh)VALUES('#{user_id}','#{first_name}','#{last_name}','#{pto}','#{admin}','out','#{doh}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
+    db.close
     
 end
 
@@ -229,6 +233,10 @@ def admin_emp_list
     emp_arr
 end
 
+
+
+
+
 def add_email(user_id,email)
     db_params = {
         host: ENV['host'],
@@ -253,16 +261,17 @@ def pay_period(now)
             start_date += add_2weeks   
             end_date = start_date + endday
         end
-    arr = [start_date,end_date]
+    arr = [start_date.strftime('%Y-%m-%d'),end_date.strftime('%Y-%m-%d')]
     arr
 end
 
 
-def pull_data_for_pay_period(user_id,date_range)
+def pull_in_and_out_times(user_id,date_range)
     
     # p start_date = date_range[0].strftime('%Y-%m-%d')\
-    start_date = "2017-10-31"
-    p end_date = date_range[1].strftime('%Y-%m-%d')
+    start_date = date_range[0]
+    end_date = date_range[1]
+    # end_date
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -271,13 +280,13 @@ def pull_data_for_pay_period(user_id,date_range)
         password: ENV['password']
             }
         db = PG::Connection.new(db_params)
-        info = db.exec("SELECT *  FROM timesheet WHERE user_id = '#{user_id}' AND date = BETWEEN #{start_date}'AND '#{end_date}'").values
+       
+        info = db.exec("SELECT time_in, time_out, date  FROM timesheet WHERE user_id = '#{user_id}' AND date >= '#{start_date}'::date AND date <= '#{end_date}'::date").values
         db.close()
-    p info
+     info
 end
 
-
-# pull_data_for_pay_period("devid",pay_period(Time.new))
+#  pull_data_for_pay_period("lukeid",pay_period(Time.new))
 # database_email_check('devid')
 
 # fuction that send the admin an email for pto request
