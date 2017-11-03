@@ -36,9 +36,7 @@ pay_period = pay_period(Time.now.utc)
 admin_check = database_admin_check(session[:user_id])
 user_checked = database_emp_checked()
 p user_checked
-pay_period = pay_period(Time.new)
-times = pull_in_and_out_times(session[:user_id],pay_period)
-erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
+erb :landing, locals:{user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
 end
 
 #post coming from landing page for vac request
@@ -84,22 +82,3 @@ post "/clock_out" do
     redirect "/to_landing"
 end
 
-post "/add_user" do
-    erb :admin_emplist
-end
-
-post "/add_to_user_list" do
-user_id=params[:user_id_new]
-first_name=params[:first_name]
-last_name=params[:last_name]
-email=params[:email]
-admin=params[:admin]
-add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
-    redirect "/add_user"
-end
-
-post "/edit_users" do
-    admin_list = admin_emp_list
-    p admin_list
-    # erb :admin_empmng
-end
