@@ -99,6 +99,7 @@ add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
 end
 
 post "/edit_users" do
-    
-    erb :admin_empmng
+    admin_list = admin_emp_list
+    p admin_list
+    # erb :admin_empmng
 end
