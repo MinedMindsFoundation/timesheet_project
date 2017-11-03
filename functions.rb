@@ -51,6 +51,7 @@ def submit_time_in(user_id,time,date)
         db = PG::Connection.new(db_params)
     db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
     db.exec("INSERT INTO timesheet(user_id,time_in,time_out,date)VALUES('#{user_id}','#{time}','N/A','#{date}')")
+    db.close
 end
 
 #submits time out to timesheet table
@@ -65,6 +66,7 @@ def submit_time_out(user_id,time)
         db = PG::Connection.new(db_params)
         db.exec("UPDATE info SET  status= 'out' WHERE user_id = '#{user_id}'")
         db.exec("UPDATE timesheet SET time_out = '#{time}' WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+        db.close
 
 end
 
@@ -79,6 +81,7 @@ def get_id(email)
         }
         db = PG::Connection.new(db_params)
     user_id = db.exec("SELECT user_id FROM email WHERE email = '#{email}'").values
+    db.close
     user_id.flatten.first
 end
 
@@ -109,6 +112,7 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
     db = PG::Connection.new(db_params)
     db.exec("insert into info(user_id,first_name,last_name,pto,admin,status,doh)VALUES('#{user_id}','#{first_name}','#{last_name}','#{pto}','#{admin}','out','#{doh}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
+    db.close
     
 end
 
@@ -211,7 +215,23 @@ def database_email_check(user_id)
         user_email.flatten.first
 end
 
-
+def admin_emp_list
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+        users = db.exec("SELECT user_id, first_name, last_name, admin FROM info").values
+        emails = db.exec("SELECT email FROM email").values
+        db.close
+    emp_arr = []
+    emp_arr << users.flatten
+    emp_arr << emails.flatten
+    emp_arr
+end
 
 
 
@@ -251,7 +271,7 @@ def pull_in_and_out_times(user_id,date_range)
     # p start_date = date_range[0].strftime('%Y-%m-%d')\
     start_date = date_range[0]
     end_date = date_range[1]
-    end_date
+    # end_date
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -293,3 +313,5 @@ Mail.defaults do
   end
   mail.deliver!
 end
+
+
