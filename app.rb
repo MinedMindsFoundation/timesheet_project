@@ -35,7 +35,6 @@ user_email = database_email_check(session[:user_id])
 pay_period = pay_period(Time.now.utc)
 admin_check = database_admin_check(session[:user_id])
 user_checked = database_emp_checked()
-p user_checked
 pay_period = pay_period(Time.new)
 times = pull_in_and_out_times(session[:user_id],pay_period)
 erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
@@ -98,8 +97,8 @@ add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
     redirect "/add_user"
 end
 
-post "/edit_users" do
-    admin_list = admin_emp_list
-    p admin_list
-    # erb :admin_empmng
+post "/edit_user" do
+    admin_list = admin_emp_list()
+    # p admin_list
+    erb :admin_empmng, locals:{admin_list:admin_list}
 end
