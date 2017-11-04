@@ -49,8 +49,8 @@ def submit_time_in(user_id,time,date)
         password: ENV['password']
         }
         db = PG::Connection.new(db_params)
-    db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
-    db.exec("INSERT INTO timesheet(user_id,time_in,time_out,date)VALUES('#{user_id}','#{time}','N/A','#{date}')")
+    # db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
+    db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date)VALUES('#{user_id}','#{time}','N/A','N/A','N/A','#{date}')")
     db.close
 end
 
@@ -64,8 +64,8 @@ def submit_time_out(user_id,time)
         password: ENV['password']
         }
         db = PG::Connection.new(db_params)
-        db.exec("UPDATE info SET  status= 'out' WHERE user_id = '#{user_id}'")
-        db.exec("UPDATE timesheet SET time_out = '#{time}' WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+        # db.exec("UPDATE info SET  status= 'out' WHERE user_id = '#{user_id}'")
+        db.exec("UPDATE timesheet_new SET time_out = '#{time}' WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
         db.close
 
 end
@@ -110,7 +110,9 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    db.exec("insert into info(user_id,first_name,last_name,pto,admin,status,doh)VALUES('#{user_id}','#{first_name}','#{last_name}','#{pto}','#{admin}','out','#{doh}')")
+    db.exec("insert into info_new(user_id,first_name,last_name,date_of_hire)VALUES('#{user_id}','#{first_name}','#{last_name}','#{doh}')")
+    db.exec("insert into pto(user_id,pto)VALUES('#{usert_id}','0')")
+    db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
     db.close
     
@@ -126,7 +128,7 @@ def time_in_check?(user_id)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    check = db.exec("SELECT * FROM timesheet WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+    check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
     if check.num_tuples.zero? 
         true
     else
@@ -145,7 +147,7 @@ def time_out_check?(user_id)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    check = db.exec("SELECT * FROM timesheet WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+    check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
     if check.num_tuples.zero? == false
         true
     else
@@ -162,8 +164,8 @@ def database_info(user_id)
         password: ENV['password']
             }
         db = PG::Connection.new(db_params)
-        user_first = db.exec("SELECT first_name FROM info WHERE user_id = '#{user_id}'").values
-        user_last = db.exec("SELECT last_name FROM info WHERE user_id = '#{user_id}'").values
+        user_first = db.exec("SELECT first_name FROM info_new WHERE user_id = '#{user_id}'").values
+        user_last = db.exec("SELECT last_name FROM info_new WHERE user_id = '#{user_id}'").values
         db.close            
         user_name = []
         user_name << user_first.flatten.first
@@ -180,7 +182,7 @@ def database_admin_check(user_id)
         password: ENV['password']
         }
     db = PG::Connection.new(db_params)
-    user_admin = db.exec("SELECT admin FROM info WHERE user_id = '#{user_id}'").values
+    user_admin = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
     db.close 
     user_admin.flatten.first
 end
@@ -194,8 +196,12 @@ def database_emp_checked()
         password: ENV['password']
     }
     inorout = "in"
+    user_checked = []
     db = PG::Connection.new(db_params)
-    user_checked = db.exec("SELECT first_name, last_name FROM info WHERE status = '#{inorout}'").values
+    user = db.exec("SELECT user_id FROM timesheet_new WHERE time_out = 'N/A'").values
+    user.each do |user_id|
+    user_checked << db.exec("SELECT first_name, last_name FROM info WHERE user_id = '#{user_id}'").values
+    end
     db.close
     next_checked = user_checked.flatten
     next_checked.each_slice(2)
@@ -215,23 +221,23 @@ def database_email_check(user_id)
         user_email.flatten.first
 end
 
-def admin_emp_list
-    db_params = {
-        host: ENV['host'],
-        port: ENV['port'],
-        dbname: ENV['dbname'],
-        user: ENV['user'],
-        password: ENV['password']
-        }
-        db = PG::Connection.new(db_params)
-        users = db.exec("SELECT user_id, first_name, last_name, admin FROM info").values
-        emails = db.exec("SELECT email FROM email").values
-        db.close
-    emp_arr = []
-    emp_arr << users.flatten
-    emp_arr << emails.flatten
-    emp_arr
-end
+# def admin_emp_list
+#     db_params = {
+#         host: ENV['host'],
+#         port: ENV['port'],
+#         dbname: ENV['dbname'],
+#         user: ENV['user'],
+#         password: ENV['password']
+#         }
+#         db = PG::Connection.new(db_params)
+#         users = db.exec("SELECT user_id, first_name, last_name, admin FROM info").values
+#         emails = db.exec("SELECT email FROM email").values
+#         db.close
+#     emp_arr = []
+#     emp_arr << users.flatten
+#     emp_arr << emails.flatten
+#     emp_arr
+# end
 
 
 
@@ -281,7 +287,7 @@ def pull_in_and_out_times(user_id,date_range)
             }
         db = PG::Connection.new(db_params)
        
-        info = db.exec("SELECT time_in, time_out, date  FROM timesheet WHERE user_id = '#{user_id}' AND date >= '#{start_date}'::date AND date <= '#{end_date}'::date").values
+        info = db.exec("SELECT time_in, lunch_start,lunch_end, time_out, date  FROM timesheet_new WHERE user_id = '#{user_id}' AND date >= '#{start_date}'::date AND date <= '#{end_date}'::date").values
         db.close()
      info
 end
@@ -291,6 +297,7 @@ end
 
 # fuction that send the admin an email for pto request
 
+def send_email(start_vec, end_vac, full_name) 
 Mail.defaults do
     delivery_method :smtp,
     address: "email-smtp.us-east-1.amazonaws.com",
@@ -299,7 +306,6 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-  def send_email(start_vec, end_vac, full_name) 
     email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}"
   mail = Mail.new do
       from         ENV['from']
@@ -314,4 +320,7 @@ Mail.defaults do
   mail.deliver!
 end
 
+def time_converter(time)
+    time.split(":")
+end
 

@@ -35,10 +35,13 @@ Users Checked In:<br>
 <%=user_email%><br></div>
 
 <% end %>
+
 <!-- tabel of time in and out --> 
 Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <table>
 <th>Time in</th>
+<th>Lunch Start</th>
+<th>Lunch End</th>
 <th>Time out</th>
 <th>Date</th>
 <%times.each do |item|%>
