@@ -321,6 +321,9 @@ Mail.defaults do
 end
 
 def time_converter(time)
-    time.split(":")
+    arr = time.split(":")
+    if arr[0].to_i <= 12
+        "#{arr[0]}:#{+arr[1]} am" 
+    end
 end
 
