@@ -51,4 +51,16 @@ class Test_funcs < Minitest::Test
         y = "02:08 am"
         assert_equal(y,x)
     end
+
+    def test_time_converter_2234
+        x = time_converter("22:34")
+        y = "10:34 pm"
+        assert_equal(y,x)
+    end
+
+    def test_time_converter_0012
+        x = time_converter("00:12")
+        y = "12:12 am"
+        assert_equal(y,x)
+    end
 end
