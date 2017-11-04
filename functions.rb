@@ -195,16 +195,19 @@ def database_emp_checked()
         user: ENV['user'],
         password: ENV['password']
     }
-    inorout = "in"
+    # inorout = "in"
     user_checked = []
     db = PG::Connection.new(db_params)
     user = db.exec("SELECT user_id FROM timesheet_new WHERE time_out = 'N/A'").values
+    # p user
     user.each do |user_id|
-    user_checked << db.exec("SELECT first_name, last_name FROM info WHERE user_id = '#{user_id}'").values
+    user_checked << db.exec("SELECT first_name, last_name FROM info_new WHERE user_id = '#{user_id[0]}'").values
+    user_checked << time_converter(db.exec("SELECT time_in FROM timesheet_new WHERE time_out = 'N/A' AND user_id = '#{user_id[0]}'").values.flatten.first)
+    # p user_checked
     end
     db.close
     next_checked = user_checked.flatten
-    next_checked.each_slice(2)
+    next_checked.each_slice(3)
 end
 
 def database_email_check(user_id)
@@ -228,17 +231,6 @@ def admin_emp_list()
         dbname: ENV['dbname'],
         user: ENV['user'],
         password: ENV['password']
-<<<<<<< HEAD
-        }
-        db = PG::Connection.new(db_params)
-        users = db.exec("SELECT user_id, first_name, last_name FROM info_new").values
-        emails = db.exec("SELECT email FROM email").values
-        db.close
-    emp_arr = []
-    emp_arr << users.flatten
-    emp_arr << emails.flatten
-    emp_arr
-=======
     }
     data = []
     db = PG::Connection.new(db_params)
@@ -250,7 +242,6 @@ def admin_emp_list()
         data << user
     end
     data
->>>>>>> 2c16f23e7cbe820c655e8ea37139a855933a19c9
 end
 
 
