@@ -47,7 +47,12 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <%times.each do |item|%>
 <tr>
 <%item.each do |time|%>
-<td><%=time%></td>
+<td><%if time.length == 5%>
+    <%=time_converter(time)%>
+    <%else%>
+    <%=time%>
+    <%end%>
+</td>
 <%end%>
 </tr>
 <%end%>
