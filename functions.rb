@@ -322,7 +322,9 @@ end
 
 def time_converter(time)
     arr = time.split(":")
-    if arr[0].to_i <= 12
+    if arr[0] == "00"
+        "12:#{arr[1]} am"  
+    elsif arr[0].to_i <= 12
         "#{arr[0]}:#{+arr[1]} am"
     else
         arr[0] = arr[0].to_i % 12
