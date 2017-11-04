@@ -97,8 +97,8 @@ add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
     redirect "/add_user"
 end
 
-post "/edit_users" do
-    admin_list = admin_emp_list
-    p admin_list
-    # erb :admin_empmng
+post "/edit_user" do
+    admin_list = admin_emp_list()
+    # p admin_list
+    erb :admin_empmng, locals:{admin_list:admin_list}
 end

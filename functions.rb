@@ -221,13 +221,14 @@ def database_email_check(user_id)
         user_email.flatten.first
 end
 
-def admin_emp_list
-    db_params = {
+def admin_emp_list()
+	db_params = {
         host: ENV['host'],
         port: ENV['port'],
         dbname: ENV['dbname'],
         user: ENV['user'],
         password: ENV['password']
+<<<<<<< HEAD
         }
         db = PG::Connection.new(db_params)
         users = db.exec("SELECT user_id, first_name, last_name FROM info_new").values
@@ -237,6 +238,19 @@ def admin_emp_list
     emp_arr << users.flatten
     emp_arr << emails.flatten
     emp_arr
+=======
+    }
+    data = []
+    db = PG::Connection.new(db_params)
+    users = db.exec("SELECT user_id, first_name, last_name, admin FROM info").values
+    # emails = db.exec("SELECT email FROM email").values
+    db.close
+    # users << emails
+    users.each do |user|
+        data << user
+    end
+    data
+>>>>>>> 2c16f23e7cbe820c655e8ea37139a855933a19c9
 end
 
 
