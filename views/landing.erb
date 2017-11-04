@@ -63,13 +63,13 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 
 <!-- form for submiting your time in -->
 <form method = "post" action = "clock_in">
-<button type = "submit">Submit Time In</button>
+<button id = "clock_in_button" type = "submit">Submit Time In</button>
 </form>
 
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
-<button type = "submit" onclick="setTime()">Submit Time Out</button>
+<button id = "clock_out_button" type = "submit" onclick="setTime()">Submit Time Out</button>
 </form>
 <!--submit button fo vac request-->
 <form method = "post" action = "vac_time_request">
@@ -96,7 +96,7 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 
 
-<!----TIME OUT STUFF---->
+<!--TIME OUT STUFF-->
 <body onload="idleTimer()"></body>
 <script type="text/javascript">
 function idleTimer() {
@@ -126,3 +126,4 @@ function idleTimer() {
 }
 idleTimer();
 </script>  
+

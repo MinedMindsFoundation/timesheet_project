@@ -111,7 +111,7 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
     }
     db = PG::Connection.new(db_params)
     db.exec("insert into info_new(user_id,first_name,last_name,date_of_hire)VALUES('#{user_id}','#{first_name}','#{last_name}','#{doh}')")
-    db.exec("insert into pto(user_id,pto)VALUES('#{usert_id}','0')")
+    db.exec("insert into pto(user_id,pto)VALUES('#{user_id}','0')")
     db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
     db.close
