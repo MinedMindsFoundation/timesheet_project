@@ -141,7 +141,7 @@ post "/add_to_user_list" do
     email=params[:email]
     admin=params[:admin]
     add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
-    redirect '/add_user'
+    erb :admin_emplist
 end
 
 post "/edit_user" do
