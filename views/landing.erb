@@ -1,9 +1,11 @@
 <!--user clock in and clockout page-->
-
 <head>
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 </head>
-
+<!-- clock -->
+<body onload="updateClock(); setInterval('updateClock()',1000)";>
+<span id="clock">&nbsp;</span>
+</body><br><br>
 <% if admin_check == "Yes" %>
     <div>
         <%user_info.each do |row|%>
@@ -95,10 +97,6 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <form method = "post" action = "vac_time_request">
     <button type = "submit">PTO Request</button>
 </form>
-<!-- clock -->
-<body onload="updateClock(); setInterval('updateClock()',1000)";>
-<span id="clock">&nbsp;</span>
-</body>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src = "/js/clock.js"></script>
