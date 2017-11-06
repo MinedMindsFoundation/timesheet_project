@@ -1,9 +1,13 @@
 <!--user clock in and clockout page-->
-
 <head>
+<div id="timeout">
+</div>
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 </head>
-
+<!-- clock -->
+<body onload="updateClock(); setInterval('updateClock()',1000)";>
+<span id="clock">&nbsp;</span>
+</body><br><br>
 <% if admin_check == "Yes" %>
     <div>
         <%user_info.each do |row|%>
@@ -74,37 +78,33 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 
 <!-- form for submiting your time in -->
 <form method = "post" action = "clock_in">
-<button id = "clock_in_button" type = "submit">Submit Time In</button>
+<button id = "clock_in_button" type = "submit" onclick = "clockedINfunction()">Submit Time In</button>
 </form>
 
 <!-- form for submiting your lunch start -->
 <form method = "post" action = "lunch_in">
-<button type = "submit">Submit Lunch Start</button>
+<button type = "submit" onclick = "lucnchINfunction()">Submit Lunch Start</button>
 </form>
 
 <!-- form for submiting your lunch end -->
 <form method = "post" action = "lunch_out">
-<button type = "submit">Submit Lunch end</button>
+<button type = "submit" onclick = "lunchOUTfunction()">Submit Lunch end</button>
 </form>
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
-<button id = "clock_out_button" type = "submit" onclick="setTime()">Submit Time Out</button>
+<button id = "clock_out_button" type = "submit" onclick="clockedOUTfunction()">Submit Time Out</button>
 </form>
 <!--submit button fo vac request-->
 <form method = "post" action = "vac_time_request">
     <button type = "submit">PTO Request</button>
 </form>
-<!-- clock -->
-<body onload="updateClock(); setInterval('updateClock()',1000)";>
-<span id="clock">&nbsp;</span>
-</body>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src = "/js/clock.js"></script>
 <script src = "/js/facebook.js"></script>
 <script src= "js/google_js.js"></script>
-
+<script src = "js/alert_box.js"></script>
 <!--sign out section--><br>
 <!--facebook sign out--><br>
 <button id = 'sign_out' onclick= 'logout()' >Sign out</button>
@@ -117,33 +117,8 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 
 
 <!--TIME OUT STUFF-->
+<script src="/js/timeout.js"></script>
 <body onload="idleTimer()"></body>
-<script type="text/javascript">
-function idleTimer() {
-    var t;
-    //window.onload = resetTimer;
-    window.onmousemove = resetTimer; // catches mouse movements
-    window.onmousedown = resetTimer; // catches mouse movements
-    window.onclick = resetTimer;     // catches mouse clicks
-    window.onscroll = resetTimer;    // catches scrolling
-    window.onkeypress = resetTimer;  //catches keyboard actions
 
-    function log_out() {
-        logout();
-        signOut();
-        window.location.href = '/';  //Adapt to actual logout script
-    }
-
-   function reload() {
-          window.location = self.location.href;  //Reloads the current page
-   }
-
-   function resetTimer() {
-        clearTimeout(t);
-        t = setTimeout(log_out, 300000);  // time is in milliseconds (1000 is 1 second)
-       // t= setTimeout(reload, 60000);  // time is in milliseconds (1000 is 1 second)
-    }
-}
-idleTimer();
-</script>  
+ 
 
