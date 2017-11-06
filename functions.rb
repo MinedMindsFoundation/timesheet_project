@@ -350,7 +350,7 @@ def who_is_clocked_in()
     users = db.exec("SELECT user_id FROM info_new").values
     users.flatten.each do |user_id|
     name = database_info(user_id)
-    p user_id
+    #  user_id
         if time_out_check?(user_id) == true
             arr_in << "#{name[0]} #{name[1]}"
         else
