@@ -53,6 +53,10 @@ get '/whos_in' do
 
 end
 
+post "/return" do
+redirct "/to_landing"
+end
+
 #post coming from landing page for vac request
 post '/vac_time_request' do
     user_info =  database_info(session[:user_id])
