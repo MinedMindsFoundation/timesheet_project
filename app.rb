@@ -41,6 +41,30 @@ times = pull_in_and_out_times(session[:user_id],pay_period)
 erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
 end
 
+#post comming from landing and records start of lunch
+post "/lunch_in" do 
+   if check_lunch_in(session[:user_id])
+    time = get_time
+        submit_lunch_in(session[:user_id],time[0])
+        session[:message] = "Lunch Started"
+   else 
+        session[:message] = "Unable to Submit Action"
+   end
+   redirect "/to_landing"
+end
+
+# post comming from landing and records end of lunch
+post "/lunch_out" do 
+    if check_lunch_out(session[:user_id])
+        time = get_time
+         submit_lunch_out(session[:user_id],time[0])
+         session[:message] = "Lunch Ended"
+    else 
+         session[:message] = "Unable to Submit Action"
+    end
+    redirect "/to_landing"
+ end
+
 # post coming from landing to whos_in
 post '/to_whos_in' do
 redirect '/whos_in'
