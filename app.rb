@@ -149,3 +149,21 @@ post "/edit_user" do
     # p admin_list
     erb :admin_empmng, locals:{admin_list:admin_list}
 end
+
+post "/update_emp" do
+    session[:edit_user] = params[:info]
+    choice = params[:choose]
+    # p session[:edit_user][0]
+    # p choice
+    if choice == "update"
+        redirect "/update_emp_page"
+    elsif choice == "delete"
+        delete_emp(session[:edit_user][0])
+    end
+end
+
+get "/update_emp_page" do
+    user_info = emp_info(session[:edit_user][0])
+    p user_info
+    erb :admin_emp_updating, locals:{user_info:user_info}
+end
