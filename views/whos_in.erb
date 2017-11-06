@@ -1,0 +1,21 @@
+<table>
+<th>User</th>
+<th>status</th>
+
+<%users[0].each do |user_id|%>
+<tr>
+<td><%=user_id%></td>
+<td>IN</td>
+</tr>
+<%end%>
+<%users[1].each do |user_id|%>
+<tr>
+<td><%=user_id%></td>
+<td>OUT</td>
+</tr>
+<%end%>
+</table>
+
+<form method = "post" action = "return">
+<button type = "submit">Return</button>
+</form>

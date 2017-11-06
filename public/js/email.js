@@ -13,4 +13,5 @@ function sendemail() {
     var subject = ('PTO Request');
     var body = ('My permanent body contents');
     document.write('<a href="mailto:billyjacktattoos@gmail.com' + email + '?subject=' + subject + '&body=' + body + '">' + 'Click here to send email as well' + '<' + '/a>');
-}
+};
+

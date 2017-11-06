@@ -35,8 +35,55 @@ user_email = database_email_check(session[:user_id])
 pay_period = pay_period(Time.now.utc)
 admin_check = database_admin_check(session[:user_id])
 user_checked = database_emp_checked()
+<<<<<<< HEAD
 p user_checked
 erb :landing, locals:{user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
+=======
+# p user_checked
+pay_period = pay_period(Time.new)
+times = pull_in_and_out_times(session[:user_id],pay_period)
+erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
+>>>>>>> b0ca3c74c04f1c2c4038a6bd9d8db7b1f0e21c6c
+end
+
+#post comming from landing and records start of lunch
+post "/lunch_in" do 
+   if check_lunch_in(session[:user_id])
+    time = get_time
+        submit_lunch_in(session[:user_id],time[0])
+        session[:message] = "Lunch Started"
+   else 
+        session[:message] = "Unable to Submit Action"
+   end
+   redirect "/to_landing"
+end
+
+# post comming from landing and records end of lunch
+post "/lunch_out" do 
+    if check_lunch_out(session[:user_id])
+        time = get_time
+         submit_lunch_out(session[:user_id],time[0])
+         session[:message] = "Lunch Ended"
+    else 
+         session[:message] = "Unable to Submit Action"
+    end
+    redirect "/to_landing"
+ end
+
+# post coming from landing to whos_in
+post '/to_whos_in' do
+redirect '/whos_in'
+end
+
+# leads to page where user can see who's clock
+get '/whos_in' do
+    users = who_is_clocked_in()
+    erb :whos_in, locals:{users:users}
+
+end
+
+post "/return" do
+redirct "/to_landing"
 end
 
 #post coming from landing page for vac request
@@ -82,3 +129,25 @@ post "/clock_out" do
     redirect "/to_landing"
 end
 
+<<<<<<< HEAD
+=======
+post "/add_user" do
+    erb :admin_emplist
+end
+
+post "/add_to_user_list" do
+user_id=params[:user_id_new]
+first_name=params[:first_name]
+last_name=params[:last_name]
+email=params[:email]
+admin=params[:admin]
+add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
+    redirect "/add_user"
+end
+
+post "/edit_user" do
+    admin_list = admin_emp_list()
+    # p admin_list
+    erb :admin_empmng, locals:{admin_list:admin_list}
+end
+>>>>>>> b0ca3c74c04f1c2c4038a6bd9d8db7b1f0e21c6c

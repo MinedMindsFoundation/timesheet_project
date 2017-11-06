@@ -2,3 +2,8 @@
 
 <h1>Current List of Employees:</h1>
 
+<%admin_list.each do |row|%>
+    <%row.each do |item|%>
+        <%=item.capitalize%>
+    <%end%><br>
+<%end%>
