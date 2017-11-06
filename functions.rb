@@ -290,12 +290,19 @@ def pull_in_and_out_times(user_id,date_range)
         password: ENV['password']
             }
         db = PG::Connection.new(db_params)
-       
-        info = db.exec("SELECT time_in, lunch_start,lunch_end, time_out, date  FROM timesheet_new WHERE user_id = '#{user_id}' AND date >= '#{start_date}'::date AND date <= '#{end_date}'::date").values
+        info = db.exec("SELECT time_in, lunch_start,lunch_end, time_out  FROM timesheet_new WHERE user_id = '#{user_id}' AND date >= '#{start_date}'::date AND date <= '#{end_date}'::date").values
         db.close()
-     info
+    small_arr = []
+    big_arr = []
+    info.each do |item|
+        item[0] = item[0].split(' ').first
+        item[1] = item[0].split(' ').first
+        item[2] = item[0].split(' ').first
+        item[3] = item[0].split(' ').first
+        big_arr << item
+    end 
+    big_arr
 end
-
 #  pull_data_for_pay_period("lukeid",pay_period(Time.new))
 # database_email_check('devid')
 

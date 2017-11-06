@@ -84,7 +84,14 @@ class Test_funcs < Minitest::Test
     # <----test for database_info()---->
         
         def test_database_info_whats_returned
-            x = database_info('TestID')
+            x = database_info('TESTID')
             assert_equal(["TEST","TEST"],x)
         end
+
+    #<----test for pull_in_and_out_time()---->
+        def test_pull_in_and_out_returns_array
+            x = pull_in_and_out_times("devId",pay_period(Time.new(2017,10,31,0,0,0)))
+            assert_equal(Array,x.class)
+        end
+
 end

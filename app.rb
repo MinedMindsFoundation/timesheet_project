@@ -9,8 +9,9 @@ load './local_ENV.rb' if File.exist?('./local_ENV.rb')
 
 # Initial "get" leads to login page
 get "/" do 
+login_message = params[:login_message]
 session[:message] = ''
-erb :login
+erb :login, locals:{login_message:login_message}
 end
 
 # comming from login.erb
@@ -23,7 +24,8 @@ session[:email] = params[:email]
         session[:user_id] = get_id(session[:email])
         redirect "/to_landing"
     else
-        redirect '/'
+        login_message = "Please contact system administrator"
+        redirect '/?login_message=' + login_message
     end
 end
 
@@ -45,7 +47,7 @@ end
 post "/lunch_in" do 
    if check_lunch_in(session[:user_id])
     time = get_time
-        submit_lunch_in(session[:user_id],time[0])
+        submit_lunch_in(session[:user_id],"#{time[0]} #{time[1]}")
         session[:message] = "Lunch Started"
    else 
         session[:message] = "Unable to Submit Action"
@@ -57,7 +59,7 @@ end
 post "/lunch_out" do 
     if check_lunch_out(session[:user_id])
         time = get_time
-         submit_lunch_out(session[:user_id],time[0])
+         submit_lunch_out(session[:user_id],"#{time[0]} #{time[1]}")
          session[:message] = "Lunch Ended"
     else 
          session[:message] = "Unable to Submit Action"
@@ -122,7 +124,7 @@ post "/clock_in" do
 post "/clock_out" do
     if time_out_check?(session[:user_id])
         time = get_time()
-        submit_time_out(session[:user_id],time[0])
+        submit_time_out(session[:user_id],"#{time[0]} #{time[1]}")
         session[:message] = "Time Out Submitted"
     else
         session[:message] =  "Already Submitted Time Out"
