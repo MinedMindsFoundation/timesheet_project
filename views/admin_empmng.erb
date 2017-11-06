@@ -4,12 +4,15 @@
 <form method = "post" action = "update_emp">
 <table>
 <tr>
+<th>Select</th>
 <th>Employee ID</th>
 <th>First Name</th>
 <th>Last Name</th>
 </tr>
 <%admin_list.each do |row|%>
+    <%people = row.join(",")%>
     <tr>
+    <td><input type = "radio" name = "info[]" value = "<%=people%>"></td>
     <%row.each do |item|%>
         <td>
         <%=item.capitalize%>
@@ -18,3 +21,7 @@
     </tr>
 <%end%>
 </table>
+<input type="radio" name="choose" value="update" checked>Update<br>
+<input type="radio" name="choose" value="delete">Delete <br>
+<input type="submit" value="Next">
+</form>
