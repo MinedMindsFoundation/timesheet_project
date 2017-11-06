@@ -6,35 +6,46 @@
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 </head>
 
-<% if admin_check =="y"|| admin_check == "Y" %>
-<div>
-<%user_info.each do |row|%>
-    <%=row%>
-<%end%>, welcome back!<br>
-<%=user_email%><br></div><br>
-Users Checked In:<br>
-<div>
-<!--Users who are clocked in-->
-<%user_checked.each do |row|%>
-    <%row.each do |item|%>
-        <%=item%>
-        <%end%><br>
-<%end%></div><br>
-<!--Form to add users-->
-<form method = "post" action = "add_user">
-<button type = "submit">Add User</button>
-</form>
-<!--Form to Change or Delete Users-->
-<form method = "post" action = "edit_user">
-<button type = "submit">Edit Users</button>
-</form>
+<% if admin_check == "Yes" %>
+    <div>
+        <%user_info.each do |row|%>
+            <%=row%>
+        <%end%>, welcome back!<br>
+        <%=user_email%><br>
+    </div><br>
+        Users Checked In:<br>
+    <div>
+        <!--Users who are clocked in-->
+        <%user_checked.each do |row|%>
+            <%row.each do |item|%>
+                <%=item%>
+                <%end%><br>
+        <%end%>
+    </div><br>
+
+    <!--Form to add users-->
+    <form method = "post" action = "add_user">
+    <button type = "submit">Add User</button>
+    </form>
+
+    <!--Form to Change or Delete Users-->
+    <form method = "post" action = "edit_user">
+    <button type = "submit">Edit Users</button>
+    </form>
+
+    <!--Form to see whos clocked in or out-->
+    <form method = "post" action = "to_whos_in">
+    <button type = "submit">Employee Status</button>
+    </form>
+
 <% else %>
 
-<div>
-<%user_info.each do |row|%>
-    <%=row%>
-<%end%>, welcome back!<br>
-<%=user_email%><br></div>
+    <div>
+        <%user_info.each do |row|%>
+            <%=row%>
+        <%end%>, welcome back!<br>
+        <%=user_email%><br>
+    </div>
 
 <% end %>
 
@@ -68,6 +79,15 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <button id = "clock_in_button" type = "submit">Submit Time In</button>
 </form>
 
+<!-- form for submiting your lunch start -->
+<form method = "post" action = "lunch_in">
+<button type = "submit">Submit Lunch Start</button>
+</form>
+
+<!-- form for submiting your lunch end -->
+<form method = "post" action = "lunch_out">
+<button type = "submit">Submit Lunch end</button>
+</form>
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">

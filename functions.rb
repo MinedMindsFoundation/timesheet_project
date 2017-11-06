@@ -129,12 +129,12 @@ def time_in_check?(user_id)
     }
     db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+    db.close
     if check.num_tuples.zero? 
         true
     else
         false
     end
-    
 end
 
 #returns true if user is not clocked out
@@ -148,6 +148,7 @@ def time_out_check?(user_id)
     }
     db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+    db.close
     if check.num_tuples.zero? == false
         true
     else
@@ -235,9 +236,7 @@ def admin_emp_list()
     data = []
     db = PG::Connection.new(db_params)
     users = db.exec("SELECT user_id, first_name, last_name FROM info_new").values
-    # emails = db.exec("SELECT email FROM email").values
     db.close
-    # users << emails
     users.each do |user|
         data << user
     end
@@ -302,7 +301,7 @@ end
 
 # fuction that send the admin an email for pto request
 
-def send_email(start_vec, end_vac, full_name) 
+def send_email(start_vec, end_vac, full_name, pto) 
 Mail.defaults do
     delivery_method :smtp,
     address: "email-smtp.us-east-1.amazonaws.com",
@@ -311,7 +310,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}"
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}. They have #{pto} day to request."
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -337,3 +336,133 @@ def time_converter(time)
     end
 end
 
+def who_is_clocked_in()
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+    arr_in = []
+    arr_out = []
+    users = db.exec("SELECT user_id FROM info_new").values
+    users.flatten.each do |user_id|
+    name = database_info(user_id)
+    #  user_id
+        if time_out_check?(user_id) == true
+            arr_in << "#{name[0]} #{name[1]}"
+        else
+            arr_out << "#{name[0]} #{name[1]}"
+        end
+    end
+    [arr_in,arr_out]
+end
+
+# returns true if lunch hasnt already been started
+def check_lunch_in(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+    check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND lunch_start = 'N/A' AND time_out = 'N/A'")
+    db.close
+    if check.num_tuples.zero? == false
+        true
+    else
+        false
+    end   
+end
+
+# submits lunch start time
+def submit_lunch_in(user_id,time)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+    db.exec("UPDATE timesheet_new SET lunch_start = '#{time}' WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+    db.close
+end
+
+# returns true if lunch has started 
+def check_lunch_out(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+    check = db.exec("SELECT *FROM timesheet_new WHERE user_id = '#{user_id}' AND lunch_start != 'N/A' AND lunch_end = 'N/A'  AND time_out = 'N/A'")
+    db.close
+    if check.num_tuples.zero? == false
+        true
+    else
+        false
+    end
+end
+
+#function for submitting lunch end
+def submit_lunch_out(user_id,time)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+    db.exec("UPDATE timesheet_new SET lunch_end = '#{time}' WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+    db.close
+end
+
+
+# func to get the user pto time
+
+def pto_time(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_pto = db.exec("SELECT pto FROM pto WHERE user_id = '#{user_id}'").values
+        db.close            
+       user_pto.flatten.first
+end
+
+# func that sends email for user that has no pto days
+def email_for_no_pto(full_name, pto) 
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+      end
+        email_body = "#{full_name[0]} #{full_name[1]} tried to request days and they have #{pto} day to request."
+      mail = Mail.new do
+          from         ENV['from']
+          to           'billyjacktattoos@gmail.com'
+          subject      "PTO Request with no days to request"
+    
+          html_part do
+            content_type 'text/html'
+            body       email_body
+          end
+      end
+      mail.deliver!
+    end

@@ -41,21 +41,67 @@ times = pull_in_and_out_times(session[:user_id],pay_period)
 erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
 end
 
+#post comming from landing and records start of lunch
+post "/lunch_in" do 
+   if check_lunch_in(session[:user_id])
+    time = get_time
+        submit_lunch_in(session[:user_id],time[0])
+        session[:message] = "Lunch Started"
+   else 
+        session[:message] = "Unable to Submit Action"
+   end
+   redirect "/to_landing"
+end
+
+# post comming from landing and records end of lunch
+post "/lunch_out" do 
+    if check_lunch_out(session[:user_id])
+        time = get_time
+         submit_lunch_out(session[:user_id],time[0])
+         session[:message] = "Lunch Ended"
+    else 
+         session[:message] = "Unable to Submit Action"
+    end
+    redirect "/to_landing"
+ end
+
+# post coming from landing to whos_in
+post '/to_whos_in' do
+redirect '/whos_in'
+end
+
+# leads to page where user can see who's clock
+get '/whos_in' do
+    users = who_is_clocked_in()
+    erb :whos_in, locals:{users:users}
+
+end
+
+post "/return" do
+redirect "/to_landing"
+end
+
 #post coming from landing page for vac request
 post '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
-    erb :pto_request, locals:{user_info:user_info, user_email:user_email}
+    user_pto = pto_time(session[:user_id])
+    erb :pto_request, locals:{user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
     start_date = params[:start_vac]
     end_date = params[:end_vac]
     user_info =  database_info(session[:user_id])
+    user_pto = pto_time(session[:user_id])
+    if user_pto == "0"
+        email_for_no_pto(user_info, user_pto)
+    else 
+        send_email(start_date, end_date, user_info, user_pto)
+    end 
     # p start_date
     # p end_date
     # p user_info
-    send_email(start_date, end_date, user_info)
     redirect "/to_landing"
 end
 
@@ -89,13 +135,13 @@ post "/add_user" do
 end
 
 post "/add_to_user_list" do
-user_id=params[:user_id_new]
-first_name=params[:first_name]
-last_name=params[:last_name]
-email=params[:email]
-admin=params[:admin]
-add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
-    redirect "/add_user"
+    user_id=params[:user_id_new]
+    first_name=params[:first_name]
+    last_name=params[:last_name]
+    email=params[:email]
+    admin=params[:admin]
+    add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
+    redirect '/add_user'
 end
 
 post "/edit_user" do
