@@ -337,3 +337,25 @@ def time_converter(time)
     end
 end
 
+def who_is_clocked_in()
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+    arr_in = []
+    arr_out = []
+    users = db.exec("SELECT user_id FROM info_new").values
+    users.each do |user_id|
+        if time_out_check?(user_id)
+            arr_in << user_id
+        else
+            arr_out << user_id
+        end
+    end
+    [arr_in,arr_out]
+end
+

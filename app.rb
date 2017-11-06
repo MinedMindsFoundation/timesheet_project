@@ -41,6 +41,8 @@ times = pull_in_and_out_times(session[:user_id],pay_period)
 erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
 end
 
+
+
 #post coming from landing page for vac request
 post '/vac_time_request' do
     user_info =  database_info(session[:user_id])
