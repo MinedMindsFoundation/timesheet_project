@@ -303,7 +303,7 @@ end
 
 # fuction that send the admin an email for pto request
 
-def send_email(start_vec, end_vac, full_name) 
+def send_email(start_vec, end_vac, full_name, pto) 
 Mail.defaults do
     delivery_method :smtp,
     address: "email-smtp.us-east-1.amazonaws.com",
@@ -312,7 +312,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}"
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}. They have #{pto} day to request."
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -427,3 +427,44 @@ def submit_lunch_out(user_id,time)
     db.exec("UPDATE timesheet_new SET lunch_end = '#{time}' WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
     db.close
 end
+
+
+# func to get the user pto time
+
+def pto_time(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_pto = db.exec("SELECT pto FROM pto WHERE user_id = '#{user_id}'").values
+        db.close            
+       user_pto.flatten.first
+end
+
+# func that sends email for user that has no pto days
+def email_for_no_pto(full_name, pto) 
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+      end
+        email_body = "#{full_name[0]} #{full_name[1]} tried to request days and they have #{pto} day to request."
+      mail = Mail.new do
+          from         ENV['from']
+          to           'billyjacktattoos@gmail.com'
+          subject      "PTO Request with no days to request"
+    
+          html_part do
+            content_type 'text/html'
+            body       email_body
+          end
+      end
+      mail.deliver!
+    end

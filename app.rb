@@ -35,15 +35,10 @@ user_email = database_email_check(session[:user_id])
 pay_period = pay_period(Time.now.utc)
 admin_check = database_admin_check(session[:user_id])
 user_checked = database_emp_checked()
-<<<<<<< HEAD
-p user_checked
-erb :landing, locals:{user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
-=======
 # p user_checked
 pay_period = pay_period(Time.new)
 times = pull_in_and_out_times(session[:user_id],pay_period)
 erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
->>>>>>> b0ca3c74c04f1c2c4038a6bd9d8db7b1f0e21c6c
 end
 
 #post comming from landing and records start of lunch
@@ -90,17 +85,23 @@ end
 post '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
-    erb :pto_request, locals:{user_info:user_info, user_email:user_email}
+    user_pto = pto_time(session[:user_id])
+    erb :pto_request, locals:{user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
     start_date = params[:start_vac]
     end_date = params[:end_vac]
     user_info =  database_info(session[:user_id])
+    user_pto = pto_time(session[:user_id])
+    if user_pto == "0"
+        email_for_no_pto(user_info, user_pto)
+    else 
+        send_email(start_date, end_date, user_info, user_pto)
+    end 
     # p start_date
     # p end_date
     # p user_info
-    send_email(start_date, end_date, user_info)
     redirect "/to_landing"
 end
 
@@ -129,8 +130,6 @@ post "/clock_out" do
     redirect "/to_landing"
 end
 
-<<<<<<< HEAD
-=======
 post "/add_user" do
     erb :admin_emplist
 end
@@ -150,4 +149,3 @@ post "/edit_user" do
     # p admin_list
     erb :admin_empmng, locals:{admin_list:admin_list}
 end
->>>>>>> b0ca3c74c04f1c2c4038a6bd9d8db7b1f0e21c6c
