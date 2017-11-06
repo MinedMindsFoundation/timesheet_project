@@ -72,7 +72,7 @@ class Test_funcs < Minitest::Test
     # <----tests for who is clocked in----> 
 
         def test_who_is_clocked_in_multi_d_array
-            x = who_is_clorucked_in()
+            x = who_is_clocked_in()
             assert_equal(2,x.count)
         end
 
@@ -80,4 +80,11 @@ class Test_funcs < Minitest::Test
             x = who_is_clocked_in()
             assert_equal(Array,x.class)
         end 
+        
+    # <----test for database_info()---->
+        
+        def test_database_info_whats_returned
+            x = database_info('TestID')
+            assert_equal(["TEST","TEST"],x)
+        end
 end
