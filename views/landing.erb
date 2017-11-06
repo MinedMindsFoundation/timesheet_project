@@ -5,34 +5,45 @@
 </head>
 
 <% if admin_check =="y"|| admin_check == "Y" %>
-<div>
-<%user_info.each do |row|%>
-    <%=row%>
-<%end%>, welcome back!<br>
-<%=user_email%><br></div><br>
-Users Checked In:<br>
-<div>
-<!--Users who are clocked in-->
-<%user_checked.each do |row|%>
-    <%row.each do |item|%>
-        <%=item%>
-        <%end%><br>
-<%end%></div><br>
-<!--Form to add users-->
-<form method = "post" action = "add_user">
-<button type = "submit">Add User</button>
-</form>
-<!--Form to Change or Delete Users-->
-<form method = "post" action = "edit_user">
-<button type = "submit">Edit Users</button>
-</form>
+    <div>
+        <%user_info.each do |row|%>
+            <%=row%>
+        <%end%>, welcome back!<br>
+        <%=user_email%><br>
+    </div><br>
+        Users Checked In:<br>
+    <div>
+        <!--Users who are clocked in-->
+        <%user_checked.each do |row|%>
+            <%row.each do |item|%>
+                <%=item%>
+                <%end%><br>
+        <%end%>
+    </div><br>
+
+    <!--Form to add users-->
+    <form method = "post" action = "add_user">
+    <button type = "submit">Add User</button>
+    </form>
+
+    <!--Form to Change or Delete Users-->
+    <form method = "post" action = "edit_user">
+    <button type = "submit">Edit Users</button>
+    </form>
+
+    <!--Form to see whos clocked in or out-->
+    <form method = "post" action = "to_whos_in">
+    <button type = "submit">Employee Status</button>
+    </form>
+
 <% else %>
 
-<div>
-<%user_info.each do |row|%>
-    <%=row%>
-<%end%>, welcome back!<br>
-<%=user_email%><br></div>
+    <div>
+        <%user_info.each do |row|%>
+            <%=row%>
+        <%end%>, welcome back!<br>
+        <%=user_email%><br>
+    </div>
 
 <% end %>
 

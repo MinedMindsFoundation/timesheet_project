@@ -41,7 +41,17 @@ times = pull_in_and_out_times(session[:user_id],pay_period)
 erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
 end
 
+# post coming from landing to whos_in
+post '/to_whos_in' do
+redirect '/whos_in'
+end
 
+# leads to page where user can see who's clock
+get '/whos_in' do
+    users = who_is_clocked_in()
+    erb :whos_in, locals:{users:users}
+
+end
 
 #post coming from landing page for vac request
 post '/vac_time_request' do
