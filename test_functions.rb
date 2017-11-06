@@ -72,12 +72,12 @@ class Test_funcs < Minitest::Test
     # <----tests for who is clocked in----> 
 
         def test_who_is_clocked_in_multi_d_array
-            x = who_is_clocked_in()
+            x = who_is_clorucked_in()
             assert_equal(2,x.count)
         end
 
         def test_who_is_clocked_in_return_type()
             x = who_is_clocked_in()
             assert_equal(Array,x.class)
-        end
+        end 
 end

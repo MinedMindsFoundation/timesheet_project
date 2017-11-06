@@ -78,7 +78,7 @@ get '/whos_in' do
 end
 
 post "/return" do
-redirct "/to_landing"
+redirect "/to_landing"
 end
 
 #post coming from landing page for vac request
