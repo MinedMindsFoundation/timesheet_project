@@ -8,7 +8,7 @@ load './local_env.rb' if File.exist?('./local_env.rb')
 #gets date & time from system
 def get_time()
     arr = []
-    x = Time.now.utc + Time.zone_offset('-0400')
+    x = Time.now.utc + Time.zone_offset('EST')
     # x.zone = "-04:00"
     arr << x.strftime('%H:%M')
     arr << x.strftime('%m/%d/%Y')
