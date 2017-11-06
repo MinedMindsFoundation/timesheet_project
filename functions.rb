@@ -129,12 +129,12 @@ def time_in_check?(user_id)
     }
     db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+    db.close
     if check.num_tuples.zero? 
         true
     else
         false
     end
-    db.close
 end
 
 #returns true if user is not clocked out
@@ -148,12 +148,12 @@ def time_out_check?(user_id)
     }
     db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+    db.close
     if check.num_tuples.zero? == false
         true
     else
         false
     end
-    db.close
 end
 
 def database_info(user_id)
@@ -352,12 +352,13 @@ def who_is_clocked_in()
     users = db.exec("SELECT user_id FROM info_new").values
     users.flatten.each do |user_id|
     name = database_info(user_id)
+    p user_id
         if time_out_check?(user_id) == true
             arr_in << "#{name[0]} #{name[1]}"
         else
             arr_out << "#{name[0]} #{name[1]}"
         end
     end
-    p [arr_in,arr_out]
+    [arr_in,arr_out]
 end
 
