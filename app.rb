@@ -129,13 +129,13 @@ post "/add_user" do
 end
 
 post "/add_to_user_list" do
-user_id=params[:user_id_new]
-first_name=params[:first_name]
-last_name=params[:last_name]
-email=params[:email]
-admin=params[:admin]
-add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
-    redirect "/add_user"
+    user_id=params[:user_id_new]
+    first_name=params[:first_name]
+    last_name=params[:last_name]
+    email=params[:email]
+    admin=params[:admin]
+    add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
+    redirect '/add_user'
 end
 
 post "/edit_user" do

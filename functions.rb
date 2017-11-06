@@ -236,9 +236,7 @@ def admin_emp_list()
     data = []
     db = PG::Connection.new(db_params)
     users = db.exec("SELECT user_id, first_name, last_name FROM info_new").values
-    # emails = db.exec("SELECT email FROM email").values
     db.close
-    # users << emails
     users.each do |user|
         data << user
     end
