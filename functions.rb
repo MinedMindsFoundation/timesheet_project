@@ -466,3 +466,26 @@ def email_for_no_pto(full_name, pto)
       end
       mail.deliver!
     end
+
+    def ssologin_check?(username,password)
+        db_params = {
+            host: ENV['host'],
+            port: ENV['port'],
+            dbname: ENV['dbname'],
+            user: ENV['user'],
+            password: ENV['password']
+                }
+            db = PG::Connection.new(db_params)
+        a = db.exec("SELECT pass FROM pass WHERE user_id = '#{username}'")
+        db.close
+        p "#{a.values.first.first} looooooook hererererererer"
+        if a.num_tuples.zero? == false
+            if password == a.values.flatten.first
+                true
+            else
+                false
+            end        
+        else
+            false
+        end        
+    end    

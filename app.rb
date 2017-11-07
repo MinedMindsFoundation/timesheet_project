@@ -27,6 +27,16 @@ session[:email] = params[:email]
     end
 end
 
+post '/sso_login' do
+    username = params[:username]
+    password = params[:password]
+        if ssologin_check?(username,password) == true
+            session[:user_id] = username
+            redirect '/to_landing'
+        else
+            redirect '/'
+        end
+end                
 
 # leads to landing page 
 get "/to_landing" do

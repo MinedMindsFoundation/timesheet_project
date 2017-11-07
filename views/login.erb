@@ -1,11 +1,16 @@
 <!-- Login/First Page -->
+<%toggle = "on"%>
+<%if toggle == "on"%>
+<form method="post" action="sso_login">
+<input type="text" name="username" placeholder="username" required><br>
+<input type="text" name="password" placeholder="password" required><br>
+<input type="submit" name="submit" value="login">
+</form>
 
-
+<%elsif toggle == "off"%>
 <head>
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 </head>
-
-
 
 <form id = "myform" method = "post" action = "login">
 <!--FaceBook Button -->
@@ -24,4 +29,5 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src= "js/google_js.js"></script>
 <script src = "js/facebook.js"></script>
+<%end%>
 

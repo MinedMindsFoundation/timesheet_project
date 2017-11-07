@@ -73,7 +73,7 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <%end%>
 </table>
 
-<!--signout function -->
+
 <%=session[:message]%><br>
 
 <!-- form for submiting your time in -->
@@ -105,19 +105,29 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <script src = "/js/facebook.js"></script>
 <script src= "js/google_js.js"></script>
 <!--sign out section--><br>
+<%toggle = "sso"%>
+<%if toggle == "sso"%>
+
+
+<form method="post" action="logout">
+<input type="submit" name="submit" value="sign out">
+</form>
+<script src="/js/timeout.js"></script>
+<body onload="ssoidleTimer()"></body>
+
+
+<%elsif toggle == "social"%>
+
+<!--social media section-->
 <!--facebook sign out--><br>
 <button id = 'sign_out' onclick= 'logout()' >Sign out</button>
 <!-- src = "/js/logout.js"-->
-
 <!--google sign out--><br>
-
 <!-- scr ="/js/google_js.js"-->
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-
-
 <!--TIME OUT STUFF-->
 <script src="/js/timeout.js"></script>
 <body onload="idleTimer()"></body>
-
+<%end%>
  
 
