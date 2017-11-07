@@ -50,7 +50,7 @@ def submit_time_in(user_id,location,time,date)
         }
         db = PG::Connection.new(db_params)
     # db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
-    db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time}','N/A','N/A','N/A','#{date}','N/A','#{location}')")
+    db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,location)VALUES('#{user_id}','#{time}','N/A','N/A','N/A','#{date}','#{location}')")
     db.close
 end
 

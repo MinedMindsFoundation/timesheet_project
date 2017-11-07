@@ -123,9 +123,10 @@ end
 # post comming from landing page
 post "/clock_in" do
     location = params[:location]
+    p location
     if time_in_check?(session[:user_id])
         time = get_time()
-        submit_time_in(session[:user_id],time[0],time[1],location)
+        submit_time_in(session[:user_id],location,time[0],time[1])
         session[:message] = "Time in Submitted"
     else
         session[:message] = "Already Submitted Time In"
