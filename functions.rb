@@ -261,8 +261,8 @@ def emp_info(user_id)
     users.each do |user|
         data << user
     end
-    emails.each do |email|
-        data << email.flatten
+    emails.first.each do |email|
+        data << email
     end
     admins.each do |admin|
         data << admin.flatten
