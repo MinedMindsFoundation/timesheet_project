@@ -243,9 +243,68 @@ def admin_emp_list()
     data
 end
 
+def emp_info(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    data = []
+    emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
+    admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
+    users = db.exec("SELECT user_id, first_name, last_name, date_of_hire FROM info_new WHERE user_id = '#{user_id}'").values
+    pto_time = db.exec("SELECT pto FROM pto WHERE user_id = '#{user_id}'").values
+    db.close
+    users.each do |user|
+        data << user
+    end
+    emails.each do |email|
+        data << email.flatten
+    end
+    admins.each do |admin|
+        data << admin.flatten
+    end
+    pto_time.each do |pto|
+        data << pto.flatten
+    end
+    data.flatten
+end
 
+def update_user(user_id, new_info)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}' ,date_of_hire = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE email SET email = '#{new_info[4]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE admin_status SET admin = '#{new_info[5]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE pto SET pto = '#{new_info[6]}' WHERE user_id = '#{user_id}'")
+    db.close
+end
 
-
+def delete_emp(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    db.exec("DELETE FROM email WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM info_new WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM admin_status WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM pto WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+    db.close
+end
 
 def add_email(user_id,email)
     db_params = {
@@ -473,3 +532,26 @@ def email_for_no_pto(full_name, pto)
       end
       mail.deliver!
     end
+
+    def ssologin_check?(username,password)
+        db_params = {
+            host: ENV['host'],
+            port: ENV['port'],
+            dbname: ENV['dbname'],
+            user: ENV['user'],
+            password: ENV['password']
+                }
+            db = PG::Connection.new(db_params)
+        a = db.exec("SELECT pass FROM pass WHERE user_id = '#{username}'")
+        db.close
+        p "#{a.values.first.first} looooooook hererererererer"
+        if a.num_tuples.zero? == false
+            if password == a.values.flatten.first
+                true
+            else
+                false
+            end        
+        else
+            false
+        end        
+    end    

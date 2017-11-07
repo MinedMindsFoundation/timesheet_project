@@ -29,6 +29,16 @@ session[:email] = params[:email]
     end
 end
 
+post '/sso_login' do
+    username = params[:username]
+    password = params[:password]
+        if ssologin_check?(username,password) == true
+            session[:user_id] = username
+            redirect '/to_landing'
+        else
+            redirect '/'
+        end
+end                
 
 # leads to landing page 
 get "/to_landing" do
@@ -150,4 +160,22 @@ post "/edit_user" do
     admin_list = admin_emp_list()
     # p admin_list
     erb :admin_empmng, locals:{admin_list:admin_list}
+end
+
+post "/update_emp" do
+    session[:edit_user] = params[:info]
+    choice = params[:choose]
+    # p session[:edit_user][0]
+    # p choice
+    if choice == "update"
+        redirect "/update_emp_page"
+    elsif choice == "delete"
+        delete_emp(session[:edit_user][0])
+    end
+end
+
+get "/update_emp_page" do
+    user_info = emp_info(session[:edit_user][0])
+    p user_info
+    erb :admin_emp_updating, locals:{user_info:user_info}
 end

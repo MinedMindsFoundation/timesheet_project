@@ -10,9 +10,8 @@
 <th>Last Name</th>
 </tr>
 <%admin_list.each do |row|%>
-    <%people = row.join(",")%>
     <tr>
-    <td><input type = "radio" name = "info[]" value = "<%=people%>"></td>
+    <td><input type = "radio" name = "info[]" value = "<%=row[0]%>"></td>
     <%row.each do |item|%>
         <td>
         <%=item.capitalize%>
