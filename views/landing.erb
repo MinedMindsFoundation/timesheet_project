@@ -78,23 +78,24 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 
 <!-- form for submiting your time in -->
 <form method = "post" action = "clock_in">
-<button id = "clock_in_button" type = "submit">Submit Time In</button>
+    <button id = "clock_in_button" type = "submit">Submit Time In</button>
 </form>
 
 <!-- form for submiting your lunch start -->
 <form method = "post" action = "lunch_in">
-<button type = "submit">Submit Lunch Start</button>
+    <button type = "submit">Submit Lunch Start</button>
 </form>
 
 <!-- form for submiting your lunch end -->
 <form method = "post" action = "lunch_out">
-<button type = "submit">Submit Lunch end</button>
+    <button type = "submit">Submit Lunch end</button>
 </form>
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
-<button id = "clock_out_button" type = "submit">Submit Time Out</button>
+    <button id = "clock_out_button" type = "submit">Submit Time Out</button>
 </form>
+
 <!--submit button fo vac request-->
 <form method = "post" action = "vac_time_request">
     <button type = "submit">PTO Request</button>
@@ -104,30 +105,26 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <script src = "/js/clock.js"></script>
 <script src = "/js/facebook.js"></script>
 <script src= "js/google_js.js"></script>
+
 <!--sign out section--><br>
 <%toggle = "social"%>
 <%if toggle == "sso"%>
-
-
-<form method="post" action="logout">
-<input type="submit" name="submit" value="sign out">
-</form>
-<script src="/js/timeout.js"></script>
-<body onload="ssoidleTimer()"></body>
-
-
+    <form method="post" action="logout">
+        <input type="submit" name="submit" value="sign out">
+    </form>
+    <script src="/js/timeout.js"></script>
+    <body onload="ssoidleTimer()"></body>
 <%elsif toggle == "social"%>
-
-<!--social media section-->
-<!--facebook sign out--><br>
-<button id = 'sign_out' onclick= 'logout()' >Sign out</button>
-<!-- src = "/js/logout.js"-->
-<!--google sign out--><br>
-<!-- scr ="/js/google_js.js"-->
-<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-<!--TIME OUT STUFF-->
-<script src="/js/timeout.js"></script>
-<body onload="idleTimer()"></body>
+    <!--social media section-->
+        <!--facebook sign out--><br>
+           <button id = 'sign_out' onclick= 'logout()' >Sign out</button>
+            <!-- src = "/js/logout.js"-->
+    <!--google sign out--><br>
+        <!-- scr ="/js/google_js.js"-->
+        <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <!--TIME OUT STUFF-->
+        <script src="/js/timeout.js"></script>
+            <body onload="idleTimer()"></body>
 <%end%>
  
 
