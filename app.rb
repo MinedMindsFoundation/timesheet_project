@@ -57,7 +57,7 @@ end
 post "/lunch_in" do 
    if check_lunch_in(session[:user_id])
     time = get_time
-        submit_lunch_in(session[:user_id],"#{time[0]} #{time[1]}")
+        submit_lunch_in(session[:user_id],time[0])
         session[:message] = "Lunch Started"
    else 
         session[:message] = "Unable to Submit Action"
@@ -69,7 +69,7 @@ end
 post "/lunch_out" do 
     if check_lunch_out(session[:user_id])
         time = get_time
-         submit_lunch_out(session[:user_id],"#{time[0]} #{time[1]}")
+         submit_lunch_out(session[:user_id],time[0])
          session[:message] = "Lunch Ended"
     else 
          session[:message] = "Unable to Submit Action"
@@ -134,7 +134,7 @@ post "/clock_in" do
 post "/clock_out" do
     if time_out_check?(session[:user_id])
         time = get_time()
-        submit_time_out(session[:user_id],"#{time[0]} #{time[1]}")
+        submit_time_out(session[:user_id],time[0],time[1])
         session[:message] = "Time Out Submitted"
     else
         session[:message] =  "Already Submitted Time Out"

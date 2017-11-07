@@ -94,4 +94,8 @@ class Test_funcs < Minitest::Test
             assert_equal(Array,x.class)
         end
 
+        def test_pull_in_and_out_multi_d_array
+            x = pull_in_and_out_times()
+
+
 end
