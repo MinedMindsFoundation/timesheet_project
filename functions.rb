@@ -522,9 +522,9 @@ def email_for_no_pto(full_name, pto)
           end
       end
       mail.deliver!
-    end
+end
 
-    def ssologin_check?(username,password)
+def ssologin_check?(username,password)
         db_params = {
             host: ENV['host'],
             port: ENV['port'],
@@ -545,4 +545,22 @@ def email_for_no_pto(full_name, pto)
         else
             false
         end        
-    end    
+end
+
+def time_date_fix(user_id,date)
+    db_params = {
+    host: ENV['host'],
+    port: ENV['port'],
+    dbname: ENV['dbname'],
+    user: ENV['user'],
+    password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    data = []
+    fixer_date =db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND date = '#{date}'").values
+    db.close
+    fixer_date.flatten.each do |item|
+        data << item
+    end
+    data
+end
