@@ -37,7 +37,11 @@ post '/sso_login' do
         else
             redirect '/'
         end
-end                
+end    
+
+post '/logout' do
+    redirect '/'
+  end
 
 # leads to landing page 
 get "/to_landing" do
@@ -118,10 +122,10 @@ end
 
 # post comming from landing page
 post "/clock_in" do
-    
+    location = params[:location]
     if time_in_check?(session[:user_id])
         time = get_time()
-        submit_time_in(session[:user_id],time[0],time[1])
+        submit_time_in(session[:user_id],time[0],time[1],location)
         session[:message] = "Time in Submitted"
     else
         session[:message] = "Already Submitted Time In"
