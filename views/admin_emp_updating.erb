@@ -1,3 +1,5 @@
+<%=user_info[1]%> <%=user_info[2]%>:<br><br>
+<form method = "post" action = "emp_updated">
 <table>
 <tr>
 <th>Employee ID</th>
@@ -8,4 +10,16 @@
 <th>Admin?</th>
 <th>PTO</th>
 </tr>
-</table>
+<tr>
+<%user_info.each do |item|%>
+    <td><%=item%></td> 
+<%end%>
+</tr>
+<tr>
+<%user_info.each do |item|%>
+<td><input type = "text" name = info[] value = "<%=item%>"></td>
+<%end%>
+</tr>
+</table><br>
+<input type = "submit" value = "Update">
+</form>
