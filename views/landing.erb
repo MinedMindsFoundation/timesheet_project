@@ -78,6 +78,11 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 
 <!-- form for submiting your time in -->
 <form method = "post" action = "clock_in">
+    <select>
+        <option value="Clendenin">Clendenin</option>
+        <option value="Beckley">Beckly</option>
+        <option value="Waynesburg">Waynesburg</option>
+    </select>
     <button id = "clock_in_button" type = "submit">Submit Time In</button>
 </form>
 
@@ -112,7 +117,7 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
     <form method="post" action="logout">
         <input type="submit" name="submit" value="sign out">
     </form>
-    <script src="/js/timeout.js"></script>
+    <script src="/js/ssotimeout.js"></script>
     <body onload="ssoidleTimer()"></body>
 <%elsif toggle == "social"%>
     <!--social media section-->
