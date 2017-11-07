@@ -165,7 +165,9 @@ post "/update_emp" do
     choice = params[:choose]
     # p session[:edit_user][0]
     # p choice
-    if choice == "update"
+    if choice == "info"
+        redirect "/employee_info"
+    elsif choice == "update"
         redirect "/update_emp_page"
     elsif choice == "delete"
         delete_emp(session[:edit_user][0])
@@ -174,6 +176,22 @@ end
 
 get "/update_emp_page" do
     user_info = emp_info(session[:edit_user][0])
-    p user_info
+    # p user_info
     erb :admin_emp_updating, locals:{user_info:user_info}
+end
+
+post "/emp_updated" do
+    new_info = params[:info]
+    # p new_info
+    update_user(session[:edit_user][0], new_info)
+    admin_list = admin_emp_list()
+    erb :admin_empmng, locals:{admin_list:admin_list}
+end
+
+get "/employee_info" do
+    pay_period = pay_period(Time.new)
+    times = pull_in_and_out_times(session[:edit_user][0],pay_period)
+    user_info = emp_info(session[:edit_user][0])
+    # p user_info
+    erb :emp_info, locals:{user_info:user_info,pay_period:pay_period,times:times}
 end
