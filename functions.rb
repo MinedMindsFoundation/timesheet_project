@@ -204,11 +204,11 @@ def database_emp_checked()
     user.each do |user_id|
     user_checked << db.exec("SELECT first_name, last_name FROM info_new WHERE user_id = '#{user_id[0]}'").values
     user_checked << time_converter(db.exec("SELECT time_in FROM timesheet_new WHERE time_out = 'N/A' AND user_id = '#{user_id[0]}'").values.flatten.first)
-    # p user_checked
+    user_checked << db.exec("SELECT location FROM timesheet_new WHERE time_out = 'N/A' and user_id = '#{user_id[0]}'").values.flatten.first
     end
     db.close
     next_checked = user_checked.flatten
-    next_checked.each_slice(3)
+    next_checked.each_slice(4)
 end
 
 def database_email_check(user_id)
@@ -524,25 +524,43 @@ def email_for_no_pto(full_name, pto)
       mail.deliver!
     end
 
-    def ssologin_check?(username,password)
-        db_params = {
-            host: ENV['host'],
-            port: ENV['port'],
-            dbname: ENV['dbname'],
-            user: ENV['user'],
-            password: ENV['password']
-                }
-            db = PG::Connection.new(db_params)
-        a = db.exec("SELECT pass FROM pass WHERE user_id = '#{username}'")
-        db.close
-        p "#{a.values.first.first} looooooook hererererererer"
-        if a.num_tuples.zero? == false
-            if password == a.values.flatten.first
-                true
-            else
-                false
-            end        
+def ssologin_check?(username,password)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+    a = db.exec("SELECT pass FROM pass WHERE user_id = '#{username}'")
+    db.close
+    p "#{a.values.first.first} looooooook hererererererer"
+    if a.num_tuples.zero? == false
+        if password == a.values.flatten.first
+            true
         else
             false
         end        
-    end    
+    else
+        false
+    end        
+end
+
+def live_time(start_time, end_time)
+    s = Time.parse(start_time)
+    e = Time.parse(end_time)
+    minutes = (e - s)/60
+    hours = 0
+    days = 0
+    if minutes >= 60
+        hours = minutes/60
+        minutes = minutes % 60
+        if hours >= 24
+            days = hours/24
+            hours = hours % 24
+        end
+    end
+[days.to_i,hours.to_i,minutes.to_i]    
+end
+
