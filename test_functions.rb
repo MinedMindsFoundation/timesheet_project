@@ -96,17 +96,27 @@ class Test_funcs < Minitest::Test
 
     #<----test for live time ---->
         def test_live_time_hour
-            x = live_time("03:00 10/10/2017","04:00 10/10/2017")
+            x = live_time("03:00 2017-10-10","04:00 2017-10-10")
             assert_equal([0,1,0],x)
         end
 
         def test_live_time_20_minutes
-            x = live_time("03:00 10/10/2017","03:20 10/10/2017")
+            x = live_time("03:00 2017-10-10","03:20 2017-10-10")
             assert_equal([0,0,20],x)
         end
 
         def test_live_time_1_day
-            x = live_time("03:00 10/10/2017","03:00 10/11/2017")
-            assert_equal([1,0,0])
+            x = live_time("03:00 2017-10-10","03:00 2017-10-11")
+            assert_equal([1,0,0],x)
+        end
+
+        def test_live_time_1_d_2_h_47_m
+            x = live_time("03:00 2017-10-10","05:47 2017-10-11")
+            assert_equal([1,2,47],x)
+        end
+
+        def test_live_time_2_d_23_h_59_m
+            x = live_time("03:00 2017-10-10","02:59 2017-10-13")
+            assert_equal([2,23,59],x)
         end
 end
