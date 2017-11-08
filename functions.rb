@@ -203,12 +203,12 @@ def database_emp_checked()
     # p user
     user.each do |user_id|
     user_checked << db.exec("SELECT first_name, last_name FROM info_new WHERE user_id = '#{user_id[0]}'").values
-    user_checked << time_converter(db.exec("SELECT time_in FROM timesheet_new WHERE time_out = 'N/A' AND user_id = '#{user_id[0]}'").values.flatten.first)
+    user_checked << db.exec("SELECT time_in, date FROM timesheet_new WHERE time_out = 'N/A' AND user_id = '#{user_id[0]}'").values.flatten
     user_checked << db.exec("SELECT location FROM timesheet_new WHERE time_out = 'N/A' and user_id = '#{user_id[0]}'").values.flatten.first
     end
     db.close
     next_checked = user_checked.flatten
-    next_checked.each_slice(4)
+    next_checked.each_slice(5)
 end
 
 def database_email_check(user_id)
