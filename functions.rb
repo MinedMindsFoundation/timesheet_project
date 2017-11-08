@@ -50,7 +50,7 @@ def submit_time_in(user_id,location,time,date)
         }
         db = PG::Connection.new(db_params)
     # db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
-    db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time}','N/A','N/A','N/A','#{date}','N/A','#{location}')")
+    db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,location)VALUES('#{user_id}','#{time}','N/A','N/A','N/A','#{date}','#{location}')")
     db.close
 end
 
@@ -261,8 +261,8 @@ def emp_info(user_id)
     users.each do |user|
         data << user
     end
-    emails.each do |email|
-        data << email.flatten
+    emails.first.each do |email|
+        data << email
     end
     admins.each do |admin|
         data << admin.flatten
@@ -522,9 +522,9 @@ def email_for_no_pto(full_name, pto)
           end
       end
       mail.deliver!
-    end
+end
 
-    def ssologin_check?(username,password)
+def ssologin_check?(username,password)
         db_params = {
             host: ENV['host'],
             port: ENV['port'],
@@ -545,4 +545,22 @@ def email_for_no_pto(full_name, pto)
         else
             false
         end        
-    end    
+end
+
+def time_date_fix(user_id,date)
+    db_params = {
+    host: ENV['host'],
+    port: ENV['port'],
+    dbname: ENV['dbname'],
+    user: ENV['user'],
+    password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    data = []
+    fixer_date =db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND date = '#{date}'").values
+    db.close
+    fixer_date.flatten.each do |item|
+        data << item
+    end
+    data
+end
