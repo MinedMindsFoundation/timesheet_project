@@ -25,6 +25,9 @@
         <%end%>
     </div><br>
 
+    <!--message for the pto request-->
+    <%=session[:pto_message]%><br>
+
     <!--Form to add users-->
     <form method = "post" action = "add_user">
     <button type = "submit">Add User</button>
@@ -117,12 +120,14 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <%toggle = "social"%>
 
 <%if toggle == "sso"%>
+
     <form method="post" action="logout">
         <input type="submit" name="submit" value="sign out">
     </form>
     <script src="/js/ssotimeout.js"></script>
     <body onload="ssoidleTimer()"></body>
 <%elsif toggle == "social"%>
+
     <!--social media section-->
         <!--facebook sign out--><br>
            <button id = 'sign_out' onclick= 'logout()' >Sign out</button>
