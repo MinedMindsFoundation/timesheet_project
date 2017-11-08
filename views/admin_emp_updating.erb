@@ -22,4 +22,30 @@
 </tr>
 </table><br>
 <input type = "submit" value = "Update">
+</form><br>
+
+Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
+<table>
+<th>Time in</th>
+<th>Lunch Start</th>
+<th>Lunch End</th>
+<th>Time out</th>
+<th>Date</th>
+<%times.each do |item|%>
+<tr>
+<%item.each do |time|%>
+<td><%if time.length == 5%>
+    <%=time_converter(time)%>
+    <%else%>
+    <%=time%>
+    <%end%>
+</td>
+<%end%>
+</tr>
+<%end%>
+</table>
+<h2>Select a date to update time mistakes</h2>
+<form method = "post" action="update_timesheet">
+    <input type="date" name="time_fix">
+    <input type="submit" value="Search">
 </form>
