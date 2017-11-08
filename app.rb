@@ -181,9 +181,11 @@ post "/update_emp" do
 end
 
 get "/update_emp_page" do
+    pay_period = pay_period(Time.new)
+    times = pull_in_and_out_times(session[:edit_user][0],pay_period)
     user_info = emp_info(session[:edit_user][0])
     # p user_info
-    erb :admin_emp_updating, locals:{user_info:user_info}
+    erb :admin_emp_updating, locals:{user_info:user_info,pay_period:pay_period,times:times}
 end
 
 post "/emp_updated" do
@@ -200,4 +202,11 @@ get "/employee_info" do
     user_info = emp_info(session[:edit_user][0])
     # p user_info
     erb :emp_info, locals:{user_info:user_info,pay_period:pay_period,times:times}
+end
+
+post "/update_timesheet" do
+    date_of_fix = params[:time_fix]
+    p date_of_fix
+    p time_date_fix(session[:edit_user][0],date_of_fix)
+    # erb 
 end

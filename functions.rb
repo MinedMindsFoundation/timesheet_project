@@ -261,8 +261,8 @@ def emp_info(user_id)
     users.each do |user|
         data << user
     end
-    emails.each do |email|
-        data << email.flatten
+    emails.first.each do |email|
+        data << email
     end
     admins.each do |admin|
         data << admin.flatten
@@ -522,7 +522,7 @@ def email_for_no_pto(full_name, pto)
           end
       end
       mail.deliver!
-    end
+end
 
 def ssologin_check?(username,password)
     db_params = {
@@ -564,3 +564,21 @@ def live_time(start_time, end_time)
 [days.to_i,hours.to_i,minutes.to_i]    
 end
 
+
+def time_date_fix(user_id,date)
+    db_params = {
+    host: ENV['host'],
+    port: ENV['port'],
+    dbname: ENV['dbname'],
+    user: ENV['user'],
+    password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    data = []
+    fixer_date =db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND date = '#{date}'").values
+    db.close
+    fixer_date.flatten.each do |item|
+        data << item
+    end
+    data
+end
