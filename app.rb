@@ -210,3 +210,8 @@ post "/update_timesheet" do
     p time_date_fix(session[:edit_user][0],date_of_fix)
     # erb 
 end
+
+get "/reload" do
+    user_checked = database_emp_checked()
+    erb :reload, locals:{user_checked:user_checked}, :layout => :post
+end

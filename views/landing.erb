@@ -16,12 +16,12 @@
         <%=user_email%><br>
     </div><br>
         Users Checked In:<br>
-    <div>
+    <div id="result">
+
         <!--Users who are clocked in-->
         <%user_checked.each do |row|%>
-            <%row.each do |item|%>
-                <%=item%>
-                <%end%><br>
+        <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+        <%=row[0]%> <%=row[1]%> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[4]%><br>
         <%end%>
     </div><br>
 
@@ -36,7 +36,7 @@
     </form>
 
     <!--Form to see whos clocked in or out-->
-    <form method = "post" action = "to_whos_in">
+     <form method = "post" action = "to_whos_in">
     <button type = "submit">Employee Status</button>
     </form>
 
@@ -112,7 +112,10 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <script src= "js/google_js.js"></script>
 
 <!--sign out section--><br>
+
+<!--toggle for sign out button-->
 <%toggle = "social"%>
+
 <%if toggle == "sso"%>
     <form method="post" action="logout">
         <input type="submit" name="submit" value="sign out">
@@ -132,4 +135,12 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
             <body onload="idleTimer()"></body>
 <%end%>
  
-
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+   <script>
+ function autoRefresh_div()
+ {
+      $("#result").load("/reload");// a function which will load data from other file after x seconds
+  }
+ 
+  setInterval('autoRefresh_div()', 5000); // refresh div after 5 secs
+            </script>
