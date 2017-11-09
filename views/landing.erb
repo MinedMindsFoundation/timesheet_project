@@ -8,20 +8,20 @@
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
 <span id="clock">&nbsp;</span>
 </body><br><br>
-<% if admin_check == "Yes" %>
     <div>
         <%user_info.each do |row|%>
             <%=row%>
         <%end%>, welcome back!<br>
         <%=user_email%><br>
-    </div><br>
+    </div>
+<% if admin_check == "Yes" %><br>
         Users Checked In:<br>
     <div id="result">
 
         <!--Users who are clocked in-->
         <%user_checked.each do |row|%>
         <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-        <%=row[0]%> <%=row[1]%> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[4]%><br>
+        <%=row[0].capitalize%> <%=row[1].capitalize%> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[4]%><br>
         <%end%>
     </div><br>
 
@@ -44,14 +44,6 @@
     </form>
 
 <% else %>
-
-    <div>
-        <%user_info.each do |row|%>
-            <%=row%>
-        <%end%>, welcome back!<br>
-        <%=user_email%><br>
-    </div>
-
 <% end %>
 
 <!-- tabel of time in and out --> 

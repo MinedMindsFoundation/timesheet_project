@@ -1,4 +1,4 @@
-<%=user_info[1]%> <%=user_info[2]%>:<br><br>
+Employee info of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%>:<br><br>
 <form method = "post" action = "emp_updated">
 <table>
 <tr>
@@ -48,4 +48,7 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <form method = "post" action="update_timesheet">
     <input type="date" name="time_fix">
     <input type="submit" value="Search">
+</form><br>
+<form method = "post" action = "to_admin_emplist">
+<input type="submit" value="Return">
 </form>

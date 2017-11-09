@@ -1,0 +1,31 @@
+Time Table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=date_of_fix%>
+<table>
+<th>Time in</th>
+<th>Lunch Start</th>
+<th>Lunch End</th>
+<th>Time out</th>
+<th>Date</th>
+<th>Date Out</th>
+<th>Location</th>
+<%times_shown.each do |item|%>
+    <tr>
+    <%item.each do |time|%>
+    <td><%if time.length == 5%>
+        <%=time_converter(time)%>
+        <%else%>
+        <%=time%>
+        <%end%>
+    </td>
+    <%end%>
+    </tr>
+    <tr>
+    <%item.each do |time|%>
+        <%if time.length == 5%>
+            <td><input type = "text" name = info[] value = "<%=time_converter(time)%>"></td>
+            <%else%>
+            <td><input type = "text" name = info[] value = "<%=time%>"></td>
+            <%end%>
+        <%end%>
+    </tr>
+<%end%>
+</table>
