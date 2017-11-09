@@ -1,5 +1,6 @@
 require "sinatra"
 require 'pg'
+require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
 require 'net/smtp'
 # require_relative 'login_func'
@@ -101,7 +102,8 @@ post '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
-    erb :pto_request, locals:{user_info:user_info, user_email:user_email, user_pto: user_pto}
+    cal = GoogleCalendar.new.events
+    erb :pto_request, locals:{cal:cal,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
@@ -109,6 +111,7 @@ post '/pto_email' do
     end_date = params[:end_vac]
     user_info =  database_info(session[:user_id])
     user_pto = pto_time(session[:user_id])
+    pto_request_db_add(session[:user_id],start_date,end_date)
     if user_pto == "0"
         email_for_no_pto(user_info, user_pto)
         session[:pto_message] = "You have no PTO to request."

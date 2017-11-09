@@ -582,3 +582,15 @@ def time_date_fix(user_id,date)
     end
     data
 end
+
+def  pto_request_db_add(user_id,start_date,end_date)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','pending')")
+end
