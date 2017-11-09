@@ -575,9 +575,9 @@ def time_date_fix(user_id,date)
     }
     db = PG::Connection.new(db_params)
     data = []
-    fixer_date =db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND date = '#{date}'").values
+    fixer_date =db.exec("SELECT time_in, lunch_start, lunch_end, time_out, date, date_out, location FROM timesheet_new WHERE user_id = '#{user_id}' AND date = '#{date}'").values
     db.close
-    fixer_date.flatten.each do |item|
+    fixer_date.each do |item|
         data << item
     end
     data

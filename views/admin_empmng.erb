@@ -1,29 +1,31 @@
 <!-- Admins Employee Management -->
 
 <h1>Current List of Employees:</h1>
-<form method = "post" action = "update_emp">
 <table>
 <tr>
 <th>Select</th>
 <th>Employee ID</th>
 <th>First Name</th>
 <th>Last Name</th>
+<th>Action</th>
 </tr>
 <%admin_list.each do |row|%>
+<form method = "post" action = "update_emp">
     <tr>
-    <td><input type = "radio" name = "info[]" value = "<%=row[0]%>" required></td>
+    <td><input type = "radio" name = "info[]" value = "<%=row[0]%>"></td>
     <%row.each do |item|%>
         <td>
         <%=item.capitalize%>
         </td>
     <%end%>
+        <td>
+            <input type="submit" name="choose" value="Info">
+            <input type="submit" name="choose" value="Update">
+            <input type="submit" name="choose" value="Delete">
+        </td>
     </tr>
 <%end%>
 </table><br>
-<input type="radio" name="choose" value="info" checked>Info<br>
-<input type="radio" name="choose" value="update">Update<br>
-<input type="radio" name="choose" value="delete">Delete <br>
-<input type="submit" value="Next">
 </form>
 <form method = "post" action = "return">
     <input type="submit" value="Return">

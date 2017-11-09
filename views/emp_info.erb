@@ -1,4 +1,4 @@
-<%=user_info[1]%> <%=user_info[2]%>:<br><br>
+<%=user_info[1].capitalize%> <%=user_info[2].capitalize%>:<br><br>
 <table>
 <tr>
 <th>Employee ID</th>
@@ -35,6 +35,6 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 </tr>
 <%end%>
 </table><br>
-<form method = "post" action = "return">
+<form method = "post" action = "to_admin_emplist">
 <input type="submit" value="Return">
 </form>
