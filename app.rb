@@ -10,7 +10,7 @@ load './local_ENV.rb' if File.exist?('./local_ENV.rb')
 # Initial "get" leads to login page
 get "/" do 
     login_message = params[:login_message]
-    session[:message] = ''
+    session[:message] = '' 
     erb :login, locals:{login_message:login_message}
 end
 

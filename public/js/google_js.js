@@ -73,19 +73,19 @@ function signOut() {
 }
 
 
-            function onSignIn(googleUser) {
-                var profile = googleUser.getBasicProfile();
-                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-                console.log('Full Name: ' + profile.getName());
-                console.log('Given Name: ' + profile.getGivenName());
-                console.log('Family Name: ' + profile.getFamilyName());
-                console.log("Image URL: " + profile.getImageUrl());
-                console.log("Email: " + profile.getEmail());
-                var first_name = profile.getGivenName();
-                var last_name = profile.getFamilyName();
-                var email = profile.getEmail();
-                document.getElementById('email').value = email;
-                document.getElementById('first_name').value = first_name;
-                document.getElementById('last_name').value = last_name;
-                document.getElementById('myform').submit();
-              }
+function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+    console.log('Full Name: ' + profile.getName());
+    console.log('Given Name: ' + profile.getGivenName());
+    console.log('Family Name: ' + profile.getFamilyName());
+    console.log("Image URL: " + profile.getImageUrl());
+    console.log("Email: " + profile.getEmail());
+    var first_name = profile.getGivenName();
+    var last_name = profile.getFamilyName();
+    var email = profile.getEmail();
+    document.getElementById('email').value = email;
+    document.getElementById('first_name').value = first_name;
+    document.getElementById('last_name').value = last_name;
+    document.getElementById('myform').submit();
+}
