@@ -12,17 +12,19 @@
 <%admin_list.each do |row|%>
 <form method = "post" action = "update_emp">
     <tr>
-    <td><input type = "radio" name = "info[]" value = "<%=row[0]%>"></td>
+    <td><input type = "checkbox" name = "info[]" value = "<%=row[0]%>"></td>
     <%row.each do |item|%>
         <td>
         <%=item.capitalize%>
         </td>
     <%end%>
+        
         <td>
             <input type="submit" name="choose" value="Info">
             <input type="submit" name="choose" value="Update">
             <input type="submit" name="choose" value="Delete">
         </td>
+        </div>
     </tr>
 <%end%>
 </table><br>
