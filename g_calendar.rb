@@ -2,6 +2,7 @@
 require 'googleauth'
 require 'google/apis/calendar_v3'
 
+
 class GoogleCalendar
 
   def initialize
@@ -40,8 +41,8 @@ private
     @service = calendar
   end
 
-def create_calendar_event(start_date,end_date,email,name)
-  event = Google::Apis::CalendarV3::Event.new{
+ def create_calendar_event(start_date,end_date,email,name)
+  new_event = Google::Apis::CalendarV3::Event.new{
     summary: "#{name}'s PTO",
     location: '',
     description: '',
@@ -49,25 +50,25 @@ def create_calendar_event(start_date,end_date,email,name)
       date_time: "#{start_date}"
     },
     end: {
-      date_time: "#{end_date}",
+      date_time: "#{end_date}"
     },
     recurrence: [
     #   'RRULE:FREQ=DAILY;COUNT=2'
     ],
     attendees: [
-      {email: "#{email}"},
+      {email: "#{email}"}
      
     ],
-    reminders: {
-      use_default: false,
-      overrides: [
-        {method' => 'email', 'minutes: 24 * 60},
-        {method' => 'popup', 'minutes: 10},
-      ],
-    },
+    # reminders: {
+    #   use_default: false,
+    #   overrides: [
+    #     {method => 'email', minutes: 24 * 60},
+    #     {method => 'popup', minutes: 10},
+    #   ],
+    # },
   }
   
 #   puts "Event created: #{result.html_link}"
-  result = client.insert_event('primary', event)
-
+  result = client.insert_event('primary',new_event)
+    end
 end
