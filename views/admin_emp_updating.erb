@@ -1,4 +1,5 @@
-Employee info of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%>:<br><br>
+<%users.each_with_index do |user, index|%>
+Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
 <form method = "post" action = "emp_updated">
 <table>
 <tr>
@@ -11,12 +12,12 @@ Employee info of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%>:<br><
 <th>PTO</th>
 </tr>
 <tr>
-<%user_info.each do |item|%>
+<%user.each do |item|%>
     <td><%=item%></td> 
 <%end%>
 </tr>
 <tr>
-<%user_info.each do |item|%>
+<%user.each do |item|%>
 <td><input type = "text" name = info[] value = "<%=item%>"></td>
 <%end%>
 </tr>
@@ -31,8 +32,8 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
 <th>Lunch End</th>
 <th>Time out</th>
 <th>Date</th>
-<%times.each do |item|%>
 <tr>
+<%time_table[index].each do |item|%>
 <%item.each do |time|%>
 <td><%if time.length == 5%>
     <%=time_converter(time)%>
@@ -49,6 +50,7 @@ Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
     <input type="date" name="time_fix">
     <input type="submit" value="Search">
 </form><br>
+<%end%>
 <form method = "post" action = "to_admin_emplist">
 <input type="submit" value="Return">
 </form>
