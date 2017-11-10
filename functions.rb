@@ -156,7 +156,7 @@ def time_out_check?(user_id)
     end
 end
 
-def database_info(user_id)database_info(user_id)
+def database_info(user_id)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -596,9 +596,18 @@ def  pto_request_db_add(user_id,start_date,end_date)
 end
 
 def pull_pto_request()
-    pto_requests = db.exec("SELECT user_id,start_date,end_date FROM pto_requests")
-    pto_requests.each_do |requests|
-        requests[0] = "#{database_info(request[0])[0]} #{database_info(request[0])[1]}"
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    pto_request = db.exec("SELECT user_id,start_date,end_date FROM pto_requests").values
+    pto_request.each do |requests|
+        names = database_info(requests[0])
+        requests[0] = "#{names[0]} #{names[1]}"
     end
-    pto_request()
+    pto_request
 end

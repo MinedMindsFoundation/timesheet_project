@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 <%if session[:admin_check] == "Yes"%>
 
     <div id="Iframe-Google-Calendar" class="set-margin set-padding set-border set-box-shadow center-block-horiz">
@@ -14,7 +11,6 @@
         <%else%>
 
         <%end%>
->>>>>>> f969740ba39411c22e8b96859d5338adb3d1aa7a
 <div>
 <%user_info.each do |row|%>
     <%=row%>
@@ -51,6 +47,21 @@ You have
 </div>
 </div>
 
+<table>
+<th>Name</th>
+<th>Pto Start</th>
+<th>Pto End</th>
+<th>Approval</th>
+<tr><%pto_requests.each do |item|%>
+    <td><%=item[0]%></td>
+    <td><%=item[1]%></td>
+    <td><%=item[2]%></td>
+    <td><input type = "checkbox" name = "approval" value = "approved">Approve<br>
+    <input type = "checkbox" name = "approval" value = 'denied'>Deny
+    </td>
+</tr>
+<%end%>
+</table>
 <script>
 
 </script>
