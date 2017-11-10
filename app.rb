@@ -190,7 +190,11 @@ post "/update_emp" do
         elsif choice == "Update"
             redirect "/update_emp_page"
         elsif choice == "Delete"
-            delete_emp(session[:edit_user][0])
+            session[:edit_user].each do |user|
+                delete_emp(user)
+            end            
+            admin_list = admin_emp_list()
+            erb :admin_empmng, locals:{admin_list:admin_list}
         end
     end
 end
@@ -198,22 +202,26 @@ end
 get "/update_emp_page" do
     pay_period = pay_period(Time.new)
     time_table = []
-    users =[]
+    session[:editing_users] =[]
     session[:edit_user].each do |times|
         time_table << pull_in_and_out_times(times,pay_period)
     end
     session[:edit_user].each do |user|
-        users << user_info = emp_info(user)
+        session[:editing_users] << user_info = emp_info(user)
     end
     # p users
     # p time_table
-    erb :admin_emp_updating, locals:{users:users,pay_period:pay_period,time_table:time_table}
+    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
 end
 
 post "/emp_updated" do
-    new_info = params[:info]
+    new_info = params[:info].each_slice(7).to_a
     # p new_info
-    update_user(session[:edit_user][0], new_info)
+    # p session[:edit_user]
+    new_info.each_with_index do |info, index|
+        # p session[:edit_user][index]
+        update_user(session[:edit_user][index], info)
+    end
     admin_list = admin_emp_list()
     erb :admin_empmng, locals:{admin_list:admin_list}
 end
