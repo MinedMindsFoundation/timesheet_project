@@ -22,10 +22,12 @@ Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
 <%end%>
 </tr>
 </table><br>
+<%end%>
 <input type = "submit" value = "Update">
 </form><br>
 
-Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
+<%users.each_with_index do |user, index|%>
+Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%> to <%=pay_period[1]%>
 <table>
 <th>Time in</th>
 <th>Lunch Start</th>
