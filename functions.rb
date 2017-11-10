@@ -367,7 +367,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}. They have #{pto} day to request."
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}. They have #{pto} day to request. <a href= <% > Click here. </a>"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
