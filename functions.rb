@@ -50,7 +50,7 @@ def submit_time_in(user_id,location,time,date)
         }
         db = PG::Connection.new(db_params)
     # db.exec("UPDATE info SET  status= 'in' WHERE user_id = '#{user_id}'")
-    db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,location)VALUES('#{user_id}','#{time}','N/A','N/A','N/A','#{date}','#{location}')")
+    db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time}','N/A','N/A','N/A','#{date}','#{date}','#{location}')")
     db.close
 end
 
@@ -575,9 +575,9 @@ def time_date_fix(user_id,date)
     }
     db = PG::Connection.new(db_params)
     data = []
-    fixer_date =db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND date = '#{date}'").values
+    fixer_date =db.exec("SELECT time_in, lunch_start, lunch_end, time_out, date, date_out, location FROM timesheet_new WHERE user_id = '#{user_id}' AND date = '#{date}'").values
     db.close
-    fixer_date.flatten.each do |item|
+    fixer_date.each do |item|
         data << item
     end
     data

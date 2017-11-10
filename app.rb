@@ -10,7 +10,7 @@ load './local_ENV.rb' if File.exist?('./local_ENV.rb')
 # Initial "get" leads to login page
 get "/" do 
     login_message = params[:login_message]
-    session[:message] = ''
+    session[:message] = '' 
     erb :login, locals:{login_message:login_message}
 end
 
@@ -150,17 +150,21 @@ post "/clock_out" do
 end
 
 post "/add_user" do
-    erb :admin_emplist
+    msg = ""
+    erb :admin_emplist, locals:{msg:msg}
 end
 
 post "/add_to_user_list" do
+    msg="User Added"
     user_id=params[:user_id_new]
     first_name=params[:first_name]
     last_name=params[:last_name]
     email=params[:email]
     admin=params[:admin]
-    add_user(user_id,email,first_name,last_name,"0",admin,"N/A")
-    erb :admin_emplist
+    pto=params[:pto]
+    dot=params[:dot]
+    add_user(user_id,email,first_name,last_name,pto,admin,dot)
+    erb :admin_emplist, locals:{msg:msg}
 end
 
 post "/edit_user" do
@@ -174,12 +178,17 @@ post "/update_emp" do
     choice = params[:choose]
     # p session[:edit_user][0]
     # p choice
-    if choice == "info"
-        redirect "/employee_info"
-    elsif choice == "update"
-        redirect "/update_emp_page"
-    elsif choice == "delete"
-        delete_emp(session[:edit_user][0])
+    if session[:edit_user] == [] || session[:edit_user] == nil
+        admin_list = admin_emp_list()
+        erb :admin_empmng, locals:{admin_list:admin_list}
+    else
+        if choice == "Info"
+            redirect "/employee_info"
+        elsif choice == "Update"
+            redirect "/update_emp_page"
+        elsif choice == "Delete"
+            delete_emp(session[:edit_user][0])
+        end
     end
 end
 
@@ -209,12 +218,17 @@ end
 
 post "/update_timesheet" do
     date_of_fix = params[:time_fix]
-    p date_of_fix
-    p time_date_fix(session[:edit_user][0],date_of_fix)
-    # erb 
+    times_shown = time_date_fix(session[:edit_user][0],date_of_fix)
+    user_info = emp_info(session[:edit_user][0])
+    erb :admin_time_fix, locals:{user_info:user_info,date_of_fix:date_of_fix, times_shown:times_shown}
 end
 
 get "/reload" do
     user_checked = database_emp_checked()
     erb :reload, locals:{user_checked:user_checked}, :layout => :post
+end
+
+post "/to_admin_emplist" do
+    admin_list = admin_emp_list()
+    erb :admin_empmng, locals:{admin_list:admin_list}
 end
