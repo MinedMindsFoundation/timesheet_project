@@ -658,3 +658,26 @@ def pull_pto_request()
     end
     pto_request
 end
+
+def send_email_for_adding_a_new_user(fullname, email) 
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+      end
+        email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'http://localhost:4567'> Click Here . </a>"
+      mail = Mail.new do
+          from         ENV['from']
+          to           email
+          subject      "PTO Request"
+    
+          html_part do
+            content_type 'text/html'
+            body       email_body
+          end
+      end
+      mail.deliver!
+    end
