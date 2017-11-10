@@ -246,6 +246,12 @@ get "/reload" do
     erb :reload, locals:{user_checked:user_checked}, :layout => :post
 end
 
+post "/approval" do
+    approval = params[:approval]
+    approval
+    # submit_pto_approval(approval)
+end
+
 post "/to_admin_emplist" do
     admin_list = admin_emp_list()
     erb :admin_empmng, locals:{admin_list:admin_list}
