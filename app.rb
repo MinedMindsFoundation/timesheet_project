@@ -1,5 +1,6 @@
 require "sinatra"
 require 'pg'
+require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
 require 'net/smtp'
 # require_relative 'login_func'
@@ -109,6 +110,7 @@ post '/pto_email' do
     end_date = params[:end_vac]
     user_info =  database_info(session[:user_id])
     user_pto = pto_time(session[:user_id])
+    pto_request_db_add(session[:user_id],start_date,end_date)
     if user_pto == "0"
         email_for_no_pto(user_info, user_pto)
         session[:pto_message] = "You have no PTO to request."
