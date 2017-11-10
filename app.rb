@@ -103,6 +103,7 @@ post '/vac_time_request' do
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
     cal = GoogleCalendar.new.events
+    create_calendar_event('2017-11-10','2017-11-12','test@test.com','TEST TEST')
     erb :pto_request, locals:{cal:cal,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
