@@ -367,7 +367,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}. They have #{pto} day to request. <a href= <% > Click here. </a>"
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -510,7 +510,7 @@ def email_for_no_pto(full_name, pto)
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]} tried to request days and they have #{pto} day to request."
+        email_body = "#{full_name[0]} #{full_name[1]} tried to request days and they have #{pto}PTO days left to request.<a href= 'http://localhost:4567'> To Reply Click Here . </a>"
       mail = Mail.new do
           from         ENV['from']
           to           'billyjacktattoos@gmail.com'
@@ -581,4 +581,51 @@ def time_date_fix(user_id,date)
         data << item
     end
     data
+end
+
+def email_for_request_approval(full_name, pto, start_vec, end_vac) 
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+      end
+        email_body = "#{full_name[0]} #{full_name[1]} your pto request was approved for the following date #{start_vec} to #{end_vac}. Enjoy you time off."
+      mail = Mail.new do
+          from         ENV['from']
+          to           'billyjacktattoos@gmail.com'
+          subject      "PTO Request with no days to request"
+    
+          html_part do
+            content_type 'text/html'
+            body       email_body
+          end
+      end
+      mail.deliver!
+end
+
+
+def email_for_request_denial(full_name, pto, start_vec, end_vac) 
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+      end
+        email_body = "#{full_name[0]} #{full_name[1]} your pto request was denied for the following date #{start_vec} to #{end_vac}."
+      mail = Mail.new do
+          from         ENV['from']
+          to           'billyjacktattoos@gmail.com'
+          subject      "PTO Request with no days to request"
+    
+          html_part do
+            content_type 'text/html'
+            body       email_body
+          end
+      end
+      mail.deliver!
 end
