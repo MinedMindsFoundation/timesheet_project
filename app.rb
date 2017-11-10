@@ -49,12 +49,12 @@ get "/to_landing" do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     pay_period = pay_period(Time.now.utc)
-    admin_check = database_admin_check(session[:user_id])
+    session[:admin_check] = database_admin_check(session[:user_id])
     user_checked = database_emp_checked()
     # p user_checked
     pay_period = pay_period(Time.new)
     times = pull_in_and_out_times(session[:user_id],pay_period)
-erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check:admin_check, user_checked:user_checked}
+erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check], user_checked:user_checked}
 end
 
 #post comming from landing and records start of lunch
@@ -180,7 +180,7 @@ end
 post "/update_emp" do
     session[:edit_user] = params[:info]
     choice = params[:choose]
-    # p session[:edit_user][0]
+    # p session[:edit_user]
     # p choice
     if session[:edit_user] == [] || session[:edit_user] == nil
         admin_list = admin_emp_list()
@@ -198,10 +198,17 @@ end
 
 get "/update_emp_page" do
     pay_period = pay_period(Time.new)
-    times = pull_in_and_out_times(session[:edit_user][0],pay_period)
-    user_info = emp_info(session[:edit_user][0])
-    # p user_info
-    erb :admin_emp_updating, locals:{user_info:user_info,pay_period:pay_period,times:times}
+    time_table = []
+    users =[]
+    session[:edit_user].each do |times|
+        time_table << pull_in_and_out_times(times,pay_period)
+    end
+    session[:edit_user].each do |user|
+        users << user_info = emp_info(user)
+    end
+    # p users
+    # p time_table
+    erb :admin_emp_updating, locals:{users:users,pay_period:pay_period,time_table:time_table}
 end
 
 post "/emp_updated" do
