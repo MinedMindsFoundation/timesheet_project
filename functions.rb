@@ -643,9 +643,18 @@ def send_email_for_pto_request_approvel(start_vec, end_vac, full_name, pto)
          
     
 def pull_pto_request()
-    pto_requests = db.exec("SELECT user_id,start_date,end_date FROM pto_requests")
-    pto_requests.each do |requests|
-        requests[0] = "#{database_info(request[0])[0]} #{database_info(request[0])[1]}"
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    pto_request = db.exec("SELECT user_id,start_date,end_date FROM pto_requests").values
+    pto_request.each do |requests|
+        names = database_info(requests[0])
+        requests[0] = "#{names[0]} #{names[1]}"
     end
-    pto_request()
+    pto_request
 end

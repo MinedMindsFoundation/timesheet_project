@@ -102,7 +102,8 @@ post '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
-    erb :pto_request, locals:{user_info:user_info, user_email:user_email, user_pto: user_pto}
+    pto_requests = pull_pto_request()
+    erb :pto_request, locals:{pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
