@@ -247,8 +247,7 @@ get "/reload" do
 end
 
 post "/approval" do
-    approval = params[:approval]
-    approval
+    approval = params.values
     # submit_pto_approval(approval)
 end
 
