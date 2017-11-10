@@ -166,6 +166,10 @@ post "/add_to_user_list" do
     admin=params[:admin]
     pto=params[:pto]
     dot=params[:dot]
+    user_info = []
+    user_info << first_name
+    user_info << last_name
+    send_email_for_adding_a_new_user(user_info, email)
     add_user(user_id,email,first_name,last_name,pto,admin,dot)
     erb :admin_emplist, locals:{msg:msg}
 end
