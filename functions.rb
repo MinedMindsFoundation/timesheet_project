@@ -516,11 +516,11 @@ def email_for_no_pto(full_name, pto)
           to           'billyjacktattoos@gmail.com'
           subject      "PTO Request with no days to request"
     
-          html_part do
+        html_part do
             content_type 'text/html'
             body       email_body
-          end
-      end
+        end
+    end
       mail.deliver!
 end
 
