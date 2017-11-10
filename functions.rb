@@ -509,15 +509,9 @@ def email_for_no_pto(full_name, pto)
         :user_name  => ENV['a3smtpuser'],
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
-<<<<<<< HEAD
-    end
-        email_body = "#{full_name[0]} #{full_name[1]} tried to request days and they have #{pto} day to request."
-    mail = Mail.new do
-=======
       end
         email_body = "#{full_name[0]} #{full_name[1]} tried to request days and they have #{pto}PTO days left to request.<a href= 'http://localhost:4567'> To Reply Click Here . </a>"
       mail = Mail.new do
->>>>>>> 941a4c81084125509087b11b14a68501e0ae755a
           from         ENV['from']
           to           'billyjacktattoos@gmail.com'
           subject      "PTO Request with no days to request"
