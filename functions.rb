@@ -367,7 +367,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}. They have #{pto} day to request."
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} #{end_vac}. They have #{pto} day to request. <a href= <% > Click here. </a>"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -581,4 +581,16 @@ def time_date_fix(user_id,date)
         data << item
     end
     data
+end
+
+def  pto_request_db_add(user_id,start_date,end_date)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','pending')")
 end
