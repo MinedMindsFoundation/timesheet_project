@@ -48,9 +48,9 @@
 }
 
 #Iframe-Google-Calendar {
-    max-height: 600px;
-    max-width: 800px;
-    overflow: hidden;
+    max-height: 12vh;
+    max-width: 12vh;
+    overflow: scroll;
 }
 
 

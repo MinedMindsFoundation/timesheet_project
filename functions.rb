@@ -583,7 +583,19 @@ def time_date_fix(user_id,date)
     data
 end
 
-def email_for_request_approval(full_name, pto, start_vec, end_vac) 
+def  pto_request_db_add(user_id,start_date,end_date)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','pending')")
+end
+
+def send_email_for_pto_request_approvel(start_vec, end_vac, full_name, pto) 
     Mail.defaults do
         delivery_method :smtp,
         address: "email-smtp.us-east-1.amazonaws.com",
@@ -592,11 +604,11 @@ def email_for_request_approval(full_name, pto, start_vec, end_vac)
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]} your pto request was approved for the following date #{start_vec} to #{end_vac}. Enjoy you time off."
+        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request. Enjoy you time off."
       mail = Mail.new do
           from         ENV['from']
           to           'billyjacktattoos@gmail.com'
-          subject      "PTO Request with no days to request"
+          subject      "PTO Request"
     
           html_part do
             content_type 'text/html'
@@ -604,28 +616,26 @@ def email_for_request_approval(full_name, pto, start_vec, end_vac)
           end
       end
       mail.deliver!
-end
+    end
 
-
-def email_for_request_denial(full_name, pto, start_vec, end_vac) 
-    Mail.defaults do
-        delivery_method :smtp,
-        address: "email-smtp.us-east-1.amazonaws.com",
-        port: 587,
-        :user_name  => ENV['a3smtpuser'],
-        :password   => ENV['a3smtppass'],
-        :enable_ssl => true
-      end
-        email_body = "#{full_name[0]} #{full_name[1]} your pto request was denied for the following date #{start_vec} to #{end_vac}."
-      mail = Mail.new do
-          from         ENV['from']
-          to           'billyjacktattoos@gmail.com'
-          subject      "PTO Request with no days to request"
-    
-          html_part do
-            content_type 'text/html'
-            body       email_body
+    def send_email_for_pto_request_denial(start_vec, end_vac, full_name, pto) 
+        Mail.defaults do
+            delivery_method :smtp,
+            address: "email-smtp.us-east-1.amazonaws.com",
+            port: 587,
+            :user_name  => ENV['a3smtpuser'],
+            :password   => ENV['a3smtppass'],
+            :enable_ssl => true
           end
-      end
-      mail.deliver!
-end
+            email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request."
+              from         ENV['from']
+              to           'billyjacktattoos@gmail.com'
+              subject      "PTO Request"
+        
+              html_part do
+                content_type 'text/html'
+                body       email_body
+              end
+          end
+          mail.deliver!
+        end
