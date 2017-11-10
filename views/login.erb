@@ -29,10 +29,15 @@
 <input type = "hidden" id = "email" name = "email">
 </form>
 
+<body onload="updateClock(); setInterval('updateClock()',1000)";>
+<span id="clock">&nbsp;</span>
+</body>
+
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src= "js/google_js.js"></script>
 <script src = "js/facebook.js"></script>
+<script src = "/js/clock.js"></script>
 <%end%>
 
 
