@@ -156,7 +156,7 @@ def time_out_check?(user_id)
     end
 end
 
-def database_info(user_id)database_info(user_id)
+def database_info(user_id)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
