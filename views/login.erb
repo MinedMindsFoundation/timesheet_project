@@ -32,7 +32,12 @@
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
 <span id="clock">&nbsp;</span>
 </body>
-
+<p id="date"></p>
+<!--the date func-->
+<script>
+var d = new Date();
+document.getElementById("date").innerHTML = d.toDateString();
+</script>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src= "js/google_js.js"></script>

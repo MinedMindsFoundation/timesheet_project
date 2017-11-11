@@ -102,7 +102,8 @@ post '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
-    erb :pto_request, locals:{user_info:user_info, user_email:user_email, user_pto: user_pto}
+    pto_requests = pull_pto_request()
+    erb :pto_request, locals:{pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
@@ -165,6 +166,10 @@ post "/add_to_user_list" do
     admin=params[:admin]
     pto=params[:pto]
     dot=params[:dot]
+    user_info = []
+    user_info << first_name
+    user_info << last_name
+    send_email_for_adding_a_new_user(user_info, email)
     add_user(user_id,email,first_name,last_name,pto,admin,dot)
     erb :admin_emplist, locals:{msg:msg}
 end
@@ -278,6 +283,11 @@ end
 get "/reload" do
     user_checked = database_emp_checked()
     erb :reload, locals:{user_checked:user_checked}, :layout => :post
+end
+
+post "/approval" do
+    approval = params.values
+    # submit_pto_approval(approval)
 end
 
 post "/to_admin_emplist" do

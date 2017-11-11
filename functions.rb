@@ -516,11 +516,11 @@ def email_for_no_pto(full_name, pto)
           to           'billyjacktattoos@gmail.com'
           subject      "PTO Request with no days to request"
     
-          html_part do
+        html_part do
             content_type 'text/html'
             body       email_body
-          end
-      end
+        end
+    end
       mail.deliver!
 end
 
@@ -669,9 +669,41 @@ def send_email_for_pto_request_approvel(start_vec, end_vac, full_name, pto)
          
     
 def pull_pto_request()
-    pto_requests = db.exec("SELECT user_id,start_date,end_date FROM pto_requests")
-    pto_requests.each do |requests|
-        requests[0] = "#{database_info(request[0])[0]} #{database_info(request[0])[1]}"
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    pto_request = db.exec("SELECT user_id,start_date,end_date FROM pto_requests").values
+    pto_request.each do |requests|
+        names = database_info(requests[0])
+        requests[0] = "#{names[0]} #{names[1]}"
     end
-    pto_request()
+    pto_request
 end
+
+def send_email_for_adding_a_new_user(fullname, email) 
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+      end
+        email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'http://localhost:4567'> Click Here . </a>"
+      mail = Mail.new do
+          from         ENV['from']
+          to           email
+          subject      "PTO Request"
+    
+          html_part do
+            content_type 'text/html'
+            body       email_body
+          end
+      end
+      mail.deliver!
+    end
