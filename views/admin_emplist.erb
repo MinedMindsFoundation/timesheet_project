@@ -1,5 +1,7 @@
-<!-- Admin's Employee List -->
-
+<!-- Admin add a user page -->
+<!--sign out div-->
+<div id="timeout">
+</div>
 <%=msg%>
 
 <h1>Add a User:</h1>
@@ -18,3 +20,23 @@ No<input type="radio" name="admin" value="No" checked><br>
 <form method = "post" action = "return">
 <input type="submit" value="Return">
 </form>
+<meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
+<!--sign out section--><br>
+<!--toggle for sign out button-->
+<%toggle = "social"%>
+<%if toggle == "sso"%>
+    <script src="/js/ssotimeout.js"></script>
+    <body onload="ssoidleTimer()"></body>
+    <%elsif toggle == "social"%>
+    <!--social media section-->
+    <button id = 'sign_out' onclick= 'logout()' hidden>Sign out</button>
+    <!--facebook sign out-->
+    <script src = "/js/facebook.js"></script>
+    <!--google sign out-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src= "js/google_js.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <!--TIME OUT STUFF-->
+    <script src="/js/timeout.js"></script>
+    <body onload="idleTimer()"></body>
+<%end%>
