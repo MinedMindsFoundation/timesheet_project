@@ -232,17 +232,52 @@ end
 
 get "/employee_info" do
     pay_period = pay_period(Time.new)
-    times = pull_in_and_out_times(session[:edit_user][0],pay_period)
-    user_info = emp_info(session[:edit_user][0])
+    time_table = []
+    session[:editing_users] =[]
+    session[:edit_user].each do |times|
+        time_table << pull_in_and_out_times(times,pay_period)
+    end
+    session[:edit_user].each do |user|
+        session[:editing_users] << user_info = emp_info(user)
+    end
     # p user_info
-    erb :emp_info, locals:{user_info:user_info,pay_period:pay_period,times:times}
+    erb :emp_info, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
 end
 
 post "/update_timesheet" do
     date_of_fix = params[:time_fix]
-    times_shown = time_date_fix(session[:edit_user][0],date_of_fix)
-    user_info = emp_info(session[:edit_user][0])
-    erb :admin_time_fix, locals:{user_info:user_info,date_of_fix:date_of_fix, times_shown:times_shown}
+    session[:selected_id] =params[:selected_id]
+    session[:times_shown] = time_date_fix(session[:selected_id],date_of_fix)
+    user_info = emp_info(session[:selected_id])
+    # p session[:times_shown]
+    erb :admin_time_fix, locals:{user_info:user_info,date_of_fix:date_of_fix, times_shown:session[:times_shown]}
+end
+
+post "/update_time_sheet" do
+    choice = params[:choose]
+    selected_time = params[:times].to_i
+    new_time = params[:edited_times].each_slice(7).to_a
+    original_time = session[:times_shown][selected_time]
+    updated_time = new_time[selected_time]
+    if selected_time == nil || selected_time == []
+        admin_list = admin_emp_list()
+        erb :admin_empmng, locals:{admin_list:admin_list}
+    else
+        if choice == "Update"
+            # p session[:times_shown][selected_time]
+            # p new_time[selected_time]
+            # p selected_time
+            timetable_fix(session[:selected_id], original_time[4], original_time[0], new_time[selected_time])
+        elsif choice == "Delete"
+            # p session[:times_shown][selected_time]
+            # p new_time[selected_time]
+            # p updated_time[0]
+            # p updated_time[4]
+            timetable_delete(session[:selected_id], updated_time[4], updated_time[0])
+        end
+        admin_list = admin_emp_list()
+        erb :admin_empmng, locals:{admin_list:admin_list}
+    end
 end
 
 get "/reload" do
@@ -251,8 +286,7 @@ get "/reload" do
 end
 
 post "/approval" do
-    approval = params[:approval]
-    approval
+    approval = params.values
     # submit_pto_approval(approval)
 end
 
