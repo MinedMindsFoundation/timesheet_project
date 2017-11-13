@@ -583,6 +583,32 @@ def time_date_fix(user_id,date)
     data
 end
 
+def timetable_fix(user_id, date, time_in, new_time)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+    db.exec("UPDATE timesheet_new SET time_in = '#{new_time[0]}', lunch_start = '#{new_time[1]}', lunch_end = '#{new_time[1]}', time_out = '#{new_time[3]}', date = '#{new_time[4]}', date_out = '#{new_time[5]}', location='#{new_time[6]}' WHERE user_id='#{user_id}' AND date = '#{date}' AND time_in = '#{time_in}'")
+    db.close
+end
+
+def timetable_delete(user_id, date, time_in)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+    db.exec("DELETE FROM timesheet_new WHERE user_id='#{user_id}' AND date = '#{date}' AND time_in = '#{time_in}'")
+    db.close
+end
+
 def  pto_request_db_add(user_id,start_date,end_date)
     db_params = {
         host: ENV['host'],
@@ -658,3 +684,26 @@ def pull_pto_request()
     end
     pto_request
 end
+
+def send_email_for_adding_a_new_user(fullname, email) 
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+      end
+        email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'http://localhost:4567'> Click Here . </a>"
+      mail = Mail.new do
+          from         ENV['from']
+          to           email
+          subject      "PTO Request"
+    
+          html_part do
+            content_type 'text/html'
+            body       email_body
+          end
+      end
+      mail.deliver!
+    end

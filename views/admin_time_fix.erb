@@ -1,5 +1,7 @@
 Time table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=date_of_fix%>
+<form method="post" action="update_time_sheet">
 <table>
+<th>Select</th>
 <th>Time in</th>
 <th>Lunch Start</th>
 <th>Lunch End</th>
@@ -7,25 +9,22 @@ Time table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=da
 <th>Date</th>
 <th>Date Out</th>
 <th>Location</th>
-<%times_shown.each do |item|%>
+<%times_shown.each_with_index do |item, index|%>
     <tr>
-    <%item.each do |time|%>
-    <td><%if time.length == 5%>
-        <%=time_converter(time)%>
-        <%else%>
-        <%=time%>
-        <%end%>
-    </td>
-    <%end%>
-    </tr>
-    <tr>
+    <td><input type = "radio" name = "times" value = '<%=index%>'></td>
     <%item.each do |time|%>
         <%if time.length == 5%>
-            <td><input type = "text" name = info[] value = "<%=time_converter(time)%>"></td>
+            <td><input type = "text" name = "edited_times[]" value = "<%=time_converter(time)%>"></td>
             <%else%>
-            <td><input type = "text" name = info[] value = "<%=time%>"></td>
+            <td><input type = "text" name = "edited_times[]" value = "<%=time%>"></td>
             <%end%>
         <%end%>
     </tr>
 <%end%>
 </table>
+<input type="submit" name="choose" value="Update">
+<input type="submit" name="choose" value="Delete">
+</form>
+<form method = "post" action = "to_admin_emplist">
+<input type="submit" value="Return">
+</form>

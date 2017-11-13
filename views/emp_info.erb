@@ -1,40 +1,43 @@
-Employee info of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%>:<br><br>
-<table>
-<tr>
-<th>Employee ID</th>
-<th>First Name</th>
-<th>Last Name</th>
-<th>Date Of Hire</th>
-<th>Business Email</th>
-<th>Admin?</th>
-<th>PTO</th>
-</tr>
-<tr>
-<%user_info.each do |item|%>
-    <td><%=item%></td> 
-<%end%>
-</tr>
-</table><br>
-Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
-<table>
-<th>Time in</th>
-<th>Lunch Start</th>
-<th>Lunch End</th>
-<th>Time out</th>
-<th>Date</th>
-<%times.each do |item|%>
-<tr>
-<%item.each do |time|%>
-<td><%if time.length == 5%>
-    <%=time_converter(time)%>
-    <%else%>
-    <%=time%>
+<%users.each_with_index do |user, index|%>
+    Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
+    <table>
+    <tr>
+    <th>Employee ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Date Of Hire</th>
+    <th>Business Email</th>
+    <th>Admin?</th>
+    <th>PTO</th>
+    </tr>
+    <tr>
+    <%user.each do |item|%>
+        <td><%=item%></td> 
     <%end%>
-</td>
-<%end%>
-</tr>
-<%end%>
-</table><br>
-<form method = "post" action = "to_admin_emplist">
-<input type="submit" value="Return">
-</form>
+    </tr>
+    </table><br>
+    
+    Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%> to <%=pay_period[1]%>
+    <table>
+    <th>Time in</th>
+    <th>Lunch Start</th>
+    <th>Lunch End</th>
+    <th>Time out</th>
+    <th>Date</th>
+    <tr>
+    <%time_table[index].each do |item|%>
+    <%item.each do |time|%>
+    <td><%if time.length == 5%>
+        <%=time_converter(time)%>
+        <%else%>
+        <%=time%>
+        <%end%>
+    </td>
+    <%end%>
+    </tr>
+    <%end%>
+    </table><br><br>
+    <%end%>
+    <form method = "post" action = "to_admin_emplist">
+    <input type="submit" value="Return">
+    </form>
