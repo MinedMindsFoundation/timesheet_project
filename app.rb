@@ -287,9 +287,7 @@ end
 
 post "/approval" do
     approval = params.values
-    calendar = GoogleCalendar.new
-    calendar.authorize
-    submit_pto_approval(approval,calendar)
+    submit_pto_approval(approval)
     session[:message] = "request submitted"
     redirect "/to_landing"
 end
