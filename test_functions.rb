@@ -135,5 +135,31 @@ class Test_funcs < Minitest::Test
             assert_equal([2,23,59],x)
         end
 
+    #<!---Vacation time tests--->
+        def test_vac_time_1
+            x = vac_time().class
+            assert_equal(String,x)
+        end   
+        
+        def test_vac_time_2
+            x = vac_time().class
+            assert_equal(String,x)
+        end    
+
+        def test_vac_time_length_1
+            x = vac_time().length
+            assert_equal(10,x)
+        end    
+
+        def test_vac_time_length_2
+            x = vac_time().length
+            assert_equal(10,x)
+        end    
+
+    #<!---submit time in section--->
+        # def test_time_in_1
+        #     submit_time_in(user_id,location,time,date)
+        #     x = time_in_check?(user_id)    
+
     
 end
