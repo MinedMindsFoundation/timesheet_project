@@ -18,7 +18,6 @@
 <% if admin_check == "Yes" %><br>
         Users Checked In:<br>
     <div id="result">
-
         <!--Users who are clocked in-->
         <%user_checked.each do |row|%>
         <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
@@ -41,7 +40,7 @@
 
     <!--Form to see whos clocked in or out-->
     <form method = "post" action = "to_whos_in">
-    <button type = "submit">Employee Status</button>
+    <button type = "submit">Search User</button>
     </form>
 
 <% else %>
