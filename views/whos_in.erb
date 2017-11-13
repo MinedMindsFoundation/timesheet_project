@@ -2,9 +2,6 @@
 <!--sign out div-->
 <div id="timeout">
 </div>
-<table>
-<th>User</th>
-<th>status</th>
 
 <!--  list of all people and in and out status -->
 <link rel= "stylesheet" href = "css/searchbar.css">
@@ -12,13 +9,18 @@
 
 <ul id="myUL">
 <%users[0].each do |user_id|%>
-    <li><a><%=user_id%></a></li>
+    <li><a><%=user_id%> IN</a></li>
+<%end%>
+<%users[1].each do |user_id|%>
+    <li><a><%=user_id%> OUT</a></li>
 <%end%>
 </ul>
-
+<br>
 <form method = "post" action = "return">
 <button type = "submit">Return</button>
 </form>
+
+<script src ="/js/search.js"></script>
 
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 <!--sign out section--><br>
