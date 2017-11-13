@@ -287,7 +287,10 @@ end
 
 post "/approval" do
     approval = params.values
-    # submit_pto_approval(approval)
+    # p approval
+    submit_pto_approval(approval)
+    session[:message] = "request submitted"
+    redirect "/to_landing"
 end
 
 post "/to_admin_emplist" do

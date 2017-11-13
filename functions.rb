@@ -707,3 +707,7 @@ def send_email_for_adding_a_new_user(fullname, email)
       end
       mail.deliver!
     end
+
+    def  submit_pto_approval(approval)
+
+    end
