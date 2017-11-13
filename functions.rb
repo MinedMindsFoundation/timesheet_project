@@ -694,7 +694,7 @@ def send_email_for_adding_a_new_user(fullname, email)
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'http://localhost:4567'> Click Here . </a>"
+        email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'http://localhost:4567'> Click Here to clock in. </a>"
       mail = Mail.new do
           from         ENV['from']
           to           email
