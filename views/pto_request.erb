@@ -49,10 +49,10 @@ You have
     <form method = "post" action = 'approval'>
     <%count = 0%>
     <tr><%pto_requests.each do |item|%>
-        <td><%=item[0]%></td>
+        <td><%=item[3]%></td>
         <td><%=item[1]%></td>
         <td><%=item[2]%></td>
-        <input type = "hidden" value = '<%=itme[0]%>' name  = '<%="info" + "#{count}" + "[]"%>'>>
+        <input type = "hidden" value = '<%=item[0]%>' name  = '<%="info" + "#{count}" + "[]"%>'>
         <input type = "hidden" value = "<%=item[1]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
         <input type = "hidden" value = "<%=item[2]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
         <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>

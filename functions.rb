@@ -3,6 +3,7 @@ require "time"
 require 'pg'
 require 'net/smtp'
 require 'mail'
+require_relative "g_calendar"
 load './local_env.rb' if File.exist?('./local_env.rb')
 
 #gets date & time from system
@@ -621,7 +622,7 @@ def  pto_request_db_add(user_id,start_date,end_date)
     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','pending')")
 end
 
-def send_email_for_pto_request_approvel(start_vec, end_vac, full_name, pto) 
+def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto) 
     Mail.defaults do
         delivery_method :smtp,
         address: "email-smtp.us-east-1.amazonaws.com",
@@ -633,7 +634,7 @@ def send_email_for_pto_request_approvel(start_vec, end_vac, full_name, pto)
         email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request. Enjoy you time off."
       mail = Mail.new do
           from         ENV['from']
-          to           'billyjacktattoos@gmail.com'
+          to           "#{email}"
           subject      "PTO Request"
     
           html_part do
@@ -644,7 +645,7 @@ def send_email_for_pto_request_approvel(start_vec, end_vac, full_name, pto)
       mail.deliver!
     end
 
-    def send_email_for_pto_request_denial(start_vec, end_vac, full_name, pto) 
+    def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto) 
         Mail.defaults do
             delivery_method :smtp,
             address: "email-smtp.us-east-1.amazonaws.com",
@@ -656,7 +657,7 @@ def send_email_for_pto_request_approvel(start_vec, end_vac, full_name, pto)
           mail = Mail.new do
             email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request."
               from         ENV['from']
-              to           'billyjacktattoos@gmail.com'
+              to           '#{email}'
               subject      "PTO Request"
         
               html_part do
@@ -680,7 +681,7 @@ def pull_pto_request()
     pto_request = db.exec("SELECT user_id,start_date,end_date FROM pto_requests").values
     pto_request.each do |requests|
         names = database_info(requests[0])
-        requests[0] = "#{names[0]} #{names[1]}"
+        requests << "#{names[0]} #{names[1]}"
     end
     pto_request
 end
@@ -708,6 +709,28 @@ def send_email_for_adding_a_new_user(fullname, email)
       mail.deliver!
     end
 
-    def  submit_pto_approval(approval)
+    def  submit_pto_approval(approval,calendar)
+        db_params = {
+            host: ENV['host'],
+            port: ENV['port'],
+            dbname: ENV['dbname'],
+            user: ENV['user'],
+            password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
 
+        # p approval
+        approval.each do |item|
+            db.exec("UPDATE pto_requests SET approval = '#{item[4]}' WHERE user_id= '#{item[0]}' AND start_date= '#{item[1]}' AND end_date= '#{item[2]}' ")
+            email = database_email_check(item[0])
+            pto = db.exec("SELECT pto From pto WHERE user_id = '#{item[0]}'")
+            full_name = item[3].split(' ')
+            if item[4] == 'approved'
+                calendar.create_calendar_event(start_date,end_date,email,name)
+                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto)
+            else
+                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto) 
+            end
+        end
+        db.close
     end
