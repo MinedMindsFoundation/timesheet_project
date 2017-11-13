@@ -1,3 +1,6 @@
+<!--sign out div-->
+<div id="timeout">
+</div>
 Time table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=date_of_fix%>
 <form method="post" action="update_time_sheet">
 <table>
@@ -28,3 +31,24 @@ Time table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=da
 <form method = "post" action = "to_admin_emplist">
 <input type="submit" value="Return">
 </form>
+
+<meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
+<!--sign out section--><br>
+<!--toggle for sign out button-->
+<%toggle = "social"%>
+<%if toggle == "sso"%>
+    <script src="/js/ssotimeout.js"></script>
+    <body onload="ssoidleTimer()"></body>
+    <%elsif toggle == "social"%>
+    <!--social media section-->
+    <button id = 'sign_out' onclick= 'logout()' hidden>Sign out</button>
+    <!--facebook sign out-->
+    <script src = "/js/facebook.js"></script>
+    <!--google sign out-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src= "js/google_js.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <!--TIME OUT STUFF-->
+    <script src="/js/timeout.js"></script>
+    <body onload="idleTimer()"></body>
+<%end%>

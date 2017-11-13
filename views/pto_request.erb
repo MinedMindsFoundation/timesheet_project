@@ -1,31 +1,34 @@
+<div id="timeout">
+</div>
+
 <%if session[:admin_check] == "Yes"%>
 
-    <div id="Iframe-Google-Calendar" class="set-margin set-padding set-border set-box-shadow center-block-horiz">
-        <div class="responsive-wrapper responsive-wrapper-padding-bottom-75pct" style="-webkit-overflow-scrolling: touch; overflow: auto;">
-            <iframe src="https://calendar.google.com/calendar/embed?alxfyv%40gmail.com&ctz=America/Chicago">
+<div id="Iframe-Google-Calendar" class="set-margin set-padding set-border set-box-shadow center-block-horiz">
+<div class="responsive-wrapper responsive-wrapper-padding-bottom-75pct" style="-webkit-overflow-scrolling: touch; overflow: auto;">
+<iframe src="https://calendar.google.com/calendar/embed?alxfyv%40gmail.com&ctz=America/Chicago">
                 <p style="font-size: 110%;"><em><strong>ERROR: </strong> 
-</iframe>
+                </iframe>
 </div>
 </div>
 
         <%else%>
-
+        
         <%end%>
 <div>
 <%user_info.each do |row|%>
     <%=row%>
-        <%end%>,
+    <%end%>,
             <br>
             <%=user_email%>
                 <br>
                 <br>
-</div>
+                </div>
 You have
 <%=user_pto%> days to request.
 <br>
 
 <form method="post" action="/pto_email">
-    start of PTO request:
+start of PTO request:
     <input type="date" name="start_vac" min="<%=vac_time%>">
     <br>
     <br> end of PTO request:
@@ -36,7 +39,7 @@ You have
 </form>
 
 <form method= "post" action= "return">
-    <input type= "submit" value= "Return">
+<input type= "submit" value= "Return">
 </form>    
 
 
@@ -67,5 +70,24 @@ You have
 
 <div>
 <script>
-
 </script>
+<meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
+<!--sign out section--><br>
+<!--toggle for sign out button-->
+<%toggle = "social"%>
+<%if toggle == "sso"%>
+    <script src="/js/ssotimeout.js"></script>
+    <body onload="ssoidleTimer()"></body>
+    <%elsif toggle == "social"%>
+    <!--social media section-->
+    <button id = 'sign_out' onclick= 'logout()' hidden>Sign out</button>
+    <!--facebook sign out-->
+    <script src = "/js/facebook.js"></script>
+    <!--google sign out-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src= "js/google_js.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+    <!--TIME OUT STUFF-->
+    <script src="/js/timeout.js"></script>
+    <body onload="idleTimer()"></body>
+<%end%>
