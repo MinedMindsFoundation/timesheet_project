@@ -712,12 +712,6 @@ def send_email_for_adding_a_new_user(fullname, email)
       mail.deliver!
     end
 
-<<<<<<< HEAD
-
-
-
-    
-=======
     def  submit_pto_approval(approval)
         db_params = {
             host: ENV['host'],
@@ -744,4 +738,3 @@ def send_email_for_adding_a_new_user(fullname, email)
         end
         db.close
     end
->>>>>>> 921a57ecb606d0ff5b17009b6fc2904bf48dcf7e
