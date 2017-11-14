@@ -14,7 +14,7 @@ Time table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=da
 <th>Location</th>
 <%times_shown.each_with_index do |item, index|%>
     <tr>
-    <td><input type = "radio" name = "times" value = '<%=index%>'></td>
+    <td><input type = "checkbox" name = "times[]" value = '<%=index%>'></td>
     <%item.each do |time|%>
         <%if time.length == 5%>
             <td><input type = "text" name = "edited_times[]" value = "<%=time_converter(time)%>"></td>
