@@ -226,8 +226,18 @@ post "/emp_updated" do
         # p session[:edit_user][index]
         update_user(session[:edit_user][index], info)
     end
-    admin_list = admin_emp_list()
-    erb :admin_empmng, locals:{admin_list:admin_list}
+    pay_period = pay_period(Time.new)
+    time_table = []
+    session[:editing_users] =[]
+    session[:edit_user].each do |times|
+        time_table << pull_in_and_out_times(times,pay_period)
+    end
+    session[:edit_user].each do |user|
+        session[:editing_users] << user_info = emp_info(user)
+    end
+    # p users
+    # p time_table
+    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
 end
 
 get "/employee_info" do
