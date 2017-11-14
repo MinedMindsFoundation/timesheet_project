@@ -22,9 +22,9 @@ require 'google/apis/calendar_v3'
     @events ||= service.list_events(calendar_id, max_results: 2500).items
   end
 
-  def new_event(start_date,end_date,email,name)
-    create_calendar_event(start_date,end_date,email,name)
-  end
+  # def new_event(start_date,end_date,email,name)
+  #   create_calendar_event(start_date,end_date,email,name)
+  # end
 
 
   def create_calendar_event(start_date,end_date,email,name)
@@ -33,10 +33,10 @@ require 'google/apis/calendar_v3'
         location: '',
         description: '',
         start: {
-          date_time: "#{start_date}T0:00:00-00:00"
+          date: "#{start_date}"
         },
         end: {
-          date_time: "#{end_date}T0:00:00-00:00"
+          date: "#{end_date}"
         },
         # recurrence: [
         #   'RRULE:FREQ=DAILY;COUNT=2'

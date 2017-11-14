@@ -722,18 +722,19 @@ def send_email_for_adding_a_new_user(fullname, email)
             }
             db = PG::Connection.new(db_params)
 
-        # p approval
-        calendar = GoogleCalendar.new
+         p "#{approval}"
         approval.each do |item|
+        p "#{item} item arr here"
             db.exec("UPDATE pto_requests SET approval = '#{item[4]}' WHERE user_id= '#{item[0]}' AND start_date= '#{item[1]}' AND end_date= '#{item[2]}' ")
             email = database_email_check(item[0])
-            pto = db.exec("SELECT pto From pto WHERE user_id = '#{item[0]}'")
+            pto = db.exec("SELECT pto From pto WHERE user_id = '#{item[0]}'").values
             full_name = item[3].split(' ')
             if item[4] == 'approved'
-                calendar.new_event("#{item[1]}","#{item[2]}",email,"#{item[3]}")
-                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto)
+                calendar = GoogleCalendar.new
+                calendar.create_calendar_event("#{item[1]}","#{item[2]}",email,"#{item[3]}")
+                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto.flatten.first)
             else
-                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto) 
+                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto.flatten.first) 
             end
         end
         db.close
