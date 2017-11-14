@@ -42,7 +42,7 @@ require 'google/apis/calendar_v3'
         #   'RRULE:FREQ=DAILY;COUNT=2'
         # ],
         attendees: [
-          {email: "#{email}"}
+          {email: "wvtimeclockdev@gmail.com"}
         ]
         # reminders: {
         #   use_default: false,

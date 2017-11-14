@@ -732,8 +732,9 @@ def send_email_for_adding_a_new_user(fullname, email)
             if item[4] == 'approved'
                 calendar = GoogleCalendar.new
                 calendar.create_calendar_event("#{item[1]}","#{item[2]}",email,"#{item[3]}")
+                p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
                 send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto.flatten.first)
-            else
+            elsif item[4] == "denied"
                 send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto.flatten.first) 
             end
         end
