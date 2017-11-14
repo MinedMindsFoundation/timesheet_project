@@ -22,6 +22,40 @@ require 'google/apis/calendar_v3'
     @events ||= service.list_events(calendar_id, max_results: 2500).items
   end
 
+  def new_event(start_date,end_date,email,name)
+    create_calendar_event(start_date,end_date,email,name)
+  end
+
+
+  def create_calendar_event(start_date,end_date,email,name)
+    event = Google::Apis::CalendarV3::Event.new({
+        summary: "#{name}'s Paid Time Off",
+        location: '',
+        description: '',
+        start: {
+          date_time: "#{start_date}T0:00:00-00:00"
+        },
+        end: {
+          date_time: "#{end_date}T0:00:00-00:00"
+        },
+        # recurrence: [
+        #   'RRULE:FREQ=DAILY;COUNT=2'
+        # ],
+        attendees: [
+          {email: "#{email}"}
+        ]
+        # reminders: {
+        #   use_default: false,
+        #   overrides: [
+        #     {'method' => 'email', 'minutes': 24 * 60},
+        #     {'method' => 'popup', 'minutes': 10},
+        #   ],
+        # },
+      })
+      
+      result = service.insert_event('primary', event)
+      puts "Event created: #{result.html_link}"
+    end
 
 private
 
@@ -42,35 +76,7 @@ private
     @service = calendar
   end
 
- def create_calendar_event(start_date,end_date,email,name)
-    event = Google::Apis::CalendarV3::Event.new({
-        summary: "#{name}'s Paid Time Off",
-        location: '',
-        description: '',
-        start: {
-          date_time: "#{start_date}T0:00:00-0:00"
-        },
-        end: {
-          date_time: "#{end_date}T0:00:00-00:00"
-        },
-        # recurrence: [
-        #   'RRULE:FREQ=DAILY;COUNT=2'
-        # ],
-        attendees: [
-          {email: "#{email}"}
-        ]
-        # reminders: {
-        #   use_default: false,
-        #   overrides: [
-        #     {'method' => 'email', 'minutes': 24 * 60},
-        #     {'method' => 'popup', 'minutes': 10},
-        #   ],
-        # },
-      })
-      
-      result = client.insert_event('primary', event)
-      puts "Event created: #{result.html_link}"
-    end
+
 end
 
 
