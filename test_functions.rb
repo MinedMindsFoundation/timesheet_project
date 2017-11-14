@@ -1,5 +1,6 @@
 require "minitest/autorun"
 require_relative 'functions.rb'
+load './local_env.rb' if File.exist?('./local_env.rb')
 
 class Test_funcs < Minitest::Test
     
@@ -157,9 +158,34 @@ class Test_funcs < Minitest::Test
         end    
 
     #<!---submit time in section--->
-        # def test_time_in_1
-        #     submit_time_in(user_id,location,time,date)
-        #     x = time_in_check?(user_id)    
+        def test_time_in_1
+            submit_time_in("TESTID","Clendenin","10:52","11/13/2017")
+            x = time_in_check?("TESTID")    
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID' AND time_out = '10:52'")
+            assert_equal(false,x)
+        end
 
+        def test_time_in_2
+            submit_time_in("TESTID","Clendenin","1:48","11/13/2017")
+            x = time_in_check?("TESTID")    
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID'")
+            assert_equal(false,x)
+        end
     
 end
