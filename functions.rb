@@ -648,70 +648,70 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
       mail.deliver!
     end
 
-    def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto) 
-        Mail.defaults do
-            delivery_method :smtp,
-            address: "email-smtp.us-east-1.amazonaws.com",
-            port: 587,
-            :user_name  => ENV['a3smtpuser'],
-            :password   => ENV['a3smtppass'],
-            :enable_ssl => true
-          end
-          mail = Mail.new do
-            email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request."
-              from         ENV['from']
-              to           email
-              subject      "PTO Request"
-        
-              html_part do
-                content_type 'text/html'
-                body       email_body
-              end
-            end
-            mail.deliver!
-        end
-         
-    
+def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto) 
+Mail.defaults do
+delivery_method :smtp,
+address: "email-smtp.us-east-1.amazonaws.com",
+port: 587,
+:user_name  => ENV['a3smtpuser'],
+:password   => ENV['a3smtppass'],
+:enable_ssl => true
+end
+mail = Mail.new do
+email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request."
+from         ENV['from']
+to           email
+subject      "PTO Request"
+
+html_part do
+content_type 'text/html'
+body       email_body
+end
+end
+mail.deliver!
+end
+
+
 def pull_pto_request()
-    db_params = {
-        host: ENV['host'],
-        port: ENV['port'],
-        dbname: ENV['dbname'],
-        user: ENV['user'],
-        password: ENV['password']
-        }
-        db = PG::Connection.new(db_params)
-    pto_request = db.exec("SELECT user_id,start_date,end_date FROM pto_requests").values
-    pto_request.each do |requests|
-        names = database_info(requests[0])
-        requests << "#{names[0]} #{names[1]}"
-    end
-    pto_request
+db_params = {
+host: ENV['host'],
+port: ENV['port'],
+dbname: ENV['dbname'],
+user: ENV['user'],
+password: ENV['password']
+}
+db = PG::Connection.new(db_params)
+pto_request = db.exec("SELECT user_id,start_date,end_date FROM pto_requests WHERE approval = 'pending'").values
+pto_request.each do |requests|
+names = database_info(requests[0])
+requests << "#{names[0]} #{names[1]}"
+end
+pto_request
 end
 
 def send_email_for_adding_a_new_user(fullname, email) 
     Mail.defaults do
-        delivery_method :smtp,
-        address: "email-smtp.us-east-1.amazonaws.com",
-        port: 587,
-        :user_name  => ENV['a3smtpuser'],
-        :password   => ENV['a3smtppass'],
-        :enable_ssl => true
-      end
-        email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'http://localhost:4567'> Click Here to clock in. </a>"
-      mail = Mail.new do
-          from         ENV['from']
-          to           email
-          subject      "PTO Request"
-    
-          html_part do
+    delivery_method :smtp,
+    address: "email-smtp.us-east-1.amazonaws.com",
+    port: 587,
+    :user_name  => ENV['a3smtpuser'],
+    :password   => ENV['a3smtppass'],
+    :enable_ssl => true
+    end
+    email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'http://localhost:4567'> Click Here to clock in. </a>"
+    mail = Mail.new do
+        from         ENV['from']
+        to           email
+        subject      "PTO Request"
+
+        html_part do
             content_type 'text/html'
             body       email_body
-          end
-      end
-      mail.deliver!
+        end
     end
-
+    mail.deliver!
+end
+        
     def  submit_pto_approval(approval)
         db_params = {
             host: ENV['host'],
@@ -722,7 +722,7 @@ def send_email_for_adding_a_new_user(fullname, email)
             }
             db = PG::Connection.new(db_params)
 
-         p "#{approval}"
+            p "#{approval}"
         approval.each do |item|
         p "#{item} item arr here"
             db.exec("UPDATE pto_requests SET approval = '#{item[4]}' WHERE user_id= '#{item[0]}' AND start_date= '#{item[1]}' AND end_date= '#{item[2]}' ")
@@ -740,3 +740,17 @@ def send_email_for_adding_a_new_user(fullname, email)
         end
         db.close
     end
+
+def get_users_pto_request(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+        user_pto = db.exec("SELECT start_date,end_date,approval FROM pto_request WHERE user_id = '#{user_id}'").values
+        db.close
+    user_pto
+end

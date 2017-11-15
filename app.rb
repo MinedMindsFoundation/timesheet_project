@@ -99,6 +99,10 @@ end
 
 #post coming from landing page for vac request
 post '/vac_time_request' do
+    redirect "/vac_time_request"
+end
+
+get '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
@@ -316,7 +320,7 @@ post "/approval" do
     approval = params.values
     submit_pto_approval(approval)
     session[:message] = "request submitted"
-    redirect "/to_landing"
+    redirect "/vac_time_request"
 end
 
 post "/to_admin_emplist" do
