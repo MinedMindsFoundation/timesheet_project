@@ -754,3 +754,16 @@ def get_users_pto_request(user_id)
         db.close
     user_pto
 end
+
+def time_out_lunch_check?(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+    check = db.exec("SELECT * FROM timesheet_new WHERE lunch_start != 'N/A' AND lunch_end = 'N/A' AND time_out = 'N/A' ")
+        check.num_tuples.zero?
+end

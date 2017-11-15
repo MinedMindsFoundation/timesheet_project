@@ -134,7 +134,7 @@ end
 # post comming from landing page
 post "/clock_in" do
     location = params[:location]
-    p location
+    # p location
     if time_in_check?(session[:user_id])
         time = get_time()
         submit_time_in(session[:user_id],location,time[0],time[1])
@@ -147,12 +147,14 @@ post "/clock_in" do
 
 # post comming from landing page
 post "/clock_out" do
-    if time_out_check?(session[:user_id])
+    if time_out_check?(session[:user_id]) && time_out_lunch_check?(session[:user_id])
         time = get_time()
         submit_time_out(session[:user_id],time[0],time[1])
         session[:message] = "Time Out Submitted"
+    elsif time_out_lunch_check?(session[:user_id])
+        session[:message] =  "Unable to Submit Action"
     else
-        session[:message] =  "Already Submitted Time Out"
+        session[:message] = "Unable to Submit Action"
     end
     redirect "/to_landing"
 end
