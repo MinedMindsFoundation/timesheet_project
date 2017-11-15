@@ -268,8 +268,18 @@ post "/update_time_sheet" do
     selected_time = params[:times]
     new_time = params[:edited_times].each_slice(7).to_a
     if selected_time == nil || selected_time == []
-        admin_list = admin_emp_list()
-        erb :admin_empmng, locals:{admin_list:admin_list}
+        pay_period = pay_period(Time.new)
+        time_table = []
+        session[:editing_users] =[]
+        session[:edit_user].each do |times|
+            time_table << pull_in_and_out_times(times,pay_period)
+        end
+        session[:edit_user].each do |user|
+            session[:editing_users] << user_info = emp_info(user)
+        end
+        # p users
+        # p time_table
+        erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
     else
         if choice == "Update"
             # p session[:times_shown]
