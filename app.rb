@@ -48,13 +48,14 @@ post '/logout' do
 get "/to_landing" do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
-    pay_period = pay_period(Time.now.utc)
+    # pay_period = pay_period(Time.now.utc)
     session[:admin_check] = database_admin_check(session[:user_id])
     user_checked = database_emp_checked()
     # p user_checked
     pay_period = pay_period(Time.new)
     times = pull_in_and_out_times(session[:user_id],pay_period)
-erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check], user_checked:user_checked}
+    todays_time = pull_in_and_out_times(session[:user_id],[DateTime.now.strftime('%Y-%m-%d'),DateTime.now.strftime('%Y-%m-%d')])
+erb :landing, locals:{todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check], user_checked:user_checked}
 end
 
 #post comming from landing and records start of lunch
@@ -134,7 +135,7 @@ end
 # post comming from landing page
 post "/clock_in" do
     location = params[:location]
-    p location
+    # p location
     if time_in_check?(session[:user_id])
         time = get_time()
         submit_time_in(session[:user_id],location,time[0],time[1])
@@ -147,12 +148,14 @@ post "/clock_in" do
 
 # post comming from landing page
 post "/clock_out" do
-    if time_out_check?(session[:user_id])
+    if time_out_check?(session[:user_id]) && time_out_lunch_check?(session[:user_id])
         time = get_time()
         submit_time_out(session[:user_id],time[0],time[1])
         session[:message] = "Time Out Submitted"
+    elsif time_out_lunch_check?(session[:user_id])
+        session[:message] =  "Unable to Submit Action"
     else
-        session[:message] =  "Already Submitted Time Out"
+        session[:message] = "Unable to Submit Action"
     end
     redirect "/to_landing"
 end
@@ -273,8 +276,18 @@ post "/update_time_sheet" do
     selected_time = params[:times]
     new_time = params[:edited_times].each_slice(7).to_a
     if selected_time == nil || selected_time == []
-        admin_list = admin_emp_list()
-        erb :admin_empmng, locals:{admin_list:admin_list}
+        pay_period = pay_period(Time.new)
+        time_table = []
+        session[:editing_users] =[]
+        session[:edit_user].each do |times|
+            time_table << pull_in_and_out_times(times,pay_period)
+        end
+        session[:edit_user].each do |user|
+            session[:editing_users] << user_info = emp_info(user)
+        end
+        # p users
+        # p time_table
+        erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
     else
         if choice == "Update"
             # p session[:times_shown]
