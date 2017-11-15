@@ -303,7 +303,7 @@ class Test_funcs < Minitest::Test
                 password: ENV['password']
             }
             db = PG::Connection.new(db_params)
-            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID'")
+            db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID'")
             db.close
             assert_equal(false,x)
         end
@@ -319,10 +319,66 @@ class Test_funcs < Minitest::Test
                 password: ENV['password']
             }
             db = PG::Connection.new(db_params)
-            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'jim'")
+            db.exec("Delete FROM timesheet_new WHERE user_id = 'jim'")
             db.close
             assert_equal(false,x)
         end
+
+
+    #<!---test time out check section--->
+        def test_time_out_check_1
+            submit_time_in("bill","Clendenin","9:00 am","11/14/2017")
+            submit_time_out("bill","5:00 pm","11/14/2017")
+            x = time_out_check?("bill")
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("Delete FROM timesheet_new WHERE user_id = 'bill'")
+            db.close
+            assert_equal(false,x) 
+        end 
+        
+        def test_time_out_check_2
+            submit_time_in("hank","Clendenin","11:00 am","11/18/2017")
+            submit_time_out("hank","10:00 pm","11/18/2017")
+            x = time_out_check?("hank")
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("Delete FROM timesheet_new WHERE user_id = 'hank'")
+            db.close
+            assert_equal(false,x) 
+        end
+
+        #<!---test adim check--->
+            def test_admin_check_1
+                add_user("gregid","greg@email.com","greg","gerg","5","No","11/14/2017")
+                x = database_admin_check("gregid")
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                    }
+                    db = PG::Connection.new(db_params)
+                    db.exec("Delete FROM info_new WHERE user_id = 'gregid'")  
+                    db.exec("Delete FROM pto WHERE user_id = 'gregid'")
+                    db.exec("Delete FROM admin_status WHERE user_id = 'gregid'")
+                    db.exec("Delete FROM email WHERE user_id = 'gregid'")
+                    db.close
+                    assert_equal("No",x)
+            end        
 
     
 end

@@ -648,32 +648,6 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
       mail.deliver!
     end
 
-<<<<<<< HEAD
-    def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto) 
-        Mail.defaults do
-            delivery_method :smtp,
-            address: "email-smtp.us-east-1.amazonaws.com",
-            port: 587,
-            :user_name  => ENV['a3smtpuser'],
-            :password   => ENV['a3smtppass'],
-            :enable_ssl => true
-        end
-        mail = Mail.new do
-            email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request."
-              from         ENV['from']
-              to           email
-              subject      "PTO Request"
-        
-            html_part do
-                content_type 'text/html'
-                body       email_body
-            end
-        end
-        mail.deliver!
-    end
-         
-    
-=======
 def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto) 
 Mail.defaults do
 delivery_method :smtp,
@@ -698,7 +672,6 @@ mail.deliver!
 end
 
 
->>>>>>> e37b266df1bca4dfff0521810a038ab174a2b0ed
 def pull_pto_request()
 db_params = {
 host: ENV['host'],
