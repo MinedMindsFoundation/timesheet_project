@@ -48,13 +48,14 @@ post '/logout' do
 get "/to_landing" do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
-    pay_period = pay_period(Time.now.utc)
+    # pay_period = pay_period(Time.now.utc)
     session[:admin_check] = database_admin_check(session[:user_id])
     user_checked = database_emp_checked()
     # p user_checked
     pay_period = pay_period(Time.new)
     times = pull_in_and_out_times(session[:user_id],pay_period)
-erb :landing, locals:{pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check], user_checked:user_checked}
+    todays_time = pull_in_and_out_times(session[:user_id],[DateTime.now.strftime('%Y-%m-%d'),DateTime.now.strftime('%Y-%m-%d')])
+erb :landing, locals:{todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check], user_checked:user_checked}
 end
 
 #post comming from landing and records start of lunch

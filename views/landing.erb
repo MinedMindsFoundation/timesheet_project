@@ -15,6 +15,29 @@
         <%end%>, welcome back!<br>
         <%=user_email%><br>
     </div>
+
+Today's Time
+     <table> 
+            <th>Time in</th>
+            <th>Lunch Start</th>
+            <th>Lunch End</th>
+            <th>Time out</th>
+            <th>Date</th>
+            <%todays_time.each do |item|%>
+            <tr>
+            <%item.each do |time|%>
+            <td><%if time.length == 5%>
+                <%=time_converter(time)%>
+                <%else%>
+                <%=time%>
+                <%end%>
+            </td>
+            <%end%>
+            </tr>
+            <%end%>
+            </table>
+
+
 <% if admin_check == "Yes" %><br>
         Users Checked In:<br>
     <div id="result">
