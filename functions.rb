@@ -656,20 +656,20 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
             :user_name  => ENV['a3smtpuser'],
             :password   => ENV['a3smtppass'],
             :enable_ssl => true
-          end
-          mail = Mail.new do
+        end
+        mail = Mail.new do
             email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request."
               from         ENV['from']
               to           email
               subject      "PTO Request"
         
-              html_part do
+            html_part do
                 content_type 'text/html'
                 body       email_body
-              end
             end
-            mail.deliver!
         end
+        mail.deliver!
+    end
          
     
 def pull_pto_request()

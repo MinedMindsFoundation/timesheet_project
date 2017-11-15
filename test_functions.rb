@@ -169,11 +169,28 @@ class Test_funcs < Minitest::Test
                 password: ENV['password']
             }
             db = PG::Connection.new(db_params)
-            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID' AND time_out = '10:52'")
+            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID' AND time_out = '11:15'")
+            db.close
             assert_equal(false,x)
         end
 
         def test_time_in_2
+            submit_time_in("TESTID","Clendenin","12:02","11/14/2017")
+            x = time_in_check?("TESTID")    
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID'")
+            db.close
+            assert_equal(false,x)
+        end
+
+        def test_time_in_3
             submit_time_in("TESTID","Clendenin","1:48","11/13/2017")
             x = time_in_check?("TESTID")    
             db_params = {
@@ -185,7 +202,127 @@ class Test_funcs < Minitest::Test
             }
             db = PG::Connection.new(db_params)
             check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID'")
+            db.close
             assert_equal(false,x)
         end
+
+        #<!---submit time out section--->
+        def test_time_ou_1
+            submit_time_in("TESTID","Clendenin","1:48","11/13/2017")
+            submit_time_out("TESTID","3:52","11/13/2017")
+            x = time_out_check?("TESTID")    
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID'")
+            db.close
+            assert_equal(false,x)
+        end  
+        
+        def test_time_ou_2
+            submit_time_in("TESTID","Clendenin","9:00 am","11/13/2017")
+            submit_time_out("TESTID","5:00 pm","11/13/2017")
+            x = time_out_check?("TESTID")    
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID'")
+            db.close
+            assert_equal(false,x)
+        end  
+
+        #<!---getting user id section--->
+        def test_get_id_1
+            x = get_id("TEST@email.com")
+            assert_equal("TESTID",x)
+        end  
+        
+        def test_get_id_2
+            x = get_id("test@email")
+            assert_equal("test",x)
+        end 
+
+        #<!---test add user--->
+        def test_add_user_1
+            add_user("usertest","email@email.com","tester1","test","5","No","11/14/2017")
+            x = get_id("email@email.com")
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+                }
+                db = PG::Connection.new(db_params)
+                db.exec("Delete FROM info_new WHERE user_id = 'usertest'")  
+                db.exec("Delete FROM pto WHERE user_id = 'usertest'")
+                db.exec("Delete FROM admin_status WHERE user_id = 'usertest'")
+                db.exec("Delete FROM email WHERE user_id = 'usertest'")
+                db.close
+                assert_equal("usertest", x)
+            end  
+            
+            def test_add_user_2
+                add_user("fellerid","feller@email.com","feller","rellef","5","No","11/14/2017")
+                x = get_id("feller@email.com")
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                    }
+                    db = PG::Connection.new(db_params)
+                    db.exec("Delete FROM info_new WHERE user_id = 'fellerid'")  
+                    db.exec("Delete FROM pto WHERE user_id = 'fellerid'")
+                    db.exec("Delete FROM admin_status WHERE user_id = 'fellerid'")
+                    db.exec("Delete FROM email WHERE user_id = 'fellerid'")
+                    db.close
+                    assert_equal("fellerid", x)
+                end        
+    
+        #<!---test check time in section--->4
+        def test_check_time_in_1
+            submit_time_in("TESTID","Clendenin","12:02","11/14/2017")
+            x = time_in_check?("TESTID")    
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'TESTID'")
+            db.close
+            assert_equal(false,x)
+        end
+
+        def test_check_time_in_2
+            submit_time_in("jim","Clendenin","12:02","11/14/2017")
+            x = time_in_check?("jim")    
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            check = db.exec("Delete FROM timesheet_new WHERE user_id = 'jim'")
+            db.close
+            assert_equal(false,x)
+        end
+
     
 end
