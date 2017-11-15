@@ -5,3 +5,46 @@ iframe:focus {
 iframe[seamless] {
     display: block;
 }
+
+#box2 {
+    background-color: whitesmoke;
+    border-style: solid;
+    border-color: black;
+    padding: auto;
+    border-radius: 3vh;
+    margin-right: 35%;
+    margin-left: 35%;
+    margin-top: 0%;
+    text-align: center;
+}
+
+#box {
+    background-color: rgba(0, 0, 139, 0.33);
+    border-style: solid;
+    border-color: transparent;
+    padding: auto;
+    border-radius: 3vh;
+    margin-right: 35%;
+    margin-left: 35%;
+    margin-top: 0%;
+    text-align: top right;
+}
+
+.back_gr {
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pad {
+    padding-left: 70%;
+}
+
+.boarder {
+    border-top-right-radius: 50%;
+}
+
+.google_button {
+    height: 1vh;
+    width: 3vh;
+}

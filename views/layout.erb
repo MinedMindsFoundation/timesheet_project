@@ -1,22 +1,26 @@
-
-
-<head>
+<!doctype html>
 <link rel= "stylesheet" href = "css/style.css">
+<head><img src="/img/logo.jpg" width="200" height="150"></head>
+<header class= "boarder">
+<span id="clock">&nbsp;</span> <span id="date"></span>
+</header>
+<center><h1>Time Clock</h1></center>
 
-<img src="/img/logo.jpg" width="200" height="150"> <center><h1>Time Clock</h1></center>
-
-</head>
-
-
-<body>
-
-<%=yield%>
+<body class = "back_gr"  onload="updateClock(); setInterval('updateClock()',1000)";>
 </body>
+<%=yield%>
+
 
 <center><footer>
-<p> Vist Our GitHub</p>
+<div id = "box2"> Vist Our GitHub
 <a href = "https://github.com/billyjack1988" target = "_blank"> Billyjack</a>
 <a href = "https://github.com/garrekmontantez" target = "_blank"> Garrek</a>
 <a href = "https://github.com/ldeems" target = "_blank"> Luke</a>
 <a href = "https://github.com/scstew" target = "_blank"> Scott</a>
+</div>
 </footer></center>
+<script src = "/js/clock.js"></script>
+<script>
+    var d = new Date();
+    document.getElementById("date").innerHTML = d.toDateString();
+</script>
