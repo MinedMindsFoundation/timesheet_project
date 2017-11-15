@@ -99,11 +99,16 @@ end
 
 #post coming from landing page for vac request
 post '/vac_time_request' do
+    redirect "/vac_time_request"
+end
+
+get '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
     pto_requests = pull_pto_request()
-    erb :pto_request, locals:{pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
+    user_pto_request = get_users_pto_request(session[:user_id])
+    erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
@@ -226,8 +231,18 @@ post "/emp_updated" do
         # p session[:edit_user][index]
         update_user(session[:edit_user][index], info)
     end
-    admin_list = admin_emp_list()
-    erb :admin_empmng, locals:{admin_list:admin_list}
+    pay_period = pay_period(Time.new)
+    time_table = []
+    session[:editing_users] =[]
+    session[:edit_user].each do |times|
+        time_table << pull_in_and_out_times(times,pay_period)
+    end
+    session[:edit_user].each do |user|
+        session[:editing_users] << user_info = emp_info(user)
+    end
+    # p users
+    # p time_table
+    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
 end
 
 get "/employee_info" do
@@ -255,28 +270,45 @@ end
 
 post "/update_time_sheet" do
     choice = params[:choose]
-    selected_time = params[:times].to_i
+    selected_time = params[:times]
     new_time = params[:edited_times].each_slice(7).to_a
-    original_time = session[:times_shown][selected_time]
-    updated_time = new_time[selected_time]
     if selected_time == nil || selected_time == []
         admin_list = admin_emp_list()
         erb :admin_empmng, locals:{admin_list:admin_list}
     else
         if choice == "Update"
-            # p session[:times_shown][selected_time]
-            # p new_time[selected_time]
+            # p session[:times_shown]
+            # p new_time
             # p selected_time
-            timetable_fix(session[:selected_id], original_time[4], original_time[0], new_time[selected_time])
+            selected_time.each do |position|
+                positions = position.to_i
+                # p positions
+                # p new_time[positions]
+                original_time = session[:times_shown][positions]
+                # p original_time
+                # p original_time[0]
+                # p original_time[4]
+            timetable_fix(session[:selected_id], original_time[4], original_time[0], new_time[positions])
+            end
         elsif choice == "Delete"
-            # p session[:times_shown][selected_time]
-            # p new_time[selected_time]
-            # p updated_time[0]
-            # p updated_time[4]
-            timetable_delete(session[:selected_id], updated_time[4], updated_time[0])
+            selected_time.each do |position|
+                positions = position.to_i
+                original_time = session[:times_shown][positions]
+                timetable_delete(session[:selected_id], original_time[4], original_time[0])
+            end
         end
-        admin_list = admin_emp_list()
-        erb :admin_empmng, locals:{admin_list:admin_list}
+        pay_period = pay_period(Time.new)
+        time_table = []
+        session[:editing_users] =[]
+        session[:edit_user].each do |times|
+            time_table << pull_in_and_out_times(times,pay_period)
+        end
+        session[:edit_user].each do |user|
+            session[:editing_users] << user_info = emp_info(user)
+        end
+        # p users
+        # p time_table
+        erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
     end
 end
 
@@ -289,7 +321,7 @@ post "/approval" do
     approval = params.values
     submit_pto_approval(approval)
     session[:message] = "request submitted"
-    redirect "/to_landing"
+    redirect "/vac_time_request"
 end
 
 post "/to_admin_emplist" do

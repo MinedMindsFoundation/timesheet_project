@@ -9,10 +9,10 @@
 
 <ul id="myUL">
 <%users[0].each do |user_id|%>
-    <li><a><%=user_id%> IN</a></li>
+    <li><a><%=user_id.capitalize%> IN</a></li>
 <%end%>
 <%users[1].each do |user_id|%>
-    <li><a><%=user_id%> OUT</a></li>
+    <li><a><%=user_id.capitalize%> OUT</a></li>
 <%end%>
 </ul>
 <br>
