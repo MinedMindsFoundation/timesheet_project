@@ -750,7 +750,7 @@ def get_users_pto_request(user_id)
         password: ENV['password']
         }
         db = PG::Connection.new(db_params)
-        user_pto = db.exec("SELECT start_date,end_date,approval FROM pto_request WHERE user_id = '#{user_id}'").values
+        user_pto = db.exec("SELECT start_date,end_date,approval FROM pto_requests WHERE user_id = '#{user_id}'").values
         db.close
     user_pto
 end

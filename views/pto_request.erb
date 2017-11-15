@@ -49,7 +49,7 @@ start of PTO request:
     <th>start</th>
     <th>end</th>
     <th>status</th>
- <%pto_requests.each do |item|%>
+ <%user_pto_request.each do |item|%>
         <%if item[0] == session[:user_id]%>
             <tr>
                 <td><%=item[1]%></td>
@@ -60,7 +60,7 @@ start of PTO request:
     <%end%>
 </table>
 
-<%if pto_requests.flatten.include?('pending') == true && session[:admin_check] = "YES"%>
+<%if session[:admin_check] = "Yes"%>
     <div>
         <table>
         <th>Name</th>
@@ -70,19 +70,17 @@ start of PTO request:
         <form method = "post" action = 'approval'>
         <%count = 0%>
         <%pto_requests.each do |item|%>
-            <%if item[3] == 'pending'%>
                 <tr>
-                    <td><%=item[4]%></td>
+                    <td><%=item[3]%></td>
                     <td><%=item[1]%></td>
                     <td><%=item[2]%></td>
                     <input type = "hidden" value = '<%=item[0]%>' name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[1]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[2]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
-                    <input type = "hidden" value = "<%=item[4]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
+                    <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="approved"%>'>Approve</td>
                     <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="denied"%>'>Deny</td>
                 </tr>
-            <%end%>
         <%count += 1%>
         <%end%>
         </table>
