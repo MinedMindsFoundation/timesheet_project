@@ -99,11 +99,16 @@ end
 
 #post coming from landing page for vac request
 post '/vac_time_request' do
+    redirect "/vac_time_request"
+end
+
+get '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
     pto_requests = pull_pto_request()
-    erb :pto_request, locals:{pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
+    user_pto_request = get_users_pto_request(session[:user_id])
+    erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
@@ -129,7 +134,7 @@ end
 # post comming from landing page
 post "/clock_in" do
     location = params[:location]
-    p location
+    # p location
     if time_in_check?(session[:user_id])
         time = get_time()
         submit_time_in(session[:user_id],location,time[0],time[1])
@@ -142,12 +147,14 @@ post "/clock_in" do
 
 # post comming from landing page
 post "/clock_out" do
-    if time_out_check?(session[:user_id])
+    if time_out_check?(session[:user_id]) && time_out_lunch_check?(session[:user_id])
         time = get_time()
         submit_time_out(session[:user_id],time[0],time[1])
         session[:message] = "Time Out Submitted"
+    elsif time_out_lunch_check?(session[:user_id])
+        session[:message] =  "Unable to Submit Action"
     else
-        session[:message] =  "Already Submitted Time Out"
+        session[:message] = "Unable to Submit Action"
     end
     redirect "/to_landing"
 end
@@ -326,7 +333,7 @@ post "/approval" do
     approval = params.values
     submit_pto_approval(approval)
     session[:message] = "request submitted"
-    redirect "/to_landing"
+    redirect "/vac_time_request"
 end
 
 post "/to_admin_emplist" do
