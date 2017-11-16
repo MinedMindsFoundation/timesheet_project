@@ -5,3 +5,8 @@ iframe:focus {
 iframe[seamless] {
     display: block;
 }
+
+.googlesignin{
+    height: 4vh;
+    width: 4vw;
+}
