@@ -212,7 +212,7 @@ def database_emp_checked()
     end
     db.close
     next_checked = user_checked.flatten
-    next_checked.each_slice(5)
+    next_checked.each_slice(5).to_a
 end
 
 def database_email_check(user_id)
