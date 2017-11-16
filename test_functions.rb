@@ -273,7 +273,7 @@ class Test_funcs < Minitest::Test
             end  
             
             def test_add_user_2
-                add_user("fellerid","feller@email.com","feller","rellef","5","No","11/14/2017")
+                add_user("testid2134","feller@email.com","feller","rellef","5","No","11/14/2017")
                 x = get_id("feller@email.com")
                 db_params = {
                     host: ENV['host'],
@@ -283,12 +283,12 @@ class Test_funcs < Minitest::Test
                     password: ENV['password']
                     }
                     db = PG::Connection.new(db_params)
-                    db.exec("Delete FROM info_new WHERE user_id = 'fellerid'")  
-                    db.exec("Delete FROM pto WHERE user_id = 'fellerid'")
-                    db.exec("Delete FROM admin_status WHERE user_id = 'fellerid'")
-                    db.exec("Delete FROM email WHERE user_id = 'fellerid'")
+                    db.exec("Delete FROM info_new WHERE user_id = 'testid2134'")  
+                    db.exec("Delete FROM pto WHERE user_id = 'testid2134'")
+                    db.exec("Delete FROM admin_status WHERE user_id = 'testid2134'")
+                    db.exec("Delete FROM email WHERE user_id = 'testid2134'")
                     db.close
-                    assert_equal("fellerid", x)
+                    assert_equal("testid2134", x)
                 end        
     
         #<!---test check time in section--->4
@@ -378,7 +378,28 @@ class Test_funcs < Minitest::Test
                     db.exec("Delete FROM email WHERE user_id = 'gregid'")
                     db.close
                     assert_equal("No",x)
-            end        
+            end
+
+            def test_admin_check_2
+                add_user('testid1234',"testid@email.com","1234","test","5","Yes","11/15/2017")
+                x = database_admin_check('testid1234')
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                    }
+                    db = PG::Connection.new(db_params)
+                    db.exec("Delete FROM info_new WHERE user_id = 'testid1234'")  
+                    db.exec("Delete FROM pto WHERE user_id = 'testid1234'")
+                    db.exec("Delete FROM admin_status WHERE user_id = 'testid1234'")
+                    db.exec("Delete FROM email WHERE user_id = 'testid1234'")
+                    db.close
+                    assert_equal("Yes",x)
+            end
+            
+        
 
     
 end
