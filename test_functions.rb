@@ -747,7 +747,7 @@ class Test_funcs < Minitest::Test
             
                 
         # <--tests for time_out_lunch_check?(user_id)-->
-        def test_lunch_check_out
+        def test_lunch_check_out_return_false
             db_params = {
                 host: ENV['host'],
                 port: ENV['port'],
@@ -764,5 +764,42 @@ class Test_funcs < Minitest::Test
             assert_equal(false,x)
         end
 
+        def test_lunch_check_out_return_true
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            user_id = 'test758'
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','10:00 am','N/A','N/A','N/A','2017-11-30','2017-11-30','N/A')")
+            x = time_out_lunch_check?(user_id)
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}' ")
+            db.close
+            assert_equal(true,x)
+        end
+        # <-- tests for get_users_pto_request(user_id) -->
+        
+        def test_get_users_pto_request()_return_array
+            user_id = 'test786'
+            start_date = '2017-11-20'
+            end_date = '2017-11-21'
+            approval = "pending"
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id},'#{start_date}','#{end_date}','#{approval}')")
+            x = test_get_users_pto_request(user_id)
+            db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+            db.close
+            assert_equal(Array,x.class)
+        end
 
 end
