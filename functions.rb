@@ -596,7 +596,7 @@ def timetable_fix(user_id, date, time_in, new_time)
         password: ENV['password']
         }
     db = PG::Connection.new(db_params)
-    db.exec("UPDATE timesheet_new SET time_in = '#{new_time[0]}', lunch_start = '#{new_time[1]}', lunch_end = '#{new_time[1]}', time_out = '#{new_time[3]}', date = '#{new_time[4]}', date_out = '#{new_time[5]}', location='#{new_time[6]}' WHERE user_id='#{user_id}' AND date = '#{date}' AND time_in = '#{time_in}'")
+    db.exec("UPDATE timesheet_new SET time_in = '#{new_time[0]}', lunch_start = '#{new_time[1]}', lunch_end = '#{new_time[2]}', time_out = '#{new_time[3]}', date = '#{new_time[4]}', date_out = '#{new_time[5]}', location='#{new_time[6]}' WHERE user_id='#{user_id}' AND date = '#{date}' AND time_in = '#{time_in}'")
     db.close
 end
 
@@ -722,9 +722,9 @@ end
             }
             db = PG::Connection.new(db_params)
 
-            p "#{approval}"
+            # p "#{approval}"
         approval.each do |item|
-        p "#{item} item arr here"
+        # p "#{item} item arr here"
             db.exec("UPDATE pto_requests SET approval = '#{item[4]}' WHERE user_id= '#{item[0]}' AND start_date= '#{item[1]}' AND end_date= '#{item[2]}' ")
             email = database_email_check(item[0])
             pto = db.exec("SELECT pto From pto WHERE user_id = '#{item[0]}'").values
@@ -732,7 +732,7 @@ end
             if item[4] == 'approved'
                 calendar = GoogleCalendar.new
                 calendar.create_calendar_event("#{item[1]}","#{item[2]}",email,"#{item[3]}")
-                p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
+                # p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
                 send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto.flatten.first)
             elsif item[4] == "denied"
                 send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto.flatten.first) 
@@ -755,6 +755,8 @@ def get_users_pto_request(user_id)
     user_pto
 end
 
+
+# <--returns false if user has started lunch but hasnt ended it yet-->
 def time_out_lunch_check?(user_id)
     db_params = {
         host: ENV['host'],
@@ -764,6 +766,6 @@ def time_out_lunch_check?(user_id)
         password: ENV['password']
         }
         db = PG::Connection.new(db_params)
-    check = db.exec("SELECT * FROM timesheet_new WHERE lunch_start != 'N/A' AND lunch_end = 'N/A' AND time_out = 'N/A' ")
+    check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND lunch_start != 'N/A' AND lunch_end = 'N/A' AND time_out = 'N/A' ")
         check.num_tuples.zero?
 end
