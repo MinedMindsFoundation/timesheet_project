@@ -910,15 +910,54 @@ class Test_funcs < Minitest::Test
         # end
 
         #<!---test pto time section--->
-        def test_pto_time_1
-            user_id = "TESTID"
-            x = pto_time(user_id)
-            assert_equal("8",x)
-        end
+        # def test_pto_time_1
+        #     user_id = "TESTID"
+        #     x = pto_time(user_id)
+        #     assert_equal("8",x)
+        # end
 
-        def test_pto_time_2
-            user_id = "lukeid"
-            x = pto_time(user_id)
-            assert_equal("5",x)
-        end
+        # def test_pto_time_2
+        #     user_id = "lukeid"
+        #     x = pto_time(user_id)
+        #     assert_equal("5",x)
+        # end
+
+        #<!---test time date fix section--->
+        def test_time_date_fix_1
+            submit_time_in("danid2","clendenin","8:00 am","12/25/2017")
+            submit_lunch_in("danid2","1:00 pm")
+            submit_lunch_out("danid2","2:00 pm")
+            submit_time_out("danid2","5:00 pm","12/25/2017")
+            x = time_date_fix("danid2","12/25/2017")
+            db_params = {
+                        host: ENV['host'],
+                        port: ENV['port'],
+                        dbname: ENV['dbname'],
+                        user: ENV['user'],
+                        password: ENV['password']
+                        }
+            db = PG::Connection.new(db_params)
+            db.exec("DELETE FROM timesheet_new WHERE user_id = 'danid2'")
+            db.close
+            assert_equal([["8:00 am", "1:00 pm", "2:00 pm", "5:00 pm", "2017-12-25", "2017-12-25", "clendenin"]],x)
+        end 
+        
+        def test_time_date_fix_2
+            submit_time_in("TEST007","clendenin","9:00 am","12/23/2017")
+            submit_lunch_in("TEST007","1:00 pm")
+            submit_lunch_out("TEST007","2:00 pm")
+            submit_time_out("TEST007","5:00 pm","12/23/2017")
+            x = time_date_fix("TEST007","12/23/2017")
+            db_params = {
+                        host: ENV['host'],
+                        port: ENV['port'],
+                        dbname: ENV['dbname'],
+                        user: ENV['user'],
+                        password: ENV['password']
+                        }
+            db = PG::Connection.new(db_params)
+            db.exec("DELETE FROM timesheet_new WHERE user_id = 'TEST007'")
+            db.close
+            assert_equal([["9:00 am", "1:00 pm", "2:00 pm", "5:00 pm", "2017-12-23", "2017-12-23", "clendenin"]],x)
+        end   
 end
