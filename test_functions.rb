@@ -404,7 +404,63 @@ class Test_funcs < Minitest::Test
                 x = database_emp_checked()
                 assert_equal(Array,x.class)
             end
+
+            def test_emp_check_multi_d_array
+                x = database_emp_checked().first
+                assert_equal(Array,x.class)
+            end
         
+        # <--test database_email_check()-->
+            def test_email_check_1
+                user_id = 'testid415'
+                email = "testemail@email.com"
+                add_email(user_id,email)
+                y = database_email_check(user_id)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                    }
+                db = PG::Connection.new(db_params)
+                db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+                assert_equal(email,y)
+            end
+
+            def test_email_check_2
+                user_id = 'test432'
+                email = "test@email432.com"
+                add_email(user_id,email)
+                y = database_email_check(user_id)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                    }
+                db = PG::Connection.new(db_params)
+                db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+                assert_equal(email,y)
+            end
+
+            def test_email_check_3
+                user_id = 'test449'
+                email = "test@email449.com"
+                add_email(user_id,email)
+                y = database_email_check(user_id)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                    }
+                db = PG::Connection.new(db_params)
+                db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+                assert_equal(email,y)
+            end
 
     
 end
