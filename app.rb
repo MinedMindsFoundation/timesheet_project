@@ -295,12 +295,12 @@ post "/update_time_sheet" do
             # p selected_time
             selected_time.each do |position|
                 positions = position.to_i
-                # p positions
-                # p new_time[positions]
+                p positions
+                p new_time[positions]
                 original_time = session[:times_shown][positions]
-                # p original_time
-                # p original_time[0]
-                # p original_time[4]
+                p original_time
+                p original_time[0]
+                p original_time[4]
             timetable_fix(session[:selected_id], original_time[4], original_time[0], new_time[positions])
             end
         elsif choice == "Delete"
