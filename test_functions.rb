@@ -657,95 +657,112 @@ class Test_funcs < Minitest::Test
         #         assert_equal(new_info_arr,x)
         #     end
 
-    # <--tests for delete_emp(user_id)-->
+    # # <--tests for delete_emp(user_id)-->
         
-            def test_delete_emp_1
-                user_id = 'testid514'
-                email = "testid@email.com"
-                fname = "test514"
-                lname = "514test"
-                pto = "2"
-                admin = "No"
-                doh = "10/15/2007"
-                add_user(user_id,email,fname,lname,pto,admin,doh)
-                delete_emp(user_id)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                }
-                db = PG::Connection.new(db_params)
-                check = db.exec("SELECT * FROM info_new WHERE user_id = '#{user_id}'")
-                x = check.num_tuples.zero?
-                db.close
-                assert_equal(true,x)
-            end  
+    #         def test_delete_emp_1
+    #             user_id = 'testid514'
+    #             email = "testid@email.com"
+    #             fname = "test514"
+    #             lname = "514test"
+    #             pto = "2"
+    #             admin = "No"
+    #             doh = "10/15/2007"
+    #             add_user(user_id,email,fname,lname,pto,admin,doh)
+    #             delete_emp(user_id)
+    #             db_params = {
+    #                 host: ENV['host'],
+    #                 port: ENV['port'],
+    #                 dbname: ENV['dbname'],
+    #                 user: ENV['user'],
+    #                 password: ENV['password']
+    #             }
+    #             db = PG::Connection.new(db_params)
+    #             check = db.exec("SELECT * FROM info_new WHERE user_id = '#{user_id}'")
+    #             x = check.num_tuples.zero?
+    #             db.close
+    #             assert_equal(true,x)
+    #         end  
 
-            def test_delete_emp_2
-                user_id = 'testid687'
-                email = "test687id@email.com"
-                fname = "test687"
-                lname = "6874test"
-                pto = "2"
-                admin = "No"
-                doh = "10/15/2007"
-                add_user(user_id,email,fname,lname,pto,admin,doh)
-                delete_emp(user_id)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                }
-                db = PG::Connection.new(db_params)
-                check = db.exec("SELECT * FROM info_new WHERE user_id = '#{user_id}'")
-                x = check.num_tuples.zero?
-                db.close
-                assert_equal(true,x)
-            end
-        # <--tests for add_email(user_id,email)-->
+    #         def test_delete_emp_2
+    #             user_id = 'testid687'
+    #             email = "test687id@email.com"
+    #             fname = "test687"
+    #             lname = "6874test"
+    #             pto = "2"
+    #             admin = "No"
+    #             doh = "10/15/2007"
+    #             add_user(user_id,email,fname,lname,pto,admin,doh)
+    #             delete_emp(user_id)
+    #             db_params = {
+    #                 host: ENV['host'],
+    #                 port: ENV['port'],
+    #                 dbname: ENV['dbname'],
+    #                 user: ENV['user'],
+    #                 password: ENV['password']
+    #             }
+    #             db = PG::Connection.new(db_params)
+    #             check = db.exec("SELECT * FROM info_new WHERE user_id = '#{user_id}'")
+    #             x = check.num_tuples.zero?
+    #             db.close
+    #             assert_equal(true,x)
+    #         end
+    #     # <--tests for add_email(user_id,email)-->
         
-            def test_add_email_1
-                user_id = "testid712"
-                email = "testid712@email.com"
-                add_email(user_id,email)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                }
-                db = PG::Connection.new(db_params)
-                check = db.exec("SELECT * FROM email WHERE email = '#{email}'")
-                x = check.num_tuples.zero?
-                db.exec("DELETE FROM email WHERE email = '#{email}'")
-                db.close
-                assert_equal(false,x)
-            end
+    #         def test_add_email_1
+    #             user_id = "testid712"
+    #             email = "testid712@email.com"
+    #             add_email(user_id,email)
+    #             db_params = {
+    #                 host: ENV['host'],
+    #                 port: ENV['port'],
+    #                 dbname: ENV['dbname'],
+    #                 user: ENV['user'],
+    #                 password: ENV['password']
+    #             }
+    #             db = PG::Connection.new(db_params)
+    #             check = db.exec("SELECT * FROM email WHERE email = '#{email}'")
+    #             x = check.num_tuples.zero?
+    #             db.exec("DELETE FROM email WHERE email = '#{email}'")
+    #             db.close
+    #             assert_equal(false,x)
+    #         end
 
-            def test_add_email_2
-                user_id = "testid732"
-                email = "testid732@email.com"
-                add_email(user_id,email)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                }
-                db = PG::Connection.new(db_params)
-                x = db.exec("SELECT email FROM email WHERE email = '#{email}'").values.flatten.first
-                db.exec("DELETE FROM email WHERE email = '#{email}'")
-                db.close
-                assert_equal(email,x)
+    #         def test_add_email_2
+    #             user_id = "testid732"
+    #             email = "testid732@email.com"
+    #             add_email(user_id,email)
+    #             db_params = {
+    #                 host: ENV['host'],
+    #                 port: ENV['port'],
+    #                 dbname: ENV['dbname'],
+    #                 user: ENV['user'],
+    #                 password: ENV['password']
+    #             }
+    #             db = PG::Connection.new(db_params)
+    #             x = db.exec("SELECT email FROM email WHERE email = '#{email}'").values.flatten.first
+    #             db.exec("DELETE FROM email WHERE email = '#{email}'")
+    #             db.close
+    #             assert_equal(email,x)
+    #         end
             
                 
-        # <--tests for 
+        # <--tests for time_out_lunch_check?(user_id)-->
+        def test_lunch_check_out
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            user_id = 'test758'
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','10:00 am','12:00 pm','N/A','N/A','2017-11-30','2017-11-30','N/A')")
+            x = time_out_lunch_check?(user_id)
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}' ")
+            db.close
+            assert_equal(false,x)
+        end
 
 
 end
