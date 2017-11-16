@@ -462,56 +462,204 @@ class Test_funcs < Minitest::Test
         #         assert_equal(email,y)
         #     end
             
-        # <--test for admin_emp_list()-->
-            def test_admin_emp_list_return_class
-                x=admin_emp_list()
-                assert_equal(Array,x.class)
-            end
+        # # <--test for admin_emp_list()-->
+        #     def test_admin_emp_list_return_class
+        #         x=admin_emp_list()
+        #         assert_equal(Array,x.class)
+        #     end
 
-            def test_admin_emp_list_return_multi_d_arr
-                x=admin_emp_list().first
-                assert_equal(Array,x.class)
-            end
+        #     def test_admin_emp_list_return_multi_d_arr
+        #         x=admin_emp_list().first
+        #         assert_equal(Array,x.class)
+        #     end
 
-            def test_admin_emp_list_multi_d_arr_of_strings
-                x=admin_emp_list().first.first
-                assert_equal(String,x.class)
-            end
+        #     def test_admin_emp_list_multi_d_arr_of_strings
+        #         x=admin_emp_list().first.first
+        #         assert_equal(String,x.class)
+        #     end
 
-        # <--test for emp_info(user_id)-->
+        # # <--test for emp_info(user_id)-->
 
-            def test_emp_info_1
-                user_id = 'testid484'
-                email = "testid@email.com"
-                fname = "test484"
-                lname = "484test"
-                pto = "5"
-                admin = "Yes"
-                doh = "11/15/2017"
-                add_user(user_id,email,fname,lname,pto,admin,doh)
-                x=emp_info('testid484')
-                delete_emp(user_id)
-                answer = [user_id,fname,lname,doh,email,admin,pto]
-                assert_equal(answer,x)
-            end
+        #     def test_emp_info_1
+        #         user_id = 'testid484'
+        #         email = "testid@email.com"
+        #         fname = "test484"
+        #         lname = "484test"
+        #         pto = "5"
+        #         admin = "Yes"
+        #         doh = "11/15/2017"
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         x=emp_info('testid484')
+        #         delete_emp(user_id)
+        #         answer = [user_id,fname,lname,doh,email,admin,pto]
+        #         assert_equal(answer,x)
+        #     end
 
-            def test_emp_info_return_class
-                user_id = 'testid484'
-                email = "testid@email.com"
-                fname = "test484"
-                lname = "484test"
-                pto = "5"
-                admin = "Yes"
-                doh = "11/15/2017"
-                add_user(user_id,email,fname,lname,pto,admin,doh)
-                x=emp_info('testid484')
-                delete_emp(user_id)
-                answer = [user_id,fname,lname,doh,email,admin,pto]
-                assert_equal(Array,x.class)
-            end
+        #     def test_emp_info_return_class
+        #         user_id = 'testid484'
+        #         email = "testid@email.com"
+        #         fname = "test484"
+        #         lname = "484test"
+        #         pto = "5"
+        #         admin = "Yes"
+        #         doh = "11/15/2017"
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         x=emp_info('testid484')
+        #         delete_emp(user_id)
+        #         answer = [user_id,fname,lname,doh,email,admin,pto]
+        #         assert_equal(Array,x.class)
+        #     end
 
-            def test_emp_info_2
+        #     def test_emp_info_2
 
+        #         user_id = 'testid514'
+        #         email = "testid@email.com"
+        #         fname = "test514"
+        #         lname = "514test"
+        #         pto = "2"
+        #         admin = "No"
+        #         doh = "10/15/2007"
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         x=emp_info(user_id)
+        #         delete_emp(user_id)
+        #         answer = [user_id,fname,lname,doh,email,admin,pto]
+        #         assert_equal(answer,x)
+        #     end
+        
+        # # <--tests for update_user(user_id, new_info)-->
+        #     def test_update_user_new_email
+        #         user_id = 'testid514'
+        #         email = "testid@email.com"
+        #         fname = "test514"
+        #         lname = "514test"
+        #         pto = "2"
+        #         admin = "No"
+        #         doh = "10/15/2007"
+        #         new_email = "testid_538@email.ecom"
+        #         delete_emp(user_id)
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         new_info_arr = [user_id,fname,lname,doh,new_email,admin,pto]
+        #         update_user(user_id,new_info_arr)
+        #         x= emp_info(user_id)
+        #         delete_emp(user_id)
+        #         assert_equal(new_info_arr,x)
+        #     end
+
+        #     def test_update_user_new_first_name
+        #         user_id = 'testid514'
+        #         email = "testid@email.com"
+        #         fname = "test514"
+        #         lname = "514test"
+        #         pto = "2"
+        #         admin = "No"
+        #         doh = "10/15/2007"
+        #         new_fname = "test556"
+        #         delete_emp(user_id)
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         new_info_arr = [user_id,new_fname,lname,doh,email,admin,pto]
+        #         update_user(user_id,new_info_arr)
+        #         x= emp_info(user_id)
+        #         delete_emp(user_id)
+        #         assert_equal(new_info_arr,x)
+        #     end
+
+        #     def test_update_user_new_last_name
+        #         user_id = 'testid514'
+        #         email = "testid@email.com"
+        #         fname = "test514"
+        #         lname = "514test"
+        #         pto = "2"
+        #         admin = "No"
+        #         doh = "10/15/2007"
+        #         new_lname = "test574"
+        #         delete_emp(user_id)
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         new_info_arr = [user_id,fname,new_lname,doh,email,admin,pto]
+        #         update_user(user_id,new_info_arr)
+        #         x= emp_info(user_id)
+        #         delete_emp(user_id)
+        #         assert_equal(new_info_arr,x)
+        #     end
+
+        #     def test_update_user_new_doh
+        #         user_id = 'testid514'
+        #         email = "testid@email.com"
+        #         fname = "test514"
+        #         lname = "514test"
+        #         pto = "2"
+        #         admin = "No"
+        #         doh = "10/15/2007"
+        #         new_doh = "10/16/2007"
+        #         delete_emp(user_id)
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         new_info_arr = [user_id,fname,lname,new_doh,email,admin,pto]
+        #         update_user(user_id,new_info_arr)
+        #         x= emp_info(user_id)
+        #         delete_emp(user_id)
+        #         assert_equal(new_info_arr,x)
+        #     end
+
+        #     def test_update_user_new_pto
+        #         user_id = 'testid514'
+        #         email = "testid@email.com"
+        #         fname = "test514"
+        #         lname = "514test"
+        #         pto = "2"
+        #         admin = "No"
+        #         doh = "10/15/2007"
+        #         new_pto = "4"
+        #         delete_emp(user_id)
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         new_info_arr = [user_id,fname,lname,doh,email,admin,new_pto]
+        #         update_user(user_id,new_info_arr)
+        #         x= emp_info(user_id)
+        #         delete_emp(user_id)
+        #         assert_equal(new_info_arr,x)
+        #     end
+
+        #     def test_update_mutliple_items
+        #         user_id = 'testid514'
+        #         email = "testid@email.com"
+        #         fname = "test514"
+        #         lname = "514test"
+        #         pto = "2"
+        #         admin = "No"
+        #         doh = "10/15/2007"
+        #         new_pto = "4"
+        #         new_lname ="test630"
+        #         new_email ="test630@email.com"
+        #         delete_emp(user_id)
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         new_info_arr = [user_id,fname,new_lname,doh,new_email,admin,new_pto]
+        #         update_user(user_id,new_info_arr)
+        #         x= emp_info(user_id)
+        #         delete_emp(user_id)
+        #         assert_equal(new_info_arr,x)
+        #     end
+
+        #     def test_update_mutliple_items_2
+        #         user_id = 'testid514'
+        #         email = "testid@email.com"
+        #         fname = "test514"
+        #         lname = "514test"
+        #         pto = "2"
+        #         admin = "No"
+        #         doh = "10/15/2007"
+        #         new_doh = "10/24/2008"
+        #         new_fname ="test649"
+        #         new_admin ="Yes"
+        #         delete_emp(user_id)
+        #         add_user(user_id,email,fname,lname,pto,admin,doh)
+        #         new_info_arr = [user_id,new_fname,lname,new_doh,email,new_admin,pto]
+        #         update_user(user_id,new_info_arr)
+        #         x= emp_info(user_id)
+        #         delete_emp(user_id)
+        #         assert_equal(new_info_arr,x)
+        #     end
+
+    # <--tests for delete_emp(user_id)-->
+        
+            def test_delete_emp_1
                 user_id = 'testid514'
                 email = "testid@email.com"
                 fname = "test514"
@@ -520,10 +668,43 @@ class Test_funcs < Minitest::Test
                 admin = "No"
                 doh = "10/15/2007"
                 add_user(user_id,email,fname,lname,pto,admin,doh)
-                x=emp_info(user_id)
                 delete_emp(user_id)
-                answer = [user_id,fname,lname,doh,email,admin,pto]
-                assert_equal(answer,x)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                }
+                db = PG::Connection.new(db_params)
+                check = db.exec("SELECT * FROM info_new WHERE user_id = '#{user_id}'")
+                x = check.num_tuples.zero?
+                db.close
+                assert_equal(true,x)
+            end  
+
+            def test_delete_emp_2
+                user_id = 'testid687'
+                email = "test687id@email.com"
+                fname = "test687"
+                lname = "6874test"
+                pto = "2"
+                admin = "No"
+                doh = "10/15/2007"
+                add_user(user_id,email,fname,lname,pto,admin,doh)
+                delete_emp(user_id)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                }
+                db = PG::Connection.new(db_params)
+                check = db.exec("SELECT * FROM info_new WHERE user_id = '#{user_id}'")
+                x = check.num_tuples.zero?
+                db.close
+                assert_equal(true,x)
             end
 
 
