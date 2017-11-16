@@ -922,45 +922,280 @@ class Test_funcs < Minitest::Test
         #     assert_equal(String,x.flatten.first.class)
         # end
 
-        # <--pto_request_db_add(user_id,start_date,end_date)-->
+        # # <--pto_request_db_add(user_id,start_date,end_date)-->
 
-            def test_pto_request_db_add_1
-                user_id = "test9281"
-                start_date = "2017-11-20"
-                end_date = "2017-11-23"
-                pto_request_db_add(user_id,start_date,end_date)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                }
-                db = PG::Connection.new(db_params)
-                check = db.exec("SELECT * FROM pto_requests WHERE user_id = '#{user_id}' AND start_date = '#{start_date}' AND end_date = '#{end_date}' AND approval = 'pending'")
-                db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
-                db.close
-                x = check.num_tuples.zero?
-                assert_equal(false,x)
-            end
+        #     def test_pto_request_db_add_1
+        #         user_id = "test9281"
+        #         start_date = "2017-11-20"
+        #         end_date = "2017-11-23"
+        #         pto_request_db_add(user_id,start_date,end_date)
+        #         db_params = {
+        #             host: ENV['host'],
+        #             port: ENV['port'],
+        #             dbname: ENV['dbname'],
+        #             user: ENV['user'],
+        #             password: ENV['password']
+        #         }
+        #         db = PG::Connection.new(db_params)
+        #         check = db.exec("SELECT * FROM pto_requests WHERE user_id = '#{user_id}' AND start_date = '#{start_date}' AND end_date = '#{end_date}' AND approval = 'pending'")
+        #         db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #         db.close
+        #         x = check.num_tuples.zero?
+        #         assert_equal(false,x)
+        #     end
 
-            def test_pto_request_db_add_2
-                user_id = "test9281"
-                start_date = "2017-11-20"
-                end_date = "2017-11-23"
-                pto_request_db_add(user_id,start_date,end_date)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                }
-                db = PG::Connection.new(db_params)
-                arr = db.exec("SELECT * FROM pto_requests WHERE user_id = '#{user_id}' AND start_date = '#{start_date}' AND end_date = '#{end_date}' AND approval = 'pending'").values
-                db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
-                db.close
-                x = [[user_id,start_date,end_date,'pending']]
-                assert_equal(arr,x)
-            end
+        #     def test_pto_request_db_add_2
+        #         user_id = "test9281"
+        #         start_date = "2017-11-20"
+        #         end_date = "2017-11-23"
+        #         pto_request_db_add(user_id,start_date,end_date)
+        #         db_params = {
+        #             host: ENV['host'],
+        #             port: ENV['port'],
+        #             dbname: ENV['dbname'],
+        #             user: ENV['user'],
+        #             password: ENV['password']
+        #         }
+        #         db = PG::Connection.new(db_params)
+        #         arr = db.exec("SELECT * FROM pto_requests WHERE user_id = '#{user_id}' AND start_date = '#{start_date}' AND end_date = '#{end_date}' AND approval = 'pending'").values
+        #         db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #         db.close
+        #         x = [[user_id,start_date,end_date,'pending']]
+        #         assert_equal(arr,x)
+        #     end
+
+        # # <--test for timetable_delete(user_id, date, time_in)-->
+            
+        # def test_timetable_delete_1
+        #     user_id = "test970"
+        #     date = "2017-11-20"
+        #     time_in = "10:00 am"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','12:00 pm','N/A','N/A','#{date}','2017-11-30','N/A')")
+        #     timetable_delete(user_id, date, time_in)
+        #     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}'")
+        #     x = check.num_tuples.zero?
+        #     assert_equal(true,x)
+        # end
+
+        # def test_timetable_delete_2
+        #     user_id = "test989"
+        #     date = "2017-12-22"
+        #     time_in = "10:30 am"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','12:00 pm','N/A','N/A','#{date}','2017-11-30','N/A')")
+        #     timetable_delete(user_id, date, time_in)
+        #     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}'")
+        #     x = check.num_tuples.zero?
+        #     assert_equal(true,x)
+        # end
+
+    # <--tests for timetable_fix(user_id, date, time_in, new_time)-->
+        def test_timetable_fix_new_time_in
+            new_time_in = "9:00"
+            user_id = "test1009"
+            date = "2017-11-20"
+            time_in = "8:59"
+            lunch_start = "12:00"
+            lunch_end = "1:00"
+            time_out = "5:00"
+            date_out = "2017-11-20"
+            location = "Clendenin"
+            new_time = [new_time_in,lunch_start,lunch_end,time_out,date,date_out,location]
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','#{lunch_start}','#{lunch_end}','#{time_out}','#{date}','#{date_out}','#{location}')")
+            timetable_fix(user_id, date, time_in, new_time)
+            x = db.exec("SELECT time_in,lunch_start,lunch_end,time_out,date,date_out,location FROM timesheet_new WHERE user_id = '#{user_id}'").values
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+            db.close
+            assert_equal([new_time],x)
+        end
+
+        def test_timetable_fix_new_lunch_start
+            new_lunch_start = "12:30 pm"
+            user_id = "test1009"
+            date = "2017-11-20"
+            time_in = "8:59 am"
+            lunch_start = "12:00 pm"
+            lunch_end = "1:00 pm"
+            time_out = "5:00 pm"
+            date_out = "2017-11-20"
+            location = "Clendenin"
+            new_time = [time_in,new_lunch_start,lunch_end,time_out,date,date_out,location]
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','#{lunch_start}','#{lunch_end}','#{time_out}','#{date}','#{date_out}','#{location}')")
+            timetable_fix(user_id, date, time_in, new_time)
+            x = db.exec("SELECT time_in,lunch_start,lunch_end,time_out,date,date_out,location FROM timesheet_new WHERE user_id = '#{user_id}'").values
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+            db.close
+            assert_equal([new_time],x)
+        end
+
+        def test_timetable_fix_new_lunch_end
+            new_lunch_end = "12:30 pm"
+            user_id = "test1009"
+            date = "2017-11-20"
+            time_in = "8:59 am"
+            lunch_start = "12:00 pm"
+            lunch_end = "1:00 pm"
+            time_out = "5:00 pm"
+            date_out = "2017-11-20"
+            location = "Clendenin"
+            new_time = [time_in,lunch_start,new_lunch_end,time_out,date,date_out,location]
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','#{lunch_start}','#{lunch_end}','#{time_out}','#{date}','#{date_out}','#{location}')")
+            timetable_fix(user_id, date, time_in, new_time)
+            x = db.exec("SELECT time_in,lunch_start,lunch_end,time_out,date,date_out,location FROM timesheet_new WHERE user_id = '#{user_id}'").values
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+            db.close
+            assert_equal([new_time],x)
+        end
+
+        def test_timetable_fix_new_date
+            new_date = "2017-12-20"
+            user_id = "test1009"
+            date = "2017-11-20"
+            time_in = "8:59 am"
+            lunch_start = "12:00 pm"
+            lunch_end = "1:00 pm"
+            time_out = "5:00 pm"
+            date_out = "2017-11-20"
+            location = "Clendenin"
+            new_time = [time_in,lunch_start,lunch_end,time_out,new_date,date_out,location]
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','#{lunch_start}','#{lunch_end}','#{time_out}','#{date}','#{date_out}','#{location}')")
+            timetable_fix(user_id, date, time_in, new_time)
+            x = db.exec("SELECT time_in,lunch_start,lunch_end,time_out,date,date_out,location FROM timesheet_new WHERE user_id = '#{user_id}'").values
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+            db.close
+            assert_equal([new_time],x)
+        end
+
+        def test_timetable_fix_new_time_out
+            new_time_out = "4:30 pm"
+            user_id = "test1009"
+            date = "2017-11-20"
+            time_in = "8:59 am"
+            lunch_start = "12:00 pm"
+            lunch_end = "1:00 pm"
+            time_out = "5:00 pm"
+            date_out = "2017-11-20"
+            location = "Clendenin"
+            new_time = [time_in,lunch_start,lunch_end,new_time_out,date,date_out,location]
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','#{lunch_start}','#{lunch_end}','#{time_out}','#{date}','#{date_out}','#{location}')")
+            timetable_fix(user_id, date, time_in, new_time)
+            x = db.exec("SELECT time_in,lunch_start,lunch_end,time_out,date,date_out,location FROM timesheet_new WHERE user_id = '#{user_id}'").values
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+            db.close
+            assert_equal([new_time],x)
+        end
+
+        def test_timetable_fix_multiple_fixes
+            new_time_out = "4:30 pm"
+            new_time_in = "9:00 am"
+            new_lunch_end = "13:20 pm"
+            user_id = "test1009"
+            date = "2017-11-20"
+            time_in = "8:59 am"
+            lunch_start = "12:00 pm"
+            lunch_end = "1:00 pm"
+            time_out = "5:00 pm"
+            date_out = "2017-11-20"
+            location = "Clendenin"
+            new_time = [new_time_in,lunch_start,new_lunch_end,new_time_out,date,date_out,location]
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','#{lunch_start}','#{lunch_end}','#{time_out}','#{date}','#{date_out}','#{location}')")
+            timetable_fix(user_id, date, time_in, new_time)
+            x = db.exec("SELECT time_in,lunch_start,lunch_end,time_out,date,date_out,location FROM timesheet_new WHERE user_id = '#{user_id}'").values
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+            db.close
+            assert_equal([new_time],x)
+        end
+
+        def test_timetable_fix_multiple_fixes_2
+            new_time_out = "4:30 pm"
+            new_date = "2017-02-20"
+            new_date_out = "2017-02-20"
+            user_id = "test1009"
+            date = "2017-11-20"
+            time_in = "8:59 am"
+            lunch_start = "12:00 pm"
+            lunch_end = "1:00 pm"
+            time_out = "5:00 pm"
+            date_out = "2017-11-20"
+            location = "Clendenin"
+            new_time = [time_in,lunch_start,lunch_end,new_time_out,new_date,new_date_out,location]
+            db_params = {
+                host: ENV['host'],
+                port: ENV['port'],
+                dbname: ENV['dbname'],
+                user: ENV['user'],
+                password: ENV['password']
+            }
+            db = PG::Connection.new(db_params)
+            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','#{time_in}','#{lunch_start}','#{lunch_end}','#{time_out}','#{date}','#{date_out}','#{location}')")
+            timetable_fix(user_id, date, time_in, new_time)
+            x = db.exec("SELECT time_in,lunch_start,lunch_end,time_out,date,date_out,location FROM timesheet_new WHERE user_id = '#{user_id}'").values
+            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+            db.close
+            assert_equal([new_time],x)
+        end
+        
 end

@@ -596,7 +596,7 @@ def timetable_fix(user_id, date, time_in, new_time)
         password: ENV['password']
         }
     db = PG::Connection.new(db_params)
-    db.exec("UPDATE timesheet_new SET time_in = '#{new_time[0]}', lunch_start = '#{new_time[1]}', lunch_end = '#{new_time[1]}', time_out = '#{new_time[3]}', date = '#{new_time[4]}', date_out = '#{new_time[5]}', location='#{new_time[6]}' WHERE user_id='#{user_id}' AND date = '#{date}' AND time_in = '#{time_in}'")
+    db.exec("UPDATE timesheet_new SET time_in = '#{new_time[0]}', lunch_start = '#{new_time[1]}', lunch_end = '#{new_time[2]}', time_out = '#{new_time[3]}', date = '#{new_time[4]}', date_out = '#{new_time[5]}', location='#{new_time[6]}' WHERE user_id='#{user_id}' AND date = '#{date}' AND time_in = '#{time_in}'")
     db.close
 end
 
