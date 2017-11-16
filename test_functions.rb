@@ -1346,17 +1346,17 @@ class Test_funcs < Minitest::Test
         end
 
         #<!---test pto time section--->
-        # def test_pto_time_1
-        #     user_id = "TESTID"
-        #     x = pto_time(user_id)
-        #     assert_equal("8",x)
-        # end
+        def test_pto_time_1
+            user_id = "TESTID"
+            x = pto_time(user_id)
+            assert_equal("8",x)
+        end
 
-        # def test_pto_time_2
-        #     user_id = "lukeid"
-        #     x = pto_time(user_id)
-        #     assert_equal("5",x)
-        # end
+        def test_pto_time_2
+            user_id = "lukeid"
+            x = pto_time(user_id)
+            assert_equal("5",x)
+        end
 
         #<!---test time date fix section--->
         def test_time_date_fix_1
