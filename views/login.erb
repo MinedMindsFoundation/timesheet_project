@@ -1,5 +1,5 @@
 <!-- Login/First Page -->
-
+<link rel = "stylesheet" href = "css/style.css">
 <!--toggle for sign in-->
 <%toggle = "off"%>
 
@@ -10,15 +10,16 @@
 <input type="submit" name="submit" value="login">
 </form>
 
+
 <%elsif toggle == "off"%>
 <head>
-<meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
-</head>
 
+</head>
+<ceneter><meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com"><center>
 <form id = "myform" method = "post" action = "login">
 <!--FaceBook Button -->
 <div class="social-login">
-    <img src="img/fb_button.png"  id="facebook_btn" onclick="fbLogin()">
+<img src="img/fb_button.png"  id="facebook_btn" onclick="fbLogin()">
 </div>
 <!--google button-->
 <div class="g-signin2" data- data-width="410" data-height="100" data-longtitle="true" data-onsuccess="onSignIn"></div>
@@ -27,22 +28,14 @@
 <input type = "hidden" id = 'first_name' name = "first_name">
 <input type = "hidden"id = "last_name" name = "last_name">
 <input type = "hidden" id = "email" name = "email">
-</form>
-<!--this is for the time to show--> 
-<body onload="updateClock(); setInterval('updateClock()',1000)";>
-<span id="clock">&nbsp;</span>
-</body>
-<p id="date"></p>
-<!--the date func-->
-<script>
-var d = new Date();
-document.getElementById("date").innerHTML = d.toDateString();
-</script>
+
+
+
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src= "js/google_js.js"></script>
 <script src = "js/facebook.js"></script>
-<script src = "/js/clock.js"></script>
+
 <%end%>
 
 
