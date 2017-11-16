@@ -746,60 +746,221 @@ class Test_funcs < Minitest::Test
     #         end
             
                 
-        # <--tests for time_out_lunch_check?(user_id)-->
-        def test_lunch_check_out_return_false
-            db_params = {
-                host: ENV['host'],
-                port: ENV['port'],
-                dbname: ENV['dbname'],
-                user: ENV['user'],
-                password: ENV['password']
-            }
-            db = PG::Connection.new(db_params)
-            user_id = 'test758'
-            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','10:00 am','12:00 pm','N/A','N/A','2017-11-30','2017-11-30','N/A')")
-            x = time_out_lunch_check?(user_id)
-            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}' ")
-            db.close
-            assert_equal(false,x)
-        end
+        # # <--tests for time_out_lunch_check?(user_id)-->
+        # def test_lunch_check_out_return_false
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     user_id = 'test758'
+        #     db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','10:00 am','12:00 pm','N/A','N/A','2017-11-30','2017-11-30','N/A')")
+        #     x = time_out_lunch_check?(user_id)
+        #     db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}' ")
+        #     db.close
+        #     assert_equal(false,x)
+        # end
 
-        def test_lunch_check_out_return_true
-            db_params = {
-                host: ENV['host'],
-                port: ENV['port'],
-                dbname: ENV['dbname'],
-                user: ENV['user'],
-                password: ENV['password']
-            }
-            db = PG::Connection.new(db_params)
-            user_id = 'test758'
-            db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','10:00 am','N/A','N/A','N/A','2017-11-30','2017-11-30','N/A')")
-            x = time_out_lunch_check?(user_id)
-            db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}' ")
-            db.close
-            assert_equal(true,x)
-        end
-        # <-- tests for get_users_pto_request(user_id) -->
+        # def test_lunch_check_out_return_true
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     user_id = 'test758'
+        #     db.exec("INSERT INTO timesheet_new(user_id,time_in,lunch_start,lunch_end,time_out,date,date_out,location)VALUES('#{user_id}','10:00 am','N/A','N/A','N/A','2017-11-30','2017-11-30','N/A')")
+        #     x = time_out_lunch_check?(user_id)
+        #     db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}' ")
+        #     db.close
+        #     assert_equal(true,x)
+        # end
+        # # <-- tests for get_users_pto_request(user_id) -->
         
-        def test_get_users_pto_request()_return_array
-            user_id = 'test786'
-            start_date = '2017-11-20'
-            end_date = '2017-11-21'
-            approval = "pending"
-            db_params = {
-                host: ENV['host'],
-                port: ENV['port'],
-                dbname: ENV['dbname'],
-                user: ENV['user'],
-                password: ENV['password']
-            }
-            db = PG::Connection.new(db_params)
-            db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id},'#{start_date}','#{end_date}','#{approval}')")
-            x = test_get_users_pto_request(user_id)
-            db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
-            db.close
-            assert_equal(Array,x.class)
-        end
+        # def test_get_users_pto_request_return_array
+        #     user_id = 'test786'
+        #     start_date = '2017-11-20'
+        #     end_date = '2017-11-21'
+        #     approval = "pending"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}')")
+        #     x = get_users_pto_request(user_id)
+        #     db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #     db.close
+        #     assert_equal(Array,x.class)
+        # end
+        
+        # def test_get_users_pto_request_return_multi_d_array
+        #     user_id = 'test786'
+        #     start_date = '2017-11-20'
+        #     end_date = '2017-11-21'
+        #     approval = "pending"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}')")
+        #     x = get_users_pto_request(user_id)
+        #     db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #     db.close
+        #     assert_equal(Array,x.first.class)
+        # end
 
+        # def test_get_users_pto_request_return_multi_d_array_of_strings
+        #     user_id = 'test786'
+        #     start_date = '2017-11-20'
+        #     end_date = '2017-11-21'
+        #     approval = "pending"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}')")
+        #     x = get_users_pto_request(user_id)
+        #     db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #     db.close
+        #     assert_equal(String,x.flatten.first.class)
+        # end
+
+        # def test_get_users_pto_request_return_1
+        #     user_id = 'test786'
+        #     start_date = '2017-11-20'
+        #     end_date = '2017-11-21'
+        #     approval = "pending"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}')")
+        #     x = get_users_pto_request(user_id)
+        #     db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #     db.close
+        #     assert_equal([[start_date,end_date,approval]],x)
+        # end
+        # # <--tests for pull_pto_request()-->
+        # def test_pull_pto_request_return_arr
+        #     user_id = 'test866'
+        #     start_date = '2017-11-20'
+        #     end_date = '2017-11-21'
+        #     approval = "pending"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}')")
+        #     x = pull_pto_request()
+        #     db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #     db.close
+        #     assert_equal(Array,x.class)
+        # end
+
+        # def test_pull_pto_request_return_multi_d_arr
+        #     user_id = 'test866'
+        #     start_date = '2017-11-20'
+        #     end_date = '2017-11-21'
+        #     approval = "pending"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}')")
+        #     x = pull_pto_request()
+        #     db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #     db.close
+        #     assert_equal(Array,x.first.class)
+        # end
+
+        # def test_pull_pto_request_return_multi_d_arr_of_strings
+        #     user_id = 'test866'
+        #     start_date = '2017-11-20'
+        #     end_date = '2017-11-21'
+        #     approval = "pending"
+        #     db_params = {
+        #         host: ENV['host'],
+        #         port: ENV['port'],
+        #         dbname: ENV['dbname'],
+        #         user: ENV['user'],
+        #         password: ENV['password']
+        #     }
+        #     db = PG::Connection.new(db_params)
+        #     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}')")
+        #     x = pull_pto_request()
+        #     db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+        #     db.close
+        #     assert_equal(String,x.flatten.first.class)
+        # end
+
+        # <--pto_request_db_add(user_id,start_date,end_date)-->
+
+            def test_pto_request_db_add_1
+                user_id = "test9281"
+                start_date = "2017-11-20"
+                end_date = "2017-11-23"
+                pto_request_db_add(user_id,start_date,end_date)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                }
+                db = PG::Connection.new(db_params)
+                check = db.exec("SELECT * FROM pto_requests WHERE user_id = '#{user_id}' AND start_date = '#{start_date}' AND end_date = '#{end_date}' AND approval = 'pending'")
+                db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+                db.close
+                x = check.num_tuples.zero?
+                assert_equal(false,x)
+            end
+
+            def test_pto_request_db_add_2
+                user_id = "test9281"
+                start_date = "2017-11-20"
+                end_date = "2017-11-23"
+                pto_request_db_add(user_id,start_date,end_date)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                }
+                db = PG::Connection.new(db_params)
+                arr = db.exec("SELECT * FROM pto_requests WHERE user_id = '#{user_id}' AND start_date = '#{start_date}' AND end_date = '#{end_date}' AND approval = 'pending'").values
+                db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
+                db.close
+                x = [[user_id,start_date,end_date,'pending']]
+                assert_equal(arr,x)
+            end
 end
