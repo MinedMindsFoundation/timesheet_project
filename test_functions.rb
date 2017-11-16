@@ -399,68 +399,132 @@ class Test_funcs < Minitest::Test
     #                 assert_equal("Yes",x)
     #         end
         
-        # <--tests for database_emp_checked()-->
-            def test_emp_check_return_type
-                x = database_emp_checked()
-                assert_equal(Array,x.class)
-            end
+        # # <--tests for database_emp_checked()-->
+        #     def test_emp_check_return_type
+        #         x = database_emp_checked()
+        #         assert_equal(Array,x.class)
+        #     end
 
-            def test_emp_check_multi_d_array
-                x = database_emp_checked().first
-                assert_equal(Array,x.class)
-            end
+        #     def test_emp_check_multi_d_array
+        #         x = database_emp_checked().first
+        #         assert_equal(Array,x.class)
+        #     end
         
-        # <--test database_email_check()-->
-            def test_email_check_1
-                user_id = 'testid415'
-                email = "testemail@email.com"
-                add_email(user_id,email)
-                y = database_email_check(user_id)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                    }
-                db = PG::Connection.new(db_params)
-                db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
-                assert_equal(email,y)
+        # # <--test database_email_check()-->
+        #     def test_email_check_1
+        #         user_id = 'testid415'
+        #         email = "testemail@email.com"
+        #         add_email(user_id,email)
+        #         y = database_email_check(user_id)
+        #         db_params = {
+        #             host: ENV['host'],
+        #             port: ENV['port'],
+        #             dbname: ENV['dbname'],
+        #             user: ENV['user'],
+        #             password: ENV['password']
+        #             }
+        #         db = PG::Connection.new(db_params)
+        #         db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+        #         assert_equal(email,y)
+        #     end
+
+        #     def test_email_check_2
+        #         user_id = 'test432'
+        #         email = "test@email432.com"
+        #         add_email(user_id,email)
+        #         y = database_email_check(user_id)
+        #         db_params = {
+        #             host: ENV['host'],
+        #             port: ENV['port'],
+        #             dbname: ENV['dbname'],
+        #             user: ENV['user'],
+        #             password: ENV['password']
+        #             }
+        #         db = PG::Connection.new(db_params)
+        #         db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+        #         assert_equal(email,y)
+        #     end
+
+        #     def test_email_check_3
+        #         user_id = 'test449'
+        #         email = "test@email449.com"
+        #         add_email(user_id,email)
+        #         y = database_email_check(user_id)
+        #         db_params = {
+        #             host: ENV['host'],
+        #             port: ENV['port'],
+        #             dbname: ENV['dbname'],
+        #             user: ENV['user'],
+        #             password: ENV['password']
+        #             }
+        #         db = PG::Connection.new(db_params)
+        #         db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+        #         assert_equal(email,y)
+        #     end
+            
+        # <--test for admin_emp_list()-->
+            def test_admin_emp_list_return_class
+                x=admin_emp_list()
+                assert_equal(Array,x.class)
             end
 
-            def test_email_check_2
-                user_id = 'test432'
-                email = "test@email432.com"
-                add_email(user_id,email)
-                y = database_email_check(user_id)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                    }
-                db = PG::Connection.new(db_params)
-                db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
-                assert_equal(email,y)
+            def test_admin_emp_list_return_multi_d_arr
+                x=admin_emp_list().first
+                assert_equal(Array,x.class)
             end
 
-            def test_email_check_3
-                user_id = 'test449'
-                email = "test@email449.com"
-                add_email(user_id,email)
-                y = database_email_check(user_id)
-                db_params = {
-                    host: ENV['host'],
-                    port: ENV['port'],
-                    dbname: ENV['dbname'],
-                    user: ENV['user'],
-                    password: ENV['password']
-                    }
-                db = PG::Connection.new(db_params)
-                db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
-                assert_equal(email,y)
+            def test_admin_emp_list_multi_d_arr_of_strings
+                x=admin_emp_list().first.first
+                assert_equal(String,x.class)
             end
 
-    
+        # <--test for emp_info(user_id)-->
+
+            def test_emp_info_1
+                user_id = 'testid484'
+                email = "testid@email.com"
+                fname = "test484"
+                lname = "484test"
+                pto = "5"
+                admin = "Yes"
+                doh = "11/15/2017"
+                add_user(user_id,email,fname,lname,pto,admin,doh)
+                x=emp_info('testid484')
+                delete_emp(user_id)
+                answer = [user_id,fname,lname,doh,email,admin,pto]
+                assert_equal(answer,x)
+            end
+
+            def test_emp_info_return_class
+                user_id = 'testid484'
+                email = "testid@email.com"
+                fname = "test484"
+                lname = "484test"
+                pto = "5"
+                admin = "Yes"
+                doh = "11/15/2017"
+                add_user(user_id,email,fname,lname,pto,admin,doh)
+                x=emp_info('testid484')
+                delete_emp(user_id)
+                answer = [user_id,fname,lname,doh,email,admin,pto]
+                assert_equal(Array,x.class)
+            end
+
+            def test_emp_info_2
+
+                user_id = 'testid514'
+                email = "testid@email.com"
+                fname = "test514"
+                lname = "514test"
+                pto = "2"
+                admin = "No"
+                doh = "10/15/2007"
+                add_user(user_id,email,fname,lname,pto,admin,doh)
+                x=emp_info(user_id)
+                delete_emp(user_id)
+                answer = [user_id,fname,lname,doh,email,admin,pto]
+                assert_equal(answer,x)
+            end
+
+
 end
