@@ -706,6 +706,46 @@ class Test_funcs < Minitest::Test
                 db.close
                 assert_equal(true,x)
             end
+        # <--tests for add_email(user_id,email)-->
+        
+            def test_add_email_1
+                user_id = "testid712"
+                email = "testid712@email.com"
+                add_email(user_id,email)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                }
+                db = PG::Connection.new(db_params)
+                check = db.exec("SELECT * FROM email WHERE email = '#{email}'")
+                x = check.num_tuples.zero?
+                db.exec("DELETE FROM email WHERE email = '#{email}'")
+                db.close
+                assert_equal(false,x)
+            end
+
+            def test_add_email_2
+                user_id = "testid732"
+                email = "testid732@email.com"
+                add_email(user_id,email)
+                db_params = {
+                    host: ENV['host'],
+                    port: ENV['port'],
+                    dbname: ENV['dbname'],
+                    user: ENV['user'],
+                    password: ENV['password']
+                }
+                db = PG::Connection.new(db_params)
+                x = db.exec("SELECT email FROM email WHERE email = '#{email}'").values.flatten.first
+                db.exec("DELETE FROM email WHERE email = '#{email}'")
+                db.close
+                assert_equal(email,x)
+            
+                
+        # <--tests for 
 
 
 end
