@@ -43,28 +43,29 @@
         <%=user_email%><br>
     </div>
 <br>
-Todays Time
-     <table> 
-            <th>Time in</th>
-            <th>Lunch Start</th>
-            <th>Lunch End</th>
-            <th>Time out</th>
-            <%todays_time.each do |item|%>
-            <tr>
-            <%item.each do |time|%>
-                <%unless time == item[4]%>
-                    <td><%if time.length == 5%>
-                        <%=time_converter(time)%>
-                        <%else%>
-                        <%=time%>
-                        <%end%>
-                    </td>
-                <%end%>
+<%if todays_time.flatten.any?%>
+    Todays Time
+    <table> 
+        <th>Time in</th>
+        <th>Lunch Start</th>
+        <th>Lunch End</th>
+        <th>Time out</th>
+        <%todays_time.each do |item|%>
+        <tr>
+        <%item.each do |time|%>
+            <%unless time == item[4]%>
+                <td><%if time.length == 5%>
+                    <%=time_converter(time)%>
+                    <%else%>
+                    <%=time%>
+                    <%end%>
+                </td>
             <%end%>
-            </tr>
-            <%end%>
-            </table>
-
+        <%end%>
+        </tr>
+        <%end%>
+    </table>
+<%end%>
             
 <% if admin_check == "Yes" %><br>
 
