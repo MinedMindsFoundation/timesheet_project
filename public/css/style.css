@@ -13,8 +13,6 @@ iframe[seamless] {
 #login_box {
     background-color: rgba(128, 128, 128, 0.39);
     position: absolute;
-    top: 25%;
-    bottom: 25%;
     left: 1rem;
     right: 1rem;
     padding-left: 3rem;
