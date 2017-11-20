@@ -89,3 +89,25 @@ function onSignIn(googleUser) {
     document.getElementById('last_name').value = last_name;
     document.getElementById('myform').submit();
 }
+
+
+function onLoadGoogleCallback(){
+    gapi.load('auth2', function() {
+      auth2 = gapi.auth2.init({
+        client_id: '529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile'
+      });
+  
+    auth2.attachClickHandler(elem, {},
+      function(googleUser) {
+          console.log('Signed in: ' + googleUser.getBasicProfile().getName());
+          onSignIn(googleUser);
+        }, function(error) {
+          console.log('Sign-in error', error);
+        }
+      );
+    });
+
+    elem = document.getElementById('googleSignIn');
+  }

@@ -6,8 +6,29 @@ iframe[seamless] {
     display: block;
 }
 
+.center{
+    text-align: center;
+}
+
+
+#login_box{
+    background-color: rgba(128, 128, 128, 0.39);
+    position: absolute;
+    top: 25%;
+    bottom: 25%;
+    left: 1rem;
+    right: 1rem;
+    padding-left: 3rem;
+    padding-top: 3rem;
+    padding-right: 3rem;
+    border-style: double;
+    border-radius: 10rem;
+    border-width: 1rem;
+}
+
+
 #box2 {
-    background-color: whitesmoke;
+    background-color: whitesmoke; 
     border-style: solid;
     border-color: black;
     padding: auto;
@@ -28,6 +49,18 @@ iframe[seamless] {
     margin-left: 70%;
     margin-top: 0%;
     text-align: center;
+}
+
+.large_text{
+    font-size:5rem;
+}
+
+.medium_text{
+    font-size:3rem;
+}
+
+.social_button{
+    height: 12rem;
 }
 
 .back_gr {
