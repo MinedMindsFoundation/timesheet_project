@@ -6,7 +6,7 @@
     <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 
     <div id="mySidenav" class="sidenav">
-    
+    <% if admin_check == "Yes" %>
       <!--Form to add users-->
       <form method = "post" action = "add_user">
       <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
@@ -21,6 +21,8 @@
       <form method = "post" action = "to_whos_in">
       <button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>
       </form>
+      <%else%>
+      <%end%>
   
       <!--facebook sign out--><br>
       <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
@@ -63,11 +65,13 @@ Todays Time
             <%end%>
             </table>
 
-
+            
 <% if admin_check == "Yes" %><br>
+
+<!--Users who are clocked in-->
+
+<div class= "box top_right" id="result" align = "right">    
         Users Checked In:<br>
-    <div id="result">
-        <!--Users who are clocked in-->
         <%user_checked.each do |row|%>
         <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
         <%=row[0].capitalize%> <%=row[1].capitalize%> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[4]%><br>
@@ -88,12 +92,13 @@ Todays Time
 <%=session[:message]%><br>
 
 <!-- form for submiting your time in -->
-<center><form method = "post" action = "clock_in">
-<select name="location">
+<center><div class="center-on-page"><form method = "post" action = "clock_in">
+<div class="select">
+<select name="location" name="slct" id="slct">
         <option value="Clendenin">Clendenin</option>
         <option value="Beckley">Beckley</option>
         <option value="Waynesburg">Waynesburg</option>
-    </select><br>
+    </select></div><br>
     <button class="button" id = "clock_in_button" type = "submit">Submit Time In</button>
     </form><br>
 
@@ -110,12 +115,12 @@ Todays Time
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
     <button  class="button" id = "clock_out_button" type = "submit">Submit Time Out</button>
-    </form><center><br>
+    </form><br>
 
 <!--submit button fo vac request-->
 <form method = "post" action = "vac_time_request">
 <button type class="button" = "submit">PTO Request</button>
-</form>
+</form></div></center>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src = "/js/clock.js"></script>
