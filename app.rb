@@ -12,7 +12,7 @@ load './local_ENV.rb' if File.exist?('./local_ENV.rb')
 get "/" do 
     login_message = params[:login_message]
     session[:message] = '' 
-    erb :login, locals:{login_message:login_message}
+    erb :login, locals:{login_message:login_message}, :layout => :post
 end
 
 # comming from login.erb
@@ -168,8 +168,8 @@ end
 post "/add_to_user_list" do
     msg="User Added"
     user_id=params[:user_id_new]
-    first_name=params[:first_name]
-    last_name=params[:last_name]
+    first_name=params[:first_name].capitalize
+    last_name=params[:last_name].capitalize
     email=params[:email]
     admin=params[:admin]
     pto=params[:pto]
@@ -267,6 +267,7 @@ post "/update_timesheet" do
     session[:selected_id] =params[:selected_id]
     session[:times_shown] = time_date_fix(session[:selected_id],date_of_fix)
     user_info = emp_info(session[:selected_id])
+    # p date
     # p session[:times_shown]
     erb :admin_time_fix, locals:{user_info:user_info,date_of_fix:date_of_fix, times_shown:session[:times_shown]}
 end
@@ -295,12 +296,12 @@ post "/update_time_sheet" do
             # p selected_time
             selected_time.each do |position|
                 positions = position.to_i
-                p positions
-                p new_time[positions]
+                # p positions
+                # p new_time[positions]
                 original_time = session[:times_shown][positions]
-                p original_time
-                p original_time[0]
-                p original_time[4]
+                # p original_time
+                # p original_time[0]
+                # p original_time[4]
             timetable_fix(session[:selected_id], original_time[4], original_time[0], new_time[positions])
             end
         elsif choice == "Delete"

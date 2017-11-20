@@ -4,6 +4,33 @@
     <div id="timeout">
     </div>
     <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
+
+    <div id="mySidenav" class="sidenav">
+    <% if admin_check == "Yes" %>
+      <!--Form to add users-->
+      <form method = "post" action = "add_user">
+      <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
+      </form>
+  
+      <!--Form to Change or Delete Users-->
+      <form method = "post" action = "edit_user">
+      <button class="menu_button" style="vertical-align:middle" type = "submit">Edit Users</button>
+      </form>
+  
+      <!--Form to see whos clocked in or out-->
+      <form method = "post" action = "to_whos_in">
+      <button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>
+      </form>
+      <%else%>
+      <%end%>
+  
+      <!--facebook sign out--><br>
+      <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
+  
+  
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      </div>
+      <span style="font-size:30px;cursor:pointer" onclick="openNav()">Menu</span>
 </head>
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
@@ -38,11 +65,13 @@ Todays Time
             <%end%>
             </table>
 
-
+            
 <% if admin_check == "Yes" %><br>
+
+<!--Users who are clocked in-->
+
+<div class= "box top_right" id="result" align = "right">    
         Users Checked In:<br>
-    <div id="result">
-        <!--Users who are clocked in-->
         <%user_checked.each do |row|%>
         <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
         <%=row[0].capitalize%> <%=row[1].capitalize%> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[4]%><br>
@@ -51,23 +80,9 @@ Todays Time
 
     <!--message for the pto request-->
     <%=session[:pto_message]%><br>
-    <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <!--Form to add users-->
-    <form method = "post" action = "add_user">
-    <button type = "submit">Add User</button>
-    </form>
 
-    <!--Form to Change or Delete Users-->
-    <form method = "post" action = "edit_user">
-    <button type = "submit">Edit Users</button>
-    </form>
-
-    <!--Form to see whos clocked in or out-->
-    <form method = "post" action = "to_whos_in">
-    <button type = "submit">Search User</button>
-    </form></div>
-    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
+  
+    
 
 <% else %>
 <% end %>
@@ -77,34 +92,35 @@ Todays Time
 <%=session[:message]%><br>
 
 <!-- form for submiting your time in -->
-<center><form method = "post" action = "clock_in">
-<select name="location">
+<center><div class="center-on-page"><form method = "post" action = "clock_in">
+<div class="select">
+<select name="location" name="slct" id="slct">
         <option value="Clendenin">Clendenin</option>
         <option value="Beckley">Beckley</option>
         <option value="Waynesburg">Waynesburg</option>
-    </select><br>
-    <button id = "clock_in_button" type = "submit">Submit Time In</button>
-    </form>
+    </select></div><br>
+    <button class="button" id = "clock_in_button" type = "submit">Submit Time In</button>
+    </form><br>
 
 <!-- form for submiting your lunch start -->
 <form method = "post" action = "lunch_in">
-    <button type = "submit">Submit Lunch Start</button>
-</form>
+    <button class="button" type = "submit">Submit Lunch Start</button>
+</form><br>
 
 <!-- form for submiting your lunch end -->
 <form method = "post" action = "lunch_out">
-    <button type = "submit">Submit Lunch end</button>
-    </form>
+    <button class="button" type = "submit">Submit Lunch end</button>
+    </form><br>
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
-    <button id = "clock_out_button" type = "submit">Submit Time Out</button>
-    </form><center>
+    <button  class="button" id = "clock_out_button" type = "submit">Submit Time Out</button>
+    </form><br>
 
 <!--submit button fo vac request-->
 <form method = "post" action = "vac_time_request">
-<button type = "submit">PTO Request</button>
-</form>
+<button type class="button" = "submit">PTO Request</button>
+</form></div></center>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src = "/js/clock.js"></script>
@@ -126,8 +142,7 @@ Todays Time
     <%elsif toggle == "social"%>
 
     <!--social media section-->
-        <!--facebook sign out--><br>
-        <button id = 'sign_out' onclick= 'logout()' >Log Out</button>
+        
             <!-- src = "/js/logout.js"-->
     <!--google sign out--><br>
         <!-- scr ="/js/google_js.js"-->
@@ -169,7 +184,7 @@ Todays Time
             <%end%>
             </table>
 
-            <!---func for nav bar--->
+         <!-- func for nav bar -->
 
             <script>
             function openNav() {
