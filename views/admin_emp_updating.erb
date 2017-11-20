@@ -15,14 +15,23 @@ Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
 <th>PTO</th>
 </tr>
 <tr>
-<%user.each do |item|%>
-<td><input type = "text" name = info[] value = "<%=item%>"></td>
-<%end%>
+<td><input type = "text" name = info[] value = "<%=user[0]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[1]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[2]%>"></td>
+<td><input type = "date" name = info[] value = "<%=user[3]%>"></td>
+<td><input type = "email" name = info[] value = "<%=user[4]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[5]%>" list="admin_status"></td>
+<td><input type = "number" name = info[] value = "<%=user[6]%>"></td>
 </tr>
 </table><br>
 <%end%>
 <input type = "submit" value = "Update">
 </form><br>
+
+<datalist id="admin_status">
+    <option value="Yes">
+    <option value="No">
+</datalist>
 
 <%users.each_with_index do |user, index|%>
 Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%> to <%=pay_period[1]%>
