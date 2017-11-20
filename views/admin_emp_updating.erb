@@ -1,6 +1,7 @@
 <!--sign out div-->
 <div id="timeout">
 </div>
+<strong><%=msg%></strong><br><br>
 <%users.each_with_index do |user, index|%>
 Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
 <form method = "post" action = "emp_updated">

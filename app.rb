@@ -223,7 +223,8 @@ get "/update_emp_page" do
     end
     # p users
     # p time_table
-    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
+    msg = ""
+    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
 end
 
 post "/emp_updated" do
@@ -245,7 +246,8 @@ post "/emp_updated" do
     end
     # p users
     # p time_table
-    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
+    msg = "User Updated"
+    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
 end
 
 get "/employee_info" do
@@ -304,25 +306,36 @@ post "/update_time_sheet" do
                 # p original_time[4]
             timetable_fix(session[:selected_id], original_time[4], original_time[0], new_time[positions])
             end
+            pay_period = pay_period(Time.new)
+            time_table = []
+            session[:editing_users] =[]
+            session[:edit_user].each do |times|
+                time_table << pull_in_and_out_times(times,pay_period)
+            end
+            session[:edit_user].each do |user|
+                session[:editing_users] << user_info = emp_info(user)
+            end
+            msg = "Time Updated"
+            erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
         elsif choice == "Delete"
             selected_time.each do |position|
                 positions = position.to_i
                 original_time = session[:times_shown][positions]
                 timetable_delete(session[:selected_id], original_time[4], original_time[0])
             end
+            
+            pay_period = pay_period(Time.new)
+            time_table = []
+            session[:editing_users] =[]
+            session[:edit_user].each do |times|
+                time_table << pull_in_and_out_times(times,pay_period)
+            end
+            session[:edit_user].each do |user|
+                session[:editing_users] << user_info = emp_info(user)
+            end
+            msg = "Time Deleted"
+            erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
         end
-        pay_period = pay_period(Time.new)
-        time_table = []
-        session[:editing_users] =[]
-        session[:edit_user].each do |times|
-            time_table << pull_in_and_out_times(times,pay_period)
-        end
-        session[:edit_user].each do |user|
-            session[:editing_users] << user_info = emp_info(user)
-        end
-        # p users
-        # p time_table
-        erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
     end
 end
 
