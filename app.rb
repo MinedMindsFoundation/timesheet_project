@@ -12,7 +12,7 @@ load './local_ENV.rb' if File.exist?('./local_ENV.rb')
 get "/" do 
     login_message = params[:login_message]
     session[:message] = '' 
-    erb :login, locals:{login_message:login_message}
+    erb :login, locals:{login_message:login_message}, :layout => :post
 end
 
 # comming from login.erb

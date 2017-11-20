@@ -13,16 +13,24 @@
 
 <%elsif toggle == "off"%>
 <head>
-
 </head>
+
+<div id =  "login_box">
+
+<div class= "large_text center">Time Clock</div>
+<div class="center"><span id="clock" class = "medium_text">&nbsp;</span> <span id="date" class = "medium_text"></span></div>
+
+
 <ceneter><meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com"><center>
 <form id = "myform" method = "post" action = "login">
 <!--FaceBook Button -->
 <div class="social-login">
-<img src="img/fb_button.png" class="button button2" id="facebook_btn" onclick="fbLogin()">
+<img src="img/fb_button.png" class="social_button" id="facebook_btn" onclick="fbLogin()">
 </div>
 <!--google button-->
-<div class="g-signin2" data- data-width="410" data-height="100" data-longtitle="true" data-onsuccess="onSignIn"></div>
+ <image id="googleSignIn" class = "social_button" src="img/google_sign_in.png"></image>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoadGoogleCallback" async defer></script>
+<!-- <div class="social_button g-signin2" onclick="onSignIn"></div> -->
 
 <!-- simple bypass for login needs deleted before merge to master -->
 <input type = "hidden" id = 'first_name' name = "first_name">
@@ -30,11 +38,16 @@
 <input type = "hidden" id = "email" name = "email">
 
 
-
+<body class = "back_gr"  onload="updateClock(); setInterval('updateClock()',1000)";></body>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src= "js/google_js.js"></script>
 <script src = "js/facebook.js"></script>
+<script src = "/js/clock.js"></script>
+<script>
+    var d = new Date();
+    document.getElementById("date").innerHTML = d.toDateString();
+</script>
 
 <%end%>
 
