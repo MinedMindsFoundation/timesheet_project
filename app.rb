@@ -1,4 +1,4 @@
-git require "sinatra"
+require "sinatra"
 require 'pg'
 require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
