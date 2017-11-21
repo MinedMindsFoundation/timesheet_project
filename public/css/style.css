@@ -11,7 +11,7 @@ iframe[seamless] {
 }
 
 .scrollable{
-    overflow-y:hidden;
+    overflow:hidden;
 }
 .square_borders{
     border-style:solid;
@@ -21,17 +21,21 @@ iframe[seamless] {
 #menu{
     display: inline-flex;
     color: #111;
-    background-color: grey;
-    position: relative;
-    bottom: 4vh;
+    background-color: darkgrey;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
 }
 
 #user_name{
     color: rgb(5, 5, 5);
+    padding-left: 0.5vh;
     background-color: rgb(169, 169, 169);
-    padding-left: 7px;
     background-color: #a9a9a9;
     border-left-style: solid;
+    padding-right: 5.5vh;
 }
 #login_box {
     background-color: rgba(128, 128, 128, 0.39);
@@ -47,34 +51,35 @@ iframe[seamless] {
 }
 
 #box3{
-    width: 55vh;
+    width: fit-content;
+    margin: auto;
     text-align: center;
-    right: 0;
+    /* right: 0; */
     position: relative;
-    bottom: 6rem;
-    background-color:rgb(195, 200, 195);
+    top: -5rem;
+    background-color: rgb(195, 200, 195);
 }
 
 #box2 {
     background-color: whitesmoke;
+    font-size: 4vw;
     border-style: solid;
     border-color: black;
     padding: auto;
     border-radius: 3vh;
-    margin-right: 35%;
-    margin-left: 35%;
-    margin-top: 0%;
+    margin: auto;
     text-align: center;
 }
 
 #box4{
-    width: 30vw;
+    width: 61vw;
+    margin: auto;
     padding: 1rem;
     text-align: center;
     font-size: 1rem;
     position: relative;
-    top: 1vh;
-    bottom: 1vh;
+    /* bottom: 1vh; */
+    bottom: -88vh;
     background-color: #c3c8c3;
 }
 
@@ -297,7 +302,7 @@ body {
 }
 
 .center-on-page {
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -378,10 +383,11 @@ select::-ms-expand {
     right: 0%;
     width: 35%;
     height: 10%;
+    visibility: collapse;
 }
 
 /* media query for tablets */
-@media only screen and (min-width: 768px) {
+/* @media only screen and (min-width: 768px) and (max-width: 1023px) {
     #login_box{
         background-color: rgba(128, 128, 128, 0.39);
         position: absolute;
@@ -407,7 +413,7 @@ select::-ms-expand {
     .social_button {
         height: 6rem;
     }
-}
+} */
 
 /* media query for desktop */
 @media only screen and (min-width: 1024px) {
