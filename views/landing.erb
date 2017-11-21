@@ -5,66 +5,73 @@
     </div>
     <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 
-    <div id="mySidenav" class="sidenav">
-    <% if admin_check == "Yes" %>
-      <!--Form to add users-->
-      <form method = "post" action = "add_user">
-      <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
-      </form>
-  
-      <!--Form to Change or Delete Users-->
-      <form method = "post" action = "edit_user">
-      <button class="menu_button" style="vertical-align:middle" type = "submit">Edit Users</button>
-      </form>
-  
-      <!--Form to see whos clocked in or out-->
-      <form method = "post" action = "to_whos_in">
-      <button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>
-      </form>
-      <%else%>
-      <%end%>
-  
-      <!--facebook sign out--><br>
-      <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
-  
-  
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      </div>
-      <span style="font-size:30px;cursor:pointer" onclick="openNav()">Menu</span>
+    <div>
+        <div id="mySidenav" class="sidenav">
+        <% if admin_check == "Yes" %>
+        <!--Form to add users-->
+        <form method = "post" action = "add_user">
+        <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
+        </form>
+    
+        <!--Form to Change or Delete Users-->
+        <form method = "post" action = "edit_user">
+        <button class="menu_button" style="vertical-align:middle" type = "submit">Edit Users</button>
+        </form>
+    
+        <!--Form to see whos clocked in or out-->
+        <form method = "post" action = "to_whos_in">
+        <button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>
+        </form>
+        <%else%>
+        <%end%>
+    
+        <!--facebook sign out--><br>
+        <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
+    
+    
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        </div>
+    </div>    
+      
 </head>
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
 <span id="clock">&nbsp;</span>
 </body><br><br>
-    <div>
-        <%user_info.each do |row|%>
-            <%=row%>
-        <%end%>, welcome back!<br>
-        <%=user_email%><br>
+    <div id = "menu" class = "square_borders">
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">Menu</span>
+        <div id ="user_name">
+            <%user_info.each do |row|%>
+                <%=row%>
+            <%end%>, welcome back!<br>
+            <%=user_email%><br>
+        </div>
     </div>
 <br>
 <%if todays_time.flatten.any?%>
-    Todays Time
-    <table> 
-        <th>Time in</th>
-        <th>Lunch Start</th>
-        <th>Lunch End</th>
-        <th>Time out</th>
-        <%todays_time.each do |item|%>
-        <tr>
-        <%item.each do |time|%>
-            <%unless time == item[4]%>
-                <td><%if time.length == 5%>
-                    <%=time_converter(time)%>
-                    <%else%>
-                    <%=time%>
-                    <%end%>
-                </td>
+    <div id = "box4" class = "rounded_borders scrollable">
+        Todays Time
+        <table> 
+            <th>Time in</th>
+            <th>Lunch Start</th>
+            <th>Lunch End</th>
+            <th>Time out</th>
+            <%todays_time.each do |item|%>
+            <tr>
+            <%item.each do |time|%>
+                <%unless time == item[4]%>
+                    <td><%if time.length == 5%>
+                        <%=time_converter(time)%>
+                        <%else%>
+                        <%=time%>
+                        <%end%>
+                    </td>
+                <%end%>
             <%end%>
-        <%end%>
-        </tr>
-        <%end%>
-    </table>
+            </tr>
+            <%end%>
+        </table>
+    </div>
 <%end%>
             
 <% if admin_check == "Yes" %><br>
@@ -76,7 +83,6 @@
         <%user_checked.each do |row|%>
         <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
         <%=row[0].capitalize%> <%=row[1].capitalize%> <%=time_zero_remove(time)%> <%=row[4]%><br>
-        <div id = "time_in_js" onload = "time_js_fix(<%=time%>)"></div>
         <%end%>
     </div><br>
 
@@ -167,26 +173,28 @@
             </script>
             
             <!-- tabel of time in and out pay period --> 
-            Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
-            <table>
-            <th>Time in</th>
-            <th>Lunch Start</th>
-            <th>Lunch End</th>
-            <th>Time out</th>
-            <th>Date</th>
-            <%times.each do |item|%>
-            <tr>
-            <%item.each do |time|%>
-            <td><%if time.length == 5%>
-                <%=time_converter(time)%>
-                <%else%>
-                <%=time%>
+            <div id = "box3" class = "scrollable rounded_borders">
+                Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
+                <table>
+                <th class = "table_borders">Time in</th>
+                <th class = "table_borders">Lunch Start</th>
+                <th class = "table_borders">Lunch End</th>
+                <th class = "table_borders">Time out</th>
+                <th class = "table_borders">Date</th>
+                <%times.each do |item|%>
+                <tr>
+                <%item.each do |time|%>
+                <td class = "table_borders"><%if time.length == 5%>
+                    <%=time_converter(time)%>
+                    <%else%>
+                    <%=time%>
+                    <%end%>
+                </td>
                 <%end%>
-            </td>
-            <%end%>
-            </tr>
-            <%end%>
-            </table>
+                </tr>
+                <%end%>
+                </table>
+            </div>
 
          <!-- func for nav bar -->
 

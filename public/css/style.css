@@ -10,6 +10,29 @@ iframe[seamless] {
     text-align: center;
 }
 
+.scrollable{
+    overflow-y:hidden;
+}
+.square_borders{
+    border-style:solid;
+    border-color:black;
+}
+
+#menu{
+    display: inline-flex;
+    color: #111;
+    background-color: grey;
+    position: relative;
+    bottom: 4vh;
+}
+
+#user_name{
+    color: rgb(5, 5, 5);
+    background-color: rgb(169, 169, 169);
+    padding-left: 7px;
+    background-color: #a9a9a9;
+    border-left-style: solid;
+}
 #login_box {
     background-color: rgba(128, 128, 128, 0.39);
     position: absolute;
@@ -23,6 +46,15 @@ iframe[seamless] {
     border-width: 1rem;
 }
 
+#box3{
+    width: 55vh;
+    text-align: center;
+    right: 0;
+    position: relative;
+    bottom: 6rem;
+    background-color:rgb(195, 200, 195);
+}
+
 #box2 {
     background-color: whitesmoke;
     border-style: solid;
@@ -34,6 +66,36 @@ iframe[seamless] {
     margin-top: 0%;
     text-align: center;
 }
+
+#box4{
+    width: 30vw;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    position: relative;
+    top: 1vh;
+    bottom: 1vh;
+    background-color: #c3c8c3;
+}
+
+.rounded_borders{
+    border-radius:3vh;
+    border-color:black;
+    border-style:solid;
+}
+
+table{
+    border-collapse: collapse;
+
+}
+
+td{
+    border-style: solid;
+    border-width: 0.3vh;
+    border-color: rgba(5, 5, 5, 0.7);
+    
+}
+
 
 .box {
     background-color: whitesmoke;

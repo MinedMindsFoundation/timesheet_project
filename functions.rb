@@ -772,22 +772,22 @@ end
 
 def time_zero_remove(time_arr)
     ret_string = ""
-    if time_arr[0] == "0"
-    elsif time_arr[0] == "1"
+    if time_arr[0].to_s == "0"
+    elsif time_arr[0].to_s == "1"
        ret_string = ret_string + " " + "#{time_arr[0]}" + " :day"
     else
         ret_string = ret_string + " " + "#{time_arr[0]}" + " :days"
     end
 
-    if time_arr[1] == "0"
-    elsif time_arr[1] == "1"
+    if time_arr[1].to_s == "0"
+    elsif time_arr[1].to_s == "1"
         ret_string = ret_string + " " + "#{time_arr[1]}" + " :hour"
     else
         ret_string = ret_string + " " + "#{time_arr[1]}" + " :hours"
     end
 
-    if time_arr[2] == "0"
-    elsif time_arr[2] == "1"
+    if time_arr[2].to_s == "0"
+    elsif time_arr[2].to_s == "1"
         ret_string = ret_string + " " + "#{time_arr[2]}" + " :minute"
     else
         ret_string = ret_string + " " + "#{time_arr[2]}" + " :minutes"
