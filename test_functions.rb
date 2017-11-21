@@ -1397,3 +1397,8 @@ class Test_funcs < Minitest::Test
             assert_equal([["9:00 am", "1:00 pm", "2:00 pm", "5:00 pm", "2017-12-23", "2017-12-23", "clendenin"]],x)
         end   
 end
+
+    # <--test for time_zero_remove(time_arr)-->
+    def test_time_zero_remove_return_class
+        x =time_zero_remove["1","14","30"]
+        assert_equal(String,x.class)

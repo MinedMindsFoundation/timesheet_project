@@ -771,5 +771,27 @@ def time_out_lunch_check?(user_id)
 end
 
 def time_zero_remove(time_arr)
+    ret_string = ""
+    if time_arr[0] == "0"
+    elsif time_arr[0] == "1"
+        ret_string + time_arr + " :day"
+    else
+        ret_string = time_arr + " :days"
+    end
 
+    if time_arr[1] == "0"
+    elsif time_arr[1] == "1"
+        ret_string + time_arr + " :hour"
+    else
+        ret_string = time_arr + " :hours"
+    end
+
+    if time_arr[2] == "0"
+    elsif time_arr[2] == "1"
+        ret_string + time_arr + " :minute"
+    else
+        ret_string = time_arr + " :minutes"
+    end
+
+    ret_string
 end
