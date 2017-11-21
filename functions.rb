@@ -769,3 +769,7 @@ def time_out_lunch_check?(user_id)
     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND lunch_start != 'N/A' AND lunch_end = 'N/A' AND time_out = 'N/A' ")
         check.num_tuples.zero?
 end
+
+def time_zero_remove(time_arr)
+
+end
