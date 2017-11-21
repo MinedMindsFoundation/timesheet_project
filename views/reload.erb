@@ -2,5 +2,7 @@
         Users Checked In:<br>
         <%user_checked.each do |row|%>
         <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-        <%=row[0]%> <%=row[1]%> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[4]%><br>
+        <div>
+        <%=row[0].capitalize%> <%=row[1].capitalize%> <%=time_zero_remove(time)%> <%=row[4]%><br>
+        </div>
         <%end%>
