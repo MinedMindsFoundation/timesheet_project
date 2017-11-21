@@ -55,7 +55,7 @@ get "/to_landing" do
     pay_period = pay_period(Time.new)
     times = pull_in_and_out_times(session[:user_id],pay_period)
     todays_time = pull_in_and_out_times(session[:user_id],[DateTime.now.strftime('%Y-%m-%d'),DateTime.now.strftime('%Y-%m-%d')])
-erb :landing, locals:{todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check], user_checked:user_checked}
+    erb :landing, locals:{todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check], user_checked:user_checked}
 end
 
 #post comming from landing and records start of lunch
@@ -182,6 +182,17 @@ post "/add_to_user_list" do
     erb :admin_emplist, locals:{msg:msg}
 end
 
+get '/landing_to_edit' do
+    user=params[:user]
+    session[:times_shown] = clocked_in_fix(user)
+    to_date_of_fix = clocked_in_fix(user).flatten
+    date_of_fix = to_date_of_fix[4]
+    user_info = emp_info(user)
+    session[:edit_user] = []
+    session[:edit_user] << user
+    erb :admin_time_fix, locals:{user_info:user_info,date_of_fix:date_of_fix, times_shown:session[:times_shown]}
+end
+
 post "/edit_user" do
     admin_list = admin_emp_list()
     # p admin_list
@@ -293,17 +304,17 @@ post "/update_time_sheet" do
         erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
     else
         if choice == "Update"
-            # p session[:times_shown]
-            # p new_time
-            # p selected_time
+            p session[:times_shown]
+            p new_time
+            p selected_time
             selected_time.each do |position|
                 positions = position.to_i
-                # p positions
-                # p new_time[positions]
+                p positions
+                p new_time[positions]
                 original_time = session[:times_shown][positions]
-                # p original_time
-                # p original_time[0]
-                # p original_time[4]
+                p original_time
+                p original_time[0]
+                p original_time[4]
             timetable_fix(session[:selected_id], original_time[4], original_time[0], new_time[positions])
             end
             pay_period = pay_period(Time.new)

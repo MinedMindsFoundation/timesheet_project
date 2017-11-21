@@ -73,8 +73,8 @@ Todays Time
 <div class= "box top_right" id="result" align = "right">    
         Users Checked In:<br>
         <%user_checked.each do |row|%>
-        <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-        <%=row[0].capitalize%> <%=row[1].capitalize%> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[4]%><br>
+        <%time = live_time("#{row[3]} #{row[4]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+        <a href='/landing_to_edit?user=<%=row[0]%>'><%=row[1].capitalize%> <%=row[2].capitalize%></a> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[5]%><br>
         <%end%>
     </div><br>
 
