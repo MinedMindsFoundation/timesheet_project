@@ -1396,4 +1396,40 @@ class Test_funcs < Minitest::Test
             db.close
             assert_equal([["9:00 am", "1:00 pm", "2:00 pm", "5:00 pm", "2017-12-23", "2017-12-23", "clendenin"]],x)
         end   
+
+    # <--test for time_zero_remove(time_arr)-->
+    def test_time_zero_remove_return_class
+        x =time_zero_remove(["1","14","30"])
+        assert_equal(String,x.class)
+    end
+
+    def test_time_zero_remove_1
+        x =time_zero_remove(["1","14","30"])
+        assert_equal("1 :day 14 :hours 30 :minutes",x)
+    end
+
+    def test_time_zero_remove_2_zero_days
+        x =time_zero_remove(["0","14","30"])
+        assert_equal("14 :hours 30 :minutes",x)
+    end
+
+    def test_time_zero_remove_3_zero_days_and_hours
+        x =time_zero_remove(["0","0","30"])
+        assert_equal("30 :minutes",x)
+    end 
+    
+    def test_time_zero_remove_4_zero_hours
+        x =time_zero_remove(["1","0","30"])
+        assert_equal("1 :day 30 :minutes",x)
+    end 
+
+    def test_time_zero_remove_5_zero_minutes
+        x =time_zero_remove(["1","0","0"])
+        assert_equal("1 :day",x)
+    end
+
+    def test_time_zero_remove_6_zero_minutes_hours_days
+        x =time_zero_remove(["0","0","0"])
+        assert_equal("",x)
+    end
 end

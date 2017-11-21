@@ -5,46 +5,53 @@
     </div>
     <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 
-    <div id="mySidenav" class="sidenav">
-    <% if admin_check == "Yes" %>
-      <!--Form to add users-->
-      <form method = "post" action = "add_user">
-      <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
-      </form>
-  
-      <!--Form to Change or Delete Users-->
-      <form method = "post" action = "edit_user">
-      <button class="menu_button" style="vertical-align:middle" type = "submit">Edit Users</button>
-      </form>
-  
-      <!--Form to see whos clocked in or out-->
-      <form method = "post" action = "to_whos_in">
-      <button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>
-      </form>
-      <%else%>
-      <%end%>
-  
-      <!--facebook sign out--><br>
-      <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
-  
-  
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      </div>
-      <span style="font-size:30px;cursor:pointer" onclick="openNav()">Menu</span>
+    <div>
+        <div id="mySidenav" class="sidenav">
+        <% if admin_check == "Yes" %>
+        <!--Form to add users-->
+        <form method = "post" action = "add_user">
+        <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
+        </form>
+    
+        <!--Form to Change or Delete Users-->
+        <form method = "post" action = "edit_user">
+        <button class="menu_button" style="vertical-align:middle" type = "submit">Edit Users</button>
+        </form>
+    
+        <!--Form to see whos clocked in or out-->
+        <form method = "post" action = "to_whos_in">
+        <button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>
+        </form>
+        <%else%>
+        <%end%>
+    
+        <!--facebook sign out--><br>
+        <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
+    
+    
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        </div>
+    </div>    
+      
 </head>
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
 <span id="clock">&nbsp;</span>
 </body><br><br>
-    <div>
-        <%user_info.each do |row|%>
-            <%=row%>
-        <%end%>, welcome back!<br>
-        <%=user_email%><br>
+    <div id = "menu" class = "square_borders">
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">Menu</span>
+        <div id ="user_name">
+            <%user_info.each do |row|%>
+                <%=row%>
+            <%end%>, welcome back!<br>
+            <%=user_email%><br>
+        </div>
     </div>
 <br>
-Todays Time
-     <table> 
+<%if todays_time.flatten.any?%>
+    <div id = "box4" class = "rounded_borders">
+        Todays Time
+        <table> 
             <th>Time in</th>
             <th>Lunch Start</th>
             <th>Lunch End</th>
@@ -63,8 +70,9 @@ Todays Time
             <%end%>
             </tr>
             <%end%>
-            </table>
-
+        </table>
+    </div>
+<%end%>
             
 <% if admin_check == "Yes" %><br>
 
@@ -77,6 +85,8 @@ Todays Time
         <a href='/landing_to_edit?user=<%=row[0]%>'><%=row[1].capitalize%> <%=row[2].capitalize%></a> <%="#{time[0]} :days #{time[1]} :hours #{time[2]} :min"%> <%=row[5]%><br>
         <%end%>
     </div><br>
+
+    
 
     <!--message for the pto request-->
     <%=session[:pto_message]%><br>
@@ -99,22 +109,22 @@ Todays Time
         <option value="Beckley">Beckley</option>
         <option value="Waynesburg">Waynesburg</option>
     </select></div><br>
-    <button class="button" id = "clock_in_button" type = "submit">Submit Time In</button>
+    <button class="button" id = "clock_in_button" type = "submit">Time In</button>
     </form><br>
 
 <!-- form for submiting your lunch start -->
 <form method = "post" action = "lunch_in">
-    <button class="button" type = "submit">Submit Lunch Start</button>
+    <button class="button" type = "submit">Lunch Start</button>
 </form><br>
 
 <!-- form for submiting your lunch end -->
 <form method = "post" action = "lunch_out">
-    <button class="button" type = "submit">Submit Lunch end</button>
+    <button class="button" type = "submit">Lunch end</button>
     </form><br>
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
-    <button  class="button" id = "clock_out_button" type = "submit">Submit Time Out</button>
+    <button  class="button" id = "clock_out_button" type = "submit">Time Out</button>
     </form><br>
 
 <!--submit button fo vac request-->
@@ -163,26 +173,28 @@ Todays Time
             </script>
             
             <!-- tabel of time in and out pay period --> 
-            Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
-            <table>
-            <th>Time in</th>
-            <th>Lunch Start</th>
-            <th>Lunch End</th>
-            <th>Time out</th>
-            <th>Date</th>
-            <%times.each do |item|%>
-            <tr>
-            <%item.each do |time|%>
-            <td><%if time.length == 5%>
-                <%=time_converter(time)%>
-                <%else%>
-                <%=time%>
+            <div id = "box3" class = "scrollable rounded_borders">
+                Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
+                <table>
+                <th class = "table_borders">Time in</th>
+                <th class = "table_borders">Lunch Start</th>
+                <th class = "table_borders">Lunch End</th>
+                <th class = "table_borders">Time out</th>
+                <th class = "table_borders">Date</th>
+                <%times.each do |item|%>
+                <tr>
+                <%item.each do |time|%>
+                <td class = "table_borders"><%if time.length == 5%>
+                    <%=time_converter(time)%>
+                    <%else%>
+                    <%=time%>
+                    <%end%>
+                </td>
                 <%end%>
-            </td>
-            <%end%>
-            </tr>
-            <%end%>
-            </table>
+                </tr>
+                <%end%>
+                </table>
+            </div>
 
          <!-- func for nav bar -->
 

@@ -414,9 +414,9 @@ def who_is_clocked_in()
     name = database_info(user_id)
     #  user_id
         if time_out_check?(user_id) == true
-            arr_in << "#{name[0]} #{name[1]}"
+            arr_in << "#{name[0].capitalize} #{name[1].capitalize}"
         else
-            arr_out << "#{name[0]} #{name[1]}"
+            arr_out << "#{name[0].capitalize} #{name[1].capitalize}"
         end
     end
     [arr_in,arr_out]
@@ -787,4 +787,31 @@ def time_out_lunch_check?(user_id)
         db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND lunch_start != 'N/A' AND lunch_end = 'N/A' AND time_out = 'N/A' ")
         check.num_tuples.zero?
+end
+
+def time_zero_remove(time_arr)
+    ret_string = ""
+    if time_arr[0].to_s == "0"
+    elsif time_arr[0].to_s == "1"
+       ret_string = ret_string + " " + "#{time_arr[0]}" + " :day"
+    else
+        ret_string = ret_string + " " + "#{time_arr[0]}" + " :days"
+    end
+
+    if time_arr[1].to_s == "0"
+    elsif time_arr[1].to_s == "1"
+        ret_string = ret_string + " " + "#{time_arr[1]}" + " :hour"
+    else
+        ret_string = ret_string + " " + "#{time_arr[1]}" + " :hours"
+    end
+
+    if time_arr[2].to_s == "0"
+    elsif time_arr[2].to_s == "1"
+        ret_string = ret_string + " " + "#{time_arr[2]}" + " :minute"
+    else
+        ret_string = ret_string + " " + "#{time_arr[2]}" + " :minutes"
+    end
+
+    ret_string.strip!
+    ret_string
 end
