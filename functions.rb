@@ -413,9 +413,9 @@ def who_is_clocked_in()
     name = database_info(user_id)
     #  user_id
         if time_out_check?(user_id) == true
-            arr_in << "#{name[0]} #{name[1]}"
+            arr_in << "#{name[0].capitalize} #{name[1].capitalize}"
         else
-            arr_out << "#{name[0]} #{name[1]}"
+            arr_out << "#{name[0].capitalize} #{name[1].capitalize}"
         end
     end
     [arr_in,arr_out]

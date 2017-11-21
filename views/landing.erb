@@ -43,28 +43,29 @@
         <%=user_email%><br>
     </div>
 <br>
-Todays Time
-     <table> 
-            <th>Time in</th>
-            <th>Lunch Start</th>
-            <th>Lunch End</th>
-            <th>Time out</th>
-            <%todays_time.each do |item|%>
-            <tr>
-            <%item.each do |time|%>
-                <%unless time == item[4]%>
-                    <td><%if time.length == 5%>
-                        <%=time_converter(time)%>
-                        <%else%>
-                        <%=time%>
-                        <%end%>
-                    </td>
-                <%end%>
+<%if todays_time.flatten.any?%>
+    Todays Time
+    <table> 
+        <th>Time in</th>
+        <th>Lunch Start</th>
+        <th>Lunch End</th>
+        <th>Time out</th>
+        <%todays_time.each do |item|%>
+        <tr>
+        <%item.each do |time|%>
+            <%unless time == item[4]%>
+                <td><%if time.length == 5%>
+                    <%=time_converter(time)%>
+                    <%else%>
+                    <%=time%>
+                    <%end%>
+                </td>
             <%end%>
-            </tr>
-            <%end%>
-            </table>
-
+        <%end%>
+        </tr>
+        <%end%>
+    </table>
+<%end%>
             
 <% if admin_check == "Yes" %><br>
 
@@ -99,22 +100,22 @@ Todays Time
         <option value="Beckley">Beckley</option>
         <option value="Waynesburg">Waynesburg</option>
     </select></div><br>
-    <button class="button" id = "clock_in_button" type = "submit">Submit Time In</button>
+    <button class="button" id = "clock_in_button" type = "submit">Time In</button>
     </form><br>
 
 <!-- form for submiting your lunch start -->
 <form method = "post" action = "lunch_in">
-    <button class="button" type = "submit">Submit Lunch Start</button>
+    <button class="button" type = "submit">Lunch Start</button>
 </form><br>
 
 <!-- form for submiting your lunch end -->
 <form method = "post" action = "lunch_out">
-    <button class="button" type = "submit">Submit Lunch end</button>
+    <button class="button" type = "submit">Lunch end</button>
     </form><br>
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
-    <button  class="button" id = "clock_out_button" type = "submit">Submit Time Out</button>
+    <button  class="button" id = "clock_out_button" type = "submit">Time Out</button>
     </form><br>
 
 <!--submit button fo vac request-->
