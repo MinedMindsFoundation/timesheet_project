@@ -1402,4 +1402,24 @@ class Test_funcs < Minitest::Test
         x =time_zero_remove(["1","14","30"])
         assert_equal(String,x.class)
     end
+
+    def test_time_zero_remove_1
+        x =time_zero_remove(["1","14","30"])
+        assert_equal("1 :day 14 :hours 30 :minutes",x)
+    end
+
+    def test_time_zero_remove_2_zero_days
+        x =time_zero_remove(["0","14","30"])
+        assert_equal("14 :hours 30 :minutes",x)
+    end
+
+    def test_time_zero_remove_3_zero_days_and_hours
+        x =time_zero_remove(["0","0","30"])
+        assert_equal("30 :minutes",x)
+    end 
+    
+    def test_time_zero_remove_3_zero_hours
+        x =time_zero_remove(["1","0","30"])
+        assert_equal("1 :day 30 :minutes",x)
+    end 
 end
