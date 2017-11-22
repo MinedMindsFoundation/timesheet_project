@@ -6,13 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <header class= "boarder">
-<span id="clock">&nbsp;</span> <span id="date"></span>
 </header>
 
 
 <body class = "back_gr"  onload="updateClock(); setInterval('updateClock()',1000)";>
-</body>
+<div>
+<span id="clock">&nbsp;</span> <span id="date"></span>
+</div>
 <%=yield%>
+</body>
 
 
 <center><footer>
