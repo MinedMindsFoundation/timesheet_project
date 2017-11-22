@@ -26,7 +26,7 @@ iframe[seamless] {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 1;
 }
 
 #user_name{
@@ -56,7 +56,9 @@ iframe[seamless] {
     text-align: center;
     /* right: 0; */
     position: relative;
-    top: -5rem;
+    top: -1rem;
+    
+    margin-top: 1vh;
     background-color: rgb(195, 200, 195);
 }
 
@@ -72,12 +74,13 @@ iframe[seamless] {
 }
 
 #box4{
-    width: 61vw;
+    width: fit-content;
     margin: auto;
     padding: 1rem;
     text-align: center;
     font-size: 1rem;
     position: relative;
+    margin-bottom: 5vh;
     /* bottom: 1vh; */
     bottom: -88vh;
     background-color: #c3c8c3;
@@ -157,13 +160,13 @@ body {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
     top: 0;
     left: 0;
     background-color: #111;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    z-index: 2;
 }
 
 .sidenav a {
@@ -429,6 +432,75 @@ select::-ms-expand {
         border-radius: 5rem;
         border-width: 1rem;
         width: fit-content;   
+    }
+    #menu{
+        display: inline-flex;
+        color: #111;
+        background-color: darkgrey;
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+    
+    #user_name{
+        color: rgb(5, 5, 5);
+        padding-left: 0.5vh;
+        background-color: rgb(169, 169, 169);
+        background-color: #a9a9a9;
+        border-left-style: solid;
+        padding-right: 5.5vh;
+    }
+
+    #box4{
+        margin: unset;
+        width: fit-content;
+        padding: 1rem;
+        text-align: center;
+        font-size: 1rem;
+        position: relative;
+        /* margin-bottom: 5vh; */
+        bottom: 1vh;
+        top: 3vh;
+        left: 0;
+        /* bottom: -88vh; */
+        background-color: #d5cbff;
+        left: 0;
+    }
+
+    #box2 {
+        background-color: whitesmoke;
+        width: fit-content;
+        padding: 1vh;
+        font-size: 2vw;
+        border-style: solid;
+        border-color: black;
+        padding: auto;
+        border-radius: 3vh;
+        margin: auto;
+        text-align: center;
+    }
+
+    #box3{
+        width: fit-content;
+        /* margin: auto; */
+        text-align: center;
+        /* right: 0; */
+        position: absolute;
+        top: 26rem;
+        left: 0;
+        background-color: rgb(195, 200, 195)
+    }
+    .top_right{
+        position: absolute;
+        top: 5%;
+        right: 0%;
+        width: fit-content;
+        height: 1vh;
+        padding: 2rem;
+        height: 10%;
+        visibility: visible;
     }
 
     .large_text {
