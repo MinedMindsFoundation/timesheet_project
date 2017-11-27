@@ -206,14 +206,13 @@ def database_emp_checked()
     user = db.exec("SELECT user_id FROM timesheet_new WHERE time_out = 'N/A'").values
     # p user
     user.each do |user_id|
-        user_checked << user_id
-        user_checked << db.exec("SELECT first_name, last_name FROM info_new WHERE user_id = '#{user_id[0]}'").values
-        user_checked << db.exec("SELECT time_in, date FROM timesheet_new WHERE time_out = 'N/A' AND user_id = '#{user_id[0]}'").values.flatten
-        user_checked << db.exec("SELECT location FROM timesheet_new WHERE time_out = 'N/A' and user_id = '#{user_id[0]}'").values.flatten.first
+    user_checked << db.exec("SELECT first_name, last_name FROM info_new WHERE user_id = '#{user_id[0]}'").values
+    user_checked << db.exec("SELECT time_in, date FROM timesheet_new WHERE time_out = 'N/A' AND user_id = '#{user_id[0]}'").values.flatten
+    user_checked << db.exec("SELECT location FROM timesheet_new WHERE time_out = 'N/A' and user_id = '#{user_id[0]}'").values.flatten.first
     end
     db.close
     next_checked = user_checked.flatten
-    next_checked.each_slice(6).to_a
+    next_checked.each_slice(5).to_a
 end
 
 def database_email_check(user_id)
@@ -581,24 +580,6 @@ def time_date_fix(user_id,date)
     db = PG::Connection.new(db_params)
     data = []
     fixer_date =db.exec("SELECT time_in, lunch_start, lunch_end, time_out, date, date_out, location FROM timesheet_new WHERE user_id = '#{user_id}' AND date = '#{date}'").values
-    db.close
-    fixer_date.each do |item|
-        data << item
-    end
-    data
-end
-
-def clocked_in_fix(user_id)
-    db_params = {
-        host: ENV['host'],
-        port: ENV['port'],
-        dbname: ENV['dbname'],
-        user: ENV['user'],
-        password: ENV['password']
-    }
-    db = PG::Connection.new(db_params)
-    data = []
-    fixer_date =db.exec("SELECT time_in, lunch_start, lunch_end, time_out, date, date_out, location FROM timesheet_new WHERE user_id = '#{user_id}' AND time_out = 'N/A'").values
     db.close
     fixer_date.each do |item|
         data << item
