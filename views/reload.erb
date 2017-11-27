@@ -1,5 +1,5 @@
  <!--Users who are clocked in-->
-        Users Checked In:<br>
+ <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
         <%user_checked.each do |row|%>
         <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
         <div>

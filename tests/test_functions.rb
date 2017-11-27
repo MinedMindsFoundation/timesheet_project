@@ -1,6 +1,7 @@
 require "minitest/autorun"
-require_relative 'functions.rb'
-load './local_env.rb' if File.exist?('./local_env.rb')
+# require_relative 'functions.rb'
+require_relative '../functions.rb'
+load '../local_env.rb' if File.exist?('../local_env.rb')
 
 class Test_funcs < Minitest::Test
     
@@ -254,7 +255,7 @@ class Test_funcs < Minitest::Test
 
         #<!---test add user--->
         def test_add_user_1
-            add_user("usertest","email@email.com","tester1","test","5","No","11/14/2017")
+            add_user("usertestid","email@email.com","tester1","test","5","No","11/14/2017")
             x = get_id("email@email.com")
             db_params = {
                 host: ENV['host'],
@@ -264,12 +265,12 @@ class Test_funcs < Minitest::Test
                 password: ENV['password']
                 }
                 db = PG::Connection.new(db_params)
-                db.exec("Delete FROM info_new WHERE user_id = 'usertest'")  
-                db.exec("Delete FROM pto WHERE user_id = 'usertest'")
-                db.exec("Delete FROM admin_status WHERE user_id = 'usertest'")
-                db.exec("Delete FROM email WHERE user_id = 'usertest'")
+                db.exec("Delete FROM info_new WHERE user_id = 'usertestid'")  
+                db.exec("Delete FROM pto WHERE user_id = 'usertestid'")
+                db.exec("Delete FROM admin_status WHERE user_id = 'usertestid'")
+                db.exec("Delete FROM email WHERE user_id = 'usertestid'")
                 db.close
-                assert_equal("usertest", x)
+                assert_equal("usertestid", x)
             end  
             
             def test_add_user_2

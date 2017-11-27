@@ -9,25 +9,43 @@
         <div id="mySidenav" class="sidenav">
         <% if admin_check == "Yes" %>
         <!--Form to add users-->
+        
         <form method = "post" action = "add_user">
+        <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
+        <span class="tooltiptext3">This is to add a new user.</span></div>
         </form>
+        
     
         <!--Form to Change or Delete Users-->
         <form method = "post" action = "edit_user">
+        <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" type = "submit">Edit Users</button>
+        <span class="tooltiptext3">This is to Edit, Delete and fix time mistakes.</span></div>
         </form>
     
         <!--Form to see whos clocked in or out-->
         <form method = "post" action = "to_whos_in">
+        <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>
+        <span class="tooltiptext3">This is to search users who are in the database.</span></div>
         </form>
+
+        <!--submit button fo vac request-->
+        <form method = "post" action = "vac_time_request">
+        <div class = "tooltip3">
+        <button class="menu_button" style="vertical-align:middle"type = "submit">PTO Request</button>
+        <span class="tooltiptext3">This is to request time off.</span></div>
+        </form>
+        
         <%else%>
+    
         <%end%>
     
         <!--facebook sign out--><br>
+        <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
-    
+        <span class="tooltiptext3">This is to sign out.</span></div>
     
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         </div>
@@ -53,13 +71,15 @@
 
 <!--Users who are clocked in-->
 
-<div class= "box top_right" id="result" align = "right">    
-        Users Checked In:<br>
+<div class= "box top_right" id="result" align = "right"> 
+   
+<div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
         <%user_checked.each do |row|%>
         <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
         <%=row[0].capitalize%> <%=row[1].capitalize%> <%=time_zero_remove(time)%> <%=row[4]%><br>
         <%end%>
-    </div><br>
+       </div><br>
+  
 
     
 
@@ -78,38 +98,46 @@
 
 <!-- form for submiting your time in -->
 <div class="center center-on-page"><form method = "post" action = "clock_in">
-<div class="select">
+<div class = "tooltip">
+<div class="select ">
 <select name="location" name="slct" id="slct">
         <option value="Clendenin">Clendenin</option>
         <option value="Beckley">Beckley</option>
         <option value="Waynesburg">Waynesburg</option>
     </select></div><br>
+    <span class="tooltiptext">This is to pick your location.</span></div><br>
+    <div class = "tooltip">
     <button class="button" id = "clock_in_button" type = "submit">Time In</button>
+    <span class="tooltiptext">This is to clock in for the day.</span></div>
     </form><br>
 
 <!-- form for submiting your lunch start -->
 <form method = "post" action = "lunch_in">
+<div class = "tooltip">
     <button class="button" type = "submit">Lunch Start</button>
+    <span class="tooltiptext">This is to clock out for lunch.</span></div>
 </form><br>
 
 <!-- form for submiting your lunch end -->
 <form method = "post" action = "lunch_out">
+<div class = "tooltip">
     <button class="button" type = "submit">Lunch end</button>
+    <span class="tooltiptext">This is to clock back in from lunch.</span></div>
     </form><br>
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
+<div class = "tooltip">
     <button  class="button" id = "clock_out_button" type = "submit">Time Out</button>
+    <span class="tooltiptext">This is to clock out for the day.</span></div>
     </form><br>
+    </div>
 
-<!--submit button fo vac request-->
-<form method = "post" action = "vac_time_request">
-<button type class="button" = "submit">PTO Request</button>
-</form></div>
+
 
 <%if todays_time.flatten.any?%>
     <div id = "box4" class = "rounded_borders">
-        Todays Time
+    <div class = "tooltip2">Todays Time<span class="tooltiptext2">This is your time for today.</span></div>
         <table> 
             <th>Time in</th>
             <th>Lunch Start</th>
@@ -175,7 +203,7 @@
             
             <!-- tabel of time in and out pay period --> 
             <div id = "box3" class = "scrollable rounded_borders">
-                Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%>
+            <div class = "tooltip3">Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%><span class="tooltiptext3">This is your time for your pay period.</span></div>
                 <table>
                 <th class = "table_borders">Time in</th>
                 <th class = "table_borders">Lunch Start</th>
