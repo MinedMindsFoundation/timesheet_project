@@ -10,15 +10,16 @@ iframe[seamless] {
     text-align: center;
 }
 
-.scrollable{
-    overflow:hidden;
-}
-.square_borders{
-    border-style:solid;
-    border-color:black;
+.scrollable {
+    overflow: hidden;
 }
 
-#menu{
+.square_borders {
+    border-style: solid;
+    border-color: black;
+}
+
+#menu {
     display: inline-flex;
     color: #111;
     background-color: darkgrey;
@@ -29,7 +30,7 @@ iframe[seamless] {
     z-index: 1;
 }
 
-#user_name{
+#user_name {
     color: rgb(5, 5, 5);
     padding-left: 0.5vh;
     background-color: rgb(169, 169, 169);
@@ -37,6 +38,7 @@ iframe[seamless] {
     border-left-style: solid;
     padding-right: 5.5vh;
 }
+
 #login_box {
     background-color: rgba(128, 128, 128, 0.39);
     position: absolute;
@@ -50,7 +52,7 @@ iframe[seamless] {
     border-width: 1rem;
 }
 
-#box3{
+#box3 {
     width: fit-content;
     margin: auto;
     padding: 1rem;
@@ -61,7 +63,6 @@ iframe[seamless] {
     background-color: #c3c8c3;
     margin-bottom: 2vh;
 }
-
 
 #box2 {
     background-color: whitesmoke;
@@ -74,7 +75,7 @@ iframe[seamless] {
     text-align: center;
 }
 
-#box4{
+#box4 {
     width: fit-content;
     margin: auto;
     padding: 1rem;
@@ -87,24 +88,21 @@ iframe[seamless] {
     background-color: #c3c8c3;
 }
 
-.rounded_borders{
-    border-radius:3vh;
-    border-color:black;
-    border-style:solid;
+.rounded_borders {
+    border-radius: 3vh;
+    border-color: black;
+    border-style: solid;
 }
 
-table{
+table {
     border-collapse: collapse;
-
 }
 
-td{
+td {
     border-style: solid;
     border-width: 0.3vh;
     border-color: rgba(5, 5, 5, 0.7);
-    
 }
-
 
 .box {
     background-color: whitesmoke;
@@ -306,9 +304,8 @@ body {
 }
 
 .center-on-page {
-
-     margin: auto; 
-     margin-top: -14vh;
+    margin: auto;
+    margin-top: -14vh;
     margin-bottom: 5vh;
 }
 
@@ -390,7 +387,10 @@ select::-ms-expand {
     visibility: collapse;
 }
 
+
 /* media query for tablets */
+
+
 /* @media only screen and (min-width: 768px) and (max-width: 1023px) {
     #login_box{
         background-color: rgba(128, 128, 128, 0.39);
@@ -419,9 +419,11 @@ select::-ms-expand {
     }
 } */
 
+
 /* media query for desktop */
+
 @media only screen and (min-width: 1024px) {
-    #login_box{
+    #login_box {
         background-color: rgba(128, 128, 128, 0.39);
         position: absolute;
         margin: auto;
@@ -432,7 +434,7 @@ select::-ms-expand {
         border-style: double;
         border-radius: 5rem;
         border-width: 1rem;
-        width: fit-content;   
+        width: fit-content;
     }
     .center-on-page {
         position: absolute;
@@ -442,7 +444,7 @@ select::-ms-expand {
         width: fit-content;
         transform: translate(-50%, -50%);
     }
-    #menu{
+    #menu {
         display: inline-flex;
         color: #111;
         background-color: darkgrey;
@@ -452,8 +454,7 @@ select::-ms-expand {
         right: 0;
         z-index: 1;
     }
-    
-    #user_name{
+    #user_name {
         color: rgb(5, 5, 5);
         padding-left: 0.5vh;
         background-color: rgb(169, 169, 169);
@@ -461,23 +462,19 @@ select::-ms-expand {
         border-left-style: solid;
         padding-right: 5.5vh;
     }
-
-    #box4{
+    #box4 {
         margin: unset;
         width: fit-content;
         padding: 1rem;
         text-align: center;
         font-size: 1rem;
         position: relative;
-
         bottom: 1vh;
         top: 3vh;
         left: 0;
-
         background-color: #d5cbff;
         left: 0;
     }
-
     #box2 {
         background-color: whitesmoke;
         width: fit-content;
@@ -493,18 +490,15 @@ select::-ms-expand {
         bottom: 0px;
         margin-top: 30vh;
     }
-
-    #box3{
+    #box3 {
         width: fit-content;
         padding: unset;
-
         text-align: center;
-
         top: 28rem;
         margin-left: -1vh;
         background-color: rgb(195, 200, 195)
     }
-    .top_right{
+    .top_right {
         position: absolute;
         top: 40%;
         right: 0%;
@@ -512,22 +506,94 @@ select::-ms-expand {
         height: 1vh;
         padding: 1rem;
         margin-left: -2vw;
-
         font-size: small;
         height: fit-content;
         visibility: visible;
     }
-
-
     .large_text {
         font-size: 3rem;
     }
-
     .medium_text {
         font-size: 2rem;
     }
-
     .social_button {
         height: 6rem;
     }
+}
+
+
+/* this is for the info to pop up */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltip2 {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip2 .tooltiptext2 {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 250%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip2:hover .tooltiptext2 {
+    visibility: visible;
+}
+
+.tooltip3 {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip3 .tooltiptext3 {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: auto;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip3:hover .tooltiptext3 {
+    visibility: visible;
 }
