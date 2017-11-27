@@ -1,3 +1,14 @@
+:root{
+    --color-1:rgba(30,0,159,1);
+    --color-2:rgba(0,34,210,1);
+    --color-3:rgba(255,184,0,1);
+    --color-4:rgba(216,155,0,1);
+    --color-5:rgba(0,0,0,1);
+    --box-bdr-color:rgb(0,40,85); /*color for the borders on the boxes */
+    --box-bg-color:rgba(234,170,0,0.5); /*background color for boxes*/
+
+}
+
 iframe:focus {
     outline: none;
 }
@@ -38,7 +49,8 @@ iframe[seamless] {
     padding-right: 5.5vh;
 }
 #login_box {
-    background-color: rgba(128, 128, 128, 0.39);
+    background-color: var(--box-bg-color);
+    border-color: var(--box-brd-color);
     position: absolute;
     left: 1rem;
     right: 1rem;
@@ -48,6 +60,7 @@ iframe[seamless] {
     border-style: double;
     border-radius: 10rem;
     border-width: 1rem;
+    background-image:url('/img/logo.jpg')
 }
 
 #box3{
