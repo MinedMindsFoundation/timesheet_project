@@ -1,5 +1,4 @@
 require "minitest/autorun"
-# require_relative 'functions.rb'
 require_relative '../functions.rb'
 load '../local_env.rb' if File.exist?('../local_env.rb')
 
