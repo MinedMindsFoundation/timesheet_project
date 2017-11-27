@@ -9,11 +9,10 @@
 <input type="submit" name="submit" value="login">
 </form>
 
-
 <%elsif toggle == "off"%>
 <head>
 </head>
-
+<center>
 <div id =  "login_box">
 
 <div class= "large_text center">Time Clock</div>
@@ -31,12 +30,12 @@
     <script src="https://apis.google.com/js/platform.js?onload=onLoadGoogleCallback" async defer></script>
 <!-- <div class="social_button g-signin2" onclick="onSignIn"></div> -->
 
-<!-- simple bypass for login needs deleted before merge to master -->
+<!--- brings first name, last name, and email to check if in database --->
 <input type = "hidden" id = 'first_name' name = "first_name">
 <input type = "hidden"id = "last_name" name = "last_name">
 <input type = "hidden" id = "email" name = "email">
 
-
+</center>
 <body class = "back_gr"  onload="updateClock(); setInterval('updateClock()',1000)";></body>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>

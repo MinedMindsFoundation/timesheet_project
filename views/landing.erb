@@ -36,10 +36,10 @@
 </head>
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
-<span id="clock">&nbsp;</span>
+<div><span id="clock">&nbsp;</span></div>
 </body><br><br>
     <div id = "menu" class = "square_borders">
-    <span style="font-size:30px;cursor:pointer" onclick="openNav()">Menu</span>
+    <span style="font-size:30px;cursor:pointer;background-color: #666;" onclick="openNav()">Menu</span>
         <div id ="user_name">
             <%user_info.each do |row|%>
                 <%=row%>
@@ -48,31 +48,6 @@
         </div>
     </div>
 <br>
-<%if todays_time.flatten.any?%>
-    <div id = "box4" class = "rounded_borders">
-        Todays Time
-        <table> 
-            <th>Time in</th>
-            <th>Lunch Start</th>
-            <th>Lunch End</th>
-            <th>Time out</th>
-            <%todays_time.each do |item|%>
-            <tr>
-            <%item.each do |time|%>
-                <%unless time == item[4]%>
-                    <td><%if time.length == 5%>
-                        <%=time_converter(time)%>
-                        <%else%>
-                        <%=time%>
-                        <%end%>
-                    </td>
-                <%end%>
-            <%end%>
-            </tr>
-            <%end%>
-        </table>
-    </div>
-<%end%>
             
 <% if admin_check == "Yes" %><br>
 
@@ -102,7 +77,7 @@
 <%=session[:message]%><br>
 
 <!-- form for submiting your time in -->
-<center><div class="center-on-page"><form method = "post" action = "clock_in">
+<div class="center center-on-page"><form method = "post" action = "clock_in">
 <div class="select">
 <select name="location" name="slct" id="slct">
         <option value="Clendenin">Clendenin</option>
@@ -130,7 +105,33 @@
 <!--submit button fo vac request-->
 <form method = "post" action = "vac_time_request">
 <button type class="button" = "submit">PTO Request</button>
-</form></div></center>
+</form></div>
+
+<%if todays_time.flatten.any?%>
+    <div id = "box4" class = "rounded_borders">
+        Todays Time
+        <table> 
+            <th>Time in</th>
+            <th>Lunch Start</th>
+            <th>Lunch End</th>
+            <th>Time out</th>
+            <%todays_time.each do |item|%>
+            <tr>
+            <%item.each do |time|%>
+                <%unless time == item[4]%>
+                    <td><%if time.length == 5%>
+                        <%=time_converter(time)%>
+                        <%else%>
+                        <%=time%>
+                        <%end%>
+                    </td>
+                <%end%>
+            <%end%>
+            </tr>
+            <%end%>
+        </table>
+    </div>
+<%end%>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src = "/js/clock.js"></script>
@@ -162,7 +163,7 @@
             <body onload="idleTimer()"></body>
 <%end%>
  
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
    <script>
    function autoRefresh_div()
  {
