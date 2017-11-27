@@ -1,8 +1,8 @@
-<!--Users who are clocked in-->
-Users Checked In:<br>
-<%user_checked.each do |row|%>
-<%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-<div>
-<%=row[0].capitalize%> <%=row[1].capitalize%> <%=time_zero_remove(time)%> <%=row[4]%><br>
-</div>
-<%end%>
+ <!--Users who are clocked in-->
+ <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
+        <%user_checked.each do |row|%>
+        <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+        <div>
+        <%=row[0].capitalize%> <%=row[1].capitalize%> <%=time_zero_remove(time)%> <%=row[4]%><br>
+        </div>
+        <%end%>

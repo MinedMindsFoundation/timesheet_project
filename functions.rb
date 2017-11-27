@@ -634,7 +634,7 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request. Enjoy you time off."
+        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} PTO days left to request. Please fill out this form <a href= 'http://localhost:4567/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off."
       mail = Mail.new do
           from         ENV['from']
           to           email
