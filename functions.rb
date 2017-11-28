@@ -36,6 +36,7 @@ def login_check?(email)
         }
         db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM email WHERE email = '#{email}'")
+    db.close
     if check.num_tuples.zero? == false
         true
     else
@@ -418,6 +419,7 @@ def who_is_clocked_in()
             arr_out << "#{name[0].capitalize} #{name[1].capitalize}"
         end
     end
+    db.close
     [arr_in,arr_out]
 end
 
@@ -623,6 +625,7 @@ def  pto_request_db_add(user_id,start_date,end_date)
         }
         db = PG::Connection.new(db_params)
     db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','pending')")
+    db.close
 end
 
 def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto) 
@@ -767,7 +770,8 @@ def time_out_lunch_check?(user_id)
         }
         db = PG::Connection.new(db_params)
     check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND lunch_start != 'N/A' AND lunch_end = 'N/A' AND time_out = 'N/A' ")
-        check.num_tuples.zero?
+    db.close    
+    check.num_tuples.zero?
 end
 
 def time_zero_remove(time_arr)

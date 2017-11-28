@@ -355,7 +355,8 @@ end
 
 get "/reload" do
     user_checked = database_emp_checked()
-    erb :reload, locals:{user_checked:user_checked}, :layout => :post
+    users = who_is_clocked_in()
+    erb :reload, locals:{users:users,user_checked:user_checked}, :layout => :post
 end
 
 post "/approval" do

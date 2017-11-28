@@ -71,15 +71,11 @@
 
 <!--Users who are clocked in-->
 
-<div class= "box top_right" id="result" align = "right"> 
-   
-<div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
-        <%user_checked.each do |row|%>
-        <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-        <%=row[0].capitalize%> <%=row[1].capitalize%> <%=time_zero_remove(time)%> <%=row[4]%><br>
-        <%end%>
-       </div><br>
-  
+<div>
+<div class= "top_right" id="result" align = "right"> 
+<input id = 'myInput' type = "hidden">
+</div>
+</div>
 
     
 
@@ -194,11 +190,11 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
    <script>
    function autoRefresh_div()
- {
+ {  
       $("#result").load("/reload");// a function which will load data from other file after x seconds
   }
  
-  setInterval('autoRefresh_div()', 5000); // refresh div after 5 secs
+  setInterval('autoRefresh_div()', 5000); // refresh div afte 5 secs
             </script>
             
             <!-- tabel of time in and out pay period --> 

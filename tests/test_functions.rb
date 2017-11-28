@@ -425,6 +425,7 @@ class Test_funcs < Minitest::Test
                     }
                 db = PG::Connection.new(db_params)
                 db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+                db.close
                 assert_equal(email,y)
             end
 
@@ -442,6 +443,7 @@ class Test_funcs < Minitest::Test
                     }
                 db = PG::Connection.new(db_params)
                 db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+                db.close
                 assert_equal(email,y)
             end
 
@@ -459,6 +461,7 @@ class Test_funcs < Minitest::Test
                     }
                 db = PG::Connection.new(db_params)
                 db.exec("DELETE FROM email WHERE user_id = '#{user_id}' ")
+                db.close
                 assert_equal(email,y)
             end
             
@@ -983,6 +986,7 @@ class Test_funcs < Minitest::Test
             timetable_delete(user_id, date, time_in)
             check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}'")
             x = check.num_tuples.zero?
+            db.close
             assert_equal(true,x)
         end
 
@@ -1002,6 +1006,7 @@ class Test_funcs < Minitest::Test
             timetable_delete(user_id, date, time_in)
             check = db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}'")
             x = check.num_tuples.zero?
+            db.close
             assert_equal(true,x)
         end
 
