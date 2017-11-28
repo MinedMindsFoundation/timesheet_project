@@ -30,6 +30,12 @@ You have
 <br>
 
 <form method="post" action="/pto_email">
+<div class= "select">
+<select name="pto_type" name="slct" id="slct">
+<option value="Sick Day">Sick Day</option>
+<option value=" Vacation Day"> Vacation Day</option>
+<option value="Personal Day">Personal Day</option>
+</select></div>
 start of PTO request:
     <input type="date" name="start_vac" min="<%=vac_time%>">
     <br>
@@ -81,16 +87,20 @@ start of PTO request:
                     <input type = "hidden" value = "<%=item[2]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="approved"%>'>Approve</td>
-                    <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="denied"%>'>Deny</td>
-                </tr>
+                    <td><input type= "radio" name= '<%="info" + "#{count}" + "[]"%>' value= '<%="denied"%>'>Deny<textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
+                    </tr>
         <%count += 1%>
         <%end%>
         </table>
-        <input type = "submit">
+        <input type = "submit" >
         </form>
+        <br>
+        <br>
+        
 
     <div>
 <%end%>
+
 <script>
 </script>
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">

@@ -113,17 +113,19 @@ get '/vac_time_request' do
 end
 
 post '/pto_email' do 
+    type_of_pto = params[:pto_type]
+    comment = params[:comment]
     start_date = params[:start_vac]
     end_date = params[:end_vac]
     user_info =  database_info(session[:user_id])
     user_pto = pto_time(session[:user_id])
     pto_request_db_add(session[:user_id],start_date,end_date)
     if user_pto == "0"
-        email_for_no_pto(user_info, user_pto)
+        email_for_no_pto(user_info, user_pto, type_of_pto)
         session[:pto_message] = "You have no PTO to request."
         redirect "/to_landing"
     else 
-        send_email(start_date, end_date, user_info, user_pto)
+        send_email(start_date, end_date, user_info, user_pto, type_of_pto)
         session[:pto_message] = "Your Request was emailed."
     end 
     # p start_date

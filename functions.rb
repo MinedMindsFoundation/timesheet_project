@@ -363,7 +363,7 @@ end
 
 # fuction that send the admin an email for pto request
 
-def send_email(start_vec, end_vac, full_name, pto) 
+def send_email(start_vec, end_vac, full_name, pto, type) 
 Mail.defaults do
     delivery_method :smtp,
     address: "email-smtp.us-east-1.amazonaws.com",
@@ -372,7 +372,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} days for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -507,7 +507,7 @@ def pto_time(user_id)
 end
 
 # func that sends email for user that has no pto days
-def email_for_no_pto(full_name, pto) 
+def email_for_no_pto(full_name, pto, pto_type) 
     Mail.defaults do
         delivery_method :smtp,
         address: "email-smtp.us-east-1.amazonaws.com",
@@ -516,7 +516,7 @@ def email_for_no_pto(full_name, pto)
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]} tried to request days and they have #{pto}PTO days left to request.<a href= 'http://localhost:4567'> To Reply Click Here . </a>"
+        email_body = "#{full_name[0]} #{full_name[1]} tried to request #{pto_type}and they have #{pto}PTO days left to request.<a href= 'http://localhost:4567'> To Reply Click Here . </a>"
       mail = Mail.new do
           from         ENV['from']
           to           'billyjacktattoos@gmail.com'
@@ -651,7 +651,7 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
       mail.deliver!
     end
 
-def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto) 
+def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto,comment) 
 Mail.defaults do
 delivery_method :smtp,
 address: "email-smtp.us-east-1.amazonaws.com",
@@ -661,7 +661,7 @@ port: 587,
 :enable_ssl => true
 end
 mail = Mail.new do
-email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request."
+email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request. the reson #{comment}"
 from         ENV['from']
 to           email
 subject      "PTO Request"
@@ -738,7 +738,7 @@ end
                 # p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
                 send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto.flatten.first)
             elsif item[4] == "denied"
-                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto.flatten.first) 
+                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[5]) 
             end
         end
         db.close
