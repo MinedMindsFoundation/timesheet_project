@@ -9,8 +9,4 @@
     "token_uri": "https://accounts.google.com/o/oauth2/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dev-166%40wvtime-clock.iam.gserviceaccount.com"
-<<<<<<< HEAD
 } 
-=======
-}
->>>>>>> 6a50edbe4ee42761191f4148a693cdefbf2909df

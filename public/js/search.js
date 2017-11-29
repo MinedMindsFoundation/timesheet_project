@@ -1,6 +1,7 @@
-function myFunction() {
+function dynamicSearch(input) {
     var input, filter, ul, li, a, i;
-    input = document.getElementById("myInput");
+    
+    //input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     ul = document.getElementById("myUL");
     li = ul.getElementsByTagName("li");

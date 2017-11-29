@@ -1,4 +1,8 @@
- 
+<head>
+<script>
+newfunc()
+</script>
+</head> 
  <div class= "box scrollable">
  <!--Users who are clocked in-->
  <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
@@ -7,22 +11,18 @@
 
 
 
-
 <!--  list of all people and in and out status -->
 <link rel= "stylesheet" href = "css/searchbar.css">
-<input type="text" id="myInput" onfocus = "myFunction"onclick = "myFunction();" onkeyup="myFunction();saveValue(this);" placeholder="Search for names.." title="Type in a name">
+<!-- <input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name"> %>
+-->
 
-
-<ul id="myUL">
+<ul onload='newfunc()'id="myUL">
 <%user_checked.each do |row|%>
 <li><a>
-
-
-
-<div id = 'green_light'>
-</div>
-        <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-        
+    <div id = 'green_light'>
+    </div>
+    <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+            
        <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%></div>
 </a></li>
 <%end%>
@@ -37,6 +37,16 @@
 </ul>
 </div>
 <script src ="/js/search.js"></script>
+
+<body onload="newfunc()">
+<script>
+function newfunc(){
+    input = document.getElementById("myInput")
+    dynamicSearch(input);
+
+}
+</script>
+
 <script>
         document.getElementById("myInput").value = getSavedValue("myInput");    // set the value to this input
         /* Here you can add more inputs to set value. if it's saved */
