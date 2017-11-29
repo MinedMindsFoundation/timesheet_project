@@ -71,8 +71,72 @@
 
 <!--Users who are clocked in-->
 
-<div>
-<div class= "top_right" id="result" align = "right"> 
+<div class= "top_right" align = "right">
+<input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
+<div  id="result" > 
+     <div class= "box scrollable">
+ <!--Users who are clocked in-->
+ <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
+
+
+
+
+
+<!--  list of all people and in and out status -->
+<link rel= "stylesheet" href = "css/searchbar.css">
+<input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
+
+
+<ul id="myUL">
+<%user_checked_in.each do |row|%>
+<li><a>
+    <div id = 'green_light'>
+    </div>
+    <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+            
+       <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%></div>
+</a></li>
+<%end%>
+<%users[1].each do |user_id|%>
+<li><a>
+<div id = "no_light">
+</div>
+<div class ="inline-block">
+    <%=user_id.capitalize%> OUT
+</div></a></li>
+<%end%>
+</ul>
+</div>
+<script src ="/js/search.js"></script>
+
+<body onload="newfunc()">
+<script>
+function newfunc(){
+    input = getSavedValue("myInput");
+    dynamicSearch(input);
+
+}
+</script>
+
+<script>
+        document.getElementById("myInput").value = getSavedValue("myInput");    // set the value to this input
+        /* Here you can add more inputs to set value. if it's saved */
+
+        //Save the value function - save it to localStorage as (ID, VALUE)
+        function saveValue(e){
+            var id = e.id;  // get the sender's id to save it . 
+            var val = e.value; // get the value. 
+            localStorage.setItem(id, val);// Every time user writing something, the localStorage's value will override . 
+        }
+
+        //get the saved value function - return the value of "v" from localStorage. 
+        function getSavedValue  (v){
+            if (localStorage.getItem(v) === null) {
+                return "";// You can change this to your defualt value. 
+            }
+            return localStorage.getItem(v);
+        }
+</script>
 <input id = 'myInput' type = "hidden">
 </div>
 </div>
@@ -188,14 +252,16 @@
 <%end%>
  
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-   <script>
-   function autoRefresh_div()
- {  
-      $("#result").load("/reload");// a function which will load data from other file after x seconds
-  }
- 
-  setInterval('autoRefresh_div()', 5000); // refresh div afte 5 secs
-            </script>
+<script src ="/js/search.js"></script>
+<script>
+    function autoRefresh_div(){  
+        var search = document.getElementById('myInput');
+        $("#result").load("/reload");// a function which will load data from other file after x seconds
+        dynamicSearch(search);
+    }
+
+    setInterval('autoRefresh_div()', 5000); // refresh div afte 5 secs
+</script>
             
             <!-- tabel of time in and out pay period --> 
             <div id = "box3" class = "scrollable rounded_borders">
