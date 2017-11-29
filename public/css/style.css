@@ -28,7 +28,7 @@ iframe[seamless] {
 
 .square_borders {
     border-style: solid;
-    border-color: black;
+    border-color: gray;
 }
 
 #menu {
@@ -82,7 +82,7 @@ iframe[seamless] {
     background-color: whitesmoke;
     font-size: 4vw;
     border-style: solid;
-    border-color: black;
+    border-color: gray;
     padding: auto;
     border-radius: 3vh;
     margin: auto;
@@ -104,7 +104,7 @@ iframe[seamless] {
 
 .rounded_borders {
     border-radius: 3vh;
-    border-color: black;
+    border-color: gray;
     border-style: solid;
 }
 
@@ -122,7 +122,7 @@ td {
     width: 60;
     background-color: whitesmoke;
     border-style: solid;
-    border-color: black;
+    border-color: gray;
     padding: 2vh;
     border-radius: 3vh;
     margin-right: 1%;
@@ -145,13 +145,13 @@ td {
 }
 
 .back_gr {
-    background-color: lightgray(204, 203, 203, 0.768);
-    background-size: cover;
+    background-color: lightwhite(204, 203, 203, 0.768);
+    background-size: contain;
     background-repeat: no-repeat;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(gray), to(black));
-    background-image: -webkit-linear-gradient(top, gray, black);
-    background-image: -moz-linear-gradient(top, gray, black);
-    background-image: linear-gradient(to bottom, gray, black);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000', GradientType=1);
 }
 
 .pad {
@@ -262,7 +262,7 @@ body {
 }
 
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: #000000;
 }
 
 .sidenav .closebtn {
@@ -310,9 +310,9 @@ body {
 .menu_button {
     display: inline-block;
     border-radius: 4px;
-    background-color: gray;
+    background-color: white;
     border: none;
-    color: black;
+    color: gray;
     text-align: center;
     font-size: 28px;
     padding: 8px;
@@ -377,7 +377,7 @@ select {
     width: 20em;
     height: 3em;
     line-height: 3;
-    background: gray;
+    background: white;
     overflow: hidden;
     border-radius: .25em;
 }
@@ -405,7 +405,7 @@ select::-ms-expand {
     right: 0;
     bottom: 0;
     padding: 0 1em;
-    background: darkgray;
+    background: darkwhite;
     pointer-events: none;
 }
 
@@ -523,7 +523,7 @@ select::-ms-expand {
         padding: 1vh;
         font-size: 2vw;
         border-style: solid;
-        border-color: black;
+        border-color: gray;
         padding: auto;
         border-radius: 3vh;
         margin: auto;
@@ -574,7 +574,7 @@ select::-ms-expand {
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
-    background-color: black;
+    background-color: gray;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -599,7 +599,7 @@ select::-ms-expand {
 .tooltip2 .tooltiptext2 {
     visibility: hidden;
     width: 120px;
-    background-color: black;
+    background-color: gray;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -625,7 +625,7 @@ select::-ms-expand {
 .tooltip3 .tooltiptext3 {
     visibility: hidden;
     width: 120px;
-    background-color: black;
+    background-color: gray;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -641,4 +641,19 @@ select::-ms-expand {
 .tooltip3:hover .tooltiptext3 {
     visibility: visible;
     transition-delay: 5s;
+}
+
+.center_text {
+    margin: auto;
+    width: 25%;
+    border: 3px transparent;
+    padding: 10px;
+}
+
+#blank_footer {
+    background-color: transparent;
+    border: solid transparent;
+    padding: auto;
+    margin: auto;
+    text-align: center;
 }
