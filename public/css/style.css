@@ -649,3 +649,11 @@ select::-ms-expand {
     border: 3px transparent;
     padding: 10px;
 }
+
+#blank_footer {
+    background-color: transparent;
+    border: solid transparent;
+    padding: auto;
+    margin: auto;
+    text-align: center;
+}
