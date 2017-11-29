@@ -10,23 +10,27 @@ Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
 <th>Employee ID</th>
 <th>First Name</th>
 <th>Last Name</th>
-<th>Date Of Hire</th>
 <th>Business Email</th>
 <th>Admin?</th>
 <th>PTO</th>
+<th>Date Of Hire</th>
+<th>Job Title</th>
+<th>Department</th>
 </tr>
 <tr>
-<td><input type = "text" name = info[] value = "<%=user[0]%>"></td>
-<td><input type = "text" name = info[] value = "<%=user[1]%>"></td>
-<td><input type = "text" name = info[] value = "<%=user[2]%>"></td>
-<td><input type = "date" name = info[] value = "<%=user[3]%>"></td>
-<td><input type = "email" name = info[] value = "<%=user[4]%>"></td>
-<td><input type = "text" name = info[] value = "<%=user[5]%>" list="admin_status"></td>
-<td><input type = "number" name = info[] value = "<%=user[6]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[0]%>" size="10"></td>
+<td><input type = "text" name = info[] value = "<%=user[1]%>" size="10"></td>
+<td><input type = "text" name = info[] value = "<%=user[2]%>" size="10"></td>
+<td><input type = "email" name = info[] value = "<%=user[3]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[4]%>" list="admin_status" size="10"></td>
+<td><input type = "number" name = info[] value = "<%=user[5]%>"></td>
+<td><input type = "date" name = info[] value = "<%=user[6]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[7]%>" size="10"></td>
+<td><input type = "text" name = info[] value = "<%=user[8]%>" size="10"></td>
 </tr>
 </table><br>
 <%end%>
-<input type = "submit" value = "Update">
+<input class="button" type = "submit" value = "Update">
 </form><br>
 
 <datalist id="admin_status">
@@ -59,11 +63,11 @@ Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%
 <form method = "post" action="update_timesheet">
     <input type="hidden" name="selected_id" value="<%=user[0]%>">
     <input type="date" name="time_fix">
-    <input type="submit" value="Search">
+    <input class="button" type="submit" value="Search">
 </form><br>
 <%end%>
 <form method = "post" action = "to_admin_emplist">
-<input type="submit" value="Return">
+<input class="button" type="submit" value="Return">
 </form>
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 <!--sign out section--><br>

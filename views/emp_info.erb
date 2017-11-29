@@ -5,10 +5,12 @@
     <th>Employee ID</th>
     <th>First Name</th>
     <th>Last Name</th>
-    <th>Date Of Hire</th>
     <th>Business Email</th>
     <th>Admin?</th>
     <th>PTO</th>
+    <th>Date Of Hire</th>
+    <th>Job Title</th>
+    <th>Department</th>
     </tr>
     <tr>
     <%user.each do |item|%>
@@ -39,5 +41,5 @@
     </table><br><br>
 <%end%>
 <form method = "post" action = "to_admin_emplist">
-    <input type="submit" value="Return">
+    <input class="button" type="submit" value="Return">
 </form>

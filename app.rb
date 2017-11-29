@@ -115,17 +115,19 @@ get '/vac_time_request' do
 end
 
 post '/pto_email' do 
+    type_of_pto = params[:pto_type]
+    comment = params[:comment]
     start_date = params[:start_vac]
     end_date = params[:end_vac]
     user_info =  database_info(session[:user_id])
     user_pto = pto_time(session[:user_id])
     pto_request_db_add(session[:user_id],start_date,end_date)
     if user_pto == "0"
-        email_for_no_pto(user_info, user_pto)
+        email_for_no_pto(user_info, user_pto, type_of_pto)
         session[:pto_message] = "You have no PTO to request."
         redirect "/to_landing"
     else 
-        send_email(start_date, end_date, user_info, user_pto)
+        send_email(start_date, end_date, user_info, user_pto, type_of_pto)
         session[:pto_message] = "Your Request was emailed."
     end 
     # p start_date
@@ -174,13 +176,15 @@ post "/add_to_user_list" do
     last_name=params[:last_name].capitalize
     email=params[:email]
     admin=params[:admin]
+    department=params[:department]
+    job=params[:job]
+    doh=params[:doh]
     pto=params[:pto]
-    dot=params[:dot]
     user_info = []
     user_info << first_name
     user_info << last_name
     send_email_for_adding_a_new_user(user_info, email)
-    add_user(user_id,email,first_name,last_name,pto,admin,dot)
+    add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
     erb :admin_emplist, locals:{msg:msg}
 end
 
@@ -223,6 +227,7 @@ get "/update_emp_page" do
     session[:edit_user].each do |user|
         session[:editing_users] << user_info = emp_info(user)
     end
+    # p session[:editing_users]
     # p users
     # p time_table
     msg = ""
@@ -230,9 +235,11 @@ get "/update_emp_page" do
 end
 
 post "/emp_updated" do
-    new_info = params[:info].each_slice(7).to_a
+    new_info = params[:info].each_slice(9).to_a
+    other_info = params[:info]
     # p new_info
     # p session[:edit_user]
+    # p other_info
     new_info.each_with_index do |info, index|
         # p session[:edit_user][index]
         update_user(session[:edit_user][index], info)
@@ -246,6 +253,7 @@ post "/emp_updated" do
     session[:edit_user].each do |user|
         session[:editing_users] << user_info = emp_info(user)
     end
+    # p session[:editing_users]
     # p users
     # p time_table
     msg = "User Updated"

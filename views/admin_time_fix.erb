@@ -11,7 +11,7 @@ Time table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=da
 <th>Time out</th>
 <th>Date</th>
 <th>Date Out</th>
-<th>Location</th>
+
 <%times_shown.each_with_index do |item, index|%>
     <tr>
     <td><input type = "checkbox" name = "times[]" value = '<%=index%>'></td>
@@ -21,15 +21,15 @@ Time table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=da
     <td><input type="time" name="edited_times[]" value="<%=item[3]%>">
     <td><input type="date" name="edited_times[]" value="<%=item[4]%>">
     <td><input type="date" name="edited_times[]" value="<%=item[5]%>">
-    <td><input type="text" name="edited_times[]" value="<%=item[6]%>">
+    
     </tr>
 <%end%>
 </table>
-<input type="submit" name="choose" value="Update">
-<input type="submit" name="choose" value="Delete">
+<input class="button" type="submit" name="choose" value="Update">
+<input class="button" type="submit" name="choose" value="Delete">
 </form>
 <form method = "post" action = "to_admin_emplist">
-<input type="submit" value="Return">
+<input class="button" type="submit" value="Return">
 </form>
 
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
@@ -52,3 +52,6 @@ Time table of <%=user_info[1].capitalize%> <%=user_info[2].capitalize%> on <%=da
     <script src="/js/timeout.js"></script>
     <body onload="idleTimer()"></body>
 <%end%>
+
+<!---Location--->
+<!--input type="text" name="edited_times[]" value="item[6]"-->

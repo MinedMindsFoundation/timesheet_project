@@ -1,4 +1,4 @@
-<!--user clock in and clockout page-->
+<!--user clock in and clockout page/ also main page-->
 <link rel= "stylesheet" href = "css/style.css">
 <head>
     <div id="timeout">
@@ -13,7 +13,7 @@
         <form method = "post" action = "add_user">
         <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
-        <span class="tooltiptext3">This is to add a new user.</span></div>
+        <span class="tooltiptext3">to add a new user.</span></div>
         </form>
         
     
@@ -21,21 +21,21 @@
         <form method = "post" action = "edit_user">
         <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" type = "submit">Edit Users</button>
-        <span class="tooltiptext3">This is to Edit, Delete and fix time mistakes.</span></div>
+        <span class="tooltiptext3">to Edit, Delete and fix time mistakes.</span></div>
         </form>
     
         <!--Form to see whos clocked in or out-->
-        <form method = "post" action = "to_whos_in">
-        <div class = "tooltip3">
-        <button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>
-        <span class="tooltiptext3">This is to search users who are in the database.</span></div>
-        </form>
+        <!--<form method = "post" action = "to_whos_in">-->
+        <!--<div class = "tooltip3">-->
+        <!--<button class="menu_button" style="vertical-align:middle"type = "submit">Search User</button>-->
+        <!--<span class="tooltiptext3">to search users who are in the database.</span></div>-->
+        <!--</form>-->
 
         <!--submit button fo vac request-->
         <form method = "post" action = "vac_time_request">
         <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle"type = "submit">PTO Request</button>
-        <span class="tooltiptext3">This is to request time off.</span></div>
+        <span class="tooltiptext3">to request time off.</span></div>
         </form>
         
         <%else%>
@@ -45,7 +45,7 @@
         <!--facebook sign out--><br>
         <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
-        <span class="tooltiptext3">This is to sign out.</span></div>
+        <span class="tooltiptext3">to sign out.</span></div>
     
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         </div>
@@ -159,37 +159,37 @@ function newfunc(){
 <!-- form for submiting your time in -->
 <div class="center center-on-page"><form method = "post" action = "clock_in">
 <div class = "tooltip">
-<div class="select ">
-<select name="location" name="slct" id="slct">
-        <option value="Clendenin">Clendenin</option>
-        <option value="Beckley">Beckley</option>
-        <option value="Waynesburg">Waynesburg</option>
-    </select></div><br>
+<!--<div class="select">-->
+<!-- <select name="location" name="slct" id="slct">-->
+<!--         <option value="Clendenin">Clendenin</option>-->
+<!--        <option value="Beckley">Beckley</option>-->
+<!--         <option value="Waynesburg">Waynesburg</option>-->
+<!--     </select></div><br>-->
     <span class="tooltiptext">This is to pick your location.</span></div><br>
     <div class = "tooltip">
     <button class="button" id = "clock_in_button" type = "submit">Time In</button>
-    <span class="tooltiptext">This is to clock in for the day.</span></div>
+    <span class="tooltiptext">to clock in for the day.</span></div>
     </form><br>
 
 <!-- form for submiting your lunch start -->
 <form method = "post" action = "lunch_in">
 <div class = "tooltip">
     <button class="button" type = "submit">Lunch Start</button>
-    <span class="tooltiptext">This is to clock out for lunch.</span></div>
+    <span class="tooltiptext">to clock out for lunch.</span></div>
 </form><br>
 
 <!-- form for submiting your lunch end -->
 <form method = "post" action = "lunch_out">
 <div class = "tooltip">
     <button class="button" type = "submit">Lunch end</button>
-    <span class="tooltiptext">This is to clock back in from lunch.</span></div>
+    <span class="tooltiptext">to clock back in from lunch.</span></div>
     </form><br>
 
 <!-- form for submiting yout time out -->
 <form id = "time_submit" method = "post" action = "clock_out">
 <div class = "tooltip">
     <button  class="button" id = "clock_out_button" type = "submit">Time Out</button>
-    <span class="tooltiptext">This is to clock out for the day.</span></div>
+    <span class="tooltiptext">to clock out for the day.</span></div>
     </form><br>
     </div>
 
@@ -197,7 +197,7 @@ function newfunc(){
 
 <%if todays_time.flatten.any?%>
     <div id = "box4" class = "rounded_borders">
-    <div class = "tooltip2">Todays Time<span class="tooltiptext2">This is your time for today.</span></div>
+    <div class = "tooltip2">Todays Time<span class="tooltiptext2">your time for today.</span></div>
         <table> 
             <th>Time in</th>
             <th>Lunch Start</th>
@@ -265,7 +265,7 @@ function newfunc(){
             
             <!-- tabel of time in and out pay period --> 
             <div id = "box3" class = "scrollable rounded_borders">
-            <div class = "tooltip3">Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%><span class="tooltiptext3">This is your time for your pay period.</span></div>
+            <div class = "tooltip3">Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%><span class="tooltiptext3">your time for your pay period.</span></div>
                 <table>
                 <th class = "table_borders">Time in</th>
                 <th class = "table_borders">Lunch Start</th>

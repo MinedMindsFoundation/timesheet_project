@@ -106,7 +106,7 @@ end
 
 # end
 # adds user to database
-def add_user(user_id,email,first_name,last_name,pto,admin,doh)
+def add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -115,10 +115,11 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    db.exec("insert into info_new(user_id,first_name,last_name,date_of_hire)VALUES('#{user_id}','#{first_name}','#{last_name}','#{doh}')")
+    db.exec("insert into info_new(user_id,first_name,last_name)VALUES('#{user_id}','#{first_name}','#{last_name}')")
     db.exec("insert into pto(user_id,pto)VALUES('#{user_id}','#{pto}')")
     db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
+    db.exec("insert into title_and_doh(user_id,date_of_hire,job_title,department)VALUES('#{user_id}','#{doh}','#{job}','#{department}')")
     db.close
     
 end
@@ -260,8 +261,9 @@ def emp_info(user_id)
     data = []
     emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
     admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
-    users = db.exec("SELECT user_id, first_name, last_name, date_of_hire FROM info_new WHERE user_id = '#{user_id}'").values
+    users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
     pto_time = db.exec("SELECT pto FROM pto WHERE user_id = '#{user_id}'").values
+    doh_and_job = db.exec("SELECT date_of_hire, job_title, department FROM title_and_doh WHERE user_id = '#{user_id}'").values
     db.close
     users.each do |user|
         data << user
@@ -275,7 +277,23 @@ def emp_info(user_id)
     pto_time.each do |pto|
         data << pto.flatten
     end
+    doh_and_job.each do |item|
+        data << item
+    end
     data.flatten
+end
+
+def add_title_doh_department(user_id,doh,job,department)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    db.exec("insert into title_and_doh(user_id,date_of_hire,job_title,department)VALUES('#{user_id}','#{doh}','#{job}','#{department}')")
+    db.close
 end
 
 def update_user(user_id, new_info)
@@ -287,10 +305,11 @@ def update_user(user_id, new_info)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}' ,date_of_hire = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE email SET email = '#{new_info[4]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE admin_status SET admin = '#{new_info[5]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE pto SET pto = '#{new_info[6]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE email SET email = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE admin_status SET admin = '#{new_info[4]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE pto SET pto = '#{new_info[5]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[6]}', job_title = '#{new_info[7]}', department = '#{new_info[8]}' WHERE user_id = '#{user_id}'")
     db.close
 end
 
@@ -307,7 +326,7 @@ def delete_emp(user_id)
     db.exec("DELETE FROM info_new WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM admin_status WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM pto WHERE user_id = '#{user_id}'")
-    db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM title_and_doh WHERE user_id = '#{user_id}'")
     db.close
 end
 
@@ -363,7 +382,7 @@ end
 
 # fuction that send the admin an email for pto request
 
-def send_email(start_vec, end_vac, full_name, pto) 
+def send_email(start_vec, end_vac, full_name, pto, type) 
 Mail.defaults do
     delivery_method :smtp,
     address: "email-smtp.us-east-1.amazonaws.com",
@@ -372,7 +391,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting thes dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} days for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -507,7 +526,7 @@ def pto_time(user_id)
 end
 
 # func that sends email for user that has no pto days
-def email_for_no_pto(full_name, pto) 
+def email_for_no_pto(full_name, pto, pto_type) 
     Mail.defaults do
         delivery_method :smtp,
         address: "email-smtp.us-east-1.amazonaws.com",
@@ -516,7 +535,7 @@ def email_for_no_pto(full_name, pto)
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]} tried to request days and they have #{pto}PTO days left to request.<a href= 'http://localhost:4567'> To Reply Click Here . </a>"
+        email_body = "#{full_name[0]} #{full_name[1]} tried to request #{pto_type}and they have #{pto}PTO days left to request.<a href= 'http://localhost:4567'> To Reply Click Here . </a>"
       mail = Mail.new do
           from         ENV['from']
           to           'billyjacktattoos@gmail.com'
@@ -651,7 +670,7 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
       mail.deliver!
     end
 
-def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto) 
+def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto,comment) 
 Mail.defaults do
 delivery_method :smtp,
 address: "email-smtp.us-east-1.amazonaws.com",
@@ -661,7 +680,7 @@ port: 587,
 :enable_ssl => true
 end
 mail = Mail.new do
-email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request."
+email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request. the reson #{comment}"
 from         ENV['from']
 to           email
 subject      "PTO Request"
@@ -738,7 +757,7 @@ end
                 # p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
                 send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto.flatten.first)
             elsif item[4] == "denied"
-                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto.flatten.first) 
+                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[5]) 
             end
         end
         db.close
