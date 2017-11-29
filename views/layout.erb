@@ -2,17 +2,26 @@
 <link rel= "stylesheet" href = "css/style.css">
 <title>Time Clock</title>
 
-<head><a href= '/to_landing'><img src="/img/wvlogo.png" width="200" height="150"></a>
+<headonload="updateClock(); setInterval('updateClock()',1000)";><a href= '/to_landing'><img src="/img/wvlogo.png" width="200" height="150"></a>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div>
+<span id="clock">&nbsp;</span> <span id="date"></span>
+</div>
+<div class="topnav" id="myTopnav">
+<% if admin_check == "Yes" %>
+<a href="/add_user">Add User</a>
+<a href="/edit_user">Edit</a>
+<a href="/vac_time_request">PTO</a>
+<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">Menu</a>
+<%end%>
+
+</div>
 </head>
 <header class= "boarder">
 </header>
 
 
-<body class = "back_gr"  onload="updateClock(); setInterval('updateClock()',1000)";>
-<div>
-<span id="clock">&nbsp;</span> <span id="date"></span>
-</div>
+<body class = "back_gr">  
 <%=yield%>
 </body>
 
@@ -24,4 +33,15 @@
 <script>
     var d = new Date();
     document.getElementById("date").innerHTML = d.toDateString();
+</script>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
 </script>

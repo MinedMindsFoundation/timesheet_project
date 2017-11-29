@@ -100,11 +100,6 @@ post "/return" do
 redirect "/to_landing"
 end
 
-#post coming from landing page for vac request
-post '/vac_time_request' do
-    redirect "/vac_time_request"
-end
-
 get '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
@@ -164,7 +159,8 @@ post "/clock_out" do
     redirect "/to_landing"
 end
 
-post "/add_user" do
+
+get "/add_user" do
     msg = ""
     erb :admin_emplist, locals:{msg:msg}
 end
@@ -188,7 +184,7 @@ post "/add_to_user_list" do
     erb :admin_emplist, locals:{msg:msg}
 end
 
-post "/edit_user" do
+get "/edit_user" do
     admin_list = admin_emp_list()
     # p admin_list
     erb :admin_empmng, locals:{admin_list:admin_list}
