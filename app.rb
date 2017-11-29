@@ -296,9 +296,11 @@ post "/update_time_sheet" do
         session[:edit_user].each do |user|
             session[:editing_users] << user_info = emp_info(user)
         end
+        # p session[:editing_users]
         # p users
         # p time_table
-        erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
+        msg = "No Time Selected Or Updated"
+        erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
     else
         if choice == "Update"
             # p session[:times_shown]
