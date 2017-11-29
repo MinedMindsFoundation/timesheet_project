@@ -145,9 +145,13 @@ td {
 }
 
 .back_gr {
-    background-color: white;
+    background-color: lightgray(204, 203, 203, 0.768);
     background-size: cover;
     background-repeat: no-repeat;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(gray), to(black));
+    background-image: -webkit-linear-gradient(top, gray, black);
+    background-image: -moz-linear-gradient(top, gray, black);
+    background-image: linear-gradient(to bottom, gray, black);
 }
 
 .pad {

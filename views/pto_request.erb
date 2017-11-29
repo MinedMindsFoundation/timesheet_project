@@ -1,4 +1,4 @@
-<div id="timeout">
+<center><div id="timeout">
 </div>
 
 <%if session[:admin_check] == "Yes"%>
@@ -36,6 +36,8 @@ You have
 <option value=" Vacation Day"> Vacation Day</option>
 <option value="Personal Day">Personal Day</option>
 </select></div>
+<br>
+<br>
 start of PTO request:
     <input type="date" name="start_vac" min="<%=vac_time%>">
     <br>
@@ -43,12 +45,15 @@ start of PTO request:
     <input type="date" name="end_vac" min="<%=vac_time%>">
     <br>
     <br>
-    <input type="submit">
+    <input class="button" type="submit">
 </form>
-
+<br>
+<br>
 <form method= "post" action= "return">
-<input type= "submit" value= "Return">
+<input class="button" type= "submit" value= "Return">
 </form> 
+<br>
+<br>
 
 <%if user_pto_request.flatten.any?%>
     <table>
@@ -92,7 +97,7 @@ start of PTO request:
         <%count += 1%>
         <%end%>
         </table>
-        <input type = "submit" >
+        <input class="button" type = "submit" >
         </form>
         <br>
         <br>
@@ -124,4 +129,4 @@ start of PTO request:
     <body onload="idleTimer()"></body>
 <%end%>
 
-<p><a href="/pto_form_pdf/pto_form.pdf">PTO Relese Forms</a></p>
+<p><a href="/pto_form_pdf/pto_form.pdf">PTO Relese Forms</a></p></center>
