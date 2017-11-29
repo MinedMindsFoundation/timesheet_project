@@ -4,8 +4,9 @@
 </div>
 <%=msg%>
 
-<center><h1>Add a User:</h1>
+<center><h1>Add a User:</h1></center>
 
+<div class="center_text">
 <form method = "post" action="add_to_user_list">
 <strong>User ID:</strong> <input type="text" name="user_id_new" placeholder="User ID" required><br>
 <strong>First Name:</strong> <input type="text" name="first_name" placeholder="First Name" required><br>
@@ -17,12 +18,13 @@
 <strong>Date Of Hire:</strong> <input type="date" name="doh" placeholder="Date Of Hire" required><br>
 <strong>Admin Status:</strong> <strong>Yes</strong> <input type="radio" name="admin" value="Yes">
 <strong>No</strong> <input type="radio" name="admin" value="No" checked><br>
-<input class="button" type="reset">
+</div>
+<center><input class="button" type="reset">
 <input class="button" type="submit">
 </form><br>
 <form method = "post" action = "return">
 <input class="button" type="submit" value="Return">
-</form>
+</form></center>
 <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com"></ceneter>
 <!--sign out section--><br>
 <!--toggle for sign out button-->

@@ -642,3 +642,10 @@ select::-ms-expand {
     visibility: visible;
     transition-delay: 5s;
 }
+
+.center_text {
+    margin: auto;
+    width: 25%;
+    border: 3px transparent;
+    padding: 10px;
+}
