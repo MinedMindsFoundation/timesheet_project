@@ -106,7 +106,7 @@ end
 
 # end
 # adds user to database
-def add_user(user_id,email,first_name,last_name,pto,admin,doh)
+def add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -115,10 +115,11 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    db.exec("insert into info_new(user_id,first_name,last_name,date_of_hire)VALUES('#{user_id}','#{first_name}','#{last_name}','#{doh}')")
+    db.exec("insert into info_new(user_id,first_name,last_name)VALUES('#{user_id}','#{first_name}','#{last_name}')")
     db.exec("insert into pto(user_id,pto)VALUES('#{user_id}','#{pto}')")
     db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
+    db.exec("insert into title_and_doh(user_id,date_of_hire,job_title,department)VALUES('#{user_id}','#{doh}','#{job}','#{department}')")
     db.close
     
 end
@@ -260,8 +261,9 @@ def emp_info(user_id)
     data = []
     emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
     admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
-    users = db.exec("SELECT user_id, first_name, last_name, date_of_hire FROM info_new WHERE user_id = '#{user_id}'").values
+    users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
     pto_time = db.exec("SELECT pto FROM pto WHERE user_id = '#{user_id}'").values
+    doh_and_job = db.exec("SELECT date_of_hire, job_title, department FROM title_and_doh WHERE user_id = '#{user_id}'").values
     db.close
     users.each do |user|
         data << user
@@ -275,7 +277,23 @@ def emp_info(user_id)
     pto_time.each do |pto|
         data << pto.flatten
     end
+    doh_and_job.each do |item|
+        data << item
+    end
     data.flatten
+end
+
+def add_title_doh_department(user_id,doh,job,department)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    db.exec("insert into title_and_doh(user_id,date_of_hire,job_title,department)VALUES('#{user_id}','#{doh}','#{job}','#{department}')")
+    db.close
 end
 
 def update_user(user_id, new_info)
@@ -287,10 +305,11 @@ def update_user(user_id, new_info)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}' ,date_of_hire = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE email SET email = '#{new_info[4]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE admin_status SET admin = '#{new_info[5]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE pto SET pto = '#{new_info[6]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE email SET email = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE admin_status SET admin = '#{new_info[4]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE pto SET pto = '#{new_info[5]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[6]}', job_title = '#{new_info[7]}', department = '#{new_info[8]}' WHERE user_id = '#{user_id}'")
     db.close
 end
 
@@ -308,6 +327,7 @@ def delete_emp(user_id)
     db.exec("DELETE FROM admin_status WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM pto WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM title_and_doh WHERE user_id = '#{user_id}'")
     db.close
 end
 

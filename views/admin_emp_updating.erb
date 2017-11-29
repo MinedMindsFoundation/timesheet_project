@@ -10,19 +10,23 @@ Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
 <th>Employee ID</th>
 <th>First Name</th>
 <th>Last Name</th>
-<th>Date Of Hire</th>
 <th>Business Email</th>
 <th>Admin?</th>
 <th>PTO</th>
+<th>Date Of Hire</th>
+<th>Job Title</th>
+<th>Department</th>
 </tr>
 <tr>
-<td><input type = "text" name = info[] value = "<%=user[0]%>"></td>
-<td><input type = "text" name = info[] value = "<%=user[1]%>"></td>
-<td><input type = "text" name = info[] value = "<%=user[2]%>"></td>
-<td><input type = "date" name = info[] value = "<%=user[3]%>"></td>
-<td><input type = "email" name = info[] value = "<%=user[4]%>"></td>
-<td><input type = "text" name = info[] value = "<%=user[5]%>" list="admin_status"></td>
-<td><input type = "number" name = info[] value = "<%=user[6]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[0]%>" size="10"></td>
+<td><input type = "text" name = info[] value = "<%=user[1]%>" size="10"></td>
+<td><input type = "text" name = info[] value = "<%=user[2]%>" size="10"></td>
+<td><input type = "email" name = info[] value = "<%=user[3]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[4]%>" list="admin_status" size="10"></td>
+<td><input type = "number" name = info[] value = "<%=user[5]%>"></td>
+<td><input type = "date" name = info[] value = "<%=user[6]%>"></td>
+<td><input type = "text" name = info[] value = "<%=user[7]%>" size="10"></td>
+<td><input type = "text" name = info[] value = "<%=user[8]%>" size="10"></td>
 </tr>
 </table><br>
 <%end%>
