@@ -326,7 +326,6 @@ def delete_emp(user_id)
     db.exec("DELETE FROM info_new WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM admin_status WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM pto WHERE user_id = '#{user_id}'")
-    db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM title_and_doh WHERE user_id = '#{user_id}'")
     db.close
 end
