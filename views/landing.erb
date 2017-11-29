@@ -87,17 +87,25 @@
 <link rel= "stylesheet" href = "css/searchbar.css">
 <input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
 
-
+<%count = 0%>
 <ul id="myUL">
 <%user_checked_in.each do |row|%>
 <li><a>
+    <input id ="f_name + <%=count%>" type = "hidden" value = "<%=row[0]%>">
+    <input id ="l_name + <%=count%>" type = "hidden" value = "<%=row[1]%>">
+    <input id ="time_a + <%=count%>" type = "hidden" value = "<%=row[2]%>">
+    <input id ="time_b + <%=count%>" type = "hidden" value = "<%=row[3]%>">
+    <input id ="location + <%=count%>" type = "hidden" value = "<%=row[4]%>">
     <div id = 'green_light'>
     </div>
+    <div  id=<%="result#{count}"%> >
     <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-            
        <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%></div>
+    </div>       
 </a></li>
+<%count += 1%>
 <%end%>
+    <input id = "count" type = "hidden" value= "<%=count%>" >
 <%users[1].each do |user_id|%>
 <li><a>
 <div id = "no_light">
@@ -255,12 +263,6 @@ function newfunc(){
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src ="/js/search.js"></script>
 <script>
-    function autoRefresh_div(){  
-        var search = document.getElementById('myInput');
-        $("#result").load("/reload");// a function which will load data from other file after x seconds
-        dynamicSearch(search);
-    }
-
     setInterval('autoRefresh_div()', 5000); // refresh div afte 5 secs
 </script>
             
@@ -299,3 +301,24 @@ function newfunc(){
             document.getElementById("mySidenav").style.width = "0";
         }
     </script>
+
+<!-- function for updating time-->
+<script>
+    function autoRefresh_div(){  
+    var search = document.getElementById('myInput');
+    var count = document.getElementById("count");
+    var arr = Array.new;
+    for (var i = 0; i < count.length; i++);{
+        console.log(document.getElementById("f_name"+i).value);
+        arr.push(document.getElementById("f_name"+i).value);
+        arr.push(document.getElementById("l_name" + i).value);
+        arr.push(document.getElementById("time_a" + i).value);
+        arr.push(document.getElementById("time_b" + i).value);
+        arr.push(document.getElementById("location" + i).value);
+    }
+            
+    $("#result"+count).load("/reload?arr=" + arr);// a function which will load data from other file after x seconds
+    dynamicSearch(search);
+    }
+
+</script>
