@@ -5,24 +5,25 @@
     </div>
     <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
 
-    <div>
-        <div id="mySidenav" class="sidenav">
-        <% if admin_check == "Yes" %>
+  <!-- <div>-->
+  <!-- <div id="mySidenav" class="sidenav">-->
+  <!--  <% if admin_check == "Yes" %>-->
         <!--Form to add users-->
-        
-        <form method = "post" action = "add_user">
+    <ul>
+        <li><a href= '/landing'>Home</a></li> 
+        <li><form method = "post" action = "add_user">
         <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" type = "submit">Add User</button>
         <span class="tooltiptext3">to add a new user.</span></div>
-        </form>
+        </form></li>
         
     
         <!--Form to Change or Delete Users-->
-        <form method = "post" action = "edit_user">
+        <li><form method = "post" action = "edit_user">
         <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" type = "submit">Edit Users</button>
         <span class="tooltiptext3">to Edit, Delete and fix time mistakes.</span></div>
-        </form>
+        </form></li>
     
         <!--Form to see whos clocked in or out-->
         <!--<form method = "post" action = "to_whos_in">-->
@@ -32,21 +33,21 @@
         <!--</form>-->
 
         <!--submit button fo vac request-->
-        <form method = "post" action = "vac_time_request">
+        <li><form method = "post" action = "vac_time_request">
         <div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle"type = "submit">PTO Request</button>
         <span class="tooltiptext3">to request time off.</span></div>
-        </form>
+        </form></li>
         
         <%else%>
     
         <%end%>
     
         <!--facebook sign out--><br>
-        <div class = "tooltip3">
+        <li><div class = "tooltip3">
         <button class="menu_button" style="vertical-align:middle" id = 'sign_out' onclick= 'logout()' >Sign out</button>
-        <span class="tooltiptext3">to sign out.</span></div>
-    
+        <span class="tooltiptext3">to sign out.</span></div></li>
+    </ul>
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         </div>
     </div>    
@@ -126,7 +127,7 @@ function newfunc(){
         function saveValue(e){
             var id = e.id;  // get the sender's id to save it . 
             var val = e.value; // get the value. 
-            localStorage.setItem(id, val);// Every time user writing something, the localStorage's value will override . 
+            localStorage.setItem(id, val);// Every time user writing something, the localStorages value will override . 
         }
 
         //get the saved value function - return the value of "v" from localStorage. 
