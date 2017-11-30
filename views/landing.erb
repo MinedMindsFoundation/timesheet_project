@@ -83,46 +83,25 @@
 
         <ul id="myUL">
             <%count = 0%>
-                <%user_checked_in.each do |row|%>
-                <input type = 'hidden' id ='<%="f_name#{count}"%>' value= '<%=row[0]%>'>
-                <input type = 'hidden' id ='<%="l_name#{count}"%>' value= '<%=row[1]%>'>
-                <input type = 'hidden' id ='<%="time_a#{count}"%>' value= '<%=row[2]%>'>
-                <input type = 'hidden' id ='<%="time_b#{count}"%>' value= '<%=row[3]%>'>
-                <input type = 'hidden' id ='<%="location#{count}"%>' value= '<%=row[4]%>'>
-                <li><a>
-                    <div id='<%="result#{count}"%>'>
+            <%user_list.each do |user|%>
+            <input type = 'hidden' id ='<%="user_id#{count}"%>' value= '<%=user[0]%>'>
+            <li><a>
+                <%=user[1].capitalize%> <%=user[2].capitalize%>
+                <div id='<%="result#{count}"%>'>
+                    <div id ='green_light'>
+                    </div>
+                    <%if time_hash[time_hash["#{user}"][4] == "N/A"%>
                         <div id ='green_light'>
                         </div>
-                
-                        <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-                
-                        <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%>
+                        <%time = live_time("#{time_hash["#{user}"][1]} #{time_hash["#{user}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+                        <div class ="inline-block"> <<%=time_zero_remove(time)%>
                         </div>
-                    </div>
-                       
-                </a></li>
-                <%count += 1%>
-                <%end%>
-                <%users[1].each do |user_id|%>
-                <%arr = user_id.split(" ") %>
-                <input type = 'hidden' id ='<%="f_name#{count}"%>' value= '<%=arr[0].capitalize%>'>
-                <input type = 'hidden' id ='<%="l_name#{count}"%>' value= '<%=arr[1].capitalize%>'>
-                <input type = 'hidden' id ='<%="time_a#{count}"%>' value= '<%="0"%>'>
-                <input type = 'hidden' id ='<%="time_b#{count}"%>' value= '<%="0"%>'>
-                <input type = 'hidden' id ='<%="location#{count}"%>' value= '<%="0"%>'>
-                <%count += 1%>
-                    <div id ='<%="result#{count}"%>'>
-                        <li><a>
-                            <div id = "no_light">
-                            </div>
-                        
-                            <div class ="inline-block">
-                                <%=user_id.capitalize%> OUT
-                            </div>
-                        </a></li>
-                    </div>
-                <%end%>
-            </div>
+                    <%else%>
+                        <div id ="no_light" >
+                        </div>
+                    <%end%>
+                </div>
+            </a></li>
         </ul>
     </div>
 </div>
@@ -323,20 +302,16 @@
     for (var i = 0; i <= count.length; i++){
         console.log(i)
         var arr = []
-        var f_name = document.getElementById("f_name"+i).value;
-        var l_name =document.getElementById("l_name"+i).value;
-        var time_a =document.getElementById("time_a"+i).value;
-        var time_b =document.getElementById("time_b"+i).value;
-        var location =document.getElementById("location"+i).value;
-        console.log(f_name);
-        console.log(l_name);
+        var user_id = document.getElementById("user_id"+i).value;
+        console.log(user_id);
+        /* console.log(l_name);
         arr.push(f_name);
         arr.push(l_name);
         arr.push(time_a);
         arr.push(time_b);
-        arr.push(location);
+        arr.push(location); */
         console.log("#result"+i) 
-    $("#result"+ i).load("/reload?arr=" + arr);// a function which will load data from other file after x seconds
+    $("#result"+ i).load("/reload?user_id=" + user_id);// a function which will load data from other file after x seconds
     }       
     //dynamicSearch(search);
 }

@@ -1,9 +1,11 @@
 <link rel= "stylesheet" href = "css/searchbar.css">
-
-
-<%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-
-<div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%>
+<div id ='green_light'>
 </div>
-
+<%if time_hash[time_hash["#{user}"][4] == "N/A"%>
+    <div id ='green_light'></div>
+    <%time = live_time("#{time_hash["#{user}"][1]} #{time_hash["#{user}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+    <div class ="inline-block"> <<%=time_zero_remove(time)%></div>
+<%else%>
+    <div id ="no_light" ></div>
+<%end%>
 

@@ -2,6 +2,7 @@ require "sinatra"
 require 'pg'
 require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
+require_relative 'user_id.rb'
 require 'net/smtp'
 # require_relative 'login_func'
 enable :sessions 
@@ -23,6 +24,7 @@ session[:email] = params[:email]
 
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
+        session[:user_class] = User.new(session[:user_id])
         redirect "/to_landing"
     else  
         redirect '/'
@@ -46,13 +48,13 @@ post '/logout' do
 
 # leads to landing page 
 get "/to_landing" do
-    user_checked_in = database_emp_checked()
-    users = who_is_clocked_in()
+    user_list = session[:user_class].users_list
+    time_hash = session[:user_class].get_last_times
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     # pay_period = pay_period(Time.now.utc)
     session[:admin_check] = database_admin_check(session[:user_id])
-    user_checked = database_emp_checked()
+    # user_checked = database_emp_checked()
     # p user_checked
     pay_period = pay_period(Time.new)
     times = pull_in_and_out_times(session[:user_id],pay_period)
@@ -384,9 +386,11 @@ post "/update_time_sheet" do
 end
 
 get "/reload" do
-     arr = params[:arr]
-     arr.gsub!(/[^0-9A-Za-z.,\-]/, '')
-      arr = arr.split(",")
+     user_id = params[:user_id]
+    #  arr.gsub!(/[^0-9A-Za-z.,\-]/, '')
+    #   user_id = arr.split(",")
+      user_list = session[:user_class].users_list
+      time_hash = session[:user_class].get_last_times
     # user_check =database_emp_checked
     # users = who_is_clocked_in()
     # erb :reload, locals:{users:users,user_checked:user_checked}, :layout => :post
