@@ -146,7 +146,7 @@ td {
 }
 
 .back_gr {
-    background-color: #FFF275;
+    background-color: #80ffa690;
     background-size: contain;
     background-repeat: no-repeat;
     /* background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
@@ -712,4 +712,21 @@ select::-ms-expand {
         display: block;
         text-align: left;
     }
+}
+
+table {
+    border: 1px solid black;
+    border-radius: 10px;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+td {
+    padding: 0.5em 1em;
+    border: 1px solid black;
+}
+
+tr {
+    padding: 0.5em 1em;
+    border: 1px solid black;
 }

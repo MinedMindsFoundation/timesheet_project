@@ -391,7 +391,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} days for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -647,7 +647,7 @@ def  pto_request_db_add(user_id,start_date,end_date)
     db.close
 end
 
-def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto) 
+def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto, comment) 
     Mail.defaults do
         delivery_method :smtp,
         address: "email-smtp.us-east-1.amazonaws.com",
@@ -656,7 +656,7 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} PTO days left to request. Please fill out this form <a href= 'http://localhost:4567/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off."
+        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} PTO days left to request. Please fill out this form <a href= 'http://localhost:4567/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off.#{comment}"
       mail = Mail.new do
           from         ENV['from']
           to           email
@@ -755,7 +755,7 @@ end
                 calendar = GoogleCalendar.new
                 calendar.create_calendar_event("#{item[1]}","#{item[2]}",email,"#{item[3]}")
                 # p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
-                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto.flatten.first)
+                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto,item[5])
             elsif item[4] == "denied"
                 send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[5]) 
             end
