@@ -55,6 +55,7 @@ end
 
 # leads to landing page 
 get "/to_landing" do
+    session[:user_hierarchy] = user_hierarchy(session[:user_id]).to_i
     user_class = User.new(session[:user_id])
     user_list = user_class.users_list
     time_hash = user_class.get_last_times
@@ -122,13 +123,13 @@ get '/vac_time_request' do
         # p users
         # p users[0]
         # p user_hierarchy(users[0]).to_i
-        # p user_hierarchy(session[:user_id]).to_i
-        if user_hierarchy(session[:user_id]).to_i == 3
-            if user_hierarchy(session[:user_id]).to_i >= user_hierarchy(users[0]).to_i
+        # p session[:user_hierarchy]
+        if session[:user_hierarchy] == 3
+            if session[:user_hierarchy] >= user_hierarchy(users[0]).to_i
                 pto_requests << users
             end
-        elsif user_hierarchy(session[:user_id]).to_i == 2
-            if user_hierarchy(session[:user_id]).to_i > user_hierarchy(users[0]).to_i
+        elsif session[:user_hierarchy] == 2
+            if session[:user_hierarchy] > user_hierarchy(users[0]).to_i
                 pto_requests << users
             end
         end
@@ -188,7 +189,6 @@ post "/clock_out" do
 end
 
 get "/add_user" do
-    session[:user_hierarchy] = user_hierarchy(session[:user_id]).to_i
     msg = ""
     erb :admin_emplist, locals:{msg:msg}
 end
@@ -220,20 +220,22 @@ end
 get "/edit_user" do
     admin_list = admin_emp_list()
     new_admin_list = []
-    # p admin_list
+    p admin_list
+    p session[:user_hierarchy]
     admin_list.each_with_index do |users|
         # p user_hierarchy(users[0]).to_i
         # p user_hierarchy(session[:user_id])
         if session[:user_hierarchy] == 3
-            if user_hierarchy(session[:user_id]).to_i >= user_hierarchy(users[0]).to_i
+            if session[:user_hierarchy] >= user_hierarchy(users[0]).to_i
                 new_admin_list << users
             end
         elsif session[:user_hierarchy] == 2
-            if user_hierarchy(session[:user_id]).to_i > user_hierarchy(users[0]).to_i
+            if session[:user_hierarchy] > user_hierarchy(users[0]).to_i
                 new_admin_list << users
             end
         end
     end
+    p new_admin_list
     erb :admin_empmng, locals:{admin_list:new_admin_list}
 end
 
@@ -245,7 +247,7 @@ post "/update_emp" do
     user_hierarchies[1].each_with_index do |users, index|
         # p users.to_i
         # p index
-        p session[:edit_user][index]
+        # p session[:edit_user][index]
     end
     # p session[:edit_user]
     # p choice
@@ -377,7 +379,7 @@ post "/update_time_sheet" do
                 # p new_time_edit
                 # p final_time.flatten.each_slice(7).to_a
                 final_edit_time = final_time.flatten.each_slice(7).to_a
-                p final_edit_time[positions]
+                # p final_edit_time[positions]
                 original_time = session[:times_shown][positions]
                 # p original_time
                 # p original_time[0]
