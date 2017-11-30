@@ -669,7 +669,7 @@ def timetable_delete(user_id, date, time_in)
     db.close
 end
 
-def  pto_request_db_add(user_id,start_date,end_date)
+def  pto_request_db_add(user_id,start_date,end_date,type)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -678,7 +678,7 @@ def  pto_request_db_add(user_id,start_date,end_date)
         password: ENV['password']
         }
         db = PG::Connection.new(db_params)
-    db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','pending')")
+    db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval,type_of_days)VALUES('#{user_id}','#{start_date}','#{end_date}','pending','#{type}')")
     db.close
 end
 
@@ -738,7 +738,7 @@ user: ENV['user'],
 password: ENV['password']
 }
 db = PG::Connection.new(db_params)
-pto_request = db.exec("SELECT user_id,start_date,end_date FROM pto_requests WHERE approval = 'pending'").values
+pto_request = db.exec("SELECT user_id,start_date,end_date,type_of_days FROM pto_requests WHERE approval = 'pending'").values
 pto_request.each do |requests|
 names = database_info(requests[0])
 requests << "#{names[0]} #{names[1]}"
@@ -902,20 +902,49 @@ def pull_pto_stamp(user_id)
     check.flatten
 end        
 
+#<!------ func for updating pto time ------>
+def update_pto_time(user_id,new_pto)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        db.exec("UPDATE pto SET pto = '#{new_pto}' WHERE user_id = '#{user_id}'")
+        db.close            
+end
+
 #<!-- function for checking if pto needs added and adding it if it does -->
 def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp)
-    
-    #arr = pto_stamp.gsub(/\s+/m, ' ').strip.split(" ")
     d = Time.now.strftime("%Y")
     c = Time.now.strftime("%m")    
     x = hire_date[0].split('-')
+    s = pto_stamp[0].split(' ')
     if d.to_i - x[0].to_i >= 2
-        m = "inside the 2"
+        i = 2
+        if s[0] != d || s[1] != c
+            new_pto = user_pto.to_i + i
+            update_pto_time(user_id,new_pto)
+            pto_time_stamp(user_id)
+            m = "#{new_pto}"
+        else
+            m = "days have already been added"
+        end        
     else
-        m = "years are less than 2"
+        i = 1
+        if s[0] != d || s[1] != c
+            new_pto = user_pto.to_i + i
+            update_pto_time(user_id,new_pto)
+            pto_time_stamp(user_id)
+            m = "#{new_pto}"
+        else
+            m = "days have already been added"
+        end
     end        
-
     m
-
 end    
+
+  
 

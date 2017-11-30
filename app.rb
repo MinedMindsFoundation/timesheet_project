@@ -109,8 +109,8 @@ get '/vac_time_request' do
     hire_date = pull_out_date_of_hire(session[:user_id])
     pto_stamp = pull_pto_stamp(session[:user_id])
     newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp)
-    p "...#{hire_date}.............#{user_pto}...........#{pto_stamp}..........#{newpto}"
-    #erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
+    #p "...#{hire_date}.............#{user_pto}...........#{pto_stamp}..........#{newpto}"
+    erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
@@ -120,9 +120,9 @@ post '/pto_email' do
     end_date = params[:end_vac]
     user_info =  database_info(session[:user_id])
     user_pto = pto_time(session[:user_id])
-    pto_request_db_add(session[:user_id],start_date,end_date)
+    pto_request_db_add(session[:user_id],start_date,end_date,type_of_pto)
     if user_pto == "0"
-        email_for_no_pto(user_info, user_pto, type_of_pto)
+        email_for_no_pto(user_info, user_pto, ype_of_pto)
         session[:pto_message] = "You have no PTO to request."
         redirect "/to_landing"
     else 
