@@ -120,7 +120,7 @@ td {
 }
 
 .box {
-    width: 60;
+    width: 33vw;
     background-color: whitesmoke;
     border-style: solid;
     border-color: gray;
@@ -128,7 +128,7 @@ td {
     border-radius: 3vh;
     margin-right: 1%;
     margin-top: 0%;
-    text-align: left;
+    text-align: center;
     max-height: 55vh;
     overflow-y: scroll;
 }
@@ -197,6 +197,8 @@ body {
     background-color: #ABFF00;
     border-radius: 50%;
     box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
+    position: inherit;
+    float: left;
 }
 
 #no_light {
@@ -207,6 +209,9 @@ body {
     border-radius: 50%;
     box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #ffffff 0 2px 12px;
     display: inline-block;
+    position: relative;
+    float: left;
+    bottom: 3vh;
 }
 
 .sidenav a {

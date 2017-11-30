@@ -2,6 +2,7 @@ require "sinatra"
 require 'pg'
 require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
+require_relative 'user_id.rb'
 require 'net/smtp'
 # require_relative 'login_func'
 enable :sessions 
@@ -17,12 +18,20 @@ end
 
 # comming from login.erb
 post '/login' do 
+
 session[:first_name] = params[:first_name]
 session[:last_name] = params[:last_name]
 session[:email] = params[:email]
 
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
+        db_params = {
+            host: ENV['host'],
+            port: ENV['port'],
+            dbname: ENV['dbname'],
+            user: ENV['user'],
+            password: ENV['password']
+        }
         redirect "/to_landing"
     else  
         redirect '/'
@@ -32,32 +41,33 @@ end
 post '/sso_login' do
     username = params[:username]
     password = params[:password]
-        if ssologin_check?(username,password) == true
-            session[:user_id] = username
-            redirect '/to_landing'
-        else
-            redirect '/'
-        end
+    if ssologin_check?(username,password) == true
+        session[:user_id] = username
+        redirect '/to_landing'
+    else
+        redirect '/'
+    end
 end    
 
 post '/logout' do
     redirect '/'
-  end
+end
 
 # leads to landing page 
 get "/to_landing" do
-    user_checked_in = database_emp_checked()
-    users = who_is_clocked_in()
+    user_class = User.new(session[:user_id])
+    user_list = user_class.users_list
+    time_hash = user_class.get_last_times
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     # pay_period = pay_period(Time.now.utc)
     session[:admin_check] = database_admin_check(session[:user_id])
-    user_checked = database_emp_checked()
+    # user_checked = database_emp_checked()
     # p user_checked
     pay_period = pay_period(Time.new)
     times = pull_in_and_out_times(session[:user_id],pay_period)
     todays_time = pull_in_and_out_times(session[:user_id],[DateTime.now.strftime('%Y-%m-%d'),DateTime.now.strftime('%Y-%m-%d')])
-erb :landing, locals:{users:users,user_checked_in:user_checked_in,todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check], user_checked:user_checked}
+erb :landing, locals:{user_list:user_list,time_hash:time_hash,todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check],}
 end
 
 #post comming from landing and records start of lunch
@@ -408,11 +418,15 @@ post "/update_time_sheet" do
 end
 
 get "/reload" do
-    arr = params[:arr]
-    # user_checked = database_emp_checked()
+     user_id = params[:user_id]
+    #  arr.gsub!(/[^0-9A-Za-z.,\-]/, '')
+    #   user_id = arr.split(",")
+    user_class = User.new(session[:user_id])
+      time_hash = user_class.get_last_times
+    # user_check =database_emp_checked
     # users = who_is_clocked_in()
     # erb :reload, locals:{users:users,user_checked:user_checked}, :layout => :post
-    erb :reload, locals:{arr:arr}, :layout => :post
+    erb :reload, locals:{time_hash:time_hash,user:user_id}, :layout => :post
 end
 
 post "/approval" do
