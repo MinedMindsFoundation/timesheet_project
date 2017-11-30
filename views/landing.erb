@@ -72,7 +72,6 @@
 
 
 <div class= "top_right" align = "right">
-    <input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
      <div class= "box scrollable">
         <!--Users who are clocked in-->
         <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
@@ -80,29 +79,31 @@
         <input type="text" id="myInput" onclick="dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
         <link rel= "stylesheet" href = "css/searchbar.css">
 
-
-        <ul id="myUL">
-            <%count = 0%>
-            <%user_list.each do |user|%>
-                <input type = 'hidden' id ='<%="user_id#{count}"%>' value= '<%=user[0]%>'>
-                <li><a>
-                    <%=user[1].capitalize%> <%=user[2].capitalize%>
-                    <div id='<%="result#{count}"%>'>
-                        <% if time_hash["#{user[0]}"][4] == "N/A" %>
-                            <div id ='green_light'>
-                            </div>
-                            <%time = live_time("#{time_hash["#{user[0]}"][1]} #{time_hash["#{user[0]}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-                            <div class ="inline-block"> <%=time_zero_remove(time)%>
-                            </div>
-                        <% else %>
-                            <div id ="no_light" >
-                            </div>
-                        <% end %>
-                    </div>
-                </a></li>
-                <%count += 1%>
-            <%end%>
-        </ul>
+        <div>
+            <ul id="myUL">
+                <%count = 0%>
+                <%user_list.each do |user|%>
+                    <input type = 'hidden' id ='<%="user_id#{count}"%>' value= '<%=user[0]%>'>
+                    <li><a>
+                        <div class = "inline-block"><%=user[1].capitalize%> <%=user[2].capitalize%>
+                        </div>
+                        <div id='<%="result#{count}"%>'>
+                            <% if time_hash["#{user[0]}"][4] == "N/A" %>
+                                <div id ='green_light'>
+                                </div>
+                                <%time = live_time("#{time_hash["#{user[0]}"][1]} #{time_hash["#{user[0]}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+                                <div class ="inline-block"> <%=time_zero_remove(time)%>
+                                </div>
+                            <% else %>
+                                <div id ="no_light" >
+                                </div>
+                            <% end %>
+                        </div>
+                    </a></li>
+                    <%count += 1%>
+                <%end%>
+            </ul>
+        </div>
     </div>
 </div>
 <input id = 'count' type = 'hidden' value = '<%=count%>'>
