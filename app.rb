@@ -60,6 +60,7 @@ get "/to_landing" do
     user_list = user_class.users_list
     time_hash = user_class.get_last_times
     user_info =  database_info(session[:user_id])
+    # p user_info
     user_email = database_email_check(session[:user_id])
     # pay_period = pay_period(Time.now.utc)
     session[:admin_check] = database_admin_check(session[:user_id])
@@ -68,7 +69,7 @@ get "/to_landing" do
     pay_period = pay_period(Time.new)
     times = pull_in_and_out_times(session[:user_id],pay_period)
     todays_time = pull_in_and_out_times(session[:user_id],[DateTime.now.strftime('%Y-%m-%d'),DateTime.now.strftime('%Y-%m-%d')])
-erb :landing, locals:{user_list:user_list,time_hash:time_hash,todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check],}
+    erb :landing, locals:{user_list:user_list,time_hash:time_hash,todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check],}
 end
 
 #post comming from landing and records start of lunch
@@ -220,8 +221,8 @@ end
 get "/edit_user" do
     admin_list = admin_emp_list()
     new_admin_list = []
-    p admin_list
-    p session[:user_hierarchy]
+    # p admin_list
+    # p session[:user_hierarchy]
     admin_list.each_with_index do |users|
         # p user_hierarchy(users[0]).to_i
         # p user_hierarchy(session[:user_id])
@@ -235,7 +236,7 @@ get "/edit_user" do
             end
         end
     end
-    p new_admin_list
+    # p new_admin_list
     erb :admin_empmng, locals:{admin_list:new_admin_list}
 end
 
