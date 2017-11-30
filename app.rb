@@ -104,8 +104,26 @@ get '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
-    pto_requests = pull_pto_request()
     user_pto_request = get_users_pto_request(session[:user_id])
+    pto_people = pull_pto_request()
+    pto_requests = []
+    # p pto_people
+    pto_people.each do |users|
+        # p users
+        # p users[0]
+        # p user_hierarchy(users[0]).to_i
+        # p user_hierarchy(session[:user_id]).to_i
+        if user_hierarchy(session[:user_id]).to_i == 3
+            if user_hierarchy(session[:user_id]).to_i >= user_hierarchy(users[0]).to_i
+                pto_requests << users
+            end
+        elsif user_hierarchy(session[:user_id]).to_i == 2
+            if user_hierarchy(session[:user_id]).to_i > user_hierarchy(users[0]).to_i
+                pto_requests << users
+            end
+        end
+    end
+    # p pto_requests
     erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
@@ -196,8 +214,14 @@ get "/edit_user" do
     admin_list.each_with_index do |users|
         # p user_hierarchy(users[0]).to_i
         # p user_hierarchy(session[:user_id])
-        if user_hierarchy(session[:user_id]).to_i >= user_hierarchy(users[0]).to_i
-            new_admin_list << users
+        if session[:user_hierarchy] == 3
+            if user_hierarchy(session[:user_id]).to_i >= user_hierarchy(users[0]).to_i
+                new_admin_list << users
+            end
+        elsif session[:user_hierarchy] == 2
+            if user_hierarchy(session[:user_id]).to_i > user_hierarchy(users[0]).to_i
+                new_admin_list << users
+            end
         end
     end
     erb :admin_empmng, locals:{admin_list:new_admin_list}
