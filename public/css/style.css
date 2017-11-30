@@ -589,7 +589,7 @@ select::-ms-expand {
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
-    transition-delay: 5s;
+    transition-delay: 3s;
 }
 
 .tooltip2 {
@@ -615,7 +615,7 @@ select::-ms-expand {
 
 .tooltip2:hover .tooltiptext2 {
     visibility: visible;
-    transition-delay: 5s;
+    transition-delay: 3s;
 }
 
 .tooltip3 {
@@ -641,7 +641,7 @@ select::-ms-expand {
 
 .tooltip3:hover .tooltiptext3 {
     visibility: visible;
-    transition-delay: 5s;
+    transition-delay: 3s;
 }
 
 .center_text {
