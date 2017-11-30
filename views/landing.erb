@@ -84,28 +84,28 @@
         <ul id="myUL">
             <%count = 0%>
             <%user_list.each do |user|%>
-            <input type = 'hidden' id ='<%="user_id#{count}"%>' value= '<%=user[0]%>'>
-            <li><a>
-                <%=user[1].capitalize%> <%=user[2].capitalize%>
-                <div id='<%="result#{count}"%>'>
-                    <div id ='green_light'>
+                <input type = 'hidden' id ='<%="user_id#{count}"%>' value= '<%=user[0]%>'>
+                <li><a>
+                    <%=user[1].capitalize%> <%=user[2].capitalize%>
+                    <div id='<%="result#{count}"%>'>
+                        <% if time_hash["#{user[0]}"][4] == "N/A" %>
+                            <div id ='green_light'>
+                            </div>
+                            <%time = live_time("#{time_hash["#{user[0]}"][1]} #{time_hash["#{user[0]}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+                            <div class ="inline-block"> <%=time_zero_remove(time)%>
+                            </div>
+                        <% else %>
+                            <div id ="no_light" >
+                            </div>
+                        <% end %>
                     </div>
-                    <%if time_hash[time_hash["#{user}"][4] == "N/A"%>
-                        <div id ='green_light'>
-                        </div>
-                        <%time = live_time("#{time_hash["#{user}"][1]} #{time_hash["#{user}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-                        <div class ="inline-block"> <<%=time_zero_remove(time)%>
-                        </div>
-                    <%else%>
-                        <div id ="no_light" >
-                        </div>
-                    <%end%>
-                </div>
-            </a></li>
+                </a></li>
+                <%count += 1%>
+            <%end%>
         </ul>
     </div>
 </div>
-                <input id = 'count' type = 'hidden' value = '<%=count%>'>
+<input id = 'count' type = 'hidden' value = '<%=count%>'>
 
 
 </script>
@@ -137,11 +137,6 @@
 
     <!--message for the pto request-->
     <%=session[:pto_message]%><br>
-
-  
-    
-
-<% else %>
 <% end %>
 
 
@@ -248,12 +243,6 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src ="/js/search.js"></script>
 <script>
-    function autoRefresh_div(){  
-        var search = document.getElementById('myInput');
-        $("#result").load("/reload");// a function which will load data from other file after x seconds
-        dynamicSearch(search);
-    }
-
     setInterval('autoRefresh_div()', 5000); // refresh div afte 5 secs
 </script>
             
@@ -298,8 +287,8 @@
     function autoRefresh_div(){  
     var search = document.getElementById('myInput');
     var count = document.getElementById("count").value;
-    console.log(count + "count here")
-    for (var i = 0; i <= count.length; i++){
+    console.log(count + " count here")
+    for (var i = 0; i < count; i++){
         console.log(i)
         var arr = []
         var user_id = document.getElementById("user_id"+i).value;
@@ -310,7 +299,7 @@
         arr.push(time_a);
         arr.push(time_b);
         arr.push(location); */
-        console.log("#result"+i) 
+        console.log("#result"+i);
     $("#result"+ i).load("/reload?user_id=" + user_id);// a function which will load data from other file after x seconds
     }       
     //dynamicSearch(search);
