@@ -874,10 +874,13 @@ def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp)
     d = Time.now.strftime("%Y")
     c = Time.now.strftime("%m")    
     x = hire_date[0].split('-')
-    
+    if d.to_i - x[0].to_i >= 2
+        m = "inside the 2"
+    else
+        m = "years are less than 2"
+    end        
 
-
-    "#{d.to_i}......#{x[0].to_i}"
+    m
 
 end    
 
