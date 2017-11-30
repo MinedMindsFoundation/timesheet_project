@@ -646,8 +646,12 @@ select::-ms-expand {
 .center_text {
     margin: auto;
     width: 25%;
-    border: 3px transparent;
+    border: 3px solid transparent;
     padding: 10px;
+}
+
+#right_align {
+    float: right;
 }
 
 #blank_footer {

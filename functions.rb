@@ -90,6 +90,41 @@ def get_id(email)
     user_id.flatten.first
 end
 
+def user_hierarchy(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    user_h = db.exec("SELECT hierarchy FROM admin_status WHERE user_id = '#{user_id}'").values.flatten
+    db.close
+    user_h[0]
+end
+
+def get_hierarchy(user_id,selected_users)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    all_users = []
+    selected_h = []
+    db = PG::Connection.new(db_params)
+    user_h = db.exec("SELECT hierarchy FROM admin_status WHERE user_id = '#{user_id}'").values.flatten
+    selected_users.each do |users|
+        selected_h << db.exec("SELECT hierarchy FROM admin_status WHERE user_id = '#{users}'").values.flatten
+    end
+    db.close
+    all_users << user_h[0]
+    all_users << selected_h.flatten
+    all_users
+end
+
 # def add_info(user_id,email,first_name,last_name,admin)
 # db_params = {
 #     host: ENV['host'],
@@ -106,7 +141,7 @@ end
 
 # end
 # adds user to database
-def add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
+def add_user(user_id,email,first_name,last_name,pto,admin,admin_access,doh,department,job)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -117,7 +152,7 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
     db = PG::Connection.new(db_params)
     db.exec("insert into info_new(user_id,first_name,last_name)VALUES('#{user_id}','#{first_name}','#{last_name}')")
     db.exec("insert into pto(user_id,pto)VALUES('#{user_id}','#{pto}')")
-    db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin}')")
+    db.exec("insert into admin_status(user_id,admin,hierarchy)VALUES('#{user_id}','#{admin_access}','#{admin}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
     db.exec("insert into title_and_doh(user_id,date_of_hire,job_title,department)VALUES('#{user_id}','#{doh}','#{job}','#{department}')")
     db.close
