@@ -1,5 +1,20 @@
-<%user_checked_in = arr.each_slice(5)%>
+<link rel= "stylesheet" href = "css/searchbar.css">
+<ul id="myUL">
 <%user_checked_in.each do |row|%>
-<%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-<%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%></div>
+<li><a>
+    <div id = 'green_light'>
+    </div>
+        <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+       <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%></div>       
+</a></li>
 <%end%>
+<%users[1].each do |user_id|%>
+<li><a>
+<div id = "no_light">
+</div>
+<div class ="inline-block">
+    <%=user_id.capitalize%> OUT
+</div></a></li>
+<%end%>
+</ul>
+

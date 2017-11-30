@@ -366,11 +366,13 @@ post "/update_time_sheet" do
 end
 
 get "/reload" do
-    arr = params[:arr]
-    # user_checked = database_emp_checked()
-    # users = who_is_clocked_in()
+    # arr = params[:arr]
+    # arr.gsub!(/[^0-9A-Za-z.,\-]/, '')
+    # user_check = arr.split(",").each_slice(5).to_a
+    user_check =database_emp_checked
+    users = who_is_clocked_in()
     # erb :reload, locals:{users:users,user_checked:user_checked}, :layout => :post
-    erb :reload, locals:{arr:arr}, :layout => :post
+    erb :reload, locals:{users:users,user_checked_in:user_check}, :layout => :post
 end
 
 post "/approval" do
