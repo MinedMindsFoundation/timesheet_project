@@ -32,6 +32,7 @@ You have
 <form method="post" action="/pto_email">
 <div class= "select">
 <select name="pto_type" name="slct" id="slct">
+<option>Select type of PTO</option>
 <option value="Sick Day">Sick Day</option>
 <option value=" Vacation Day"> Vacation Day</option>
 <option value="Personal Day">Personal Day</option>
@@ -91,8 +92,8 @@ start of PTO request:
                     <input type = "hidden" value = "<%=item[1]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[2]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
-                    <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="approved"%>'>Approve</td>
-                    <td><input type= "radio" name= '<%="info" + "#{count}" + "[]"%>' value= '<%="denied"%>'>Deny<textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
+                    <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="approved"%>'>Approve  <textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
+                    <td><input type= "radio" name= '<%="info" + "#{count}" + "[]"%>' value= '<%="denied"%>'>Deny  <textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
                     </tr>
         <%count += 1%>
         <%end%>
