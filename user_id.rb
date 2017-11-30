@@ -1,9 +1,8 @@
-class User_onfo
+class User
     
-    attr_accessor 
+    attr_accessor :users_list ,:user_data
     def initialize(user_id)
-
-    def initialize
+    
         @db_params = {
             host: ENV['host'],
             port: ENV['port'],
@@ -11,7 +10,9 @@ class User_onfo
             user: ENV['user'],
             password: ENV['password']
         }
+        @db = PG::Connection.new(db_params)
         @users_list = db.exec("Select user_id From info.new").values
-        @user_info = db.exec("Select info_new.*,admin_status.* From info_new,admin_status WHERE user_id = #{user_id}")
+        @user_data = db.exec("Select info_new.*,admin_status.* From info_new,admin_status WHERE user_id = #{user_id}")
+    end
         
 end
