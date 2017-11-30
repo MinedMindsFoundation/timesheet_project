@@ -70,11 +70,10 @@
 
 <!--Users who are clocked in-->
 
-<input type = "hidden" value = '<%="#{user_checked_in.join(',')}"%>' id = "user_info">
+
 <div class= "top_right" align = "right">
     <input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
      <div class= "box scrollable">
-<<<<<<< HEAD
         <!--Users who are clocked in-->
         <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
         <!--  list of all people and in and out status -->
@@ -83,65 +82,53 @@
 
 
         <ul id="myUL">
-            <div  id="result" > 
+            <%count = 0%>
                 <%user_checked_in.each do |row|%>
+                <input type = 'hidden' id ='<%="f_name#{count}"%>' value= '<%=row[0]%>'>
+                <input type = 'hidden' id ='<%="l_name#{count}"%>' value= '<%=row[1]%>'>
+                <input type = 'hidden' id ='<%="time_a#{count}"%>' value= '<%=row[2]%>'>
+                <input type = 'hidden' id ='<%="time_b#{count}"%>' value= '<%=row[3]%>'>
+                <input type = 'hidden' id ='<%="location#{count}"%>' value= '<%=row[4]%>'>
                 <li><a>
-                    
-                    <div id = 'green_light'>
+                    <div id='<%="result#{count}"%>'>
+                        <div id ='green_light'>
+                        </div>
+                
+                        <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+                
+                        <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%>
+                        </div>
                     </div>
-                
-                    <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-                
-                    <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%>
-                    </div>       
+                       
                 </a></li>
+                <%count += 1%>
                 <%end%>
-                
                 <%users[1].each do |user_id|%>
-                    <li><a>
-                        <div id = "no_light">
-                        </div>
-                    
-                        <div class ="inline-block">
-                            <%=user_id.capitalize%> OUT
-                        </div>
-                    </a></li>
+                <%arr = user_id.split(" ") %>
+                <input type = 'hidden' id ='<%="f_name#{count}"%>' value= '<%=arr[0].capitalize%>'>
+                <input type = 'hidden' id ='<%="l_name#{count}"%>' value= '<%=arr[1].capitalize%>'>
+                <input type = 'hidden' id ='<%="time_a#{count}"%>' value= '<%="0"%>'>
+                <input type = 'hidden' id ='<%="time_b#{count}"%>' value= '<%="0"%>'>
+                <input type = 'hidden' id ='<%="location#{count}"%>' value= '<%="0"%>'>
+                <%count += 1%>
+                    <div id ='<%="result#{count}"%>'>
+                        <li><a>
+                            <div id = "no_light">
+                            </div>
+                        
+                            <div class ="inline-block">
+                                <%=user_id.capitalize%> OUT
+                            </div>
+                        </a></li>
+                    </div>
                 <%end%>
             </div>
         </ul>
     </div>
-=======
- <!--Users who are clocked in-->
- <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
-
-
-
-
-
-<!--  list of all people and in and out status -->
-<link rel= "stylesheet" href = "css/searchbar.css">
-<input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
-
-
-<ul id="myUL">
-<%user_checked_in.each do |row|%>
-<li><a>
-    <div id = 'green_light'>
-    </div>
-    <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-            
-       <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%></div>
-</a></li>
-<%end%>
-<%users[1].each do |user_id|%>
-<li><a>
-<div id = "no_light">
->>>>>>> a339537afceb98e0b64b048014c3bce055278bfa
 </div>
+                <input id = 'count' type = 'hidden' value = '<%=count%>'>
 
-<<<<<<< HEAD
-=======
-}
+
 </script>
 
 <script>
@@ -166,7 +153,6 @@
 <input id = 'myInput' type = "hidden">
 </div>
 </div>
->>>>>>> a339537afceb98e0b64b048014c3bce055278bfa
 
     
 
@@ -218,14 +204,10 @@
     <button  class="button" id = "clock_out_button" type = "submit">Time Out</button>
     <span class="tooltiptext">to clock out for the day.</span></div>
     </form><br>
-<<<<<<< HEAD
-</div>
-=======
     <div class = "tooltip3">
     <button class="button"  id = 'sign_out' onclick= 'logout()' >Sign out</button>
     <span class="tooltiptext3">to sign out.</span></div>
     </div>
->>>>>>> a339537afceb98e0b64b048014c3bce055278bfa
 
 
 <%if todays_time.flatten.any?%>
@@ -330,16 +312,17 @@
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
         }
-<<<<<<< HEAD
     </script>
 
 <!-- function for updating time-->
 <script>
     function autoRefresh_div(){  
     var search = document.getElementById('myInput');
-    //var count = document.getElementById("count").value;
-    /* for (var i = 0; i <= count.length; i++);{
+    var count = document.getElementById("count").value;
+    console.log(count + "count here")
+    for (var i = 0; i <= count.length; i++){
         console.log(i)
+        var arr = []
         var f_name = document.getElementById("f_name"+i).value;
         var l_name =document.getElementById("l_name"+i).value;
         var time_a =document.getElementById("time_a"+i).value;
@@ -352,11 +335,11 @@
         arr.push(time_a);
         arr.push(time_b);
         arr.push(location);
-        console.log("#result"+i) */
-    $("#result").load("/reload");// a function which will load data from other file after x seconds
-            
+        console.log("#result"+i) 
+    $("#result"+ i).load("/reload?arr=" + arr);// a function which will load data from other file after x seconds
+    }       
     //dynamicSearch(search);
-    }
+}
 
 </script>
 <script src ="/js/search.js"></script>
@@ -389,6 +372,3 @@ function newfunc(){
             return localStorage.getItem(v);
         }
 </script>
-=======
-    </script>
->>>>>>> a339537afceb98e0b64b048014c3bce055278bfa
