@@ -28,6 +28,7 @@ class User
             @hash["#{user_id[0]}"] = arr.values.flatten
             end
         end
+        db.close
         @hash
     end
 
