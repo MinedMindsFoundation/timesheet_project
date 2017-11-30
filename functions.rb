@@ -782,18 +782,34 @@ end
             # p "#{approval}"
         approval.each do |item|
         # p "#{item} item arr here"
-            db.exec("UPDATE pto_requests SET approval = '#{item[4]}' WHERE user_id= '#{item[0]}' AND start_date= '#{item[1]}' AND end_date= '#{item[2]}' ")
+            db.exec("UPDATE pto_requests SET approval = '#{item[5]}' WHERE user_id= '#{item[0]}' AND start_date= '#{item[1]}' AND end_date= '#{item[2]}' ")
             email = database_email_check(item[0])
             pto = db.exec("SELECT pto From pto WHERE user_id = '#{item[0]}'").values
             full_name = item[3].split(' ')
-            if item[4] == 'approved'
+            if item[5] == 'approved'
                 calendar = GoogleCalendar.new
                 calendar.create_calendar_event("#{item[1]}","#{item[2]}",email,"#{item[3]}")
                 # p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
-                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto,item[5])
-            elsif item[4] == "denied"
-                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[5]) 
+                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto,item[6])
+            elsif item[5] == "denied"
+                send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[6]) 
             end
+            #goes here luke------- this is where is subtacts days aproved
+
+            if item[4] == "Pto"
+                puts "#{item[1]}........#{item[2]}............"
+                old_date = Date.parse("#{item[1]}")
+                new_date = Date.parse("#{item[2]}")
+                days_between = (new_date - old_date).to_i
+                old_pto = pto_time(item[0]).to_i
+                new_pto = old_pto - days_between
+                update_pto_time(item[0],new_pto)
+            elsif item[4] == "Vacation"
+
+            elsif item[4] == "Sick"
+                
+            else
+            end    
         end
         db.close
     end
