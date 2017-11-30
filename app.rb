@@ -111,7 +111,11 @@ get '/vac_time_request' do
     user_pto = pto_time(session[:user_id])
     pto_requests = pull_pto_request()
     user_pto_request = get_users_pto_request(session[:user_id])
-    erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
+    hire_date = pull_out_date_of_hire(session[:user_id])
+    pto_stamp = pull_pto_stamp(session[:user_id])
+    newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp)
+    p "...#{hire_date}.............#{user_pto}...........#{pto_stamp}..........#{newpto}"
+    #erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
 
 post '/pto_email' do 
@@ -185,6 +189,7 @@ post "/add_to_user_list" do
     user_info << last_name
     send_email_for_adding_a_new_user(user_info, email)
     add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
+    pto_time_stamp(user_id)
     erb :admin_emplist, locals:{msg:msg}
 end
 

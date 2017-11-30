@@ -819,3 +819,65 @@ def time_zero_remove(time_arr)
     ret_string.strip!
     ret_string
 end
+
+#<!------ gets date of hire ------>
+def pull_out_date_of_hire(userid)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+        hire_date = db.exec("SELECT date_of_hire FROM title_and_doh WHERE user_id = '#{userid}'").values
+        db.close
+    hire_date.flatten
+end  
+
+#<!-----------adds ptod time stamp ----------->
+def pto_time_stamp(user_id)
+    
+    stamp = Time.now.strftime("%Y %m")
+    db_params = {
+    host: ENV['host'],
+    port: ENV['port'],
+    dbname: ENV['dbname'],
+    user: ENV['user'],
+    password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    db.exec("UPDATE pto SET pto_time_stamp = '#{stamp}' WHERE user_id = '#{user_id}'")
+    db.close
+
+end    
+
+#<!--------function for pulling back pto time stamp------>
+def pull_pto_stamp(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+        check = db.exec("SELECT pto_time_stamp FROM pto WHERE user_id = '#{user_id}'").values
+        db.close
+    check.flatten
+end        
+
+#<!-- function for checking if pto needs added and adding it if it does -->
+def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp)
+    
+    #arr = pto_stamp.gsub(/\s+/m, ' ').strip.split(" ")
+    d = Time.now.strftime("%Y")
+    c = Time.now.strftime("%m")    
+    x = hire_date[0].split('-')
+    
+
+
+    "#{d.to_i}......#{x[0].to_i}"
+
+end    
+
