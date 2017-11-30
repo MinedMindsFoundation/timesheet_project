@@ -90,6 +90,41 @@ def get_id(email)
     user_id.flatten.first
 end
 
+def user_hierarchy(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    user_h = db.exec("SELECT hierarchy FROM admin_status WHERE user_id = '#{user_id}'").values.flatten
+    db.close
+    user_h[0]
+end
+
+def get_hierarchy(user_id,selected_users)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    all_users = []
+    selected_h = []
+    db = PG::Connection.new(db_params)
+    user_h = db.exec("SELECT hierarchy FROM admin_status WHERE user_id = '#{user_id}'").values.flatten
+    selected_users.each do |users|
+        selected_h << db.exec("SELECT hierarchy FROM admin_status WHERE user_id = '#{users}'").values.flatten
+    end
+    db.close
+    all_users << user_h[0]
+    all_users << selected_h.flatten
+    all_users
+end
+
 # def add_info(user_id,email,first_name,last_name,admin)
 # db_params = {
 #     host: ENV['host'],
@@ -106,7 +141,7 @@ end
 
 # end
 # adds user to database
-def add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
+def add_user(user_id,email,first_name,last_name,pto,admin,admin_access,doh,department,job)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -117,7 +152,7 @@ def add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
     db = PG::Connection.new(db_params)
     db.exec("insert into info_new(user_id,first_name,last_name)VALUES('#{user_id}','#{first_name}','#{last_name}')")
     db.exec("insert into pto(user_id,pto)VALUES('#{user_id}','#{pto}')")
-    db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin}')")
+    db.exec("insert into admin_status(user_id,admin,hierarchy)VALUES('#{user_id}','#{admin_access}','#{admin}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
     db.exec("insert into title_and_doh(user_id,date_of_hire,job_title,department)VALUES('#{user_id}','#{doh}','#{job}','#{department}')")
     db.close
@@ -391,7 +426,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} days for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -647,7 +682,7 @@ def  pto_request_db_add(user_id,start_date,end_date)
     db.close
 end
 
-def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto) 
+def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto, comment) 
     Mail.defaults do
         delivery_method :smtp,
         address: "email-smtp.us-east-1.amazonaws.com",
@@ -656,7 +691,7 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} PTO days left to request. Please fill out this form <a href= 'http://localhost:4567/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off."
+        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} PTO days left to request. Please fill out this form <a href= 'http://localhost:4567/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off.#{comment}"
       mail = Mail.new do
           from         ENV['from']
           to           email
@@ -755,7 +790,7 @@ end
                 calendar = GoogleCalendar.new
                 calendar.create_calendar_event("#{item[1]}","#{item[2]}",email,"#{item[3]}")
                 # p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
-                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto.flatten.first)
+                send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto,item[5])
             elsif item[4] == "denied"
                 send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[5]) 
             end

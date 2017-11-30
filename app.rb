@@ -100,11 +100,6 @@ post "/return" do
 redirect "/to_landing"
 end
 
-#post coming from landing page for vac request
-post '/vac_time_request' do
-    redirect "/vac_time_request"
-end
-
 get '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
@@ -168,7 +163,8 @@ post "/clock_out" do
     redirect "/to_landing"
 end
 
-post "/add_user" do
+get "/add_user" do
+    session[:user_hierarchy] = user_hierarchy(session[:user_id]).to_i
     msg = ""
     erb :admin_emplist, locals:{msg:msg}
 end
@@ -184,24 +180,44 @@ post "/add_to_user_list" do
     job=params[:job]
     doh=params[:doh]
     pto=params[:pto]
+    if admin == "1"
+        admin_access = "No"
+    else
+        admin_access = "Yes"
+    end
     user_info = []
     user_info << first_name
     user_info << last_name
     send_email_for_adding_a_new_user(user_info, email)
-    add_user(user_id,email,first_name,last_name,pto,admin,doh,department,job)
+    add_user(user_id,email,first_name,last_name,pto,admin,admin_access,doh,department,job)
     pto_time_stamp(user_id)
     erb :admin_emplist, locals:{msg:msg}
 end
 
-post "/edit_user" do
+get "/edit_user" do
     admin_list = admin_emp_list()
+    new_admin_list = []
     # p admin_list
-    erb :admin_empmng, locals:{admin_list:admin_list}
+    admin_list.each_with_index do |users|
+        # p user_hierarchy(users[0]).to_i
+        # p user_hierarchy(session[:user_id])
+        if user_hierarchy(session[:user_id]).to_i >= user_hierarchy(users[0]).to_i
+            new_admin_list << users
+        end
+    end
+    erb :admin_empmng, locals:{admin_list:new_admin_list}
 end
 
 post "/update_emp" do
     session[:edit_user] = params[:info]
     choice = params[:choose]
+    user_hierarchies = get_hierarchy(session[:user_id],session[:edit_user])
+    # p user_hierarchies[0].to_i
+    user_hierarchies[1].each_with_index do |users, index|
+        # p users.to_i
+        # p index
+        p session[:edit_user][index]
+    end
     # p session[:edit_user]
     # p choice
     if session[:edit_user] == [] || session[:edit_user] == nil
@@ -213,8 +229,10 @@ post "/update_emp" do
         elsif choice == "Update"
             redirect "/update_emp_page"
         elsif choice == "Delete"
-            session[:edit_user].each do |user|
-                delete_emp(user)
+            user_hierarchies[1].each_with_index do |users, index|
+                if user_hierarchies[0].to_i > users.to_i
+                    delete_emp(session[:edit_user][index])
+                end
             end            
             admin_list = admin_emp_list()
             erb :admin_empmng, locals:{admin_list:admin_list}
@@ -371,9 +389,11 @@ post "/update_time_sheet" do
 end
 
 get "/reload" do
-    user_checked = database_emp_checked()
-    users = who_is_clocked_in()
-    erb :reload, locals:{users:users,user_checked:user_checked}, :layout => :post
+    arr = params[:arr]
+    # user_checked = database_emp_checked()
+    # users = who_is_clocked_in()
+    # erb :reload, locals:{users:users,user_checked:user_checked}, :layout => :post
+    erb :reload, locals:{arr:arr}, :layout => :post
 end
 
 post "/approval" do
