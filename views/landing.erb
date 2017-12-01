@@ -174,8 +174,7 @@
 
     
 
-    <!--message for the pto request-->
-    <%=session[:pto_message]%><br>
+
 <% end %>
 
 
@@ -183,7 +182,7 @@
 
 <!-- form for submiting your time in -->
 <div class="center-on-page"><form method = "post" action = "clock_in">
-<center><br><br><br><%=session[:message]%></center>
+<center><br><br><br><%=session[:message]%> <%=session[:pto_message]%></center>
 <div class = "tooltip">
 <!--<div class="select">-->
 <!-- <select name="location" name="slct" id="slct">-->
