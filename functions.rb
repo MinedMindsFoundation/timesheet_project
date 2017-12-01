@@ -141,7 +141,7 @@ end
 
 # end
 # adds user to database
-def add_user(user_id,email,first_name,last_name,pto,vacation,admin_access,doh,department,job,vacation,sick)
+def add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,department,job,vacation,sick)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -153,7 +153,7 @@ def add_user(user_id,email,first_name,last_name,pto,vacation,admin_access,doh,de
     db.exec("insert into info_new(user_id,first_name,last_name)VALUES('#{user_id}','#{first_name}','#{last_name}')")
     db.exec("insert into pto(user_id,pto,vacation,sick)VALUES('#{user_id}','#{pto}','#{vacation}','#{sick}')")
     db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin_access}')")
-    db.exec("INSERT into supervisor(user_id,supervisorVALUES('#{user_id}','#{supervisor}')")
+    db.exec("INSERT into supervisor(user_id,supervisor)VALUES('#{user_id}','#{supervisor}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
     db.exec("insert into title_and_doh(user_id,date_of_hire,job_title,department)VALUES('#{user_id}','#{doh}','#{job}','#{department}')")
     db.close

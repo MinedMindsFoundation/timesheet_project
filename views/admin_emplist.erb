@@ -19,8 +19,9 @@
 <strong>Job Title:</strong> <input type="text" name="job" placeholder="Job Title" id="right_align"  required><br><br>
 <strong>Date Of Hire:</strong> <input type="date" name="doh" placeholder="Date Of Hire" id="right_align" required><br><br>
 <strong>Supervisor</strong> <select name="supervisor">
+<option value ='' selected disabled hidden>Choose Supervisor... </option>
 <%names_arr.each do |name|%>
-    <option><option value=<%="#{name[0]}"%>><%="#{name[1]} #{name[2]}"%></option>
+<option value=<%="#{name[0]}"%>><%="#{name[1]} #{name[2]}"%></option>
 <%end%>
 </div>
 <center><input class="button" type="reset">

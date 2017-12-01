@@ -185,7 +185,7 @@ get "/add_user" do
     msg = ""
     names_to_use = session[:employees]
     names_to_use << session[:user_id]
-    names_arr = get_names(names)
+    names_arr = get_names(names_to_use)
     erb :admin_emplist, locals:{names_arr:names_arr,msg:msg}
 end
 
@@ -209,7 +209,11 @@ post "/add_to_user_list" do
     send_email_for_adding_a_new_user(user_info, email)
     add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,department,job,vacation,sick)
     pto_time_stamp(user_id)
-    erb :admin_emplist, locals:{msg:msg}
+    names_to_use = session[:employees]
+    names_to_use << session[:user_id]
+    names_arr = get_names(names_to_use)
+    erb :admin_emplist, locals:{names_arr:names_arr,msg:msg}
+    # erb :admin_emplist, locals:{msg:msg}
 end
 
 get "/edit_user" do
