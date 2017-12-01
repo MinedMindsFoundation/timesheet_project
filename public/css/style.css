@@ -10,6 +10,43 @@
     /*background color for boxes*/
 }
 
+#style-10::-webkit-scrollbar-track
+{
+	background-color: transparent;
+	border-radius: 10px;
+}
+
+#style-10::-webkit-scrollbar
+{
+    height: 0px;
+	width: 10px;
+	background-color: transparent;
+}
+
+#style-10::-webkit-scrollbar-thumb
+{
+	background-color: #AAA;
+	border-radius: 10px;
+    background-image: -webkit-linear-gradient(90deg,
+    rgba(0, 0, 0, .2) 25%,
+	transparent 25%,
+    transparent 50%,
+    rgba(0, 0, 0, .2) 50%,
+    rgba(0, 0, 0, .2) 75%
+    transparent 75%,
+	transparent)
+}
+.scrollbar
+{
+	margin-left: 0px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 35px;
+}
+
 iframe:focus {
     outline: none;
 }
@@ -23,7 +60,7 @@ iframe[seamless] {
 }
 
 .scrollable {
-    overflow: hidden;
+    overflow-y: hidden;
 }
 
 .square_borders {
@@ -128,7 +165,6 @@ td {
     margin-top: 0%;
     text-align: center;
     max-height: 55vh;
-    overflow-y: scroll;
 }
 
 .large_text {

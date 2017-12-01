@@ -67,7 +67,7 @@ def pull_employee_pto_request(arr)
     
     arr.each do |item|
          
-        check = db.exec("SELECT user_id,start_date,end_date FROM pto_requests WHERE approval = 'pending' AND user_id = '#{item}'")
+        check = db.exec("SELECT user_id,start_date,end_date,type_of_days FROM pto_requests WHERE approval = 'pending' AND user_id = '#{item}'")
             if check.num_tuples.zero? == false
                 pto_request << check.values.flatten
             end
