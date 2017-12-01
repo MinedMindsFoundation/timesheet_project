@@ -9,12 +9,20 @@
 </div>
 <div class="topnav" id="myTopnav">
 <% if session[:admin_check] == "Yes" %>
+<<<<<<< HEAD
+<a href="/to_landing">Home</a>
 <a href="/vac_time_request">PTO</a>
 <a href="/add_user">Add User</a>
 <a href="/edit_user">Edit</a>
 <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">Menu</a>
+=======
+    <a href="/vac_time_request">PTO</a>
+    <a href="/add_user">Add User</a>
+    <a href="/edit_user">Edit</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">Menu</a>
+>>>>>>> bb6250d701d84f269745dec04f55380dfe6fc0b4
 <%else%>
-
+    <a href="/vac_time_request">PTO</a>
 <%end%>
 
 </div>
