@@ -542,7 +542,7 @@ select::-ms-expand {
         padding: unset;
         text-align: center;
         top: 28rem;
-        margin-left: 1vh;
+        margin-left: 0vh;
         background-color: rgb(195, 200, 195)
     }
     .top_right {
