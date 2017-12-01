@@ -3,6 +3,7 @@ require 'pg'
 require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
 require_relative 'user_id.rb'
+require_relative 'cte_func.rb'
 require 'net/smtp'
 # require_relative 'login_func'
 enable :sessions 
@@ -55,7 +56,7 @@ end
 
 # leads to landing page 
 get "/to_landing" do
-    session[:user_hierarchy] = user_hierarchy(session[:user_id]).to_i
+    session[:employees] = get_supervisees(session[:user_id])
     user_class = User.new(session[:user_id])
     user_list = user_class.users_list
     time_hash = user_class.get_last_times
@@ -117,24 +118,23 @@ get '/vac_time_request' do
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
     user_pto_request = get_users_pto_request(session[:user_id])
-    pto_people = pull_pto_request()
-    pto_requests = []
+    pto_requests = pull_employee_pto_request(session[:employees])
     # p pto_people
-    pto_people.each do |users|
+    # pto_people.each do |users|
         # p users
         # p users[0]
         # p user_hierarchy(users[0]).to_i
         # p session[:user_hierarchy]
-        if session[:user_hierarchy] == 3
-            if session[:user_hierarchy] >= user_hierarchy(users[0]).to_i
-                pto_requests << users
-            end
-        elsif session[:user_hierarchy] == 2
-            if session[:user_hierarchy] > user_hierarchy(users[0]).to_i
-                pto_requests << users
-            end
-        end
-    end
+    #     if session[:user_hierarchy] == 3
+    #         if session[:user_hierarchy] >= user_hierarchy(users[0]).to_i
+    #             pto_requests << users
+    #         end
+    #     elsif session[:user_hierarchy] == 2
+    #         if session[:user_hierarchy] > user_hierarchy(users[0]).to_i
+    #             pto_requests << users
+    #         end
+    #     end
+    # end
     # p pto_requests
     erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
 end
