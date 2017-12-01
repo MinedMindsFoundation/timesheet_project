@@ -297,7 +297,7 @@ def emp_info(user_id)
     emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
     admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
     users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
-    pto_time = db.exec("SELECT pto FROM pto WHERE user_id = '#{user_id}'").values
+    pto_time = db.exec("SELECT pto, vacation, sick FROM pto WHERE user_id = '#{user_id}'").values
     doh_and_job = db.exec("SELECT date_of_hire, job_title, department FROM title_and_doh WHERE user_id = '#{user_id}'").values
     db.close
     users.each do |user|
@@ -343,8 +343,8 @@ def update_user(user_id, new_info)
     db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}' WHERE user_id = '#{user_id}'")
     db.exec("UPDATE email SET email = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
     db.exec("UPDATE admin_status SET admin = '#{new_info[4]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE pto SET pto = '#{new_info[5]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[6]}', job_title = '#{new_info[7]}', department = '#{new_info[8]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE pto SET pto = '#{new_info[5]}', vacation = '#{new_info[6]}', sick = '#{new_info[7]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[8]}', job_title = '#{new_info[9]}', department = '#{new_info[10]}' WHERE user_id = '#{user_id}'")
     db.close
 end
 
