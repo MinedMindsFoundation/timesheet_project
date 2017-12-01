@@ -519,7 +519,7 @@ select::-ms-expand {
         position: relative;
         bottom: 1vh;
         top: 3vh;
-        left: 0;
+        left: 1vh;
         background-color: var(--box-bg-color);
         left: 0;
     }
@@ -543,7 +543,7 @@ select::-ms-expand {
         padding: unset;
         text-align: center;
         top: 28rem;
-        margin-left: -1vh;
+        margin-left: 1vh;
         background-color: rgb(195, 200, 195)
     }
     .top_right {
