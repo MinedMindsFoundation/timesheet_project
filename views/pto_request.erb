@@ -26,23 +26,23 @@
                 <br>
                 </div>
 You have
-<%=user_pto%> days to request.
+<%=user_pto%> pto days, <%=user_vac%> vacation days, and <%=user_sic%> sick days to request.
 <br>
 
 <form method="post" action="/pto_email">
 <div class= "select">
 <select name="pto_type" name="slct" id="slct">
-<option>Select type of PTO</option>
-<option value="Sick Day">Sick Day</option>
-<option value=" Vacation Day"> Vacation Day</option>
-<option value="Personal Day">Personal Day</option>
+<option>Select type of Days off</option>
+<option value="Sick">Sick</option>
+<option value="Vacation">Vacation</option>
+<option value="Pto">Pto</option>
 </select></div>
 <br>
 <br>
-start of PTO request:
+Start Date:
     <input type="date" name="start_vac" min="<%=vac_time%>">
     <br>
-    <br> end of PTO request:
+    <br> Return Date:
     <input type="date" name="end_vac" min="<%=vac_time%>">
     <br>
     <br>
@@ -84,16 +84,20 @@ start of PTO request:
         <form method = "post" action = 'approval'>
         <%count = 0%>
         <%pto_requests.each do |item|%>
+            
                 <tr>
-                    <td><%=item[3]%></td>
+                    <td><%=item[4]%><%=item[0]%><%=item[6]%></td>
                     <td><%=item[1]%></td>
                     <td><%=item[2]%></td>
                     <input type = "hidden" value = '<%=item[0]%>' name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[1]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[2]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
+                    <input type = "hidden" value = "<%=item[4]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="approved"%>'>Approve  <textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
                     <td><input type= "radio" name= '<%="info" + "#{count}" + "[]"%>' value= '<%="denied"%>'>Deny  <textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
+                    <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
+                    <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     </tr>
         <%count += 1%>
         <%end%>
