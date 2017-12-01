@@ -33,20 +33,22 @@ SELECT * FROM search_graph;")
             num = id[2].to_i
         end
     end
-    users.values.each do |id|
-        if id[2].to_i > num && user_id == id[1]
-            
-            arr << id[0]
-             arr
-            arr_2 << id[0]
-        end
-    end
-    until arr.empty?
-        item = arr.pop
+    if num != ""
         users.values.each do |id|
-            if id[2].to_i > num && item == id[1]
+            if id[2].to_i > num && user_id == id[1]
+                
                 arr << id[0]
+                arr
                 arr_2 << id[0]
+            end
+        end
+        until arr.empty?
+            item = arr.pop
+            users.values.each do |id|
+                if id[2].to_i > num && item == id[1]
+                    arr << id[0]
+                    arr_2 << id[0]
+                end
             end
         end
     end
