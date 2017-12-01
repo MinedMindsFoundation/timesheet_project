@@ -1,4 +1,5 @@
 require 'pg'
+load 'local_env.rb' if File.exist?('local_env.rb')
 
 class User
     
