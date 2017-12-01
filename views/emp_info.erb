@@ -1,3 +1,4 @@
+<div id= "box4" class= "rounded_borders">
 <%users.each_with_index do |user, index|%>
     Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
     <table>
@@ -17,8 +18,8 @@
         <td><%=item%></td> 
     <%end%>
     </tr>
-    </table><br>
-    
+    </table></div><br>
+    <div id= "box4" class= "rounded_borders">
     Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%> to <%=pay_period[1]%>
     <table>
     <th>Time in</th>
@@ -39,7 +40,9 @@
     </tr>
     <%end%>
     </table><br><br>
-<%end%>
+<%end%></div>
+<br>
+<br>
 <form method = "post" action = "to_admin_emplist">
     <input class="button" type="submit" value="Return">
 </form>
