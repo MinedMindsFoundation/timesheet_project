@@ -44,11 +44,9 @@ iframe[seamless] {
 
 #user_name {
     color: rgb(5, 5, 5);
-    padding-left: 0.5vh;
     background-color: rgb(169, 169, 169);
     background-color: #a9a9a9;
     border-left-style: solid;
-    padding: 1vh;
     width: fit-content;
 }
 
@@ -509,6 +507,7 @@ select::-ms-expand {
         background-color: #a9a9a9;
         border-left-style: solid;
         padding-right: 5.5vh;
+        text-align: center;
     }
     #box4 {
         margin: unset;

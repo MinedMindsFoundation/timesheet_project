@@ -287,13 +287,15 @@ get "/update_emp_page" do
 end
 
 post "/emp_updated" do
-    new_info = params[:info].each_slice(9).to_a
+    new_info = params[:info].each_slice(11).to_a
     other_info = params[:info]
     # p new_info
     # p session[:edit_user]
     # p other_info
     new_info.each_with_index do |info, index|
         # p session[:edit_user][index]
+        # p info
+        # p index
         update_user(session[:edit_user][index], info)
     end
     pay_period = pay_period(Time.new)
@@ -322,7 +324,8 @@ get "/employee_info" do
     session[:edit_user].each do |user|
         session[:editing_users] << user_info = emp_info(user)
     end
-    # p user_info
+    # p emp_info(user)
+    # p session[:editing_users]
     erb :emp_info, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table}
 end
 
