@@ -117,26 +117,18 @@ get '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
-    user_pto_request = get_users_pto_request(session[:user_id])
+    user_vac = get_vacation_time(session[:user_id])
+    user_sic = sic_time(session[:user_id])
     pto_requests = pull_employee_pto_request(session[:employees])
-    # p pto_people
-    # pto_people.each do |users|
-        # p users
-        # p users[0]
-        # p user_hierarchy(users[0]).to_i
-        # p session[:user_hierarchy]
-    #     if session[:user_hierarchy] == 3
-    #         if session[:user_hierarchy] >= user_hierarchy(users[0]).to_i
-    #             pto_requests << users
-    #         end
-    #     elsif session[:user_hierarchy] == 2
-    #         if session[:user_hierarchy] > user_hierarchy(users[0]).to_i
-    #             pto_requests << users
-    #         end
-    #     end
-    # end
-    # p pto_requests
-    erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
+    user_pto_request = get_users_pto_request(session[:user_id])
+    hire_date = pull_out_date_of_hire(session[:user_id])
+    pto_stamp = pull_pto_stamp(session[:user_id])
+    newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic)
+    user_pto = pto_time(session[:user_id])
+    user_vac = get_vacation_time(session[:user_id])
+    user_sic = sic_time(session[:user_id])
+    #p "...#{hire_date}.............#{user_pto}...........#{pto_stamp}..........#{newpto}"
+    erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto, user_vac: user_vac, user_sic: user_sic}
 end
 
 post '/pto_email' do 
@@ -146,9 +138,9 @@ post '/pto_email' do
     end_date = params[:end_vac]
     user_info =  database_info(session[:user_id])
     user_pto = pto_time(session[:user_id])
-    pto_request_db_add(session[:user_id],start_date,end_date)
+    pto_request_db_add(session[:user_id],start_date,end_date,type_of_pto)
     if user_pto == "0"
-        email_for_no_pto(user_info, user_pto, type_of_pto)
+        email_for_no_pto(user_info, user_pto, ype_of_pto)
         session[:pto_message] = "You have no PTO to request."
         redirect "/to_landing"
     else 
@@ -215,6 +207,7 @@ post "/add_to_user_list" do
     user_info << last_name
     send_email_for_adding_a_new_user(user_info, email)
     add_user(user_id,email,first_name,last_name,pto,admin,admin_access,doh,department,job)
+    pto_time_stamp(user_id)
     erb :admin_emplist, locals:{msg:msg}
 end
 
