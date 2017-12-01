@@ -1,7 +1,7 @@
 require 'pg'
 load 'local_env.rb' if File.exist?('local_env.rb')
 
-def get_supervises(user_id)
+def get_supervisees(user_id)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -53,3 +53,28 @@ SELECT * FROM search_graph;")
     arr_2
 end
 
+def pull_employee_pto_request(arr)
+    db_params = {
+    host: ENV['host'],
+    port: ENV['port'],
+    dbname: ENV['dbname'],
+    user: ENV['user'],
+    password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    pto_request = []
+    
+    arr.each do |item|
+         
+        check = db.exec("SELECT user_id,start_date,end_date FROM pto_requests WHERE approval = 'pending' AND user_id = '#{item}'")
+            if check.num_tuples.zero? == false
+                pto_request << check.values.flatten
+            end
+        end
+    pto_request.each do |requests|
+        names = database_info(requests[0])
+        requests << "#{names[0]} #{names[1]}"
+    end
+    db.close
+     pto_request
+end
