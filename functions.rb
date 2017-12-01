@@ -712,7 +712,7 @@ def  pto_request_db_add(user_id,start_date,end_date,type)
     db.close
 end
 
-def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto, comment) 
+def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto, comment,pto_type) 
     Mail.defaults do
         delivery_method :smtp,
         address: "email-smtp.us-east-1.amazonaws.com",
@@ -721,7 +721,7 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} PTO days left to request. Please fill out this form <a href= 'http://localhost:4567/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off.#{comment}"
+        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} #{pto_type} days left to request. Please fill out this form <a href= 'http://localhost:4567/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off.#{comment}"
       mail = Mail.new do
           from         ENV['from']
           to           email
@@ -735,7 +735,7 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
       mail.deliver!
     end
 
-def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto,comment) 
+def send_email_for_pto_request_denial(start_vec, end_vac, full_name,email,pto,comment, pto_type) 
 Mail.defaults do
 delivery_method :smtp,
 address: "email-smtp.us-east-1.amazonaws.com",
@@ -745,7 +745,7 @@ port: 587,
 :enable_ssl => true
 end
 mail = Mail.new do
-email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto}PTO days left to request. the reson #{comment}"
+email_body = "#{full_name[0]} #{full_name[1]}your PTO request was denied the following days #{start_vec} to #{end_vac}. you have #{pto} #{pto_type} days left to request. the reson #{comment}"
 from         ENV['from']
 to           email
 subject      "PTO Request"
