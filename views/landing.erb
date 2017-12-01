@@ -7,13 +7,11 @@
 
     <!--<div class="topnav" id="myTopnav">-->
         <% if admin_check == "Yes" %>
-
         <!-- <a href="/add_user">Add User</a>-->
         <!--<a href="/edit_user">Edit</a>-->
         <!-- <a href="/vac_time_request">PTO</a>-->
 
         <!--Form to add users-->
-        
         <!--<form method = "post" action = "add_user">-->
         <!--<div class = "tooltip3">-->
         <!--<button class="menu_button" type = "submit">Add User</button>-->
@@ -41,80 +39,114 @@
         <!--<button class="menu_button" type = "submit">PTO Request</button>-->
         <!--<span class="tooltiptext3">to request time off.</span></div>-->
         <!--</form>-->
-        
         <%else%>
-    
         <%end%>
-    
-  
-    
-        
-        <!--</div>-->
+    <!--</div>-->
       
 </head>
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
 <div><span id="clock">&nbsp;</span></div>
-</body><br><br>
+</body>
     
-        <div id ="user_name" class = "rounded_borders">
-            <%user_info.each do |row|%>
-                <%=row%>
-            <%end%>, welcome back!<br>
-            <%=user_email%><br>
-        </div>
-    
-<br>
+<div id ="user_name" class = "rounded_borders">
+    <center><%=user_info[0]%> <%=user_info[1]%>, welcome back!<br>
+    <%=user_email%></center>
+</div>
+
+<%if todays_time.flatten.any?%>
+<div id = "box4" class = "rounded_borders">
+<div class = "tooltip2">Todays Time<span class="tooltiptext2">your time for today.</span></div>
+    <table> 
+        <th>Time in</th>
+        <th>Lunch Start</th>
+        <th>Lunch End</th>
+        <th>Time out</th>
+        <%todays_time.each do |item|%>
+        <tr>
+        <%item.each do |time|%>
+            <%unless time == item[4]%>
+                <td><%if time.length == 5%>
+                    <%=time_converter(time)%>
+                    <%else%>
+                    <%=time%>
+                    <%end%>
+                </td>
+            <%end%>
+        <%end%>
+        </tr>
+        <%end%>
+    </table>
+</div>
+<%end%><br><br>
+
+<!-- table of time in and out pay period --> 
+<div id = "box3" class = "scrollable rounded_borders">
+    <div class = "tooltip3">Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%><span class="tooltiptext3">your time for your pay period.</span></div>
+    <table>
+        <th class = "table_borders">Time in</th>
+        <th class = "table_borders">Lunch Start</th>
+        <th class = "table_borders">Lunch End</th>
+        <th class = "table_borders">Time out</th>
+        <th class = "table_borders">Date</th>
+        <%times.each do |item|%>
+            <tr>
+            <%item.each do |time|%>
+                <td class = "table_borders"><%if time.length == 5%>
+                    <%=time_converter(time)%>
+                <%else%>
+                    <%=time%>
+                <%end%>
+                </td>
+            <%end%>
+            </tr>
+        <%end%>
+    </table>
+</div>
             
 <% if admin_check == "Yes" %><br>
 
 <!--Users who are clocked in-->
 
+
 <div class= "top_right" align = "right">
-<input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
-<div  id="result" > 
      <div class= "box scrollable">
- <!--Users who are clocked in-->
- <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
+        <!--Users who are clocked in-->
+        <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
+        <!--  list of all people and in and out status -->
+        <input type="text" id="myInput" onclick="dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
+        <link rel= "stylesheet" href = "css/searchbar.css">
 
-
-
-
-
-<!--  list of all people and in and out status -->
-<link rel= "stylesheet" href = "css/searchbar.css">
-<input type="text" id="myInput" onclick = "dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
-
-
-<ul id="myUL">
-<%user_checked_in.each do |row|%>
-<li><a>
-    <div id = 'green_light'>
+        <div>
+            <ul id="myUL">
+                <%count = 0%>
+                <%user_list.each do |user|%>
+                    <input type = 'hidden' id ='<%="user_id#{count}"%>' value= '<%=user[0]%>'>
+                    <li><a>
+                        <div class = "inline-block"><%=user[1].capitalize%> <%=user[2].capitalize%>
+                        </div>
+                        <div id='<%="result#{count}"%>'>
+                            <% if time_hash["#{user[0]}"][4] == "N/A" %>
+                                <div id ='green_light'>
+                                </div>
+                                <%time = live_time("#{time_hash["#{user[0]}"][1]} #{time_hash["#{user[0]}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+                                <div class ="inline-block"> <%=time_zero_remove(time)%>
+                                </div>
+                            <% else %>
+                                <div id ="no_light" >
+                                </div>
+                            <% end %>
+                        </div>
+                    </a></li>
+                    <%count += 1%>
+                <%end%>
+            </ul>
+        </div>
     </div>
-    <%time = live_time("#{row[2]} #{row[3]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-            
-       <div class ="inline-block"> <%=row[0].capitalize%> <%=row[1].capitalize%> <br><%=time_zero_remove(time)%> <%=row[4]%></div>
-</a></li>
-<%end%>
-<%users[1].each do |user_id|%>
-<li><a>
-<div id = "no_light">
 </div>
-<div class ="inline-block">
-    <%=user_id.capitalize%> OUT
-</div></a></li>
-<%end%>
-</ul>
-</div>
-<script src ="/js/search.js"></script>
+<input id = 'count' type = 'hidden' value = '<%=count%>'>
 
-<body onload="newfunc()">
-<script>
-function newfunc(){
-    input = getSavedValue("myInput");
-    dynamicSearch(input);
 
-}
 </script>
 
 <script>
@@ -144,19 +176,14 @@ function newfunc(){
 
     <!--message for the pto request-->
     <%=session[:pto_message]%><br>
-
-  
-    
-
-<% else %>
 <% end %>
 
 
 
-<%=session[:message]%><br>
 
 <!-- form for submiting your time in -->
 <div class="center-on-page"><form method = "post" action = "clock_in">
+<center><br><br><br><%=session[:message]%></center>
 <div class = "tooltip">
 <!--<div class="select">-->
 <!-- <select name="location" name="slct" id="slct">-->
@@ -195,33 +222,6 @@ function newfunc(){
     <span class="tooltiptext3">to sign out.</span></div>
     </div>
 
-
-<%if todays_time.flatten.any?%>
-    <div id = "box4" class = "rounded_borders">
-    <div class = "tooltip2">Todays Time<span class="tooltiptext2">your time for today.</span></div>
-        <table> 
-            <th>Time in</th>
-            <th>Lunch Start</th>
-            <th>Lunch End</th>
-            <th>Time out</th>
-            <%todays_time.each do |item|%>
-            <tr>
-            <%item.each do |time|%>
-                <%unless time == item[4]%>
-                    <td><%if time.length == 5%>
-                        <%=time_converter(time)%>
-                        <%else%>
-                        <%=time%>
-                        <%end%>
-                    </td>
-                <%end%>
-            <%end%>
-            </tr>
-            <%end%>
-        </table>
-    </div>
-<%end%>
-
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src = "/js/clock.js"></script>
 <script src = "/js/facebook.js"></script>
@@ -255,38 +255,8 @@ function newfunc(){
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src ="/js/search.js"></script>
 <script>
-    function autoRefresh_div(){  
-        var search = document.getElementById('myInput');
-        $("#result").load("/reload");// a function which will load data from other file after x seconds
-        dynamicSearch(search);
-    }
-
     setInterval('autoRefresh_div()', 5000); // refresh div afte 5 secs
 </script>
-            
-            <!-- tabel of time in and out pay period --> 
-            <div id = "box3" class = "scrollable rounded_borders">
-            <div class = "tooltip3">Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%><span class="tooltiptext3">your time for your pay period.</span></div>
-                <table>
-                <th class = "table_borders">Time in</th>
-                <th class = "table_borders">Lunch Start</th>
-                <th class = "table_borders">Lunch End</th>
-                <th class = "table_borders">Time out</th>
-                <th class = "table_borders">Date</th>
-                <%times.each do |item|%>
-                <tr>
-                <%item.each do |time|%>
-                <td class = "table_borders"><%if time.length == 5%>
-                    <%=time_converter(time)%>
-                    <%else%>
-                    <%=time%>
-                    <%end%>
-                </td>
-                <%end%>
-                </tr>
-                <%end%>
-                </table>
-            </div>
 
 <!-- func for nav bar -->
 
@@ -299,3 +269,58 @@ function newfunc(){
             document.getElementById("mySidenav").style.width = "0";
         }
     </script>
+
+<!-- function for updating time-->
+<script>
+    function autoRefresh_div(){  
+    var search = document.getElementById('myInput');
+    var count = document.getElementById("count").value;
+    console.log(count + " count here")
+    for (var i = 0; i < count; i++){
+        console.log(i)
+        var arr = []
+        var user_id = document.getElementById("user_id"+i).value;
+        console.log(user_id);
+        /* console.log(l_name);
+        arr.push(f_name);
+        arr.push(l_name);
+        arr.push(time_a);
+        arr.push(time_b);
+        arr.push(location); */
+        console.log("#result"+i);
+    $("#result"+ i).load("/reload?user_id=" + user_id);// a function which will load data from other file after x seconds
+    }       
+    //dynamicSearch(search);
+}
+
+</script>
+<script src ="/js/search.js"></script>
+
+<body onload="newfunc()">
+<script>
+function newfunc(){
+    input = getSavedValue("myInput");
+    dynamicSearch(input);
+
+}
+</script>
+
+<script>
+        document.getElementById("myInput").value = getSavedValue("myInput");    // set the value to this input
+        /* Here you can add more inputs to set value. if it's saved */
+
+        //Save the value function - save it to localStorage as (ID, VALUE)
+        function saveValue(e){
+            var id = e.id;  // get the sender's id to save it . 
+            var val = e.value; // get the value. 
+            localStorage.setItem(id, val);// Every time user writing something, the localStorage's value will override . 
+        }
+
+        //get the saved value function - return the value of "v" from localStorage. 
+        function getSavedValue  (v){
+            if (localStorage.getItem(v) === null) {
+                return "";// You can change this to your defualt value. 
+            }
+            return localStorage.getItem(v);
+        }
+</script>

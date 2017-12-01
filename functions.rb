@@ -770,10 +770,11 @@ password: ENV['password']
 db = PG::Connection.new(db_params)
 pto_request = db.exec("SELECT user_id,start_date,end_date,type_of_days FROM pto_requests WHERE approval = 'pending'").values
 pto_request.each do |requests|
-names = database_info(requests[0])
-requests << "#{names[0]} #{names[1]}"
+    names = database_info(requests[0])
+    requests << "#{names[0]} #{names[1]}"
 end
 pto_request
+db.close
 end
 
 def send_email_for_adding_a_new_user(fullname, email) 
