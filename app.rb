@@ -197,6 +197,9 @@ post "/add_to_user_list" do
     job=params[:job]
     doh=params[:doh]
     pto=params[:pto]
+    vacation=params[:vacation]
+    sick=params[:sick]
+
     if admin == "1"
         admin_access = "No"
     else
@@ -206,7 +209,7 @@ post "/add_to_user_list" do
     user_info << first_name
     user_info << last_name
     send_email_for_adding_a_new_user(user_info, email)
-    add_user(user_id,email,first_name,last_name,pto,admin,admin_access,doh,department,job)
+    add_user(user_id,email,first_name,last_name,pto,admin,admin_access,doh,department,job,vacation,sick)
     pto_time_stamp(user_id)
     erb :admin_emplist, locals:{msg:msg}
 end
