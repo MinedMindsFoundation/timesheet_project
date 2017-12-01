@@ -7,13 +7,11 @@
 
     <!--<div class="topnav" id="myTopnav">-->
         <% if admin_check == "Yes" %>
-
         <!-- <a href="/add_user">Add User</a>-->
         <!--<a href="/edit_user">Edit</a>-->
         <!-- <a href="/vac_time_request">PTO</a>-->
 
         <!--Form to add users-->
-        
         <!--<form method = "post" action = "add_user">-->
         <!--<div class = "tooltip3">-->
         <!--<button class="menu_button" type = "submit">Add User</button>-->
@@ -41,22 +39,17 @@
         <!--<button class="menu_button" type = "submit">PTO Request</button>-->
         <!--<span class="tooltiptext3">to request time off.</span></div>-->
         <!--</form>-->
-        
         <%else%>
-    
         <%end%>
-    
-  
-    
-        
-        <!--</div>-->
+    <!--</div>-->
       
 </head>
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
 <div><span id="clock">&nbsp;</span></div>
-</body><br><br>
+</body>
     
+<<<<<<< HEAD
         <div id ="user_name" class = "rounded_borders">
             <%user_info.each do |row|%>
                 <%=row%>
@@ -64,6 +57,62 @@
             <%=user_email%><br>
         </div>
     
+=======
+<div id ="user_name" class = "rounded_borders">
+    <%=user_info[0]%> <%=user_info[1]%>, welcome back!<br>
+    <%=user_email%><br>
+</div>
+
+<%if todays_time.flatten.any?%>
+<div id = "box4" class = "rounded_borders">
+<div class = "tooltip2">Todays Time<span class="tooltiptext2">your time for today.</span></div>
+    <table> 
+        <th>Time in</th>
+        <th>Lunch Start</th>
+        <th>Lunch End</th>
+        <th>Time out</th>
+        <%todays_time.each do |item|%>
+        <tr>
+        <%item.each do |time|%>
+            <%unless time == item[4]%>
+                <td><%if time.length == 5%>
+                    <%=time_converter(time)%>
+                    <%else%>
+                    <%=time%>
+                    <%end%>
+                </td>
+            <%end%>
+        <%end%>
+        </tr>
+        <%end%>
+    </table>
+</div>
+<%end%><br><br>
+
+<!-- table of time in and out pay period --> 
+<div id = "box3" class = "scrollable rounded_borders">
+    <div class = "tooltip3">Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%><span class="tooltiptext3">your time for your pay period.</span></div>
+    <table>
+        <th class = "table_borders">Time in</th>
+        <th class = "table_borders">Lunch Start</th>
+        <th class = "table_borders">Lunch End</th>
+        <th class = "table_borders">Time out</th>
+        <th class = "table_borders">Date</th>
+        <%times.each do |item|%>
+            <tr>
+            <%item.each do |time|%>
+                <td class = "table_borders"><%if time.length == 5%>
+                    <%=time_converter(time)%>
+                <%else%>
+                    <%=time%>
+                <%end%>
+                </td>
+            <%end%>
+            </tr>
+        <%end%>
+    </table>
+</div>
+>>>>>>> 6f8703dbeaa2b78654c3dfce4cb4e84d86af424c
             
 <% if admin_check == "Yes" %><br>
 
@@ -141,10 +190,10 @@
 
 
 
-<%=session[:message]%><br>
 
 <!-- form for submiting your time in -->
 <div class="center-on-page"><form method = "post" action = "clock_in">
+<center><br><br><br><%=session[:message]%></center>
 <div class = "tooltip">
 <!--<div class="select">-->
 <!-- <select name="location" name="slct" id="slct">-->
@@ -183,33 +232,6 @@
     <span class="tooltiptext3">to sign out.</span></div>
     </div>
 
-
-<%if todays_time.flatten.any?%>
-    <div id = "box4" class = "rounded_borders">
-    <div class = "tooltip2">Todays Time<span class="tooltiptext2">your time for today.</span></div>
-        <table> 
-            <th>Time in</th>
-            <th>Lunch Start</th>
-            <th>Lunch End</th>
-            <th>Time out</th>
-            <%todays_time.each do |item|%>
-            <tr>
-            <%item.each do |time|%>
-                <%unless time == item[4]%>
-                    <td><%if time.length == 5%>
-                        <%=time_converter(time)%>
-                        <%else%>
-                        <%=time%>
-                        <%end%>
-                    </td>
-                <%end%>
-            <%end%>
-            </tr>
-            <%end%>
-        </table>
-    </div>
-<%end%>
-
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src = "/js/clock.js"></script>
 <script src = "/js/facebook.js"></script>
@@ -245,30 +267,6 @@
 <script>
     setInterval('autoRefresh_div()', 5000); // refresh div afte 5 secs
 </script>
-            
-            <!-- tabel of time in and out pay period --> 
-            <div id = "box3" class = "scrollable rounded_borders">
-            <div class = "tooltip3">Pay Period: <%=pay_period[0]%> to <%=pay_period[1]%><span class="tooltiptext3">your time for your pay period.</span></div>
-                <table>
-                <th class = "table_borders">Time in</th>
-                <th class = "table_borders">Lunch Start</th>
-                <th class = "table_borders">Lunch End</th>
-                <th class = "table_borders">Time out</th>
-                <th class = "table_borders">Date</th>
-                <%times.each do |item|%>
-                <tr>
-                <%item.each do |time|%>
-                <td class = "table_borders"><%if time.length == 5%>
-                    <%=time_converter(time)%>
-                    <%else%>
-                    <%=time%>
-                    <%end%>
-                </td>
-                <%end%>
-                </tr>
-                <%end%>
-                </table>
-            </div>
 
 <!-- func for nav bar -->
 
