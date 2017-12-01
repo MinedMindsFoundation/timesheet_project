@@ -139,7 +139,7 @@ iframe[seamless] {
 }
 
 .rounded_borders {
-    border-radius: 3vh;
+    border-radius: 2vh;
     border-color: gray;
     border-style: solid;
 }
@@ -538,11 +538,10 @@ select::-ms-expand {
     }
     #user_name {
         color: rgb(5, 5, 5);
-        padding-left: 0.5vh;
+        padding: 1vh;
         background-color: rgb(169, 169, 169);
         background-color: #a9a9a9;
         border-left-style: solid;
-        padding-right: 5.5vh;
         text-align: center;
     }
     #box4 {
