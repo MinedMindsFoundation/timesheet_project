@@ -78,3 +78,21 @@ def pull_employee_pto_request(arr)
     db.close
      pto_request
 end
+
+
+def get_names(arr)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+        db = PG::Connection.new(db_params)
+        names = []
+        arr.each do |id|
+        names  <<  db.exec("SELECT * FROM info_new WHERE user_id = '#{id}'").values.flatten
+        end
+    db.close
+    names    
+end

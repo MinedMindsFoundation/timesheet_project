@@ -214,23 +214,24 @@ end
 get "/edit_user" do
     admin_list = admin_emp_list()
     new_admin_list = []
-    # p admin_list
+    employees = session[:employees]
+    admin_list = get_names(employees)
     # p session[:user_hierarchy]
-    admin_list.each_with_index do |users|
+    # admin_list.each_with_index do |users|
         # p user_hierarchy(users[0]).to_i
         # p user_hierarchy(session[:user_id])
-        if session[:user_hierarchy] == 3
-            if session[:user_hierarchy] >= user_hierarchy(users[0]).to_i
-                new_admin_list << users
-            end
-        elsif session[:user_hierarchy] == 2
-            if session[:user_hierarchy] > user_hierarchy(users[0]).to_i
-                new_admin_list << users
-            end
-        end
-    end
+        # if session[:user_hierarchy] == 3
+        #     if session[:user_hierarchy] >= user_hierarchy(users[0]).to_i
+        #         new_admin_list << users
+        #     end
+        # elsif session[:user_hierarchy] == 2
+        #     if session[:user_hierarchy] > user_hierarchy(users[0]).to_i
+        #         new_admin_list << users
+        #     end
+        # end
+    # end
     # p new_admin_list
-    erb :admin_empmng, locals:{admin_list:new_admin_list}
+    erb :admin_empmng, locals:{admin_list:admin_list}
 end
 
 post "/update_emp" do
