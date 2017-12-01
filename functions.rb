@@ -810,54 +810,57 @@ end
             }
             db = PG::Connection.new(db_params)
 
-            # p "#{approval}"
+             p "#{approval}"
         approval.each do |item|
         # p "#{item} item arr here"
             if item[5] != ""
                 db.exec("UPDATE pto_requests SET approval = '#{item[5]}' WHERE user_id= '#{item[0]}' AND start_date= '#{item[1]}' AND end_date= '#{item[2]}' ")
                 email = database_email_check(item[0])
-                pto = db.exec("SELECT pto From pto WHERE user_id = '#{item[0]}'").values
                 full_name = item[3].split(' ')
                 if item[5] == 'approved'
                     calendar = GoogleCalendar.new
                     calendar.create_calendar_event("#{item[1]}","#{item[2]}",email,"#{item[3]}")
                     # p "#{item[1]}","#{item[2]}",email,"#{item[3]}"
                     send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto,item[6])
+                    pto = db.exec("SELECT '#{item[4]}' From pto WHERE user_id = '#{item[0]}'").values.flatten.first
+                    #goes here luke------- this is where is subtacts days aproved
+                    page = "nope"
+                    if item[4] == "Pto"
+                        # p "inside pto.........................................inside pto"
+                        old_date = Date.parse("#{item[1]}")
+                        new_date = Date.parse("#{item[2]}")
+                        days_between = (new_date - old_date).to_i
+                        old_pto = pto_time(item[0]).to_i
+                        new_pto = old_pto - days_between
+                        new_sick = ""
+                        new_vacation = ""
+                        update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
+                    elsif item[4] == "Vacation"
+                        # p "inside vacation..................................Inside vacation"
+                        old_date = Date.parse("#{item[1]}")
+                        new_date = Date.parse("#{item[2]}")
+                        days_between = (new_date - old_date).to_i
+                        old_pto = get_vacation_time(item[0]).to_i
+                        new_vacation = old_pto - days_between
+                        new_pto = ""
+                        new_sick = ""
+                        update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
+                    elsif item[4] == "Sick"
+                        # p "inside sick.............................................inside sick"
+                        old_date = Date.parse("#{item[1]}")
+                        new_date = Date.parse("#{item[2]}")
+                        days_between = (new_date - old_date).to_i
+                        old_pto = sic_time(item[0]).to_i
+                        new_sick = old_pto - days_between
+                        new_pto = ""
+                        new_vacation = ""
+                        update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
+                    end
+                    pto = db.exec("SELECT #{item[4].downcase} From pto WHERE user_id = '#{item[0]}'").values.flatten.first
+                    send_email_for_pto_request_approval(item[1],item[2], full_name,email,pto,item[6],item[4])
                 elsif item[5] == "denied"
-                    send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[6]) 
-                end
-                #goes here luke------- this is where is subtacts days aproved
-                page = "nope"
-                if item[4] == "Pto"
-                    # p "inside pto.........................................inside pto"
-                    old_date = Date.parse("#{item[1]}")
-                    new_date = Date.parse("#{item[2]}")
-                    days_between = (new_date - old_date).to_i
-                    old_pto = pto_time(item[0]).to_i
-                    new_pto = old_pto - days_between
-                    new_sick = ""
-                    new_vacation = ""
-                    update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
-                elsif item[4] == "Vacation"
-                    # p "inside vacation..................................Inside vacation"
-                    old_date = Date.parse("#{item[1]}")
-                    new_date = Date.parse("#{item[2]}")
-                    days_between = (new_date - old_date).to_i
-                    old_pto = get_vacation_time(item[0]).to_i
-                    new_vacation = old_pto - days_between
-                    new_pto = ""
-                    new_sick = ""
-                    update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
-                elsif item[4] == "Sick"
-                    # p "inside sick.............................................inside sick"
-                    old_date = Date.parse("#{item[1]}")
-                    new_date = Date.parse("#{item[2]}")
-                    days_between = (new_date - old_date).to_i
-                    old_pto = sic_time(item[0]).to_i
-                    new_sick = old_pto - days_between
-                    new_pto = ""
-                    new_vacation = ""
-                    update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
+                    pto = db.exec("SELECT #{item[4].downcase} From pto WHERE user_id = '#{item[0]}'").values.flatten.first
+                    send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[6],item[4]) 
                 end
             end    
         end

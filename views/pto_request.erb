@@ -51,7 +51,7 @@ Start Date:
 <br>
 <br>
 <form method= "post" action= "return">
-<input class="button" type= "submit" value= "Return">
+    <input class="button" type= "submit" value= "Return">
 </form> 
 <br>
 <br>
@@ -97,10 +97,9 @@ Start Date:
                     <input type = "hidden" value = "<%=item[2]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[4]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
-                    <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="approved"%>'>Approve  <textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
-                    <td><input type= "radio" name= '<%="info" + "#{count}" + "[]"%>' value= '<%="denied"%>'>Deny  <textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
-                    <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
-                    <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
+                    <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="approved"%>'>Approve
+                    <input type= "radio" name= '<%="info" + "#{count}" + "[]"%>' value= '<%="denied"%>'>Deny</td>  
+                    <td><textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea><td>
                     </tr>
         <%count += 1%>
         <%end%>
