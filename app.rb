@@ -104,13 +104,18 @@ get '/vac_time_request' do
     user_info =  database_info(session[:user_id])
     user_email = database_email_check(session[:user_id])
     user_pto = pto_time(session[:user_id])
+    user_vac = get_vacation_time(session[:user_id])
+    user_sic = sic_time(session[:user_id])
     pto_requests = pull_pto_request()
     user_pto_request = get_users_pto_request(session[:user_id])
     hire_date = pull_out_date_of_hire(session[:user_id])
     pto_stamp = pull_pto_stamp(session[:user_id])
-    newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp)
+    newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic)
+    user_pto = pto_time(session[:user_id])
+    user_vac = get_vacation_time(session[:user_id])
+    user_sic = sic_time(session[:user_id])
     #p "...#{hire_date}.............#{user_pto}...........#{pto_stamp}..........#{newpto}"
-    erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto}
+    erb :pto_request, locals:{user_pto_request:user_pto_request,pto_requests:pto_requests,user_info:user_info, user_email:user_email, user_pto: user_pto, user_vac: user_vac, user_sic: user_sic}
 end
 
 post '/pto_email' do 

@@ -560,6 +560,36 @@ def pto_time(user_id)
        user_pto.flatten.first
 end
 
+#func for getting vac time
+def get_vacation_time(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_vac = db.exec("SELECT vacation FROM pto WHERE user_id = '#{user_id}'").values
+        db.close            
+       user_vac.flatten.first
+end
+#func for getting sic time
+
+def sic_time(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        user_sic = db.exec("SELECT sick FROM pto WHERE user_id = '#{user_id}'").values
+        db.close            
+       user_sic.flatten.first
+end
+
 # func that sends email for user that has no pto days
 def email_for_no_pto(full_name, pto, pto_type) 
     Mail.defaults do
@@ -797,17 +827,35 @@ end
             #goes here luke------- this is where is subtacts days aproved
 
             if item[4] == "Pto"
-                puts "#{item[1]}........#{item[2]}............"
+                p "inside pto.........................................inside pto"
                 old_date = Date.parse("#{item[1]}")
                 new_date = Date.parse("#{item[2]}")
                 days_between = (new_date - old_date).to_i
                 old_pto = pto_time(item[0]).to_i
                 new_pto = old_pto - days_between
-                update_pto_time(item[0],new_pto)
+                new_sick = ""
+                new_vacation = ""
+                update_pto_time(item[0],new_pto,new_vacation,new_sick)
             elsif item[4] == "Vacation"
-
+                p "inside vacation..................................Inside vacation"
+                old_date = Date.parse("#{item[1]}")
+                new_date = Date.parse("#{item[2]}")
+                days_between = (new_date - old_date).to_i
+                old_pto = get_vacation_time(item[0]).to_i
+                new_vacation = old_pto - days_between
+                new_pto = ""
+                new_sick = ""
+                update_pto_time(item[0],new_pto,new_vacation,new_sick)
             elsif item[4] == "Sick"
-                
+                p "inside sick.............................................inside sick"
+                old_date = Date.parse("#{item[1]}")
+                new_date = Date.parse("#{item[2]}")
+                days_between = (new_date - old_date).to_i
+                old_pto = sic_time(item[0]).to_i
+                new_sick = old_pto - days_between
+                new_pto = ""
+                new_vacation = ""
+                update_pto_time(item[0],new_pto,new_vacation,new_sick)
             else
             end    
         end
@@ -918,8 +966,8 @@ def pull_pto_stamp(user_id)
     check.flatten
 end        
 
-#<!------ func for updating pto time ------>
-def update_pto_time(user_id,new_pto)
+#<!------ func for updating pto,Vacation,andSick time ------>
+def update_pto_time(user_id,new_pto,new_vacation,new_sick)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -928,12 +976,22 @@ def update_pto_time(user_id,new_pto)
         password: ENV['password']
             }
         db = PG::Connection.new(db_params)
-        db.exec("UPDATE pto SET pto = '#{new_pto}' WHERE user_id = '#{user_id}'")
+            if new_pto != ""
+                p "....................PTO........................"
+                db.exec("UPDATE pto SET pto = '#{new_pto}' WHERE user_id = '#{user_id}'")
+            elsif new_vacation != ""  
+                p "....................VAC........................"
+                db.exec("UPDATE pto SET vacation = '#{new_vacation}' WHERE user_id = '#{user_id}'")
+            elsif new_sick != ""  
+                p "....................SIC........................"  
+                db.exec("UPDATE pto SET sick = '#{new_sick}' WHERE user_id = '#{user_id}'")  
+            end
         db.close            
 end
 
+
 #<!-- function for checking if pto needs added and adding it if it does -->
-def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp)
+def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic)
     d = Time.now.strftime("%Y")
     c = Time.now.strftime("%m")    
     x = hire_date[0].split('-')
@@ -942,9 +1000,11 @@ def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp)
         i = 2
         if s[0] != d || s[1] != c
             new_pto = user_pto.to_i + i
-            update_pto_time(user_id,new_pto)
+            new_vac = user_vac.to_i + i
+            new_sic = user_sic.to_i + i
+            update_pto_time(user_id,new_pto,new_vac,new_sic)
             pto_time_stamp(user_id)
-            m = "#{new_pto}"
+            m = "#{new_pto}.......#{new_vac}.........#{new_sic}"
         else
             m = "days have already been added"
         end        
@@ -952,9 +1012,11 @@ def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp)
         i = 1
         if s[0] != d || s[1] != c
             new_pto = user_pto.to_i + i
-            update_pto_time(user_id,new_pto)
+            new_vac = user_vac.to_i + i
+            new_sic = user_sic.to_i + i
+            update_pto_time(user_id,new_pto,new_vac,new_sic)
             pto_time_stamp(user_id)
-            m = "#{new_pto}"
+            m = "#{new_pto}.......#{new_vac}.........#{new_sic}"
         else
             m = "days have already been added"
         end

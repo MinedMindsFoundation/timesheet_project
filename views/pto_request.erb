@@ -26,7 +26,7 @@
                 <br>
                 </div>
 You have
-<%=user_pto%> days to request.
+<%=user_pto%> pto days, <%=user_vac%> vacation days, and <%=user_sic%> sick days to request.
 <br>
 
 <form method="post" action="/pto_email">
@@ -86,7 +86,7 @@ Start Date:
         <%pto_requests.each do |item|%>
             
                 <tr>
-                    <td><%=item[4]%></td>
+                    <td><%=item[4]%><%=item[0]%><%=item[6]%></td>
                     <td><%=item[1]%></td>
                     <td><%=item[2]%></td>
                     <input type = "hidden" value = '<%=item[0]%>' name  = '<%="info" + "#{count}" + "[]"%>'>
@@ -96,6 +96,8 @@ Start Date:
                     <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     <td><input type = "radio" name = '<%="info" + "#{count}" + "[]"%>' value = '<%="approved"%>'>Approve  <textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
                     <td><input type= "radio" name= '<%="info" + "#{count}" + "[]"%>' value= '<%="denied"%>'>Deny  <textarea rows="1" cols="50" name= '<%="info" + "#{count}" + "[]"%>' placeholder= "Enter comment here..."></textarea></td>
+                    <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
+                    <input type = "hidden" value = "<%=item[3]%>" name  = '<%="info" + "#{count}" + "[]"%>'>
                     </tr>
         <%count += 1%>
         <%end%>
