@@ -826,7 +826,7 @@ end
                 send_email_for_pto_request_denial(item[1],item[2], full_name,email,pto,item[6]) 
             end
             #goes here luke------- this is where is subtacts days aproved
-
+            page = "nope"
             if item[4] == "Pto"
                 p "inside pto.........................................inside pto"
                 old_date = Date.parse("#{item[1]}")
@@ -836,7 +836,7 @@ end
                 new_pto = old_pto - days_between
                 new_sick = ""
                 new_vacation = ""
-                update_pto_time(item[0],new_pto,new_vacation,new_sick)
+                update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
             elsif item[4] == "Vacation"
                 p "inside vacation..................................Inside vacation"
                 old_date = Date.parse("#{item[1]}")
@@ -846,7 +846,7 @@ end
                 new_vacation = old_pto - days_between
                 new_pto = ""
                 new_sick = ""
-                update_pto_time(item[0],new_pto,new_vacation,new_sick)
+                update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
             elsif item[4] == "Sick"
                 p "inside sick.............................................inside sick"
                 old_date = Date.parse("#{item[1]}")
@@ -856,7 +856,7 @@ end
                 new_sick = old_pto - days_between
                 new_pto = ""
                 new_vacation = ""
-                update_pto_time(item[0],new_pto,new_vacation,new_sick)
+                update_pto_time(item[0],new_pto,new_vacation,new_sick,page)
             else
             end    
         end
@@ -968,7 +968,7 @@ def pull_pto_stamp(user_id)
 end        
 
 #<!------ func for updating pto,Vacation,andSick time ------>
-def update_pto_time(user_id,new_pto,new_vacation,new_sick)
+def update_pto_time(user_id,new_pto,new_vacation,new_sick,page)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -977,6 +977,11 @@ def update_pto_time(user_id,new_pto,new_vacation,new_sick)
         password: ENV['password']
             }
         db = PG::Connection.new(db_params)
+        if page == "hello"
+            db.exec("UPDATE pto SET pto = '#{new_pto}' WHERE user_id = '#{user_id}'")
+            db.exec("UPDATE pto SET vacation = '#{new_vacation}' WHERE user_id = '#{user_id}'")
+            db.exec("UPDATE pto SET sick = '#{new_sick}' WHERE user_id = '#{user_id}'")
+        else    
             if new_pto != ""
                 p "....................PTO........................"
                 db.exec("UPDATE pto SET pto = '#{new_pto}' WHERE user_id = '#{user_id}'")
@@ -987,6 +992,7 @@ def update_pto_time(user_id,new_pto,new_vacation,new_sick)
                 p "....................SIC........................"  
                 db.exec("UPDATE pto SET sick = '#{new_sick}' WHERE user_id = '#{user_id}'")  
             end
+        end    
         db.close            
 end
 
@@ -1000,10 +1006,11 @@ def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_
     if d.to_i - x[0].to_i >= 2
         i = 2
         if s[0] != d || s[1] != c
+            page = "hello"
             new_pto = user_pto.to_i + i
             new_vac = user_vac.to_i + i
             new_sic = user_sic.to_i + i
-            update_pto_time(user_id,new_pto,new_vac,new_sic)
+            update_pto_time(user_id,new_pto,new_vac,new_sic,page)
             pto_time_stamp(user_id)
             m = "#{new_pto}.......#{new_vac}.........#{new_sic}"
         else
@@ -1012,10 +1019,11 @@ def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_
     else
         i = 1
         if s[0] != d || s[1] != c
+            page = "hello"
             new_pto = user_pto.to_i + i
             new_vac = user_vac.to_i + i
             new_sic = user_sic.to_i + i
-            update_pto_time(user_id,new_pto,new_vac,new_sic)
+            update_pto_time(user_id,new_pto,new_vac,new_sic,page)
             pto_time_stamp(user_id)
             m = "#{new_pto}.......#{new_vac}.........#{new_sic}"
         else
