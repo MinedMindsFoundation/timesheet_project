@@ -497,7 +497,7 @@
 #                 doh = "11/15/2017"
 #                 department="Marketing"
 #                 job="Sales"
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job)
 #                 x=emp_info('testid484')
 #                 delete_emp(user_id)
 #                 answer = [user_id,fname,lname,email,admin,pto,doh,job,department]
@@ -514,7 +514,7 @@
 #                 doh = "11/15/2017"
 #                 department="Marketing"
 #                 job="Sales"
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job)
 #                 x=emp_info('testid484')
 #                 delete_emp(user_id)
 #                 answer = [user_id,email,fname,lname,pto,admin,doh,department,job]
@@ -531,7 +531,7 @@
 #                 doh = "10/15/2007"
 #                 department="Marketing"
 #                 job="Sales"
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job)
 #                 x=emp_info(user_id)
 #                 delete_emp(user_id)
 #                 answer = [user_id,fname,lname,email,admin,pto,doh,job,department]
@@ -545,13 +545,16 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 new_email = "testid_538@email.ecom"
 #                 department="Marketing"
 #                 job="Sales"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
 #                 new_info_arr = [user_id,fname,lname,new_email,admin,pto,doh,department,job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
@@ -565,13 +568,16 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 new_fname = "test556"
 #                 department="Marketing"
 #                 job="Sales"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
 #                 new_info_arr = [user_id,new_fname,lname,email,admin,pto,doh,department,job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
@@ -585,14 +591,17 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 new_lname = "test574"
 #                 department="Marketing"
 #                 job="Sales"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
-#                 new_info_arr = [user_id,fname,new_lname,email,admin,pto,doh,department,job]
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
+#                 new_info_arr = [user_id,fname,new_lname,email,admin,admin_access,pto,doh,department,job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
 #                 delete_emp(user_id)
@@ -605,13 +614,16 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 new_doh = "10/16/2007"
 #                 department="Marketing"
 #                 job="Sales"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
 #                 new_info_arr = [user_id,fname,lname,email,admin,pto,new_doh,department,job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
@@ -625,13 +637,16 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 new_pto = "4"
 #                 department="Marketing"
 #                 job="Sales"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
 #                 new_info_arr = [user_id,fname,lname,email,admin,new_pto,doh,department,job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
@@ -645,13 +660,16 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 department="Marketing"
 #                 job="Sales"
 #                 new_department = "Accounting"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
 #                 new_info_arr = [user_id,fname,lname,email,admin,pto,doh,new_department,job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
@@ -665,13 +683,16 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 department="Marketing"
 #                 job="Sales"
 #                 new_job = "Design"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
 #                 new_info_arr = [user_id,fname,lname,email,admin,pto,doh,department,new_job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
@@ -685,7 +706,10 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 new_pto = "4"
 #                 new_lname ="test630"
@@ -693,7 +717,7 @@
 #                 department="Marketing"
 #                 job="Sales"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
 #                 new_info_arr = [user_id,fname,new_lname,new_email,admin,new_pto,doh,department,job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
@@ -707,7 +731,10 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
-#                 admin = "No"
+#                 vacation = "2"
+#                 sick = "3"
+#                 admin = "1"
+#                 admin_access = "No"
 #                 doh = "10/15/2007"
 #                 new_doh = "10/24/2008"
 #                 new_fname ="test649"
@@ -715,7 +742,7 @@
 #                 department="Marketing"
 #                 job="Sales"
 #                 delete_emp(user_id)
-#                 add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+#                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
 #                 new_info_arr = [user_id,new_fname,lname,email,new_admin,pto,new_doh,department,job]
 #                 update_user(user_id,new_info_arr)
 #                 x= emp_info(user_id)
@@ -731,6 +758,8 @@
 #                 fname = "test514"
 #                 lname = "514test"
 #                 pto = "2"
+#                 vacation = "2"
+#                 sick = "3"
 #                 admin = "No"
 #                 doh = "10/15/2007"
 #                 department="Marketing"
@@ -999,7 +1028,8 @@
 #                 user_id = "test9281"
 #                 start_date = "2017-11-20"
 #                 end_date = "2017-11-23"
-#                 pto_request_db_add(user_id,start_date,end_date)
+#                 type = "Pto"
+#                 pto_request_db_add(user_id,start_date,end_date,type)
 #                 db_params = {
 #                     host: ENV['host'],
 #                     port: ENV['port'],
@@ -1019,7 +1049,8 @@
 #                 user_id = "test9281"
 #                 start_date = "2017-11-20"
 #                 end_date = "2017-11-23"
-#                 pto_request_db_add(user_id,start_date,end_date)
+#                 type = "Sick"
+#                 pto_request_db_add(user_id,start_date,end_date,type)
 #                 db_params = {
 #                     host: ENV['host'],
 #                     port: ENV['port'],
