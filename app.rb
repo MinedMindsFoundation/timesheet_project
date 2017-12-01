@@ -183,7 +183,10 @@ end
 
 get "/add_user" do
     msg = ""
-    erb :admin_emplist, locals:{msg:msg}
+    names_to_use = session[:employees]
+    names_to_use << session[:user_id]
+    names_arr = get_names(names)
+    erb :admin_emplist, locals:{names_arr:names_arr,msg:msg}
 end
 
 post "/add_to_user_list" do
@@ -192,24 +195,19 @@ post "/add_to_user_list" do
     first_name=params[:first_name].capitalize
     last_name=params[:last_name].capitalize
     email=params[:email]
-    admin=params[:admin]
+    supervisor=params[:supervisor]
     department=params[:department]
     job=params[:job]
     doh=params[:doh]
     pto=params[:pto]
     vacation=params[:vacation]
     sick=params[:sick]
-
-    if admin == "1"
-        admin_access = "No"
-    else
-        admin_access = "Yes"
-    end
+    admin_access = "No"
     user_info = []
     user_info << first_name
     user_info << last_name
     send_email_for_adding_a_new_user(user_info, email)
-    add_user(user_id,email,first_name,last_name,pto,admin,admin_access,doh,department,job,vacation,sick)
+    add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,department,job,vacation,sick)
     pto_time_stamp(user_id)
     erb :admin_emplist, locals:{msg:msg}
 end

@@ -18,7 +18,10 @@
 <strong>Department:</strong> <input type="text" name="department" placeholder="Department" id="right_align"  required><br><br>
 <strong>Job Title:</strong> <input type="text" name="job" placeholder="Job Title" id="right_align"  required><br><br>
 <strong>Date Of Hire:</strong> <input type="date" name="doh" placeholder="Date Of Hire" id="right_align" required><br><br>
-<strong>Admin Status:</strong> <select name="admin"><%if session[:user_hierarchy] == 3 %><option value="3">C.E.O</option><option value="2">Supervisor</option><option value="1">Worker</option><%elsif session[:user_hierarchy] == 2 %><option value="2">Supervisor</option><option value="1">Worker</option><%end%></select><br>
+<strong>Supervisor</strong> <select name="supervisor">
+<%names_arr.each do |name|%>
+    <option><option value=<%="#{name[0]}"%>><%="#{name[1]} #{name[2]}"%></option>
+<%end%>
 </div>
 <center><input class="button" type="reset">
 <input class="button" type="submit">
