@@ -2,6 +2,7 @@
 <div id="timeout">
 </div>
 <strong><%=msg%></strong><br><br>
+<div id= "box4" class= "rounded_borders">
 <%users.each_with_index do |user, index|%>
 Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
 <form method = "post" action = "emp_updated">
@@ -28,16 +29,16 @@ Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:<br><br>
 <td><input type = "text" name = info[] value = "<%=user[7]%>" size="10"></td>
 <td><input type = "text" name = info[] value = "<%=user[8]%>" size="10"></td>
 </tr>
-</table><br>
+</table></div><br><br>
 <%end%>
 <input class="button" type = "submit" value = "Update">
-</form><br>
+</form><br><br>
 
 <datalist id="admin_status">
     <option value="Yes">
     <option value="No">
 </datalist>
-
+<div  id = "box4" class = "rounded_borders">
 <%users.each_with_index do |user, index|%>
 Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%> to <%=pay_period[1]%>
 <table>
@@ -58,14 +59,15 @@ Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%
 <%end%>
 </tr>
 <%end%>
-</table>
+</table></div><br><br>
+<div  id = "box4" class = "rounded_borders">
 <h2>Select a date to update time mistakes</h2>
 <form method = "post" action="update_timesheet">
     <input type="hidden" name="selected_id" value="<%=user[0]%>">
     <input type="date" name="time_fix"><br><br>
     <input class="button" type="submit" value="Search">
 </form><br>
-<%end%>
+<%end%></div><br><br>
 <form method = "post" action = "to_admin_emplist">
 <input class="button" type="submit" value="Return">
 </form>
