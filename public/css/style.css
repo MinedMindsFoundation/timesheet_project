@@ -5,9 +5,9 @@
     --color-4: rgba(216, 155, 0, 1);
     --color-5: rgba(0, 0, 0, 1);
     --box-bdr-color: rgb(0, 40, 85);
-    /*color for the borders on the boxes */
+
     --box-bg-color: rgba(116, 116, 115, 0.5);
-    /*background color for boxes*/
+
 }
 
 #style-10::-webkit-scrollbar-track
@@ -108,8 +108,6 @@ iframe[seamless] {
     padding: 1rem;
     text-align: center;
     font-size: 1rem;
-    /* bottom: 1vh; */
-    /* bottom: -20vh; */
     background-color: var(--box-bg-color);
     margin-bottom: 2vh;
 }
@@ -131,10 +129,6 @@ iframe[seamless] {
     padding: 1rem;
     text-align: center;
     font-size: 1rem;
-    /* position: relative; */
-    /* margin-bottom: 13vh; */
-    /* bottom: 1vh; */
-    /* bottom: -88vh; */
     background-color: var(--box-bg-color);
 }
 
@@ -183,10 +177,6 @@ td {
     background-color: #ffffff;
     background-size: contain;
     background-repeat: no-repeat;
-    /* background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
-    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000', GradientType=1); */
 }
 
 .pad {
@@ -477,29 +467,19 @@ select::-ms-expand {
 
 /* @media only screen and (min-width: 768px) and (max-width: 1023px) {
     #login_box{
-        background-color: rgba(128, 128, 128, 0.39);
-        position: absolute;
-        margin: auto;
-        padding-left: 3rem;
-        padding-top: 3rem;
-        padding-right: 3rem;
-        padding-bottom: 1rem;
-        border-style: double;
-        border-radius: 5rem;
-        border-width: 1rem;
-        width: fit-content;   
+         
     }
 
     .large_text {
-        font-size: 3rem;
+        
     }
 
     .medium_text {
-        font-size: 2rem;
+
     }
 
     .social_button {
-        height: 6rem;
+       
     }
 } */
 
