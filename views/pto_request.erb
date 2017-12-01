@@ -57,6 +57,7 @@ Start Date:
 <br>
 
 <%if user_pto_request.flatten.any?%>
+<div id = "box4" class = "rounded_borders">
     <table>
         PTO Request Status
         <th>start</th>
@@ -72,10 +73,12 @@ Start Date:
             
         <%end%>
     </table>
+    </div>
 <%end%>
 
 <%if session[:admin_check] == "Yes"%>
-    <div>
+<br>
+    <div id= "box4" class= "rounded_borders">
         <table>
         <th>Name</th>
         <th>Pto Start</th>
@@ -102,13 +105,16 @@ Start Date:
         <%count += 1%>
         <%end%>
         </table>
+        </div>
+        <br>
+        <br>
         <input class="button" type = "submit" >
         </form>
         <br>
         <br>
         
 
-    <div>
+  
 <%end%>
 
 <script>
