@@ -110,14 +110,14 @@
 
 
 <div class= "top_right" align = "right">
-     <div class= "box scrollable">
+     <div class= "box scrollbar" id="style-10">
         <!--Users who are clocked in-->
         <div class = "tooltip2">Users Checked In:<br> <span class="tooltiptext2">This is to show what users are clocked In.</span></div><br>
         <!--  list of all people and in and out status -->
         <input type="text" id="myInput" onclick="dynamicSearch(this);" onkeyup="dynamicSearch(this);saveValue(this);" placeholder="Search for names.." title="Type in a name">
         <link rel= "stylesheet" href = "css/searchbar.css">
 
-        <div>
+        <div class="force-overflow">
             <ul id="myUL">
                 <%count = 0%>
                 <%user_list.each do |user|%>
