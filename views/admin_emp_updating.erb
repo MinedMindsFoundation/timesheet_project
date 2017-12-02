@@ -27,14 +27,14 @@
     <%end%>
 <%end%>
 <strong>Supervisor:</strong><select  name = info[]>
-<option value ='' selected disabled hidden><%=current_sup%></option>
+<option value ='<%=current_sup%>' selected><%=current_sup%></option>
 <%names_arr.each do |name|%>
     <option value=<%="#{name[0]}"%>><%="#{name[1]} #{name[2]}"%></option>
 <%end%><br></select>
-</div>
-<center>
-<input class="button" type = "submit" value = "Update"><br><br><br><br>
+</div><br><br>
 <%end%>
+<center>
+<input class="button" type = "submit" value = "Update">
 </form><br><br>
 
 <datalist id="admin_status">
