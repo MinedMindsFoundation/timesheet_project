@@ -222,21 +222,7 @@ get "/edit_user" do
     # new_admin_list = []
     employees = session[:employees]
     admin_list = get_names(employees)
-    # p session[:user_hierarchy]
-    # admin_list.each_with_index do |users|
-        # p user_hierarchy(users[0]).to_i
-        # p user_hierarchy(session[:user_id])
-        # if session[:user_hierarchy] == 3
-        #     if session[:user_hierarchy] >= user_hierarchy(users[0]).to_i
-        #         new_admin_list << users
-        #     end
-        # elsif session[:user_hierarchy] == 2
-        #     if session[:user_hierarchy] > user_hierarchy(users[0]).to_i
-        #         new_admin_list << users
-        #     end
-        # end
-    # end
-    # p new_admin_list
+    # p admin_list
     erb :admin_empmng, locals:{admin_list:admin_list}
 end
 
@@ -244,14 +230,6 @@ post "/update_emp" do
     session[:edit_user] = params[:info]
     choice = params[:choose]
     p session[:edit_user]
-    # user_hierarchies = get_hierarchy(session[:user_id],session[:edit_user])
-    # p user_hierarchies[0].to_i
-    # user_hierarchies[1].each_with_index do |users, index|
-        # p users.to_i
-        # p index
-        # p session[:edit_user][index]
-    # end
-    # p session[:edit_user]
     # p choice
     if session[:edit_user] == [] || session[:edit_user] == nil
         employees = session[:employees]
@@ -297,13 +275,13 @@ post "/emp_updated" do
     new_info = params[:info].each_slice(11).to_a
     other_info = params[:info]
     # p new_info
-    p session[:edit_user]
-    p other_info
+    # p session[:edit_user]
+    # p other_info
     new_info.each_with_index do |info, index|
         # p session[:edit_user][index]
-        p info
-        p index
-        # update_user(session[:edit_user][index], info)
+        # p info
+        # p index
+        update_user(session[:edit_user][index], info)
     end
     pay_period = pay_period(Time.new)
     time_table = []
@@ -318,7 +296,7 @@ post "/emp_updated" do
     # p users
     # p time_table
     msg = "User Updated"
-    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
+    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg, sup_arr:session[:names_arr]}
 end
 
 get "/employee_info" do
@@ -364,7 +342,7 @@ post "/update_time_sheet" do
         # p users
         # p time_table
         msg = "No Time Selected Or Updated"
-        erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
+        erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg, sup_arr:session[:names_arr]}
     else
         if choice == "Update"
             # p session[:times_shown]
@@ -404,7 +382,7 @@ post "/update_time_sheet" do
                 session[:editing_users] << user_info = emp_info(user)
             end
             msg = "Time Updated"
-            erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
+            erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg, sup_arr:session[:names_arr]}
         elsif choice == "Delete"
             selected_time.each do |position|
                 positions = position.to_i
@@ -422,7 +400,7 @@ post "/update_time_sheet" do
                 session[:editing_users] << user_info = emp_info(user)
             end
             msg = "Time Deleted"
-            erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
+            erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg, sup_arr:session[:names_arr]}
         end
     end
 end

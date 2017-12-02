@@ -104,27 +104,6 @@ def user_hierarchy(user_id)
     user_h[0]
 end
 
-def get_hierarchy(user_id,selected_users)
-    db_params = {
-        host: ENV['host'],
-        port: ENV['port'],
-        dbname: ENV['dbname'],
-        user: ENV['user'],
-        password: ENV['password']
-    }
-    all_users = []
-    selected_h = []
-    db = PG::Connection.new(db_params)
-    user_h = db.exec("SELECT hierarchy FROM admin_status WHERE user_id = '#{user_id}'").values.flatten
-    selected_users.each do |users|
-        selected_h << db.exec("SELECT hierarchy FROM admin_status WHERE user_id = '#{users}'").values.flatten
-    end
-    db.close
-    all_users << user_h[0]
-    all_users << selected_h.flatten
-    all_users
-end
-
 # def add_info(user_id,email,first_name,last_name,admin)
 # db_params = {
 #     host: ENV['host'],
@@ -342,9 +321,9 @@ def update_user(user_id, new_info)
     db = PG::Connection.new(db_params)
     db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}' WHERE user_id = '#{user_id}'")
     db.exec("UPDATE email SET email = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE admin_status SET admin = '#{new_info[4]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE pto SET pto = '#{new_info[5]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[6]}', job_title = '#{new_info[7]}', department = '#{new_info[8]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE pto SET pto = '#{new_info[4]}', vacation = '#{new_info[5]}', sick = '#{new_info[6]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[7]}', job_title = '#{new_info[8]}', department = '#{new_info[9]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE supervisor SET supervisor = '#{new_info[10]}' WHERE user_id = '#{user_id}'")
     db.close
 end
 
