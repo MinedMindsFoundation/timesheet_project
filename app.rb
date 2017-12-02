@@ -26,6 +26,9 @@ session[:email] = params[:email]
 
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
+        if status_check(session[:user_id]) == 'removed'
+            redirect '/'
+        else
         db_params = {
             host: ENV['host'],
             port: ENV['port'],
@@ -34,6 +37,7 @@ session[:email] = params[:email]
             password: ENV['password']
         }
         redirect "/to_landing"
+        end
     else  
         redirect '/'
     end

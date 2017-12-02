@@ -365,6 +365,21 @@ def remove_emp(user_id)
     db.close
 end
 
+def status_check(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    status = db.exec("SELECT admin_status FROM admin_status WHERE user_id = '#{user_id}'").values.flatten.first
+    db.close
+    status
+end
+
+
 def delete_emp(user_id)
     db_params = {
         host: ENV['host'],
