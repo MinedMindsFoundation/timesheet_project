@@ -4,45 +4,6 @@
     <div id="timeout">
     </div>
     <meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com">
-
-    <!--<div class="topnav" id="myTopnav">-->
-        <% if admin_check == "Yes" %>
-        <!-- <a href="/add_user">Add User</a>-->
-        <!--<a href="/edit_user">Edit</a>-->
-        <!-- <a href="/vac_time_request">PTO</a>-->
-
-        <!--Form to add users-->
-        <!--<form method = "post" action = "add_user">-->
-        <!--<div class = "tooltip3">-->
-        <!--<button class="menu_button" type = "submit">Add User</button>-->
-        <!--<span class="tooltiptext3">to add a new user.</span></div>-->
-        <!--</form>-->
-        
-    
-        <!--Form to Change or Delete Users-->
-        <!--<form method = "post" action = "edit_user">-->
-        <!--<div class = "tooltip3">-->
-        <!--<button class="menu_button" type = "submit">Edit Users</button>-->
-        <!--<span class="tooltiptext3">to Edit, Delete and fix time mistakes.</span></div>-->
-        <!--</form>-->
-    
-        <!--Form to see whos clocked in or out-->
-        <!--<form method = "post" action = "to_whos_in">-->
-        <!--<div class = "tooltip3">-->
-        <!--<button class="menu_button"type = "submit">Search User</button>-->
-        <!--<span class="tooltiptext3">to search users who are in the database.</span></div>-->
-        <!--</form>-->
-
-        <!--submit button fo vac request-->
-        <!--<form method = "post" action = "vac_time_request">-->
-        <!--<div class = "tooltip3">-->
-        <!--<button class="menu_button" type = "submit">PTO Request</button>-->
-        <!--<span class="tooltiptext3">to request time off.</span></div>-->
-        <!--</form>-->
-        <%else%>
-        <%end%>
-    <!--</div>-->
-      
 </head>
 <!-- clock -->
 <body onload="updateClock(); setInterval('updateClock()',1000)";>
@@ -52,7 +13,48 @@
 <div id ="user_name" class = "rounded_borders">
     <center><%=user_info[0]%> <%=user_info[1]%>, welcome back!<br>
     <%=user_email%></center>
-</div>
+</div><br>
+<strong><%=session[:message]%> <%=session[:pto_message]%></strong>
+
+<!-- form for submiting your time in -->
+<div class="center-on-page"><form method = "post" action = "clock_in">
+<div class = "tooltip">
+<!--<div class="select">-->
+<!-- <select name="location" name="slct" id="slct">-->
+<!--         <option value="Clendenin">Clendenin</option>-->
+<!--        <option value="Beckley">Beckley</option>-->
+<!--         <option value="Waynesburg">Waynesburg</option>-->
+<!--     </select></div><br>-->
+    <span class="tooltiptext">This is to pick your location.</span></div><br>
+    <div class = "tooltip">
+    <button class="button" id = "clock_in_button" type = "submit">Time In</button>
+    <span class="tooltiptext">to clock in for the day.</span></div>
+    </form><br>
+
+<!-- form for submiting your lunch start -->
+<form method = "post" action = "lunch_in">
+<div class = "tooltip">
+    <button class="button" type = "submit">Lunch Start</button>
+    <span class="tooltiptext">to clock out for lunch.</span></div>
+</form><br>
+
+<!-- form for submiting your lunch end -->
+<form method = "post" action = "lunch_out">
+<div class = "tooltip">
+    <button class="button" type = "submit">Lunch end</button>
+    <span class="tooltiptext">to clock back in from lunch.</span></div>
+    </form><br>
+
+<!-- form for submiting yout time out -->
+<form id = "time_submit" method = "post" action = "clock_out">
+<div class = "tooltip">
+    <button  class="button" id = "clock_out_button" type = "submit">Time Out</button>
+    <span class="tooltiptext">to clock out for the day.</span></div>
+    </form><br>
+    <div class = "tooltip3">
+    <button class="button"  id = 'sign_out' onclick= 'logout()' >Sign out</button>
+    <span class="tooltiptext3">to sign out.</span></div>
+    </div>
 
 <%if todays_time.flatten.any?%>
 <div id = "box4" class = "rounded_borders">
@@ -180,46 +182,7 @@
 
 
 
-<!-- form for submiting your time in -->
-<div class="center-on-page"><form method = "post" action = "clock_in">
-<center><br><br><br><%=session[:message]%> <%=session[:pto_message]%></center>
-<div class = "tooltip">
-<!--<div class="select">-->
-<!-- <select name="location" name="slct" id="slct">-->
-<!--         <option value="Clendenin">Clendenin</option>-->
-<!--        <option value="Beckley">Beckley</option>-->
-<!--         <option value="Waynesburg">Waynesburg</option>-->
-<!--     </select></div><br>-->
-    <span class="tooltiptext">This is to pick your location.</span></div><br>
-    <div class = "tooltip">
-    <button class="button" id = "clock_in_button" type = "submit">Time In</button>
-    <span class="tooltiptext">to clock in for the day.</span></div>
-    </form><br>
 
-<!-- form for submiting your lunch start -->
-<form method = "post" action = "lunch_in">
-<div class = "tooltip">
-    <button class="button" type = "submit">Lunch Start</button>
-    <span class="tooltiptext">to clock out for lunch.</span></div>
-</form><br>
-
-<!-- form for submiting your lunch end -->
-<form method = "post" action = "lunch_out">
-<div class = "tooltip">
-    <button class="button" type = "submit">Lunch end</button>
-    <span class="tooltiptext">to clock back in from lunch.</span></div>
-    </form><br>
-
-<!-- form for submiting yout time out -->
-<form id = "time_submit" method = "post" action = "clock_out">
-<div class = "tooltip">
-    <button  class="button" id = "clock_out_button" type = "submit">Time Out</button>
-    <span class="tooltiptext">to clock out for the day.</span></div>
-    </form><br>
-    <div class = "tooltip3">
-    <button class="button"  id = 'sign_out' onclick= 'logout()' >Sign out</button>
-    <span class="tooltiptext3">to sign out.</span></div>
-    </div>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src = "/js/clock.js"></script>
