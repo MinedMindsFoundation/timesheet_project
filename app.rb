@@ -242,13 +242,14 @@ end
 post "/update_emp" do
     session[:edit_user] = params[:info]
     choice = params[:choose]
-    user_hierarchies = get_hierarchy(session[:user_id],session[:edit_user])
+    p session[:edit_user]
+    # user_hierarchies = get_hierarchy(session[:user_id],session[:edit_user])
     # p user_hierarchies[0].to_i
-    user_hierarchies[1].each_with_index do |users, index|
+    # user_hierarchies[1].each_with_index do |users, index|
         # p users.to_i
         # p index
         # p session[:edit_user][index]
-    end
+    # end
     # p session[:edit_user]
     # p choice
     if session[:edit_user] == [] || session[:edit_user] == nil
@@ -260,11 +261,12 @@ post "/update_emp" do
         elsif choice == "Update"
             redirect "/update_emp_page"
         elsif choice == "Delete"
-            user_hierarchies[1].each_with_index do |users, index|
-                if user_hierarchies[0].to_i > users.to_i
-                    delete_emp(session[:edit_user][index])
-                end
-            end            
+            # user_hierarchies[1].each_with_index do |users, index|
+            #     if user_hierarchies[0].to_i > users.to_i|
+            session[:edit_user].each do |user|
+                remove_emp(user)
+            end
+            # end            
             admin_list = admin_emp_list()
             erb :admin_empmng, locals:{admin_list:admin_list}
         end

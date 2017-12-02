@@ -349,6 +349,19 @@ def update_user(user_id, new_info)
     db.close
 end
 
+def remove_emp(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    db.exec("UPDATE admin_status  SET admin= 'removed' WHERE user_id = '#{user_id}'")
+    db.close
+end
+
 def delete_emp(user_id)
     db_params = {
         host: ENV['host'],
@@ -363,6 +376,8 @@ def delete_emp(user_id)
     db.exec("DELETE FROM admin_status WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM pto WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM title_and_doh WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM supervisor WHERE user_id = '#{user_id}'")
     db.close
 end
 
