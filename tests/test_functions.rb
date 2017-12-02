@@ -256,7 +256,7 @@ class Test_funcs < Minitest::Test
         def test_add_user_1
             delete_emp("testid258")
             add_user('testid258',"testid258@email.com","258","line","0","devid","No","11/15/2017","Accounting","slackering","0","0")
-            x = get_id("email@email.com")
+            x = get_id("testid258@email.com")
             db_params = {
                 host: ENV['host'],
                 port: ENV['port'],
@@ -493,12 +493,14 @@ class Test_funcs < Minitest::Test
                 fname = "test484"
                 lname = "484test"
                 pto = "5"
+                vacation = "1"
+                sick = "1"
                 admin = "1"
                 admin_access = "No"
                 doh = "11/15/2017"
                 department="Marketing"
                 job="Sales"
-                add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job)
+                add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
                 x=emp_info('testid484')
                 delete_emp(user_id)
                 answer = [user_id,fname,lname,email,admin,pto,doh,job,department]
@@ -511,12 +513,14 @@ class Test_funcs < Minitest::Test
                 fname = "test484"
                 lname = "484test"
                 pto = "5"
+                vacation = "0"
+                sick = "0"
                 admin = "1"
                 admin_access = "No"
                 doh = "11/15/2017"
                 department="Marketing"
                 job="Sales"
-                add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job)
+                add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
                 x=emp_info('testid484')
                 delete_emp(user_id)
                 answer = [user_id,email,fname,lname,pto,admin,doh,department,job]
@@ -629,7 +633,7 @@ class Test_funcs < Minitest::Test
                 job="Sales"
                 delete_emp(user_id)
                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-                new_info_arr = [user_id,fname,lname,email,admin,pto,new_doh,department,job]
+                new_info_arr = [user_id,fname,lname,email,admin,pto,new_doh,department,job,vacation,sick]
                 update_user(user_id,new_info_arr)
                 x= emp_info(user_id)
                 delete_emp(user_id)
@@ -723,7 +727,7 @@ class Test_funcs < Minitest::Test
                 job="Sales"
                 delete_emp(user_id)
                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-                new_info_arr = [user_id,fname,new_lname,new_email,admin,new_pto,doh,department,job]
+                new_info_arr = [user_id,fname,new_lname,new_email,admin,new_pto,doh,department,job,vacation,sick]
                 update_user(user_id,new_info_arr)
                 x= emp_info(user_id)
                 delete_emp(user_id)
@@ -766,10 +770,11 @@ class Test_funcs < Minitest::Test
                 vacation = "2"
                 sick = "3"
                 admin = "No"
+                admin_access = "No"
                 doh = "10/15/2007"
                 department="Marketing"
                 job="Sales"
-                add_user(user_id,email,fname,lname,pto,admin,doh,department,job)
+                add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
                 delete_emp(user_id)
                 db_params = {
                     host: ENV['host'],
@@ -963,6 +968,7 @@ class Test_funcs < Minitest::Test
             start_date = '2017-11-20'
             end_date = '2017-11-21'
             approval = "pending"
+            type = "sick"
             db_params = {
                 host: ENV['host'],
                 port: ENV['port'],
@@ -971,7 +977,7 @@ class Test_funcs < Minitest::Test
                 password: ENV['password']
             }
             db = PG::Connection.new(db_params)
-            db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}')")
+            db.exec("INSERT INTO pto_requests(user_id,start_date,end_date,approval)VALUES('#{user_id}','#{start_date}','#{end_date}','#{approval}','#{type}')")
             x = pull_pto_request()
             db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
             db.close
@@ -1058,7 +1064,7 @@ class Test_funcs < Minitest::Test
                 arr = db.exec("SELECT * FROM pto_requests WHERE user_id = '#{user_id}' AND start_date = '#{start_date}' AND end_date = '#{end_date}' AND approval = 'pending'").values
                 db.exec("DELETE FROM pto_requests WHERE user_id = '#{user_id}'")
                 db.close
-                x = [[user_id,start_date,end_date,'pending']]
+                x = [[user_id,start_date,end_date,'pending',"Sick"]]
                 assert_equal(arr,x)
             end
 
