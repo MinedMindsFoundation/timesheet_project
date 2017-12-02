@@ -26,6 +26,9 @@ session[:email] = params[:email]
 
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
+        if status_check(session[:user_id]) == 'removed'
+            redirect '/'
+        else
         db_params = {
             host: ENV['host'],
             port: ENV['port'],
@@ -34,6 +37,7 @@ session[:email] = params[:email]
             password: ENV['password']
         }
         redirect "/to_landing"
+        end
     else  
         redirect '/'
     end
@@ -214,8 +218,8 @@ post "/add_to_user_list" do
 end
 
 get "/edit_user" do
-    admin_list = admin_emp_list()
-    new_admin_list = []
+    # admin_list = admin_emp_list()
+    # new_admin_list = []
     employees = session[:employees]
     admin_list = get_names(employees)
     # p session[:user_hierarchy]
@@ -250,7 +254,8 @@ post "/update_emp" do
     # p session[:edit_user]
     # p choice
     if session[:edit_user] == [] || session[:edit_user] == nil
-        admin_list = admin_emp_list()
+        employees = session[:employees]
+        admin_list = get_names(employees)
         erb :admin_empmng, locals:{admin_list:admin_list}
     else
         if choice == "Info"
@@ -263,8 +268,9 @@ post "/update_emp" do
             session[:edit_user].each do |user|
                 remove_emp(user)
             end
-            # end            
-            admin_list = admin_emp_list()
+            # end       
+            employees = session[:employees]
+            admin_list = get_names(employees)     
             erb :admin_empmng, locals:{admin_list:admin_list}
         end
     end

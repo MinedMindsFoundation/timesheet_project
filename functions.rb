@@ -359,8 +359,26 @@ def remove_emp(user_id)
     }
     db = PG::Connection.new(db_params)
     db.exec("UPDATE admin_status  SET admin= 'removed' WHERE user_id = '#{user_id}'")
+    supervisor = db.exec("SELECT supervisor FROM  supervisor WHERE user_id = '#{user_id}'").values.flatten.first
+    db.exec("UPDATE supervisor SET supervisor='#{supervisor}' WHERE supervisor = '#{user_id}'")
+    db.exec("UPDATE supervisor SET supervisor='removed' WHERE user_id = '#{user_id}'")
     db.close
 end
+
+def status_check(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    status = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values.flatten.first
+    db.close
+    status
+end
+
 
 def delete_emp(user_id)
     db_params = {

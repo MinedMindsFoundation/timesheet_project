@@ -1531,4 +1531,5 @@ class Test_funcs < Minitest::Test
         x =time_zero_remove(["0","0","0"])
         assert_equal("",x)
     end
+
 end
