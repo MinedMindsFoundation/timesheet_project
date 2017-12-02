@@ -57,6 +57,9 @@ end
 # leads to landing page 
 get "/to_landing" do
     session[:employees] = get_supervisees(session[:user_id])
+    names_to_use = session[:employees]
+    names_to_use << session[:user_id]
+    session[:names_arr] = get_names(names_to_use)
     user_class = User.new(session[:user_id])
     user_list = user_class.users_list
     time_hash = user_class.get_last_times
@@ -183,10 +186,7 @@ end
 
 get "/add_user" do
     msg = ""
-    names_to_use = session[:employees]
-    names_to_use << session[:user_id]
-    names_arr = get_names(names_to_use)
-    erb :admin_emplist, locals:{names_arr:names_arr,msg:msg}
+    erb :admin_emplist, locals:{names_arr:session[:names_arr],msg:msg}
 end
 
 post "/add_to_user_list" do
@@ -209,10 +209,7 @@ post "/add_to_user_list" do
     send_email_for_adding_a_new_user(user_info, email)
     add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,department,job,vacation,sick)
     pto_time_stamp(user_id)
-    names_to_use = session[:employees]
-    names_to_use << session[:user_id]
-    names_arr = get_names(names_to_use)
-    erb :admin_emplist, locals:{names_arr:names_arr,msg:msg}
+    erb :admin_emplist, locals:{names_arr:session[:names_arr],msg:msg}
     # erb :admin_emplist, locals:{msg:msg}
 end
 
@@ -242,13 +239,14 @@ end
 post "/update_emp" do
     session[:edit_user] = params[:info]
     choice = params[:choose]
-    user_hierarchies = get_hierarchy(session[:user_id],session[:edit_user])
+    p session[:edit_user]
+    # user_hierarchies = get_hierarchy(session[:user_id],session[:edit_user])
     # p user_hierarchies[0].to_i
-    user_hierarchies[1].each_with_index do |users, index|
+    # user_hierarchies[1].each_with_index do |users, index|
         # p users.to_i
         # p index
         # p session[:edit_user][index]
-    end
+    # end
     # p session[:edit_user]
     # p choice
     if session[:edit_user] == [] || session[:edit_user] == nil
@@ -260,11 +258,12 @@ post "/update_emp" do
         elsif choice == "Update"
             redirect "/update_emp_page"
         elsif choice == "Delete"
-            user_hierarchies[1].each_with_index do |users, index|
-                if user_hierarchies[0].to_i > users.to_i
-                    delete_emp(session[:edit_user][index])
-                end
-            end            
+            # user_hierarchies[1].each_with_index do |users, index|
+            #     if user_hierarchies[0].to_i > users.to_i|
+            session[:edit_user].each do |user|
+                remove_emp(user)
+            end
+            # end            
             admin_list = admin_emp_list()
             erb :admin_empmng, locals:{admin_list:admin_list}
         end
@@ -285,20 +284,20 @@ get "/update_emp_page" do
     # p users
     # p time_table
     msg = ""
-    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg}
+    erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg, sup_arr:session[:names_arr]}
 end
 
 post "/emp_updated" do
     new_info = params[:info].each_slice(11).to_a
     other_info = params[:info]
     # p new_info
-    # p session[:edit_user]
-    # p other_info
+    p session[:edit_user]
+    p other_info
     new_info.each_with_index do |info, index|
         # p session[:edit_user][index]
-        # p info
-        # p index
-        update_user(session[:edit_user][index], info)
+        p info
+        p index
+        # update_user(session[:edit_user][index], info)
     end
     pay_period = pay_period(Time.new)
     time_table = []

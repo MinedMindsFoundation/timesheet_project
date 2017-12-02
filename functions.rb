@@ -296,7 +296,7 @@ def emp_info(user_id)
     db = PG::Connection.new(db_params)
     data = []
     emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
-    admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
+    admins = db.exec("SELECT supervisor FROM supervisor WHERE user_id = '#{user_id}'").values
     users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
     pto_time = db.exec("SELECT pto, vacation, sick FROM pto WHERE user_id = '#{user_id}'").values
     doh_and_job = db.exec("SELECT date_of_hire, job_title, department FROM title_and_doh WHERE user_id = '#{user_id}'").values
@@ -349,6 +349,19 @@ def update_user(user_id, new_info)
     db.close
 end
 
+def remove_emp(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+    }
+    db = PG::Connection.new(db_params)
+    db.exec("UPDATE admin_status  SET admin= 'removed' WHERE user_id = '#{user_id}'")
+    db.close
+end
+
 def delete_emp(user_id)
     db_params = {
         host: ENV['host'],
@@ -363,6 +376,8 @@ def delete_emp(user_id)
     db.exec("DELETE FROM admin_status WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM pto WHERE user_id = '#{user_id}'")
     db.exec("DELETE FROM title_and_doh WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM timesheet_new WHERE user_id = '#{user_id}'")
+    db.exec("DELETE FROM supervisor WHERE user_id = '#{user_id}'")
     db.close
 end
 
