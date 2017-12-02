@@ -374,7 +374,7 @@ def status_check(user_id)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    status = db.exec("SELECT admin_status FROM admin_status WHERE user_id = '#{user_id}'").values.flatten.first
+    status = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values.flatten.first
     db.close
     status
 end
