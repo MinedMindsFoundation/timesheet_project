@@ -2,33 +2,47 @@
 <div id="timeout">
 </div>
 <strong><%=msg%></strong><br><br>
-<div class="center_text">
+<%names_arr = []%>
+<%current_sup = ""%>
 <%users.each_with_index do |user, index|%>
-<strong><center>Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:</center></strong><br><br><br>
+<div class="center_text">
+<strong><center>Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:</center></strong><br>
 <form method = "post" action = "emp_updated">
 <strong>Employee ID:</strong> <input type = "text" name = info[] value = "<%=user[0]%>" size="10" id="right_align" ><br><br>
 <strong>First Name:</strong> <input type = "text" name = info[] value = "<%=user[1]%>" size="10" id="right_align" ><br><br>
 <strong>Last Name:</strong> <input type = "text" name = info[] value = "<%=user[2]%>" size="10" id="right_align" ><br><br>
 <strong>Business Email:</strong> <input type = "email" name = info[] value = "<%=user[3]%>" id="right_align" ><br><br>
-<strong>Admin Status:</strong> <input type = "text" name = info[] value = "<%=user[4]%>" list="admin_status" size="10" id="right_align" ><br><br>
 <strong>PTO:</strong> <input type = "number" name = info[] value = "<%=user[5]%>" style = "width: 4em" id="right_align" ><br><br>
 <strong>Vacation:</strong> <input type = "number" name = info[] value = "<%=user[6]%>" style = "width: 4em" id="right_align" ><br><br>
 <strong>Sick Days:</strong> <input type = "number" name = info[] value = "<%=user[7]%>" style = "width: 4em" id="right_align" ><br><br>
 <strong>Date Of Hire:</strong> <input type = "date" name = info[] value = "<%=user[8]%>" style = "width: 10em" id="right_align" ><br><br>
 <strong>Job Title:</strong> <input type = "text" name = info[] value = "<%=user[9]%>" size="10" id="right_align" ><br><br>
-<strong>Department:</strong> <input type = "text" name = info[] value = "<%=user[10]%>" size="10" id="right_align" >
-</div><br><br>
+<strong>Department:</strong> <input type = "text" name = info[] value = "<%=user[10]%>" size="10" id="right_align"><br><br>
+<%sup_arr.each do |superv|%>
+    <%if superv[0] == user[0] %>
+    <%elsif superv[0] == user[4]%>
+        <%current_sup = "#{superv[1]} #{superv[2]}"%>
+    <%else%>
+        <%names_arr << superv%>
+    <%end%>
 <%end%>
+<strong>Supervisor:</strong><select  name = info[]>
+<option value ='' selected disabled hidden><%=current_sup%></option>
+<%names_arr.each do |name|%>
+    <option value=<%="#{name[0]}"%>><%="#{name[1]} #{name[2]}"%></option>
+<%end%><br></select>
+</div>
 <center>
-<input class="button" type = "submit" value = "Update">
+<input class="button" type = "submit" value = "Update"><br><br><br><br>
+<%end%>
 </form><br><br>
 
 <datalist id="admin_status">
     <option value="Yes">
     <option value="No">
 </datalist>
-<div  id = "box4" class = "rounded_borders">
 <%users.each_with_index do |user, index|%>
+<div  id = "box4" class = "rounded_borders">
 Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%> to <%=pay_period[1]%>
 <table>
 <th>Time in</th>
@@ -55,8 +69,8 @@ Pay Period of <%=user[1].capitalize%> <%=user[2].capitalize%>: <%=pay_period[0]%
     <input type="hidden" name="selected_id" value="<%=user[0]%>">
     <input type="date" name="time_fix"><br><br>
     <input class="button" type="submit" value="Search">
-</form><br>
-<%end%></div><br><br>
+</form></div><br>
+<%end%><br><br>
 <form method = "post" action = "to_admin_emplist">
 <input class="button" type="submit" value="Return">
 </form></center>

@@ -296,7 +296,7 @@ def emp_info(user_id)
     db = PG::Connection.new(db_params)
     data = []
     emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
-    admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
+    admins = db.exec("SELECT supervisor FROM supervisor WHERE user_id = '#{user_id}'").values
     users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
     pto_time = db.exec("SELECT pto, vacation, sick FROM pto WHERE user_id = '#{user_id}'").values
     doh_and_job = db.exec("SELECT date_of_hire, job_title, department FROM title_and_doh WHERE user_id = '#{user_id}'").values
