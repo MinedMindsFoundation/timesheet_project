@@ -1632,4 +1632,16 @@ class Test_funcs < Minitest::Test
         x = status_check(user_id)
         assert_equal("removed",x)
     end    
+
+    def test_status_check_2
+        user_id = "TESTID"
+        x = status_check(user_id)
+        assert_equal("No",x)
+    end 
+
+    def test_status_check_2
+        user_id = "lukeid"
+        x = status_check(user_id)
+        assert_equal("Yes",x)
+    end
 end
