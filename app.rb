@@ -67,7 +67,7 @@ get "/to_landing" do
     session[:names_arr] = get_names(names_to_use)
     user_class = User.new(session[:user_id])
     time_hash = user_class.get_last_times(user_list)
-    p time_hash
+    # p time_hash
     user_info =  database_info(session[:user_id])
     # p user_info
     user_email = database_email_check(session[:user_id])
@@ -230,7 +230,7 @@ end
 post "/update_emp" do
     session[:edit_user] = params[:info]
     choice = params[:choose]
-    p session[:edit_user]
+    # p session[:edit_user]
     # p choice
     if session[:edit_user] == [] || session[:edit_user] == nil
         employees = session[:employees]
