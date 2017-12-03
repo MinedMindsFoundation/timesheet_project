@@ -131,7 +131,9 @@ get '/vac_time_request' do
     user_pto_request = get_users_pto_request(session[:user_id])
     hire_date = pull_out_date_of_hire(session[:user_id])
     pto_stamp = pull_pto_stamp(session[:user_id])
-    newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic)
+    todays_year = todays_year_stamp()
+    todays_month = todays_month_stamp()
+    newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year,todays_month)
     user_pto = pto_time(session[:user_id])
     user_vac = get_vacation_time(session[:user_id])
     user_sic = sic_time(session[:user_id])
@@ -207,7 +209,7 @@ post "/add_to_user_list" do
     pto=params[:pto]
     vacation=params[:vacation]
     sick=params[:sick]
-    admin_access = "No"
+    admin_access = params[:admin]
     user_info = []
     user_info << first_name
     user_info << last_name
@@ -266,18 +268,17 @@ get "/update_emp_page" do
         session[:editing_users] << user_info = emp_info(user)
     end
     # p session[:editing_users]
-    # p users
     # p time_table
     msg = ""
     erb :admin_emp_updating, locals:{users:session[:editing_users],pay_period:pay_period,time_table:time_table, msg:msg, sup_arr:session[:names_arr]}
 end
 
 post "/emp_updated" do
-    new_info = params[:info].each_slice(11).to_a
+    new_info = params[:info].each_slice(12).to_a
     other_info = params[:info]
-    # p new_info
-    # p session[:edit_user]
-    # p other_info
+    p new_info
+    p session[:edit_user]
+    p other_info
     new_info.each_with_index do |info, index|
         # p session[:edit_user][index]
         # p info

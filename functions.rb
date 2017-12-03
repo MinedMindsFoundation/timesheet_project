@@ -274,10 +274,11 @@ def emp_info(user_id)
     }
     db = PG::Connection.new(db_params)
     data = []
+    users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
     emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
     admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
-    users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
-    pto_time = db.exec("SELECT pto FROM pto WHERE user_id = '#{user_id}'").values
+    supervisor = db.exec("SELECT supervisor FROM supervisor WHERE user_id = '#{user_id}'").values
+    pto_time = db.exec("SELECT pto, vacation, sick FROM pto WHERE user_id = '#{user_id}'").values
     doh_and_job = db.exec("SELECT date_of_hire, job_title, department FROM title_and_doh WHERE user_id = '#{user_id}'").values
     db.close
     users.each do |user|
@@ -288,6 +289,9 @@ def emp_info(user_id)
     end
     admins.each do |admin|
         data << admin.flatten
+    end
+    supervisor.each do |supervisors|
+        data << supervisors
     end
     pto_time.each do |pto|
         data << pto.flatten
@@ -324,7 +328,8 @@ def update_user(user_id, new_info)
     db.exec("UPDATE email SET email = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
     db.exec("UPDATE pto SET pto = '#{new_info[4]}', vacation = '#{new_info[5]}', sick = '#{new_info[6]}' WHERE user_id = '#{user_id}'")
     db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[7]}', job_title = '#{new_info[8]}', department = '#{new_info[9]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE supervisor SET supervisor = '#{new_info[10]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE admin_status SET admin ='#{new_info[10]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE supervisor SET supervisor = '#{new_info[11]}' WHERE user_id = '#{user_id}'")
     db.close
 end
 
@@ -1012,40 +1017,49 @@ end
 
 
 #<!-- function for checking if pto needs added and adding it if it does -->
-def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic)
-    d = Time.now.strftime("%Y")
-    c = Time.now.strftime("%m")    
+def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+    # d = Time.now.strftime("%Y")
+    # c = Time.now.strftime("%m")  
     x = hire_date[0].split('-')
     s = pto_stamp[0].split(' ')
-    if d.to_i - x[0].to_i >= 2
+    if todays_year_stamp.to_i - x[0].to_i >= 2
         i = 2
-        if s[0] != d || s[1] != c
+        if s[0] != todays_year_stamp || s[1] != todays_month_stamp
             page = "hello"
             new_pto = user_pto.to_i + i
             new_vac = user_vac.to_i + i
             new_sic = user_sic.to_i + i
             update_pto_time(user_id,new_pto,new_vac,new_sic,page)
             pto_time_stamp(user_id)
-            m = "#{new_pto}.......#{new_vac}.........#{new_sic}"
+            m = "days were added 2orlonger"
         else
             m = "days have already been added"
         end        
     else
         i = 1
-        if s[0] != d || s[1] != c
+        if s[0] != todays_year_stamp || s[1] != todays_month_stamp
             page = "hello"
             new_pto = user_pto.to_i + i
             new_vac = user_vac.to_i + i
             new_sic = user_sic.to_i + i
             update_pto_time(user_id,new_pto,new_vac,new_sic,page)
             pto_time_stamp(user_id)
-            m = "#{new_pto}.......#{new_vac}.........#{new_sic}"
+            m = "days were added lessthat2"
         else
             m = "days have already been added"
         end
     end        
     m
-end    
+end  
 
+#time stamps for current day function area
+def todays_year_stamp()
+    d = Time.now.strftime("%Y")
+    d
+end
+def todays_month_stamp()
+    c = Time.now.strftime("%m") 
+    c
+end
   
 
