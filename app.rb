@@ -62,11 +62,12 @@ end
 get "/to_landing" do
     session[:employees] = get_supervisees(session[:user_id])
     names_to_use = session[:employees]
+    user_list = get_names(names_to_use)
     names_to_use << session[:user_id]
     session[:names_arr] = get_names(names_to_use)
     user_class = User.new(session[:user_id])
-    user_list = user_class.users_list
-    time_hash = user_class.get_last_times
+    p user_list
+    time_hash = user_class.get_last_times(user_list)
     user_info =  database_info(session[:user_id])
     # p user_info
     user_email = database_email_check(session[:user_id])
