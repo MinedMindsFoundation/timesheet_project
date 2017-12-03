@@ -41,7 +41,7 @@ SELECT * FROM search_graph;")
                 arr_2 << id[0]
             end
         end
-    p "#{arr} arr is here"
+    # p "#{arr} arr is here"
         until arr.empty?
             item = arr.pop
             users.values.each do |id|
@@ -52,7 +52,6 @@ SELECT * FROM search_graph;")
             end
         end
     end
-    p arr_2
     arr_2
 end
 

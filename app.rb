@@ -66,8 +66,8 @@ get "/to_landing" do
     names_to_use << session[:user_id]
     session[:names_arr] = get_names(names_to_use)
     user_class = User.new(session[:user_id])
-    p user_list
     time_hash = user_class.get_last_times(user_list)
+    p time_hash
     user_info =  database_info(session[:user_id])
     # p user_info
     user_email = database_email_check(session[:user_id])
@@ -131,7 +131,9 @@ get '/vac_time_request' do
     user_pto_request = get_users_pto_request(session[:user_id])
     hire_date = pull_out_date_of_hire(session[:user_id])
     pto_stamp = pull_pto_stamp(session[:user_id])
-    newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic)
+    todays_year = todays_year_stamp()
+    todays_month = todays_month_stamp()
+    newpto = timeoffbiuldup(session[:user_id],user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year,todays_month)
     user_pto = pto_time(session[:user_id])
     user_vac = get_vacation_time(session[:user_id])
     user_sic = sic_time(session[:user_id])
@@ -409,8 +411,10 @@ get "/reload" do
      user_id = params[:user_id]
     #  arr.gsub!(/[^0-9A-Za-z.,\-]/, '')
     #   user_id = arr.split(",")
+    names_to_use = session[:employees]
+    user_list = get_names(names_to_use)
     user_class = User.new(session[:user_id])
-      time_hash = user_class.get_last_times
+      time_hash = user_class.get_last_times(user_list)
     # user_check =database_emp_checked
     # users = who_is_clocked_in()
     # erb :reload, locals:{users:users,user_checked:user_checked}, :layout => :post
