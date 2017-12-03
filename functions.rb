@@ -274,10 +274,11 @@ def emp_info(user_id)
     }
     db = PG::Connection.new(db_params)
     data = []
+    users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
     emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
     admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
-    users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
-    pto_time = db.exec("SELECT pto FROM pto WHERE user_id = '#{user_id}'").values
+    supervisor = db.exec("SELECT supervisor FROM supervisor WHERE user_id = '#{user_id}'").values
+    pto_time = db.exec("SELECT pto, vacation, sick FROM pto WHERE user_id = '#{user_id}'").values
     doh_and_job = db.exec("SELECT date_of_hire, job_title, department FROM title_and_doh WHERE user_id = '#{user_id}'").values
     db.close
     users.each do |user|
@@ -288,6 +289,9 @@ def emp_info(user_id)
     end
     admins.each do |admin|
         data << admin.flatten
+    end
+    supervisor.each do |supervisors|
+        data << supervisors
     end
     pto_time.each do |pto|
         data << pto.flatten
@@ -324,7 +328,8 @@ def update_user(user_id, new_info)
     db.exec("UPDATE email SET email = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
     db.exec("UPDATE pto SET pto = '#{new_info[4]}', vacation = '#{new_info[5]}', sick = '#{new_info[6]}' WHERE user_id = '#{user_id}'")
     db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[7]}', job_title = '#{new_info[8]}', department = '#{new_info[9]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE supervisor SET supervisor = '#{new_info[10]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE admin_status SET admin ='#{new_info[10]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE supervisor SET supervisor = '#{new_info[11]}' WHERE user_id = '#{user_id}'")
     db.close
 end
 
