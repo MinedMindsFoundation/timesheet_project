@@ -594,28 +594,28 @@ class Test_funcs < Minitest::Test
     #             assert_equal(new_info_arr,x)
     #         end
 
-    #         def test_update_user_new_last_name
-    #             user_id = 'testid514'
-    #             email = "testid@email.com"
-    #             fname = "test514"
-    #             lname = "514test"
-    #             pto = "2"
-    #             vacation = "2"
-    #             sick = "3"
-    #             admin = "1"
-    #             admin_access = "No"
-    #             doh = "10/15/2007"
-    #             new_lname = "test574"
-    #             department="Marketing"
-    #             job="Sales"
-    #             delete_emp(user_id)
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             new_info_arr = [user_id,fname,new_lname,email,admin,admin_access,pto,doh,department,job]
-    #             update_user(user_id,new_info_arr)
-    #             x= emp_info(user_id)
-    #             delete_emp(user_id)
-    #             assert_equal(new_info_arr,x)
-    #         end
+            def test_update_user_new_last_name
+                user_id = 'testid514'
+                email = "testid@email.com"
+                fname = "test514"
+                lname = "514test"
+                pto = "2"
+                vacation = "2"
+                sick = "3"
+                supervisor = "devId"
+                admin_access = "No"
+                doh = "10/15/2007"
+                new_lname = "test574"
+                department="Marketing"
+                job="Sales"
+                delete_emp(user_id)
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                new_info_arr = [user_id,fname,new_lname,email,pto,vacation,sick,doh,job,department,admin_access,supervisor]
+                update_user(user_id,new_info_arr)
+                x= emp_info(user_id)
+                delete_emp(user_id)
+                assert_equal(new_info_arr,x)
+            end
 
     #         def test_update_user_new_doh
     #             user_id = 'testid514'
@@ -1541,88 +1541,88 @@ class Test_funcs < Minitest::Test
     #     assert_equal("",x)
     # end
 
-    #<----- test timeoffbiuldup function area --------->
-    def test_timeoffbiuldup_1
-        user_id = "TESTID"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["2017-10-31"]
-        pto_stamp = ["2017 12"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days have already been added",x)
-    end  
+    # #<----- test timeoffbiuldup function area --------->
+    # def test_timeoffbiuldup_1
+    #     user_id = "TESTID"
+    #     user_info = "none"
+    #     user_pto = "2"
+    #     hire_date = ["2017-10-31"]
+    #     pto_stamp = ["2017 12"]
+    #     user_vac = "2"
+    #     user_sic = "2"
+    #     todays_year_stamp = "2017"
+    #     todays_month_stamp = "12"
+    #     x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+    #     assert_equal("days have already been added",x)
+    # end  
     
-    def test_timeoffbiuldup_2
-        user_id = "TESTID"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["2017-10-31"]
-        pto_stamp = ["2017 11"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days were added lessthat2",x)
-    end 
+    # def test_timeoffbiuldup_2
+    #     user_id = "TESTID"
+    #     user_info = "none"
+    #     user_pto = "2"
+    #     hire_date = ["2017-10-31"]
+    #     pto_stamp = ["2017 11"]
+    #     user_vac = "2"
+    #     user_sic = "2"
+    #     todays_year_stamp = "2017"
+    #     todays_month_stamp = "12"
+    #     x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+    #     assert_equal("days were added lessthat2",x)
+    # end 
 
-    def test_timeoffbiuldup_3
-        user_id = "TESTID"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["1995-10-31"]
-        pto_stamp = ["2017 12"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days have already been added",x)
-    end 
+    # def test_timeoffbiuldup_3
+    #     user_id = "TESTID"
+    #     user_info = "none"
+    #     user_pto = "2"
+    #     hire_date = ["1995-10-31"]
+    #     pto_stamp = ["2017 12"]
+    #     user_vac = "2"
+    #     user_sic = "2"
+    #     todays_year_stamp = "2017"
+    #     todays_month_stamp = "12"
+    #     x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+    #     assert_equal("days have already been added",x)
+    # end 
 
-    def test_timeoffbiuldup_4
-        user_id = "TESTID"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["1995-10-31"]
-        pto_stamp = ["2017 12"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2018"
-        todays_month_stamp = "1"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days were added 2orlonger",x)
-    end 
+    # def test_timeoffbiuldup_4
+    #     user_id = "TESTID"
+    #     user_info = "none"
+    #     user_pto = "2"
+    #     hire_date = ["1995-10-31"]
+    #     pto_stamp = ["2017 12"]
+    #     user_vac = "2"
+    #     user_sic = "2"
+    #     todays_year_stamp = "2018"
+    #     todays_month_stamp = "1"
+    #     x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+    #     assert_equal("days were added 2orlonger",x)
+    # end 
 
-    def test_timeoffbiuldup_5
-        user_id = "bradyid"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["2001-9-28"]
-        pto_stamp = ["2017 12"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days have already been added",x)
-    end
+    # def test_timeoffbiuldup_5
+    #     user_id = "bradyid"
+    #     user_info = "none"
+    #     user_pto = "2"
+    #     hire_date = ["2001-9-28"]
+    #     pto_stamp = ["2017 12"]
+    #     user_vac = "2"
+    #     user_sic = "2"
+    #     todays_year_stamp = "2017"
+    #     todays_month_stamp = "12"
+    #     x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+    #     assert_equal("days have already been added",x)
+    # end
 
-    def test_timeoffbiuldup_6
-        user_id = "eastwoodid"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["2016-8-10"]
-        pto_stamp = ["2017 8"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days were added lessthat2",x)
-    end
+    # def test_timeoffbiuldup_6
+    #     user_id = "eastwoodid"
+    #     user_info = "none"
+    #     user_pto = "2"
+    #     hire_date = ["2016-8-10"]
+    #     pto_stamp = ["2017 8"]
+    #     user_vac = "2"
+    #     user_sic = "2"
+    #     todays_year_stamp = "2017"
+    #     todays_month_stamp = "12"
+    #     x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+    #     assert_equal("days were added lessthat2",x)
+    # end
 end

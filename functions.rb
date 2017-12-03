@@ -132,7 +132,7 @@ def add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,
     db.exec("insert into info_new(user_id,first_name,last_name)VALUES('#{user_id}','#{first_name}','#{last_name}')")
     db.exec("insert into pto(user_id,pto,vacation,sick)VALUES('#{user_id}','#{pto}','#{vacation}','#{sick}')")
     db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin_access}')")
-    db.exec("INSERT into supervisor(user_id,supervisorVALUES('#{user_id}','#{supervisor}')")
+    db.exec("INSERT into supervisor(user_id,supervisor)VALUES('#{user_id}','#{supervisor}')")
     db.exec("insert into email(user_id,email)VALUES('#{user_id}','#{email}')")
     db.exec("insert into title_and_doh(user_id,date_of_hire,job_title,department)VALUES('#{user_id}','#{doh}','#{job}','#{department}')")
     db.close
@@ -283,22 +283,29 @@ def emp_info(user_id)
     db.close
     users.each do |user|
         data << user
+        p "#{user} user"
     end
     emails.first.each do |email|
         data << email
-    end
-    admins.each do |admin|
-        data << admin.flatten
-    end
-    supervisor.each do |supervisors|
-        data << supervisors
+        p "#{email} email"
     end
     pto_time.each do |pto|
         data << pto.flatten
+        p "#{pto} pto"
     end
     doh_and_job.each do |item|
         data << item
+        p "#{item} item"
     end
+    admins.each do |admin|
+        data << admin.flatten
+        p "#{admin} admin"
+    end
+    supervisor.each do |supervisors|
+        data << supervisors
+        p "#{supervisors} supervisors" 
+    end
+    p data
     data.flatten
 end
 
