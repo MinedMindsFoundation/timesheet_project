@@ -487,25 +487,25 @@ class Test_funcs < Minitest::Test
 
     #     # <--test for emp_info(user_id)-->
 
-    #         def test_emp_info_1
-    #             user_id = 'testid484'
-    #             email = "testid@email.com"
-    #             fname = "test484"
-    #             lname = "484test"
-    #             pto = "5"
-    #             vacation = "1"
-    #             sick = "1"
-    #             admin = "1"
-    #             admin_access = "No"
-    #             doh = "11/15/2017"
-    #             department="Marketing"
-    #             job="Sales"
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             x=emp_info('testid484')
-    #             delete_emp(user_id)
-    #             answer = [user_id,fname,lname,email,admin,pto,doh,job,department]
-    #             assert_equal(answer,x)
-    #         end
+            def test_emp_info_1
+                user_id = 'testid484'
+                email = "testid@email.com"
+                fname = "test484"
+                lname = "484test"
+                pto = "5"
+                vacation = "1"
+                sick = "1"
+                supervisor = "devId"
+                admin_access = "No"
+                doh = "11/15/2017"
+                department="Marketing"
+                job="Sales"
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                x=emp_info('testid484')
+                delete_emp(user_id)
+                answer = [user_id,fname,lname,email,pto,vacation,sick,doh,job,department,admin_access,supervisor]
+                assert_equal(answer,x)
+            end
 
     #         def test_emp_info_return_class
     #             user_id = 'testid484'
@@ -547,29 +547,29 @@ class Test_funcs < Minitest::Test
     #             assert_equal(answer,x)
     #         end
         
-    #     # <--tests for update_user(user_id, new_info)-->
-    #         def test_update_user_new_email
-    #             user_id = 'testid514'
-    #             email = "testid@email.com"
-    #             fname = "test514"
-    #             lname = "514test"
-    #             pto = "2"
-    #             vacation = "2"
-    #             sick = "3"
-    #             admin = "No"
-    #             admin_access = "No"
-    #             doh = "10/15/2007"
-    #             new_email = "testid_538@email.ecom"
-    #             department="Marketing"
-    #             job="Sales"
-    #             delete_emp(user_id)
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             new_info_arr = [user_id,fname,lname,new_email,admin,pto,doh,department,job]
-    #             update_user(user_id,new_info_arr)
-    #             x= emp_info(user_id)
-    #             delete_emp(user_id)
-    #             assert_equal(new_info_arr,x)
-    #         end
+        # <--tests for update_user(user_id, new_info)-->
+            def test_update_user_new_email
+                user_id = 'testid551'
+                email = "testid@email.com"
+                fname = "test551"
+                lname = "514test"
+                pto = "2"
+                vacation = "2"
+                sick = "3"
+                supervisor = "devId"
+                admin_access = "No"
+                doh = "10/15/2007"
+                new_email = "testid_538@email.ecom"
+                department="Marketing"
+                job="Sales"
+                delete_emp(user_id)
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                new_info_arr = [user_id,fname,lname,new_email,pto,vacation,sick,doh,job,department,admin_access,supervisor]
+                update_user(user_id,new_info_arr)
+                x= emp_info(user_id)
+                delete_emp(user_id)
+                assert_equal(new_info_arr,x)
+            end
 
     #         def test_update_user_new_first_name
     #             user_id = 'testid514'
@@ -617,51 +617,51 @@ class Test_funcs < Minitest::Test
                 assert_equal(new_info_arr,x)
             end
 
-    #         def test_update_user_new_doh
-    #             user_id = 'testid514'
-    #             email = "testid@email.com"
-    #             fname = "test514"
-    #             lname = "514test"
-    #             pto = "2"
-    #             vacation = "2"
-    #             sick = "3"
-    #             admin = "1"
-    #             admin_access = "No"
-    #             doh = "10/15/2007"
-    #             new_doh = "10/16/2007"
-    #             department="Marketing"
-    #             job="Sales"
-    #             delete_emp(user_id)
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             new_info_arr = [user_id,fname,lname,email,admin,pto,new_doh,department,job]
-    #             update_user(user_id,new_info_arr)
-    #             x= emp_info(user_id)
-    #             delete_emp(user_id)
-    #             assert_equal(new_info_arr,x)
-    #         end
+            def test_update_user_new_doh
+                user_id = 'testid514'
+                email = "testid@email.com"
+                fname = "test514"
+                lname = "514test"
+                pto = "2"
+                vacation = "2"
+                sick = "3"
+                supervisor = "devId"
+                admin_access = "No"
+                doh = "10/15/2007"
+                new_doh = "10/16/2007"
+                department="Marketing"
+                job="Sales"
+                delete_emp(user_id)
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                new_info_arr = [user_id,fname,lname,email,pto,vacation,sick,new_doh,job,department,admin_access,supervisor]
+                update_user(user_id,new_info_arr)
+                x= emp_info(user_id)
+                delete_emp(user_id)
+                assert_equal(new_info_arr,x)
+            end
 
-    #         def test_update_user_new_pto
-    #             user_id = 'testid514'
-    #             email = "testid@email.com"
-    #             fname = "test514"
-    #             lname = "514test"
-    #             pto = "2"
-    #             vacation = "2"
-    #             sick = "3"
-    #             admin = "1"
-    #             admin_access = "No"
-    #             doh = "10/15/2007"
-    #             new_pto = "4"
-    #             department="Marketing"
-    #             job="Sales"
-    #             delete_emp(user_id)
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             new_info_arr = [user_id,fname,lname,email,admin,admin_access,new_pto,doh,department,job]
-    #             update_user(user_id,new_info_arr)
-    #             x= emp_info(user_id)
-    #             delete_emp(user_id)
-    #             assert_equal(new_info_arr,x)
-    #         end
+            def test_update_user_new_pto
+                user_id = 'testid514'
+                email = "testid@email.com"
+                fname = "test514"
+                lname = "514test"
+                pto = "2"
+                vacation = "2"
+                sick = "3"
+                supervisor= "devId"
+                admin_access = "No"
+                doh = "10/15/2007"
+                new_pto = "4"
+                department="Marketing"
+                job="Sales"
+                delete_emp(user_id)
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                new_info_arr = [user_id,fname,lname,email,new_pto,vacation,sick,doh,job,department,admin_access,supervisor]
+                update_user(user_id,new_info_arr)
+                x= emp_info(user_id)
+                delete_emp(user_id)
+                assert_equal(new_info_arr,x)
+            end
 
     #         def test_update_user_new_department
     #             user_id = 'testid514'
@@ -686,28 +686,28 @@ class Test_funcs < Minitest::Test
     #             assert_equal(new_info_arr,x)
     #         end
 
-    #         def test_update_user_new_job
-    #             user_id = 'testid514'
-    #             email = "testid@email.com"
-    #             fname = "test514"
-    #             lname = "514test"
-    #             pto = "2"
-    #             vacation = "2"
-    #             sick = "3"
-    #             admin = "1"
-    #             admin_access = "No"
-    #             doh = "10/15/2007"
-    #             department="Marketing"
-    #             job="Sales"
-    #             new_job = "Design"
-    #             delete_emp(user_id)
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             new_info_arr = [user_id,fname,lname,email,admin,pto,doh,department,new_job]
-    #             update_user(user_id,new_info_arr)
-    #             x= emp_info(user_id)
-    #             delete_emp(user_id)
-    #             assert_equal(new_info_arr,x)
-    #         end
+            def test_update_user_new_job
+                user_id = 'testid514'
+                email = "testid@email.com"
+                fname = "test514"
+                lname = "514test"
+                pto = "2"
+                vacation = "2"
+                sick = "3"
+                supervisor = "devId"
+                admin_access = "No"
+                doh = "10/15/2007"
+                department="Marketing"
+                job="Sales"
+                new_job = "Design"
+                delete_emp(user_id)
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                new_info_arr = [user_id,fname,lname,email,pto,vacation,sick,doh,new_job,department,admin_access,supervisor]
+                update_user(user_id,new_info_arr)
+                x= emp_info(user_id)
+                delete_emp(user_id)
+                assert_equal(new_info_arr,x)
+            end
 
     #         def test_update_mutliple_items
     #             user_id = 'testid514'
@@ -734,30 +734,30 @@ class Test_funcs < Minitest::Test
     #             assert_equal(new_info_arr,x)
     #         end
 
-    #         def test_update_mutliple_items_2
-    #             user_id = 'testid514'
-    #             email = "testid@email.com"
-    #             fname = "test514"
-    #             lname = "514test"
-    #             pto = "2"
-    #             vacation = "2"
-    #             sick = "3"
-    #             admin = "Yes"
-    #             admin_access = "No"
-    #             doh = "10/15/2007"
-    #             new_doh = "10/24/2008"
-    #             new_fname ="test649"
-    #             new_admin ="Yes"
-    #             department="Marketing"
-    #             job="Sales"
-    #             delete_emp(user_id)
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             new_info_arr = [user_id,new_fname,lname,email,new_admin,pto,new_doh,department,job]
-    #             update_user(user_id,new_info_arr)
-    #             x= emp_info(user_id)
-    #             delete_emp(user_id)
-    #             assert_equal(new_info_arr,x)
-    #         end
+            def test_update_mutliple_items_2
+                user_id = 'testid514'
+                email = "testid@email.com"
+                fname = "test514"
+                lname = "514test"
+                pto = "2"
+                vacation = "2"
+                sick = "3"
+                supervisor = "scottid"
+                admin_access = "No"
+                doh = "10/15/2007"
+                new_doh = "10/24/2008"
+                new_fname ="test649"
+                new_supervisor ="devId"
+                department="Marketing"
+                job="Sales"
+                delete_emp(user_id)
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                new_info_arr = [user_id,new_fname,lname,email,pto,vacation,sick,new_doh,job,department,admin_access,new_supervisor]
+                update_user(user_id,new_info_arr)
+                x= emp_info(user_id)
+                delete_emp(user_id)
+                assert_equal(new_info_arr,x)
+            end
 
     # # <--tests for delete_emp(user_id)-->
         
@@ -1556,92 +1556,92 @@ class Test_funcs < Minitest::Test
     #     assert_equal("days have already been added",x)
     # end  
     
-    def test_timeoffbiuldup_2
-        user_id = "TESTID"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["2017-10-31"]
-        pto_stamp = ["2017 11"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days were added lessthat2",x)
-    end 
+#     def test_timeoffbiuldup_2
+#         user_id = "TESTID"
+#         user_info = "none"
+#         user_pto = "2"
+#         hire_date = ["2017-10-31"]
+#         pto_stamp = ["2017 11"]
+#         user_vac = "2"
+#         user_sic = "2"
+#         todays_year_stamp = "2017"
+#         todays_month_stamp = "12"
+#         x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+#         assert_equal("days were added lessthat2",x)
+#     end 
 
-    def test_timeoffbiuldup_3
-        user_id = "TESTID"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["1995-10-31"]
-        pto_stamp = ["2017 12"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days have already been added",x)
-    end 
+#     def test_timeoffbiuldup_3
+#         user_id = "TESTID"
+#         user_info = "none"
+#         user_pto = "2"
+#         hire_date = ["1995-10-31"]
+#         pto_stamp = ["2017 12"]
+#         user_vac = "2"
+#         user_sic = "2"
+#         todays_year_stamp = "2017"
+#         todays_month_stamp = "12"
+#         x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+#         assert_equal("days have already been added",x)
+#     end 
 
-    def test_timeoffbiuldup_4
-        user_id = "TESTID"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["1995-10-31"]
-        pto_stamp = ["2017 12"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2018"
-        todays_month_stamp = "1"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days were added 2orlonger",x)
-    end 
+#     def test_timeoffbiuldup_4
+#         user_id = "TESTID"
+#         user_info = "none"
+#         user_pto = "2"
+#         hire_date = ["1995-10-31"]
+#         pto_stamp = ["2017 12"]
+#         user_vac = "2"
+#         user_sic = "2"
+#         todays_year_stamp = "2018"
+#         todays_month_stamp = "1"
+#         x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+#         assert_equal("days were added 2orlonger",x)
+#     end 
 
-    def test_timeoffbiuldup_5
-        user_id = "bradyid"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["2001-9-28"]
-        pto_stamp = ["2017 12"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days have already been added",x)
-    end
+#     def test_timeoffbiuldup_5
+#         user_id = "bradyid"
+#         user_info = "none"
+#         user_pto = "2"
+#         hire_date = ["2001-9-28"]
+#         pto_stamp = ["2017 12"]
+#         user_vac = "2"
+#         user_sic = "2"
+#         todays_year_stamp = "2017"
+#         todays_month_stamp = "12"
+#         x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+#         assert_equal("days have already been added",x)
+#     end
 
-    def test_timeoffbiuldup_6
-        user_id = "eastwoodid"
-        user_info = "none"
-        user_pto = "2"
-        hire_date = ["2016-8-10"]
-        pto_stamp = ["2017 8"]
-        user_vac = "2"
-        user_sic = "2"
-        todays_year_stamp = "2017"
-        todays_month_stamp = "12"
-        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
-        assert_equal("days were added lessthat2",x)
-    end
+#     def test_timeoffbiuldup_6
+#         user_id = "eastwoodid"
+#         user_info = "none"
+#         user_pto = "2"
+#         hire_date = ["2016-8-10"]
+#         pto_stamp = ["2017 8"]
+#         user_vac = "2"
+#         user_sic = "2"
+#         todays_year_stamp = "2017"
+#         todays_month_stamp = "12"
+#         x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+#         assert_equal("days were added lessthat2",x)
+#     end
 
-    #-------------------status check test area------------------------
-    def test_status_check_1
-        user_id = "antID"
-        x = status_check(user_id)
-        assert_equal("removed",x)
-    end    
+#     #-------------------status check test area------------------------
+#     def test_status_check_1
+#         user_id = "antID"
+#         x = status_check(user_id)
+#         assert_equal("removed",x)
+#     end    
 
-    def test_status_check_2
-        user_id = "TESTID"
-        x = status_check(user_id)
-        assert_equal("No",x)
-    end 
+#     def test_status_check_2
+#         user_id = "TESTID"
+#         x = status_check(user_id)
+#         assert_equal("No",x)
+#     end 
 
-    def test_status_check_2
-        user_id = "lukeid"
-        x = status_check(user_id)
-        assert_equal("Yes",x)
-    end
+#     def test_status_check_2
+#         user_id = "lukeid"
+#         x = status_check(user_id)
+#         assert_equal("Yes",x)
+#     end
 end
