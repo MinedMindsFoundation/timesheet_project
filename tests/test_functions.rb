@@ -571,28 +571,28 @@ class Test_funcs < Minitest::Test
     #             assert_equal(new_info_arr,x)
     #         end
 
-    #         def test_update_user_new_first_name
-    #             user_id = 'testid514'
-    #             email = "testid@email.com"
-    #             fname = "test514"
-    #             lname = "514test"
-    #             pto = "2"
-    #             vacation = "2"
-    #             sick = "3"
-    #             admin = "1"
-    #             admin_access = "No"
-    #             doh = "10/15/2007"
-    #             new_fname = "test556"
-    #             department="Marketing"
-    #             job="Sales"
-    #             delete_emp(user_id)
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             new_info_arr = [user_id,new_fname,lname,email,admin,pto,doh,department,job]
-    #             update_user(user_id,new_info_arr)
-    #             x= emp_info(user_id)
-    #             delete_emp(user_id)
-    #             assert_equal(new_info_arr,x)
-    #         end
+            def test_update_user_new_first_name
+                user_id = 'testid574'
+                email = "testid@email.com"
+                fname = "test574"
+                lname = "574test"
+                pto = "2"
+                vacation = "2"
+                sick = "3"
+                supervisor = "devId"
+                admin_access = "No"
+                doh = "10/15/2007"
+                new_fname = "test556"
+                department="Marketing"
+                job="Sales"
+                delete_emp(user_id)
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                new_info_arr = [user_id,fname,lname,email,pto,vacation,sick,doh,job,department,admin_access,supervisor]
+                update_user(user_id,new_info_arr)
+                x= emp_info(user_id)
+                delete_emp(user_id)
+                assert_equal(new_info_arr,x)
+            end
 
             def test_update_user_new_last_name
                 user_id = 'testid514'
@@ -1453,12 +1453,12 @@ class Test_funcs < Minitest::Test
     #         assert_equal(false,x)
     #     end
 
-    #     #<!---test pto time section--->
-    #     def test_pto_time_1
-    #         user_id = "TESTID"
-    #         x = pto_time(user_id)
-    #         assert_equal("8",x)
-    #     end
+        #<!---test pto time section--->
+        def test_pto_time_1
+            user_id = "tomhanksid"
+            x = pto_time(user_id)
+            assert_equal("8",x)
+        end
 
     #     def test_pto_time_2
     #         user_id = "lukeid"
