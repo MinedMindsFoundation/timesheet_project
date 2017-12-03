@@ -27,4 +27,13 @@ class Test_cte_funcs < Minitest::Test
         assert_equal(Array,get_names(id_arr).first.class)
     end
 
+    def test_get_names_return_multi_d_arr_of_strings
+        id_arr = ["scottid"]
+        assert_equal(String,get_names(id_arr).flatten.first.class)
+    end
+
+    def test_get_names_return_specific_string
+        id_arr = ["scottid"]
+        assert_equal([["scottid", "Scott", "Steward"]],get_names(id_arr))
+    end
 end
