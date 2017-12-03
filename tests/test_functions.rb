@@ -364,7 +364,7 @@ class Test_funcs < Minitest::Test
 
         #<!---test adim check--->
             def test_admin_check_1
-                delete_emp("gregid")
+                delete_emp("testid368")
                 add_user('testid368',"testid368@email.com","368","line","0","devid","No","11/15/2017","Accounting","slackering","0","0")
                 x = database_admin_check("testid368")
                 db_params = {
@@ -533,7 +533,7 @@ class Test_funcs < Minitest::Test
                 fname = "test514"
                 lname = "514test"
                 pto = "2"
-                admin = "1"
+                admin = "No"
                 admin_access = "No"
                 doh = "10/15/2007"
                 department="Marketing"
@@ -556,7 +556,7 @@ class Test_funcs < Minitest::Test
                 pto = "2"
                 vacation = "2"
                 sick = "3"
-                admin = "1"
+                admin = "No"
                 admin_access = "No"
                 doh = "10/15/2007"
                 new_email = "testid_538@email.ecom"
@@ -633,7 +633,7 @@ class Test_funcs < Minitest::Test
                 job="Sales"
                 delete_emp(user_id)
                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-                new_info_arr = [user_id,fname,lname,email,admin,pto,new_doh,department,job,vacation,sick]
+                new_info_arr = [user_id,fname,lname,email,admin,pto,new_doh,department,job]
                 update_user(user_id,new_info_arr)
                 x= emp_info(user_id)
                 delete_emp(user_id)
@@ -656,7 +656,7 @@ class Test_funcs < Minitest::Test
                 job="Sales"
                 delete_emp(user_id)
                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-                new_info_arr = [user_id,fname,lname,email,admin,admin_access,new_pto,doh,department,job,vacation,sick]
+                new_info_arr = [user_id,fname,lname,email,admin,admin_access,new_pto,doh,department,job]
                 update_user(user_id,new_info_arr)
                 x= emp_info(user_id)
                 delete_emp(user_id)
@@ -671,7 +671,7 @@ class Test_funcs < Minitest::Test
                 pto = "2"
                 vacation = "2"
                 sick = "3"
-                admin = "1"
+                admin = "No"
                 admin_access = "No"
                 doh = "10/15/2007"
                 department="Marketing"
@@ -679,7 +679,7 @@ class Test_funcs < Minitest::Test
                 new_department = "Accounting"
                 delete_emp(user_id)
                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-                new_info_arr = [user_id,fname,lname,email,admin,pto,doh,new_department,job,vacation,sick]
+                new_info_arr = [user_id,fname,lname,email,admin,pto,new_department,job]
                 update_user(user_id,new_info_arr)
                 x= emp_info(user_id)
                 delete_emp(user_id)
@@ -727,7 +727,7 @@ class Test_funcs < Minitest::Test
                 job="Sales"
                 delete_emp(user_id)
                 add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-                new_info_arr = [user_id,fname,new_lname,new_email,admin,new_pto,doh,department,job,vacation,sick]
+                new_info_arr = [user_id,fname,new_lname,new_email,admin,new_pto,doh,department,job]
                 update_user(user_id,new_info_arr)
                 x= emp_info(user_id)
                 delete_emp(user_id)
