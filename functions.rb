@@ -1011,40 +1011,49 @@ end
 
 
 #<!-- function for checking if pto needs added and adding it if it does -->
-def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic)
-    d = Time.now.strftime("%Y")
-    c = Time.now.strftime("%m")    
+def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+    # d = Time.now.strftime("%Y")
+    # c = Time.now.strftime("%m")  
     x = hire_date[0].split('-')
     s = pto_stamp[0].split(' ')
-    if d.to_i - x[0].to_i >= 2
+    if todays_year_stamp.to_i - x[0].to_i >= 2
         i = 2
-        if s[0] != d || s[1] != c
+        if s[0] != todays_year_stamp || s[1] != todays_month_stamp
             page = "hello"
             new_pto = user_pto.to_i + i
             new_vac = user_vac.to_i + i
             new_sic = user_sic.to_i + i
             update_pto_time(user_id,new_pto,new_vac,new_sic,page)
             pto_time_stamp(user_id)
-            m = "#{new_pto}.......#{new_vac}.........#{new_sic}"
+            m = "here days were added, #{s[0]} #{s[1]}"
         else
             m = "days have already been added"
         end        
     else
         i = 1
-        if s[0] != d || s[1] != c
+        if s[0] != todays_year_stamp || s[1] != todays_month_stamp
             page = "hello"
             new_pto = user_pto.to_i + i
             new_vac = user_vac.to_i + i
             new_sic = user_sic.to_i + i
             update_pto_time(user_id,new_pto,new_vac,new_sic,page)
             pto_time_stamp(user_id)
-            m = "#{new_pto}.......#{new_vac}.........#{new_sic}"
+            m = " there days were added, #{s[0]} #{s[1]}"
         else
             m = "days have already been added"
         end
     end        
     m
-end    
+end  
 
+#time stamps for current day function area
+def todays_year_stamp()
+    d = Time.now.strftime("%Y")
+    d
+end
+def todays_month_stamp()
+    c = Time.now.strftime("%m") 
+    c
+end
   
 
