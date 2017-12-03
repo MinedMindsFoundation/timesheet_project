@@ -709,30 +709,30 @@ class Test_funcs < Minitest::Test
     #             assert_equal(new_info_arr,x)
     #         end
 
-    #         def test_update_mutliple_items
-    #             user_id = 'testid514'
-    #             email = "testid@email.com"
-    #             fname = "test514"
-    #             lname = "514test"
-    #             pto = "2"
-    #             vacation = "2"
-    #             sick = "3"
-    #             admin = "No"
-    #             admin_access = "No"
-    #             doh = "10/15/2007"
-    #             new_pto = "4"
-    #             new_lname ="test630"
-    #             new_email ="test630@email.com"
-    #             department="Marketing"
-    #             job="Sales"
-    #             delete_emp(user_id)
-    #             add_user(user_id,email,fname,lname,pto,admin,admin_access,doh,department,job,vacation,sick)
-    #             new_info_arr = [user_id,fname,new_lname,new_email,admin,new_pto,doh,department,job]
-    #             update_user(user_id,new_info_arr)
-    #             x= emp_info(user_id)
-    #             delete_emp(user_id)
-    #             assert_equal(new_info_arr,x)
-    #         end
+            def test_update_mutliple_items
+                user_id = 'testid712'
+                email = "testid@email.com"
+                fname = "test712"
+                lname = "712test"
+                pto = "2"
+                vacation = "2"
+                sick = "3"
+                supervisor = "devId"
+                admin_access = "No"
+                doh = "10/15/2007"
+                new_pto = "4"
+                new_lname ="test630"
+                new_email ="test630@email.com"
+                department="Marketing"
+                job="Sales"
+                delete_emp(user_id)
+                add_user(user_id,email,fname,lname,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+                new_info_arr = [user_id,fname,lname,email,pto,vacation,sick,doh,job,department,admin_access,supervisor]
+                update_user(user_id,new_info_arr)
+                x= emp_info(user_id)
+                delete_emp(user_id)
+                assert_equal(new_info_arr,x)
+            end
 
     #         def test_update_mutliple_items_2
     #             user_id = 'testid514'
