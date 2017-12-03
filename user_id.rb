@@ -21,9 +21,9 @@ class User
     def get_last_times(users)
         @db = PG::Connection.new(@db_params)
         @hash = {}
-        p users
+        # p users
         users.each do |user_id|
-            arr = @db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id}' AND time_out = 'N/A'")
+            arr = @db.exec("SELECT * FROM timesheet_new WHERE user_id = '#{user_id[0]}' AND time_out = 'N/A'")
             if arr.num_tuples.zero?
                 @hash["#{user_id[0]}"] = [user_id[0],"empty","empty","empty","empty","empty","empty","empty"]
             else
