@@ -1026,7 +1026,7 @@ def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_
             new_sic = user_sic.to_i + i
             update_pto_time(user_id,new_pto,new_vac,new_sic,page)
             pto_time_stamp(user_id)
-            m = "here days were added, #{s[0]} #{s[1]}"
+            m = "days were added 2orlonger"
         else
             m = "days have already been added"
         end        
@@ -1039,7 +1039,7 @@ def timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_
             new_sic = user_sic.to_i + i
             update_pto_time(user_id,new_pto,new_vac,new_sic,page)
             pto_time_stamp(user_id)
-            m = " there days were added, #{s[0]} #{s[1]}"
+            m = "days were added lessthat2"
         else
             m = "days have already been added"
         end

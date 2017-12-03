@@ -1546,8 +1546,8 @@ class Test_funcs < Minitest::Test
         user_id = "TESTID"
         user_info = "none"
         user_pto = "2"
-        hire_date = "2017-10-31"
-        pto_stamp = "2017 12"
+        hire_date = ["2017-10-31"]
+        pto_stamp = ["2017 12"]
         user_vac = "2"
         user_sic = "2"
         todays_year_stamp = "2017"
