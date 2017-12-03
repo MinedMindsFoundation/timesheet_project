@@ -1583,4 +1583,18 @@ class Test_funcs < Minitest::Test
         x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
         assert_equal("days have already been added",x)
     end 
+
+    def test_timeoffbiuldup_4
+        user_id = "TESTID"
+        user_info = "none"
+        user_pto = "2"
+        hire_date = ["1995-10-31"]
+        pto_stamp = ["2017 12"]
+        user_vac = "2"
+        user_sic = "2"
+        todays_year_stamp = "2018"
+        todays_month_stamp = "1"
+        x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
+        assert_equal("days were added 2orlonger",x)
+    end 
 end
