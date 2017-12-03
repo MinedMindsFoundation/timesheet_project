@@ -786,8 +786,8 @@ pto_request.each do |requests|
     names = database_info(requests[0])
     requests << "#{names[0]} #{names[1]}"
 end
-pto_request
 db.close
+pto_request
 end
 
 def send_email_for_adding_a_new_user(fullname, email) 
