@@ -1625,4 +1625,11 @@ class Test_funcs < Minitest::Test
         x = timeoffbiuldup(user_id,user_info,user_pto,hire_date,pto_stamp,user_vac,user_sic,todays_year_stamp,todays_month_stamp)
         assert_equal("days were added lessthat2",x)
     end
+
+    #-------------------status check test area------------------------
+    def test_status_check_1
+        user_id = "antID"
+        x = status_check(user_id)
+        assert_equal("removed",x)
+    end    
 end
