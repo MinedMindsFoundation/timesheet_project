@@ -283,29 +283,29 @@ def emp_info(user_id)
     db.close
     users.each do |user|
         data << user
-        p "#{user} user"
+        # p "#{user} user"
     end
     emails.first.each do |email|
         data << email
-        p "#{email} email"
+        # p "#{email} email"
     end
     pto_time.each do |pto|
         data << pto.flatten
-        p "#{pto} pto"
+        # p "#{pto} pto"
     end
     doh_and_job.each do |item|
         data << item
-        p "#{item} item"
+        # p "#{item} item"
     end
     admins.each do |admin|
         data << admin.flatten
-        p "#{admin} admin"
+        # p "#{admin} admin"
     end
     supervisor.each do |supervisors|
         data << supervisors
-        p "#{supervisors} supervisors" 
+        # p "#{supervisors} supervisors" 
     end
-    p data
+    # p data
     data.flatten
 end
 
