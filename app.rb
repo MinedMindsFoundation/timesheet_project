@@ -408,17 +408,17 @@ post "/update_time_sheet" do
 end
 
 get "/reload" do
-     user_id = params[:user_id]
+    # user_id = params[:user_id]
     #  arr.gsub!(/[^0-9A-Za-z.,\-]/, '')
     #   user_id = arr.split(",")
     names_to_use = session[:employees]
     user_list = get_names(names_to_use)
     user_class = User.new(session[:user_id])
-      time_hash = user_class.get_last_times(user_list)
+    time_hash = user_class.get_last_times(user_list)
     # user_check =database_emp_checked
     # users = who_is_clocked_in()
     # erb :reload, locals:{users:users,user_checked:user_checked}, :layout => :post
-    erb :reload, locals:{time_hash:time_hash,user:user_id}, :layout => :post
+    erb :reload, locals:{time_hash:time_hash}, :layout => :post
 end
 
 post "/approval" do

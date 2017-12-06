@@ -121,32 +121,40 @@
 
         <div class="force-overflow">
             <ul id="myUL">
-                <%count = 0%>
+            
                 <%user_list.each do |user|%>
-                    <input type = 'hidden' id ='<%="user_id#{count}"%>' value= '<%=user[0]%>'>
                     <li><a>
                         <div class = "inline-block"><%=user[1].capitalize%> <%=user[2].capitalize%>
-                        </div>
-                        <div id='<%="result#{count}"%>'>
-                            <% if time_hash["#{user[0]}"][4] == "N/A" %>
-                                <div id ='green_light'>
-                                </div>
-                                <%time = live_time("#{time_hash["#{user[0]}"][1]} #{time_hash["#{user[0]}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-                                <div class ="inline-block"> <%=time_zero_remove(time)%>
-                                </div>
-                            <% else %>
-                                <div id ="no_light" >
-                                </div>
-                            <% end %>
+                            <div id ='<%="#{user[0]}list"%>' >
+                            </div>
                         </div>
                     </a></li>
-                    <%count += 1%>
                 <%end%>
             </ul>
         </div>
     </div>
 </div>
-<input id = 'count' type = 'hidden' value = '<%=count%>'>
+<div id="result">
+    <%time_hash.each_pair do |key,value|%>
+    <div id = '<%="#{key}result"%>'>
+            <%if value[1] != 'empty'%>
+             <div id= "green_light">
+            </div>
+            <%time = live_time("#{value[1]} #{value[5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+            <div class ="inline-block"> <%=time_zero_remove(time)%></div>
+            <%else%>
+            <div id= "no_light">
+            </div>
+            <%end%>
+    </div>
+    <%end%>
+</div>
+<input id = "name_arr" type = "hidden" value = '<%=session[:employees]%>' >
+
+
+<script>
+
+</script>
 
 
 </script>
@@ -234,28 +242,28 @@
 
 <!-- function for updating time-->
 <script>
-    function autoRefresh_div(){  
-    var search = document.getElementById('myInput');
-    var count = document.getElementById("count").value;
-    console.log(count + " count here")
-    for (var i = 0; i < count; i++){
-        console.log(i)
-        var arr = []
-        var user_id = document.getElementById("user_id"+i).value;
-        console.log(user_id);
-        /* console.log(l_name);
-        arr.push(f_name);
-        arr.push(l_name);
-        arr.push(time_a);
-        arr.push(time_b);
-        arr.push(location); */
-        console.log("#result"+i);
-    $("#result"+ i).load("/reload?user_id=" + user_id);// a function which will load data from other file after x seconds
-    }       
-    //dynamicSearch(search);
-}
-
+    function aligntimes(){
+        var names,id,timeInfo,num;
+        names = document.getElementById("name_arr").value;
+        names = JSON.parse(names);
+        console.log(names);
+        for (num = 0;num < names.length;num++){
+        console.log(num);
+        console.log(names[num]);
+        timeInfo = document.getElementById(names[num] + 'result').innerHTML;
+        console.log(timeInfo);
+        document.getElementById(names[num] + "list").innerHTML = timeInfo;
+        };
+    }
 </script>
+<script>
+    function autoRefresh_div(){  
+    $("#result").load("/reload?");// a function which will load data from other file after x
+    aligntimes();
+    };       
+    //dynamicSearch(search);
+</script>
+
 <script src ="/js/search.js"></script>
 
 <body onload="newfunc()">

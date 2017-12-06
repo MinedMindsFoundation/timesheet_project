@@ -1,10 +1,14 @@
 <link rel= "stylesheet" href = "css/searchbar.css">
-
-<%if time_hash["#{user}"][4] == "N/A"%>
-    <div id ='green_light'></div>
-    <%time = live_time("#{time_hash["#{user}"][1]} #{time_hash["#{user}"][5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
-    <div class ="inline-block"> <%=time_zero_remove(time)%></div>
-<%else%>
-    <div id ="no_light" ></div>
-<%end%>
-
+<%time_hash.each_pair do |key,value|%>
+    <div id = '<%="#{key}result"%>'>
+            <%if value[1] != 'empty'%>
+            <div id= "green_light">
+            </div>
+            <%time = live_time("#{value[1]} #{value[5]}",Time.now.strftime('%H:%M %Y-%m-%d'))%>
+            <div class ="inline-block"> <%=time_zero_remove(time)%></div>
+            <%else%>
+            <div id= "no_light">
+            </div>
+            <%end%>
+    </div>
+    <%end%>

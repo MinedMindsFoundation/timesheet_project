@@ -96,10 +96,10 @@ iframe[seamless] {
 
 #box3 {
     width: fit-content;
-    margin: auto;
+    margin: 1vh;
     padding: 1rem;
     text-align: center;
-    font-size: 1rem;
+    font-size: 3vw;
     background-color: var(--box-bg-color);
     margin-bottom: 2vh;
 }
@@ -370,8 +370,9 @@ body {
 }
 
 .center-on-page {
+    display: inline-block;
     margin: auto;
-    margin-top: 10vh;
+    margin-top: 0vh;
     margin-bottom: 5vh;
 }
 
@@ -550,7 +551,13 @@ select::-ms-expand {
         text-align: center;
         top: 28rem;
         margin-left: 0vh;
-        background-color: rgb(195, 200, 195)
+        background-color: rgb(195, 200, 195);
+        /* margin: auto; */
+        font-size: 1rem;
+        background-color: var(--box-bg-color);
+        margin-bottom: 2vh;
+        /* padding: 1rem; */
+        /* text-align: center; */
     }
     .top_right {
         position: absolute;
