@@ -228,6 +228,7 @@ body {
     position: relative;
     float: left;
     bottom: 3vh;
+    ;
 }
 
 .sidenav a {
@@ -240,7 +241,7 @@ body {
 }
 
 .inline-block {
-    display: inline-block;
+    /* display: inline-block; */
 }
 
 .button {
@@ -553,17 +554,8 @@ select::-ms-expand {
         top: 28rem;
         margin-left: 0vh;
         background-color: rgb(195, 200, 195);
-<<<<<<< HEAD
-        /* margin: auto; */
-        font-size: 1rem;
-        background-color: var(--box-bg-color);
-        margin-bottom: 2vh;
-        /* padding: 1rem; */
-        /* text-align: center; */
-=======
         font-size: 1rem;
         margin-bottom: 2vh;
->>>>>>> 5b50a6aafa2669e9bb8b600fff9ab80842176ce9
     }
     .top_right {
         position: absolute;
