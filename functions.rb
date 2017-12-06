@@ -451,7 +451,7 @@ Mail.defaults do
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
   end
-    email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'http://localhost:4567'> To Reply Click Here . </a>"
+    email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'https://wv-timesheet-clock.herokuapp.com/vac_time_request'> To Reply Click Here . </a>"
   mail = Mail.new do
       from         ENV['from']
       to           'billyjacktattoos@gmail.com'
@@ -625,7 +625,7 @@ def email_for_no_pto(full_name, pto, pto_type)
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]} tried to request #{pto_type}and they have #{pto}PTO days left to request.<a href= 'http://localhost:4567'> To Reply Click Here . </a>"
+        email_body = "#{full_name[0]} #{full_name[1]} tried to request #{pto_type}and they have #{pto}PTO days left to request.<a href= 'https://wv-timesheet-clock.herokuapp.com/'> To Reply Click Here . </a>"
       mail = Mail.new do
           from         ENV['from']
           to           'billyjacktattoos@gmail.com'
@@ -746,7 +746,7 @@ def send_email_for_pto_request_approval(start_vec, end_vac, full_name,email, pto
         :password   => ENV['a3smtppass'],
         :enable_ssl => true
       end
-        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} #{pto_type} days left to request. Please fill out this form <a href= 'http://localhost:4567/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off.#{comment}"
+        email_body = "#{full_name[0]} #{full_name[1]}your PTO request was approved for the following days #{start_vec} to #{end_vac}. you have #{pto} #{pto_type} days left to request. Please fill out this form <a href= 'https://wv-timesheet-clock.herokuapp.com/vac_time_request'> Click Here To Fill Out PTO Form.</a> Enjoy you time off.#{comment}"
       mail = Mail.new do
           from         ENV['from']
           to           email
@@ -811,7 +811,7 @@ def send_email_for_adding_a_new_user(fullname, email)
     :password   => ENV['a3smtppass'],
     :enable_ssl => true
     end
-    email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'http://localhost:4567'> Click Here to clock in. </a>"
+    email_body = "#{fullname[0]} #{fullname[1]} you have just been added to our team, Welcome.<a href= 'https://wv-timesheet-clock.herokuapp.com/'> Click Here to clock in. </a>"
     mail = Mail.new do
         from         ENV['from']
         to           email
