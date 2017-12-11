@@ -255,12 +255,12 @@
         var names,id,timeInfo,num;
         names = document.getElementById("name_arr").value;
         names = JSON.parse(names);
-        console.log(names);
-        for (num = 0;num < names.length;num++){
-        console.log(num);
-        console.log(names[num]);
+        /*console.log(names);*/
+        for (num = 0;num <= names.length;num++){
+        /* console.log(num);
+        console.log(names[num]);*/
         timeInfo = document.getElementById(names[num] + 'result').innerHTML;
-        console.log(timeInfo);
+        /*console.log(timeInfo);*/
         document.getElementById(names[num] + "list").innerHTML = timeInfo;
         };
     }
