@@ -1,4 +1,5 @@
 <!-- Login/First Page -->
+
 <link rel = "stylesheet" href = "css/style.css">
 <!--toggle for sign in-->
 <%toggle = "off"%>
@@ -17,9 +18,11 @@
 
 <div class= "large_text center">Time Clock</div>
 <div class="center"><span id="clock" class = "medium_text">&nbsp;</span> <span id="date" class = "medium_text"></span></div>
+<!--github button-->
+<script src="/../js/git_api.js"></script>
+<button onclick="gitSignOn('<%=git_id%>')">github</button>
 
-
-<ceneter><meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com"><center>
+<center><meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com"><center>
 <form id = "myform" method = "post" action = "login">
 <!--FaceBook Button -->
 <div class="social-login">
@@ -36,7 +39,7 @@
 <input type = "hidden" id = "email" name = "email">
 
 </center>
-<body class = "back_gr"  onload="updateClock(); setInterval('updateClock()',1000)";></body>
+<body class = "back_gr"  onload="updateClock(); setInterval('updateClock()',1000)";> </body>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src= "js/google_js.js"></script>

@@ -14,7 +14,9 @@ load './local_ENV.rb' if File.exist?('./local_ENV.rb')
 get "/" do 
     login_message = params[:login_message]
     session[:message] = '' 
-    erb :login, locals:{login_message:login_message}, :layout => :post
+    git_id = ENV['git_id']
+    git_pass= ENV['git_secret']
+    erb :login, locals:{login_message:login_message,git_id:git_id,git_pass:git_pass}, :layout => :post
 end
 
 # comming from login.erb
@@ -432,3 +434,10 @@ post "/to_admin_emplist" do
     admin_list = admin_emp_list()
     erb :admin_empmng, locals:{admin_list:admin_list}
 end
+
+# gets github api info then displays it on the next page
+get "/github" do
+    commits = Git_api_class.new(username,password)
+    erb :github_info, locals:{commits:commits}
+end
+
