@@ -1,5 +1,6 @@
 require "sinatra"
 require 'pg'
+require 'rest-client'
 require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
 require_relative 'user_id.rb'
@@ -16,7 +17,16 @@ get "/" do
     session[:message] = '' 
     git_id = ENV['git_id']
     git_pass= ENV['git_secret']
+    if params[:code] == nil
     erb :login, locals:{login_message:login_message,git_id:git_id,git_pass:git_pass}, :layout => :post
+    else 
+        email = params[:email]
+        redirect "/git_login?email=" + email
+    end
+end
+
+get "/git_login" do
+    session[:email] = params[:email]
 end
 
 # comming from login.erb
@@ -437,7 +447,24 @@ end
 
 # gets github api info then displays it on the next page
 get "/github" do
-    commits = Git_api_class.new(username,password)
+    commits = Git_api_class.new(token)
     erb :github_info, locals:{commits:commits}
 end
 
+get '/callback' do
+    # get temporary GitHub code...
+    session_code = request.env['rack.request.query_hash']['code']
+  
+    # ... and POST it back to GitHub
+    result = RestClient.post('https://github.com/login/oauth/access_token',
+                            {:client_id =>ENV['git_id'],
+                             :client_secret => ENV['git_secret'],
+                             :code => session_code},
+                             :accept => :json)
+  
+    # extract the token and granted scopes
+    access_token = JSON.parse(result)['access_token']
+    email =JSON.parse(RestClient.get('https://api.github.com/user/emails',{:params => {:access_token => access_token}}))
+    p email
+    redirect '/?code=' + access_token + "&email=" + email
+  end

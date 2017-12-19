@@ -1,7 +1,7 @@
-function gitSignOn(client_id){ 
+function gitSignOn(git_id){ 
     console.log("signing in with github")
-    window.open('https://github.com/login/oauth/authorize?client_id='+ git_id);
-}
+    window.open('https://github.com/login/oauth/authorize?client_id='+ git_id +  "&scopes= user:email repo");
+};
 // Get the authorization code from the url that was returned by GitHub
 
 var authCode = getAuthCode(window.location.href);
