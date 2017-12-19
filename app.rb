@@ -454,17 +454,16 @@ end
 get '/callback' do
     # get temporary GitHub code...
     session_code = request.env['rack.request.query_hash']['code']
-  
     # ... and POST it back to GitHub
     result = RestClient.post('https://github.com/login/oauth/access_token',
                             {:client_id =>ENV['git_id'],
                              :client_secret => ENV['git_secret'],
                              :code => session_code},
                              :accept => :json)
-  
     # extract the token and granted scopes
     access_token = JSON.parse(result)['access_token']
-    email =JSON.parse(RestClient.get('https://api.github.com/user/emails',{:params => {:access_token => access_token}}))
-    p email
+    email_rquest = RestClient.get('https://api.github.com/user',{:params => {:access_token => access_token}})
+    info = JSON.parse(email_rquest)
+    p info['email']
     redirect '/?code=' + access_token + "&email=" + email
   end
