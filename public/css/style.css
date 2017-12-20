@@ -125,7 +125,7 @@ iframe[seamless] {
 }
 
 #gitbox {
-    width: fit-content;
+    width: 45%;
     margin: right;
     text-align: center;
     border-style: solid;

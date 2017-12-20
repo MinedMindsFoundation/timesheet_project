@@ -52,7 +52,7 @@ class Git_api_class
                 info["#{repo.name}"] = commit_date
             end
         end
-        # p info
+        p info
         info
     end
 end

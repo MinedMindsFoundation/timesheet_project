@@ -4,11 +4,14 @@
         <%repo[1].each do |dates|%>
             <table align ="center">
             <h3><%=dates[0]%></h3>
+                <th></th>
                 <th>Branch</th>
                 <th>SHA Key</th>
                 <th>Commit</th>
                 <%dates[1].each do |info|%>
                     <tr align ="center">
+                    <td><input type = "checkbox" name = "info[]" value = '<%{repo[0]=>{dates[0]=>[{"branch"=>info["branch"], "sha"=>info["sha"], "message"=>info["message"]}]}}%>'></td>
+                    <td><%={repo[0]=>{dates[0]=>[{"branch"=>info["branch"], "sha"=>info["sha"], "message"=>info["message"]}]}}%></td>
                     <td><%=info["branch"]%></td>
                     <td><%=info["sha"]%></td>
                     <td><%=info["message"]%></td>
