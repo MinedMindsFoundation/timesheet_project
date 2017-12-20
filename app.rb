@@ -447,10 +447,20 @@ end
 
 # gets github api info then displays it on the next page
 get "/github" do
-    erb :github_info
+    erb :git_login
 end
 
+post "/from_git_login" do
+    user = params[:user]
+    pass = params[:pass]
+    session[:git_api] = Git_api_class.new(user,pass)
+    redirect "/to_github_page?"
+end
 
+get '/to_github_page?' do 
+   git_commits = session[:git_api].get_api_data(pay_period(Time.now)[0])
+   erb :git_page, locals:{git_commits:git_commits}
+end
 # callback from the github api oAuth access token
 get '/callback' do
     # get temporary GitHub code...
