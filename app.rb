@@ -461,9 +461,8 @@ get '/callback' do
                              :code => session_code},
                              :accept => :json)
     # extract the token and granted scopes
+
     access_token = JSON.parse(result)['access_token']
-    email_rquest = RestClient.get('https://api.github.com/user',{:params => {:access_token => access_token}})
-    info = JSON.parse(email_rquest)
-    p info['email']
+    session[:git_api] = 
     redirect '/?code=' + access_token + "&email=" + email
   end
