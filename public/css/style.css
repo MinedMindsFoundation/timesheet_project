@@ -124,6 +124,17 @@ iframe[seamless] {
     background-color: var(--box-bg-color);
 }
 
+#gitbox {
+    width: fit-content;
+    margin: right;
+    text-align: center;
+    border-style: solid;
+    border-color: gray;
+    padding: auto;
+    border-radius: 3vh;
+    background-color: var(--box-bg-color);
+}
+
 .rounded_borders {
     border-radius: 2vh;
     border-color: gray;
