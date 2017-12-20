@@ -4,20 +4,18 @@ require 'time'
 
 class Git_api_class
     
-    def initialize(token)
-        @access_token = token
-        # @username = username
-        # @password = password
+    def initialize(username,password)
+        @username = username
+        @password = password
     end
 
     def get_api_data(date)
-        client = Octokit::Client.new(:access_token => @access_token)
+        client = Octokit::Client.new(:login => @username, :password => @password)
         # p client.user
         # p client.user.email
         repos = client.repositories
         info = {}
         repos.each do |repo|
-            p repo
             # p repo.full_name
             commit_date = {}
             client.branches("#{repo.full_name}").each do |branch|

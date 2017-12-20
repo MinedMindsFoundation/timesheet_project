@@ -466,15 +466,14 @@ end
 get "/github" do
     erb :git_login
 end
-# made to bypass github oauth till oauth is working
-# post "/from_git_login" do
-#     session[:git_user] = params[:user]
-#     session[:git_pass] = params[:pass]
-#     redirect "/to_github_page?"
-# end
+# returns from git_login with github password
+post "/from_git_login" do
+    session[:git_pass] = params[:pass]
+    redirect "/to_github_page"
+end
 
 get '/to_github_page' do   
-    git_api = Git_api_class.new(session[:access_token])
+    git_api = Git_api_class.new(session[:git_user],session[:git_pass])
     git_commits = git_api.get_api_data(pay_period(Time.now)[0])
     erb :git_page, locals:{git_commits:git_commits}
 end
@@ -491,7 +490,7 @@ get '/callback' do
     # extract the token and granted scopes
     p JSON.parse(result)['scope']
     session[:access_token] = JSON.parse(result)['access_token']
+    session[:git_user] = JSON.parse(RestClient.get('https://api.github.com/user?access_token=' + session[:access_token]))['login']
     email = JSON.parse(RestClient.get('https://api.github.com/user/emails?access_token=' + session[:access_token])).first['email']
-    p email
     redirect '/git_login?email=' + email
 end
