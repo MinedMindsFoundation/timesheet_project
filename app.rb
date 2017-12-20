@@ -17,25 +17,15 @@ get "/" do
     login_message = params[:login_message]
     session[:message] = '' 
     git_id = ENV['git_id']
-    git_pass= ENV['git_secret']
-    erb :login, locals:{login_message:login_message}, :layout => :post
+    erb :login, locals:{login_message:login_message,git_id:git_id}, :layout => :post
 end
 
-# get "/git_login" do
-#     session[:email] = params[:email]
-# end
-
-# comming from login.erb
-post '/login' do 
-p "made it past login"
-session[:first_name] = params[:first_name]
-session[:last_name] = params[:last_name]
-session[:email] = params[:email]
-p session
+get "/git_login" do
+    session[:email] = params[:email]
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
         if status_check(session[:user_id]) == 'removed'
-            p "failed status_check"
+            # p "failed status_check"
             redirect '/'
         else
         db_params = {
@@ -48,7 +38,35 @@ p session
         redirect "/to_landing"
         end
     else  
-        p "failed at login_check?"
+        # p "failed at login_check?"
+        redirect '/'
+    end
+end
+
+# comming from login.erb
+post '/login' do 
+# p "made it past login"
+session[:first_name] = params[:first_name]
+session[:last_name] = params[:last_name]
+session[:email] = params[:email]
+# p session[:email]
+    if login_check?(session[:email])
+        session[:user_id] = get_id(session[:email])
+        if status_check(session[:user_id]) == 'removed'
+            # p "failed status_check"
+            redirect '/'
+        else
+        db_params = {
+            host: ENV['host'],
+            port: ENV['port'],
+            dbname: ENV['dbname'],
+            user: ENV['user'],
+            password: ENV['password']
+        }
+        redirect "/to_landing"
+        end
+    else  
+        # p "failed at login_check?"
         redirect '/'
     end
 end
@@ -60,7 +78,7 @@ post '/sso_login' do
         session[:user_id] = username
         redirect '/to_landing'
     else
-        p "failed at sso login"
+        # p "failed at sso login"
         redirect '/'
     end
 end    
@@ -448,15 +466,15 @@ end
 get "/github" do
     erb :git_login
 end
+# made to bypass github oauth till oauth is working
+# post "/from_git_login" do
+#     session[:git_user] = params[:user]
+#     session[:git_pass] = params[:pass]
+#     redirect "/to_github_page?"
+# end
 
-post "/from_git_login" do
-    session[:git_user] = params[:user]
-    session[:git_pass] = params[:pass]
-    redirect "/to_github_page?"
-end
-
-get '/to_github_page?' do   
-    git_api = Git_api_class.new(session[:git_user],session[:git_pass])
+get '/to_github_page' do   
+    git_api = Git_api_class.new(session[:access_token])
     git_commits = git_api.get_api_data(pay_period(Time.now)[0])
     erb :git_page, locals:{git_commits:git_commits}
 end
@@ -471,8 +489,9 @@ get '/callback' do
                              :code => session_code},
                              :accept => :json)
     # extract the token and granted scopes
-
-    access_token = JSON.parse(result)['access_token']
-    session[:git_api] = 
-    redirect '/?code=' + access_token + "&email=" + email
-  end
+    p JSON.parse(result)['scope']
+    session[:access_token] = JSON.parse(result)['access_token']
+    email = JSON.parse(RestClient.get('https://api.github.com/user/emails?access_token=' + session[:access_token])).first['email']
+    p email
+    redirect '/git_login?email=' + email
+end
