@@ -17,6 +17,7 @@ class Git_api_class
         repos = client.repositories
         info = {}
         repos.each do |repo|
+            p repo
             # p repo.full_name
             commit_date = {}
             client.branches("#{repo.full_name}").each do |branch|
