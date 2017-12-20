@@ -1,6 +1,7 @@
 require "sinatra"
 require 'pg'
 require 'rest-client'
+require_relative 'github_api.rb'
 require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
 require_relative 'user_id.rb'
@@ -17,28 +18,24 @@ get "/" do
     session[:message] = '' 
     git_id = ENV['git_id']
     git_pass= ENV['git_secret']
-    if params[:code] == nil
-    erb :login, locals:{login_message:login_message,git_id:git_id,git_pass:git_pass}, :layout => :post
-    else 
-        email = params[:email]
-        redirect "/git_login?email=" + email
-    end
+    erb :login, locals:{login_message:login_message}, :layout => :post
 end
 
-get "/git_login" do
-    session[:email] = params[:email]
-end
+# get "/git_login" do
+#     session[:email] = params[:email]
+# end
 
 # comming from login.erb
 post '/login' do 
-
+p "made it past login"
 session[:first_name] = params[:first_name]
 session[:last_name] = params[:last_name]
 session[:email] = params[:email]
-
+p session
     if login_check?(session[:email])
         session[:user_id] = get_id(session[:email])
         if status_check(session[:user_id]) == 'removed'
+            p "failed status_check"
             redirect '/'
         else
         db_params = {
@@ -51,6 +48,7 @@ session[:email] = params[:email]
         redirect "/to_landing"
         end
     else  
+        p "failed at login_check?"
         redirect '/'
     end
 end
@@ -62,6 +60,7 @@ post '/sso_login' do
         session[:user_id] = username
         redirect '/to_landing'
     else
+        p "failed at sso login"
         redirect '/'
     end
 end    
@@ -451,15 +450,15 @@ get "/github" do
 end
 
 post "/from_git_login" do
-    user = params[:user]
-    pass = params[:pass]
-    session[:git_api] = Git_api_class.new(user,pass)
+    session[:git_user] = params[:user]
+    session[:git_pass] = params[:pass]
     redirect "/to_github_page?"
 end
 
-get '/to_github_page?' do 
-   git_commits = session[:git_api].get_api_data(pay_period(Time.now)[0])
-   erb :git_page, locals:{git_commits:git_commits}
+get '/to_github_page?' do   
+    git_api = Git_api_class.new(session[:git_user],session[:git_pass])
+    git_commits = git_api.get_api_data(pay_period(Time.now)[0])
+    erb :git_page, locals:{git_commits:git_commits}
 end
 # callback from the github api oAuth access token
 get '/callback' do
