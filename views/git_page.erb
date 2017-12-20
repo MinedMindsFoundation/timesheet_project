@@ -1,1 +1,20 @@
-<%=git_commits%>
+<div id="gitbox" class= "scrollable top_right" align = "right">
+    <%git_commits.each do |repo|%>
+        <h1><%=repo[0]%></h1>
+        <%repo[1].each do |dates|%>
+            <table align ="center">
+            <h3><%=dates[0]%></h3>
+                <th>Branch</th>
+                <th>SHA Key</th>
+                <th>Commit</th>
+                <%dates[1].each do |info|%>
+                    <tr align ="center">
+                    <td><%=info["branch"]%></td>
+                    <td><%=info["sha"]%></td>
+                    <td><%=info["message"]%></td>
+                    </tr>
+                <%end%>
+            </table>
+        <%end%>
+    <%end%>
+</div>
