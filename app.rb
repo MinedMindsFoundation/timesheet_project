@@ -447,10 +447,11 @@ end
 
 # gets github api info then displays it on the next page
 get "/github" do
-    commits = Git_api_class.new(token)
-    erb :github_info, locals:{commits:commits}
+    erb :github_info
 end
 
+
+# callback from the github api oAuth access token
 get '/callback' do
     # get temporary GitHub code...
     session_code = request.env['rack.request.query_hash']['code']
