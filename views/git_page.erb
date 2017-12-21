@@ -1,23 +1,27 @@
-<div id="gitbox" class= "scrollable top_right" align = "right">
-    <%git_commits.each do |repo|%>
-        <h1><%=repo[0]%></h1>
-        <%repo[1].each do |dates|%>
-            <table align ="center">
-            <h3><%=dates[0]%></h3>
-                <th></th>
-                <th>Branch</th>
-                <th>SHA Key</th>
-                <th>Commit</th>
-                <%dates[1].each do |info|%>
-                    <tr align ="center">
-                    <td><input type = "checkbox" name = "info[]" value = '<%{repo[0]=>{dates[0]=>[{"branch"=>info["branch"], "sha"=>info["sha"], "message"=>info["message"]}]}}%>'></td>
-                    <td><%={repo[0]=>{dates[0]=>[{"branch"=>info["branch"], "sha"=>info["sha"], "message"=>info["message"]}]}}%></td>
-                    <td><%=info["branch"]%></td>
-                    <td><%=info["sha"]%></td>
-                    <td><%=info["message"]%></td>
-                    </tr>
-                <%end%>
-            </table>
+ <form method = "post" action="commits_to_send">
+    <div id="gitbox" class= "scrollable top_right" align = "right">
+        <%git_commits.each do |repo|%>
+            <h1><%=repo[0]%></h1>
+            <%repo[1].each do |dates|%>
+                <table align ="center">
+                <h3><%=dates[0]%></h3>
+                    <th>info</th>
+                    <th>Branch</th>
+                    <th>SHA Key</th>
+                    <th>Commit</th>
+                    <%dates[1].each do |info|%>
+                        <tr align ="center">
+                        <%hash = {repo[0]=>{dates[0]=>[info]}}%>
+                        <%=hash%>
+                        <td><input type = "checkbox" name = "info[]" value = '<%=hash%>'></td>
+                        <td><%=info["branch"]%></td>
+                        <td><%=info["sha"]%></td>
+                        <td><%=info["message"]%></td>
+                        </tr>
+                    <%end%>
+                </table>
+            <%end%>
         <%end%>
-    <%end%>
-</div>
+    </div>
+    <input type= "submit" value = "enter">
+</form>
