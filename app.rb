@@ -494,3 +494,8 @@ get '/callback' do
     email = JSON.parse(RestClient.get('https://api.github.com/user/emails?access_token=' + session[:access_token])).first['email']
     redirect '/git_login?email=' + email
 end
+
+post "/commits_to_send" do
+    info = params[:info]
+    p info
+end

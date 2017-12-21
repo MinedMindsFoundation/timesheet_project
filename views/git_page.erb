@@ -1,3 +1,4 @@
+<form method="post" action="commits_to_send">
 <div id="gitbox" class= "scrollable top_right" align = "right">
     <%git_commits.each do |repo|%>
         <h1><%=repo[0]%></h1>
@@ -10,7 +11,8 @@
                 <th>Commit</th>
                 <%dates[1].each do |info|%>
                     <tr align ="center">
-                    <td><input type = "checkbox" name = "info[]" value = '<% Hash["repo"=>repo[0], "date"=>dates[0], "branch"=>info["branch"], "sha"=>info["sha"], "message"=>info["message"]]%>'></td>
+                    <%checked_info = Hash["repo"=>repo[0], "date"=>dates[0], "branch"=>info["branch"], "sha"=>info["sha"], "message"=>info["message"]]%>
+                    <td><input type = "checkbox" name = "info[]" value = '<%=checked_info%>'></td>
                     <td><%=info["branch"]%></td>
                     <td><%=info["sha"]%></td>
                     <td><%=info["message"]%></td>
@@ -20,3 +22,5 @@
         <%end%>
     <%end%>
 </div>
+<input type= "submit">
+</form>
