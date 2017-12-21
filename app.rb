@@ -496,6 +496,14 @@ get '/callback' do
 end
 
 post "/commits_to_send" do
-    info = params.keys
-    p info
+    info = params[:info]
+    redirect '/invoice_preview?info=' + info
 end
+
+get '/invoice_preview' do
+    info = params[:info]
+    erb :invoice_preview, locals:{info:info}
+end
+
+
+
