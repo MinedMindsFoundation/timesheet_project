@@ -143,7 +143,7 @@ iframe[seamless] {
 }
 #gitbox {
     float: left;
-    width: 45%;
+    width: 95%;
     font-size: 60%;
     margin: 1rem;
     margin-left: 0;
@@ -164,6 +164,13 @@ iframe[seamless] {
 
 }
 
+.left{
+    float: left;
+    width: 48%;
+    display: grid;
+    margin-right: auto;
+}
+
 .repo_name{
     text-align: center;
     font-size: 3vw;
@@ -172,9 +179,9 @@ iframe[seamless] {
     width: -webkit-fill-available;
 }
 #client_box{
-    width: fit-content;
-    margin: auto;
-    position: relative;
+    width: 94%;
+    margin: 0vh;
+    /* position: relative; */
     border-style: solid;
     border-color: gray;
     padding: 1rem;
