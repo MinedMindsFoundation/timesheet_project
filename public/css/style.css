@@ -178,6 +178,18 @@ iframe[seamless] {
     margin-bottom: 0;
     width: -webkit-fill-available;
 }
+
+#login_git_box{
+    border-color: var(--box-bdr-color);
+    background-color: var(--box-bg-color);
+    margin:auto;
+    margin-top:1vh;
+    padding:3rem;
+    border-radius: 5rem;
+    border-width: 1vw;
+    width: fit-content;
+}
+
 #client_box{
     width: 94%;
     margin: 0vh;
