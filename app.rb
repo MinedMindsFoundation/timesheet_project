@@ -475,7 +475,10 @@ end
 get '/to_github_page' do   
     git_api = Git_api_class.new(session[:git_user],session[:git_pass])
     git_commits = git_api.get_api_data(pay_period(Time.now)[0])
-    erb :git_page, locals:{git_commits:git_commits}
+    # p pay_period(Time.now)
+    # p Time.now
+    session[:two_weeks] = two_week_days(Time.now)
+    erb :git_page, locals:{git_commits:git_commits, two_weeks:session[:two_weeks]}
 end
 # callback from the github api oAuth access token
 get '/callback' do
@@ -497,6 +500,7 @@ end
 
 post "/commits_to_send" do
     info = params[:info]
+<<<<<<< HEAD
     redirect '/invoice_preview?info=' + info
 end
 
@@ -507,3 +511,14 @@ end
 
 
 
+=======
+    non_committed = params[:ncommit]
+    day_to_non = {}
+    session[:two_weeks].each_with_index do |day, index|
+        day_to_non["#{day}"] = ncommit[index]
+    end
+    p day_to_non
+    p non_committed
+    p info
+end
+>>>>>>> 9c35231f230021a2c84ebd12b54844c7d074aba0

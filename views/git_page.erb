@@ -1,5 +1,40 @@
 <form method="post" action="commits_to_send">
-<div id="gitbox" class= "scrollable top_right" align = "right">
+<div id="gitbox" class= "scrollable" align = "left">
+<h2>Activities Not Commited</h2>
+<h2>Week of <%=two_weeks[0]%> to <%=two_weeks[6]%></h2>
+<h3 id="day_left">Monday-<%=two_weeks[0]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Tuesday-<%=two_weeks[1]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Wednesday-<%=two_weeks[2]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Thursday-<%=two_weeks[3]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Friday-<%=two_weeks[4]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Saturday-<%=two_weeks[5]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Sunday-<%=two_weeks[6]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<br><br>
+<h2>Week of <%=two_weeks[7]%> to <%=two_weeks[13]%></h2>
+<h3 id="day_left">Monday-<%=two_weeks[7]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Tuesday-<%=two_weeks[8]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Wednesday-<%=two_weeks[9]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Thursday-<%=two_weeks[10]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Friday-<%=two_weeks[11]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Saturday-<%=two_weeks[12]%></h3>
+    <input type="text" name="ncommit[]" value="">
+<h3 id="day_left">Sunday-<%=two_weeks[13]%></h3>
+    <input type="text" name="ncommit[]" value="">
+</div>
+<div id="gitbox" class= "top_right" align = "right">
+    <h1>Commits from</h1>
     <%git_commits.each do |repo|%>
         <h1><%=repo[0]%></h1>
         <%repo[1].each do |dates|%>

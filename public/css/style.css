@@ -135,6 +135,10 @@ iframe[seamless] {
     background-color: var(--box-bg-color);
 }
 
+#day_left {
+    text-align: left;
+}
+
 .rounded_borders {
     border-radius: 2vh;
     border-color: gray;
