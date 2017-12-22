@@ -418,6 +418,24 @@ def pay_period(now)
     arr
 end
 
+def two_week_days(now)
+    add_2weeks = (14 * 60 * 60 * 24)
+    endday = (13 * 60 * 60 * 24)  + (23 * 60 *60 ) +(59*60) + 59
+
+    start_date = Time.utc(2017,10,30)
+    end_date = start_date + endday
+        until now < end_date do
+            start_date += add_2weeks   
+            end_date = start_date + endday
+        end
+    arr = []
+        14.times do
+            # p start_date
+            arr << start_date.strftime('%Y-%m-%d')
+            start_date += (60 * 60 * 24)
+        end
+    arr
+end
 
 def pull_in_and_out_times(user_id,date_range)
     
