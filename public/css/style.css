@@ -171,6 +171,17 @@ iframe[seamless] {
 }
 
 
+#datebox {
+    width: 45%;
+    margin: right;
+    text-align: center;
+    border-style: solid;
+    border-color: gray;
+    padding: auto;
+    border-radius: 3vh;
+    background-color: var(--box-bg-color);
+}
+
 #day_left {
     text-align: left;
 }
