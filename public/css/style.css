@@ -179,6 +179,18 @@ iframe[seamless] {
     width: -webkit-fill-available;
 }
 
+#git_submit{
+    border-radius: 33%;
+    border-style: solid;
+    padding: 1rem;
+    font-size: 8vw;
+    margin: auto;
+    margin-top: 5vh;
+    margin-left: 10%;
+    border-color: black;
+}
+
+
 #login_git_box{
     border-color: var(--box-bdr-color);
     background-color: var(--box-bg-color);
