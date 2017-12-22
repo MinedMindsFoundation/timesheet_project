@@ -500,18 +500,6 @@ end
 
 post "/commits_to_send" do
     info = params[:info]
-<<<<<<< HEAD
-    redirect '/invoice_preview?info=' + info
-end
-
-get '/invoice_preview' do
-    info = params[:info]
-    erb :invoice_preview, locals:{info:info}
-end
-
-
-
-=======
     non_committed = params[:ncommit]
     day_to_non = {}
     session[:two_weeks].each_with_index do |day, index|
@@ -521,4 +509,3 @@ end
     p non_committed
     p info
 end
->>>>>>> 9c35231f230021a2c84ebd12b54844c7d074aba0

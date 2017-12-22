@@ -124,16 +124,52 @@ iframe[seamless] {
     background-color: var(--box-bg-color);
 }
 
-#gitbox {
+#gitbox_2{
+    float: right;
+    display: grid;
     width: 45%;
-    margin: right;
+    font-size: 60%;
+    text-align: center;
+    border-style: solid;
+    border-color: gray;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 3vh;
+    background-color: var(--box-bg-color);
+}
+
+
+#gitbox {
+    float:left;
+    width: 45%;
+    font-size: 60%;
+    margin: 1rem;
     text-align: center;
     border-style: solid;
     border-color: gray;
     padding: auto;
     border-radius: 3vh;
+
     background-color: var(--box-bg-color);
 }
+.git_dates{
+    text-align: left;
+    font-size: 2vw;
+    border-bottom: black;
+    border-bottom-style: solid;
+    padding-left: 1vw;
+    margin-top: 2vh;
+
+}
+
+.repo_name{
+    text-align: center;
+    font-size: 3vw;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: -webkit-fill-available;
+}
+
 
 #day_left {
     text-align: left;
