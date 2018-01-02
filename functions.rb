@@ -472,7 +472,7 @@ Mail.defaults do
     email_body = "#{full_name[0]} #{full_name[1]} is requesting #{type} for these dates #{start_vec} to #{end_vac}. They have #{pto}PTO days left to request. <a href= 'https://wv-timesheet-clock.herokuapp.com/vac_time_request'> To Reply Click Here . </a>"
   mail = Mail.new do
       from         ENV['from']
-      to           'billyjacktattoos@gmail.com'
+      to           'wvtimeclockdev@gmail.com'
       subject      "PTO Request"
 
       html_part do
@@ -646,7 +646,7 @@ def email_for_no_pto(full_name, pto, pto_type)
         email_body = "#{full_name[0]} #{full_name[1]} tried to request #{pto_type}and they have #{pto}PTO days left to request.<a href= 'https://wv-timesheet-clock.herokuapp.com/'> To Reply Click Here . </a>"
       mail = Mail.new do
           from         ENV['from']
-          to           'billyjacktattoos@gmail.com'
+          to           'wvtimeclockdev@gmail.com'
           subject      "PTO Request with no days to request"
     
         html_part do
@@ -1088,3 +1088,25 @@ def todays_month_stamp()
 end
   
 
+def invoice_mail(email, name, start_date)
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+        end
+        email_body = ""
+        mail = Mail.new do
+            from         ENV['from']
+            to           email
+            subject      "Invoice for #{name} from #{start_date}"
+    
+            html_part do
+                content_type 'text/html'
+                body       email_body
+            end
+        end
+        mail.deliver!
+end

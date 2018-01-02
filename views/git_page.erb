@@ -78,6 +78,61 @@
         <textarea rows="4" cols="50"></textarea>
     </div>
 
+<div id="gitbox" class= "scrollable" align = "left">
+<h2>Activities Not Commited</h2>
+<h2>Week of <%=two_weeks[0]%> to <%=two_weeks[6]%></h2>
+<h3 id="day_left">Monday-<%=two_weeks[0]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Tuesday-<%=two_weeks[1]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Wednesday-<%=two_weeks[2]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Thursday-<%=two_weeks[3]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Friday-<%=two_weeks[4]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Saturday-<%=two_weeks[5]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Sunday-<%=two_weeks[6]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<br><br>
+<h2>Week of <%=two_weeks[7]%> to <%=two_weeks[13]%></h2>
+<h3 id="day_left">Monday-<%=two_weeks[7]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Tuesday-<%=two_weeks[8]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Wednesday-<%=two_weeks[9]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Thursday-<%=two_weeks[10]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Friday-<%=two_weeks[11]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Saturday-<%=two_weeks[12]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+<h3 id="day_left">Sunday-<%=two_weeks[13]%></h3>
+    <textarea rows="4" cols="50"></textarea>
+</div><br><br>
+
+<div id="datebox" class= "scrollable" align = "right">
+<h1>Clients This Week</h1>
+<input type="text" name="clients[]"><input type="text" name="clients[]"><input type="text" name="clients[]">
+<br>
+<h1>Expenses</h1>
+<table>
+    <th>Date</th>
+    <th>Expenses(General)</th>
+    <th>Expenses(Mileage)</th>
+    <th>Expenses(Tolls)</th>
+    <%two_weeks.each do |day|%>
+    <tr>
+        <td><%=day%></td>
+        <td><input type="text" name="exp_gen[]"style = "width: 4em" required></td>
+        <td><input type="text" name="exp_mil[]"style = "width: 4em" required></td>
+        <td><input type="text" name="exp_tol[]"style = "width: 4em" required></td>
+    </tr>
+    <%end%>
+    </table>
+</div>
 
 
     <div id="client_box">

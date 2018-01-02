@@ -502,9 +502,9 @@ post "/commits_to_send" do
     info = params[:info]
     non_committed = params[:ncommit]
     day_to_non = {}
-    session[:two_weeks].each_with_index do |day, index|
-        day_to_non["#{day}"] = ncommit[index]
-    end
+    # session[:two_weeks].each_with_index do |day, index|
+    #     day_to_non["#{day}"] = non_committed[index]
+    # end
     p day_to_non
     p non_committed
     p info
