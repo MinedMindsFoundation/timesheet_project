@@ -78,33 +78,24 @@
     <textarea rows="4" cols="50"></textarea>
 </div><br><br>
 
-<div id="datebox" class= "scrollable" align = "left">
+<div id="datebox" class= "scrollable" align = "right">
 <h1>Clients This Week</h1>
-<input type="text" name="clients[]"><input type="text" name="clients[]"><input type="text" name="clients[]"><br>
-<h1>Expenses This Week</h1>
+<input type="text" name="clients[]"><input type="text" name="clients[]"><input type="text" name="clients[]">
+<br>
+<h1>Expenses</h1>
 <table>
     <th>Date</th>
     <th>Expenses(General)</th>
     <th>Expenses(Mileage)</th>
     <th>Expenses(Tolls)</th>
+    <%two_weeks.each do |day|%>
     <tr>
-        <td><%=two_weeks[0]%></td>
+        <td><%=day%></td>
         <td><input type="text" name="exp_gen[]"style = "width: 4em" required></td>
         <td><input type="text" name="exp_mil[]"style = "width: 4em" required></td>
         <td><input type="text" name="exp_tol[]"style = "width: 4em" required></td>
     </tr>
-    <tr>
-        <td><%=two_weeks[1]%></td>
-        <td><input type="text" name="exp_gen[]"style = "width: 4em" required></td>
-        <td><input type="text" name="exp_mil[]"style = "width: 4em" required></td>
-        <td><input type="text" name="exp_tol[]"style = "width: 4em" required></td>
-    </tr>
-    <tr>
-        <td><%=two_weeks[2]%></td>
-        <td><input type="text" name="exp_gen[]"style = "width: 4em" required></td>
-        <td><input type="text" name="exp_mil[]"style = "width: 4em" required></td>
-        <td><input type="text" name="exp_tol[]"style = "width: 4em" required></td>
-    </tr>
+    <%end%>
     </table>
 </div>
 
