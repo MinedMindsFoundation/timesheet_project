@@ -1,7 +1,9 @@
 <form method="post" action="commits_to_send">
-<div id="datebox" class= "scrollable" align = "left">
+
+<div id="datebox" class= "scrollable" style="float: right">
 <h2>Hours Per Day</h2>
-<h3><%=two_weeks[0]%> to <%=two_weeks[6]%></h3>
+<%two_weeks.each do |split_week|%>
+<h3><%=split_week[0]%> to <%=split_week[6]%></h3>
 <table align ="left">
     <th>Monday</th>
     <th>Tuesday</th>
@@ -11,97 +13,67 @@
     <th>Saturday</th>
     <th>Sunday</th>
     <tr>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
+    <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="8" required></td>
+    <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="8" required></td>
+    <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="8" required></td>
+    <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="8" required></td>
+    <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="8" required></td>
+    <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="8" required></td>
+    <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="8" required></td>
     </tr>
 </table>
 <br><br>
-<h3><%=two_weeks[7]%> to <%=two_weeks[13]%></h3>
-<table align ="left">
-    <th>Monday</th>
-    <th>Tuesday</th>
-    <th>Wednesday</th>
-    <th>Thursday</th>
-    <th>Friday</th>
-    <th>Saturday</th>
-    <th>Sunday</th>
-    <tr>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    <td><input type="number" name="hours_day[]" style = "width: 3em" min="0" max="8" required></td>
-    </tr>
-</table>
-</div><br><br>
+<%end%>
+</div>
 
+<div id="datebox" class= "scrollable">
+<h1>Clients This Week</h1>
+<input type="text" name="clients[]" required><input type="text" name="clients[]"><input type="text" name="clients[]"><input type="text" name="clients[]">
+</div>
 
 <div id="gitbox" class= "scrollable" align = "left">
 <h2>Activities Not Commited</h2>
-<h2>Week of <%=two_weeks[0]%> to <%=two_weeks[6]%></h2>
-<h3 id="day_left">Monday-<%=two_weeks[0]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Tuesday-<%=two_weeks[1]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Wednesday-<%=two_weeks[2]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Thursday-<%=two_weeks[3]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Friday-<%=two_weeks[4]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Saturday-<%=two_weeks[5]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Sunday-<%=two_weeks[6]%></h3>
-    <textarea rows="4" cols="50"></textarea>
+<%two_weeks.each do |split_week|%>
+<h2>Week of <%=split_week[0]%> to <%=split_week[6]%></h2>
+<h3 id="day_left">Monday-<%=split_week[0]%></h3>
+    <textarea name="ncommit[]" rows="4" cols="50"></textarea>
+<h3 id="day_left">Tuesday-<%=split_week[1]%></h3>
+    <textarea name="ncommit[]" rows="4" cols="50"></textarea>
+<h3 id="day_left">Wednesday-<%=split_week[2]%></h3>
+    <textarea name="ncommit[]" rows="4" cols="50"></textarea>
+<h3 id="day_left">Thursday-<%=split_week[3]%></h3>
+    <textarea name="ncommit[]" rows="4" cols="50"></textarea>
+<h3 id="day_left">Friday-<%=split_week[4]%></h3>
+    <textarea name="ncommit[]" rows="4" cols="50"></textarea>
+<h3 id="day_left">Saturday-<%=split_week[5]%></h3>
+    <textarea name="ncommit[]" rows="4" cols="50"></textarea>
+<h3 id="day_left">Sunday-<%=split_week[6]%></h3>
+    <textarea name="ncommit[]" rows="4" cols="50"></textarea>
 <br><br>
-<h2>Week of <%=two_weeks[7]%> to <%=two_weeks[13]%></h2>
-<h3 id="day_left">Monday-<%=two_weeks[7]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Tuesday-<%=two_weeks[8]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Wednesday-<%=two_weeks[9]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Thursday-<%=two_weeks[10]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Friday-<%=two_weeks[11]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Saturday-<%=two_weeks[12]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-<h3 id="day_left">Sunday-<%=two_weeks[13]%></h3>
-    <textarea rows="4" cols="50"></textarea>
-</div><br><br>
-
+<%end%>
+</div>
+<br><br>
 <div id="datebox" class= "scrollable" align = "right">
-<h1>Clients This Week</h1>
-<input type="text" name="clients[]"><input type="text" name="clients[]"><input type="text" name="clients[]">
-<br>
 <h1>Expenses</h1>
 <table>
     <th>Date</th>
     <th>Expenses(General)</th>
     <th>Expenses(Mileage)</th>
     <th>Expenses(Tolls)</th>
-    <%two_weeks.each do |day|%>
-    <tr>
-        <td><%=day%></td>
-        <td><input type="text" name="exp_gen[]"style = "width: 4em" required></td>
-        <td><input type="text" name="exp_mil[]"style = "width: 4em" required></td>
-        <td><input type="text" name="exp_tol[]"style = "width: 4em" required></td>
-    </tr>
+    <%two_weeks.each do |split_week|%>
+        <%split_week.each do |day|%>
+            <tr>
+                <td><%=day%></td>
+                <td><input type="text" name="exp_gen[]" value="0" style = "width: 4em" required></td>
+                <td><input type="text" name="exp_mil[]" value="0" style = "width: 4em" required></td>
+                <td><input type="text" name="exp_tol[]" value="0" style = "width: 4em" required></td>
+            </tr>
+        <%end%>
     <%end%>
     </table>
 </div>
 
-
-
-    <%git_commits.each do |repo|%>
+<%git_commits.each do |repo|%>
 <div id="gitbox_2">
         <p class="repo_name"><%=repo[0]%></p>
         <%repo[1].each do |dates|%>

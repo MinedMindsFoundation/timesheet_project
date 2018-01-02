@@ -478,7 +478,8 @@ get '/to_github_page' do
     # p pay_period(Time.now)
     # p Time.now
     session[:two_weeks] = two_week_days(Time.now)
-    erb :git_page, locals:{git_commits:git_commits, two_weeks:session[:two_weeks]}
+    session[:split_weeks] = session[:two_weeks].each_slice(7).to_a
+    erb :git_page, locals:{git_commits:git_commits, two_weeks:session[:split_weeks]}
 end
 # callback from the github api oAuth access token
 get '/callback' do
@@ -501,10 +502,21 @@ end
 post "/commits_to_send" do
     info = params[:info]
     non_committed = params[:ncommit]
+    clients = params[:clients]
     day_to_non = {}
-    # session[:two_weeks].each_with_index do |day, index|
-    #     day_to_non["#{day}"] = non_committed[index]
-    # end
+    final_clients = []
+    session[:two_weeks].each_with_index do |day, index|
+        if non_committed[index] != ""
+            day_to_non["#{day}"] = non_committed[index]
+        end
+    end
+    clients.each do |client|
+        if client != ""
+            final_clients << client
+        end
+    end
+    p final_clients
+    p clients
     p day_to_non
     p non_committed
     p info
