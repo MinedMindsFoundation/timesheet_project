@@ -127,29 +127,31 @@ iframe[seamless] {
 #gitbox_2{
     float: right;
     display: grid;
-    width: 45%;
+    width: 92%;
     font-size: 60%;
     text-align: center;
     border-style: solid;
     border-color: gray;
     padding: 1rem;
     margin: 1rem;
+    margin-right: 0;
     border-radius: 3vh;
     background-color: var(--box-bg-color);
 }
-
-
+.web_fill{
+    width: -webkit-fill-available;
+}
 #gitbox {
-    float:left;
-    width: 45%;
+    float: left;
+    width: 95%;
     font-size: 60%;
     margin: 1rem;
+    margin-left: 0;
     text-align: center;
     border-style: solid;
     border-color: gray;
-    padding: auto;
+    padding: 1vw;
     border-radius: 3vh;
-
     background-color: var(--box-bg-color);
 }
 .git_dates{
@@ -162,6 +164,13 @@ iframe[seamless] {
 
 }
 
+.left{
+    float: left;
+    width: 48%;
+    display: grid;
+    margin-right: auto;
+}
+
 .repo_name{
     text-align: center;
     font-size: 3vw;
@@ -170,14 +179,50 @@ iframe[seamless] {
     width: -webkit-fill-available;
 }
 
+#git_submit{
+    border-radius: 33%;
+    border-style: solid;
+    padding: 1rem;
+    font-size: 8vw;
+    margin: auto;
+    margin-top: 5vh;
+    margin-left: 10%;
+    border-color: black;
+}
+
+
+#login_git_box{
+    border-color: var(--box-bdr-color);
+    background-color: var(--box-bg-color);
+    margin:auto;
+    margin-top:1vh;
+    padding:3rem;
+    border-radius: 5rem;
+    border-width: 1vw;
+    width: fit-content;
+}
+
+#client_box{
+    width: 94%;
+    margin: 0vh;
+    /* position: relative; */
+    border-style: solid;
+    border-color: gray;
+    padding: 1rem;
+    border-radius: 3vh;
+    background-color: var(--box-bg-color);
+    display: table-caption;
+}
+
 
 #datebox {
-    width: 45%;
-    margin: right;
+    width: fit-content;
+    margin: auto;
+    margin-top: 1vw;
     text-align: center;
     border-style: solid;
     border-color: gray;
-    padding: auto;
+    padding: 1rem;
     border-radius: 3vh;
     background-color: var(--box-bg-color);
 }

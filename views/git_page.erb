@@ -3,7 +3,7 @@
 <div id="datebox" class= "scrollable" style="float: right">
 <h2>Hours Per Day</h2>
 <%two_weeks.each do |split_week|%>
-<h3><%=split_week[0]%> to <%=split_week[6]%></h3>
+<h3><%=two_weeks[0]%> to <%=two_weeks[6]%></h3>
 <table align ="left">
     <th>Monday</th>
     <th>Tuesday</th>
@@ -95,6 +95,30 @@
             </table>
         <%end%>
 </div>
+<div style="float:right;width: 50%;">
+    <%git_commits.each do |repo|%>
+        <div id="gitbox_2">
+            <p class="repo_name"><%=repo[0]%></p>
+            <%repo[1].each do |dates|%>
+                <table class="web_fill">
+                <p class = 'git_dates'><%=dates[0]%></p>
+                    <th></th>
+                    <th>Branch</th>
+                    <th>SHA Key</th>
+                    <th>Commit</th>
+                    <%dates[1].each do |info|%>
+                        <tr align ="left">
+                        <%checked_info = Hash["repo"=>repo[0], "date"=>dates[0], "branch"=>info["branch"], "sha"=>info["sha"], "message"=>info["message"]]%>
+                        <td><input type = "checkbox" name = "info[]" value = '<%=checked_info%>'></td>
+                        <td><%=info["branch"]%></td>
+                        <td><%=info["sha"]%></td>
+                        <td><%=info["message"]%></td>
+                        </tr>
+                    <%end%>
+                </table>
+            <%end%>
+        </div>
     <%end%>
-<input type= "submit">
+</div>    
+<input type= "submit" id = "git_submit">
 </form>
