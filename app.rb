@@ -473,7 +473,6 @@ post "/from_git_login" do
 end
 
 get "/to_git_clients" do
-    git_api = Git_api_class.new(session[:git_user],session[:git_pass])
     erb :git_client
 end
 
@@ -485,21 +484,33 @@ post '/got_clients' do
             final_clients << client
         end
     end
+    session[:final_clients] = final_clients
     erb :client_to_time, locals:{clients:final_clients}
 end
 
 post '/client_hours' do
     hours = params[:hours_day].each_slice(7).to_a
+    client_to_hour = {}
     day_arr = ["0","0","0","0","0","0","0"]
     hours.each do |days|
-        p days
+        # p days
         days.each_with_index do |hours, index|
             num_hour = hours.to_i
             num_day = day_arr[index].to_i
-            num_hour.sum
+            # p num_hour
+            # p num_day
+            num_total = num_day + num_hour
+            # p num_total.to_s
+            day_arr[index] = num_total.to_s
         end
-        p day_arr
     end
+    session[:total_hours] = day_arr
+    session[:final_clients].each_with_index do |client, index|
+        client_to_hour["#{client}"] = hours[index]
+    end
+    p session[:total_hours]
+    p client_to_hour
+    redirect '/to_github_page'
 end
 
 get '/to_github_page' do   
@@ -509,7 +520,7 @@ get '/to_github_page' do
     # p Time.now
     session[:two_weeks] = two_week_days(Time.now)
     session[:split_weeks] = session[:two_weeks].each_slice(7).to_a
-    erb :git_page, locals:{git_commits:git_commits, two_weeks:session[:split_weeks]}
+    erb :client_to_project, locals:{git_commits:git_commits, two_weeks:session[:split_weeks]}
 end
 # callback from the github api oAuth access token
 get '/callback' do
