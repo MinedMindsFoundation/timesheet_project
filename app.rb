@@ -515,9 +515,24 @@ post "/commits_to_send" do
             final_clients << client
         end
     end
-    p final_clients
-    p clients
-    p day_to_non
-    p non_committed
+    # p final_clients
+    # p clients
+    # p day_to_non
+    # p non_committed
     p info
+    # info.each do |sep|
+    #     p sep
+    # end
+    session[:clients] = final_clients
+    if day_to_non != {}
+        session[:non_committed] = day_to_non
+    else
+        session[:non_committed] = ""
+    end
+    session[:commits_info] = info
+    redirect '/commit_confirmation'
+end
+
+get '/commit_confirmation' do
+    erb :commit_confirmation, locals:{clients:session[:clients],non_committed:session[:non_committed], commits_info:session[:commits_info]}
 end
