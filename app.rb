@@ -473,6 +473,7 @@ post "/from_git_login" do
 end
 
 get "/to_git_clients" do
+    git_api = Git_api_class.new(session[:git_user],session[:git_pass])
     erb :git_client
 end
 
