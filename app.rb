@@ -476,6 +476,11 @@ get "/to_git_clients" do
     erb :git_client
 end
 
+post '/got_clients' do
+    clients = params[:client]
+    erb :client_to_time, locals:{clients:clients}
+end
+
 get '/to_github_page' do   
     git_api = Git_api_class.new(session[:git_user],session[:git_pass])
     git_commits = git_api.get_api_data(pay_period(Time.now)[0])

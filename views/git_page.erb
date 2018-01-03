@@ -76,8 +76,6 @@
 <div id="gitbox_2">
 <div style="float:right;width: 50%;">
     <%git_commits.each do |repo|%>
-            <%pushing_repos={}%>
-            <%times = {}%>
             <p class="repo_name"><%=repo[0]%></p>
             <%repo[1].each do |dates|%>
                 <table class="web_fill">
@@ -88,9 +86,7 @@
                     <th>Commit</th>
                     <%dates[1].each do |info|%>
                         <tr align ="left">
-                        <%times["#{dates[0]}"] = info%>
-                        <%pushing_repos["#{repo[0]}"] = times%>
-                        <td><input type = "checkbox" name = "info[]" value = '<%=pushing_repos%>'></td>
+                        <td><input type = "checkbox" name = "info[]" value = '<%=info["sha"]%>'></td>
                         <td><%=info["branch"]%></td>
                         <td><%=info["sha"]%></td>
                         <td><%=info["message"]%></td>
