@@ -1,0 +1,11 @@
+<%=clients%>
+<%=non_committed%>
+<%=commits_info%>
+<div id="gitbox_2">
+    <%commits_info.each do |repo|%>
+        <%repo.each do |commits|%>
+            <%=commits%>
+        <%end%>
+    <%end%>
+    </div>
+</div>
