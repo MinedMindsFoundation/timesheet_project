@@ -1,0 +1,25 @@
+<form method="post" action="client_hours">
+    <table>
+        <th>Clients</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+        <%clients.each do |client|%>
+            <tr>
+            <td><%=client%></td>
+            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            </tr>
+        <%end%>
+    </table>
+    <input type="submit">
+</form>

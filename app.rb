@@ -478,7 +478,27 @@ end
 
 post '/got_clients' do
     clients = params[:client]
-    erb :client_to_time, locals:{clients:clients}
+    final_clients = []
+    clients.each do |client|
+        if client != ""
+            final_clients << client
+        end
+    end
+    erb :client_to_time, locals:{clients:final_clients}
+end
+
+post '/client_hours' do
+    hours = params[:hours_day].each_slice(7).to_a
+    day_arr = ["0","0","0","0","0","0","0"]
+    hours.each do |days|
+        p days
+        days.each_with_index do |hours, index|
+            num_hour = hours.to_i
+            num_day = day_arr[index].to_i
+            num_hour.sum
+        end
+        p day_arr
+    end
 end
 
 get '/to_github_page' do   
