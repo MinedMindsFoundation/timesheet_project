@@ -504,23 +504,28 @@ post '/client_hours' do
             day_arr[index] = num_total.to_s
         end
     end
-    session[:total_hours] = day_arr
     session[:final_clients].each_with_index do |client, index|
         client_to_hour["#{client}"] = hours[index]
     end
+    session[:total_hours] = day_arr
+    session[:client_to_hour] = client_to_hour
     p session[:total_hours]
-    p client_to_hour
     redirect '/to_github_page'
 end
 
 get '/to_github_page' do   
     git_api = Git_api_class.new(session[:git_user],session[:git_pass])
     git_commits = git_api.get_api_data(pay_period(Time.now)[0])
+    session[:repo_names] = []
+    git_commits.each do |repos|
+        session[:repo_names] << repos[0]
+    end
     # p pay_period(Time.now)
     # p Time.now
     session[:two_weeks] = two_week_days(Time.now)
+
     session[:split_weeks] = session[:two_weeks].each_slice(7).to_a
-    erb :client_to_project, locals:{git_commits:git_commits, two_weeks:session[:split_weeks]}
+    erb :client_to_project, locals:{git_commits:git_commits, two_weeks:session[:split_weeks], clients:session[:final_clients]}
 end
 # callback from the github api oAuth access token
 get '/callback' do
@@ -542,38 +547,16 @@ end
 
 post "/commits_to_send" do
     info = params[:info]
-    non_committed = params[:ncommit]
-    clients = params[:clients]
-    day_to_non = {}
-    final_clients = []
-    session[:two_weeks].each_with_index do |day, index|
-        if non_committed[index] != ""
-            day_to_non["#{day}"] = non_committed[index]
-        end
+    client_repo = {}
+    repo_list = []
+    # non_committed = params[:ncommit]
+    p session[:repo_names]
+    session[:repo_names].each_with_index do |repos, index|
+        repos = params[:"#{repos}_client"]
+            client_repo["#{repos}"] = session[:repo_names][index]
+            repo_list << client_repo
     end
-    clients.each do |client|
-        if client != ""
-            final_clients << client
-        end
-    end
-    # p final_clients
-    # p clients
-    # p day_to_non
-    # p non_committed
+    p client_repo
+    p session[:repo_names]
     p info
-    # info.each do |sep|
-    #     p sep
-    # end
-    session[:clients] = final_clients
-    if day_to_non != {}
-        session[:non_committed] = day_to_non
-    else
-        session[:non_committed] = ""
-    end
-    session[:commits_info] = info
-    redirect '/commit_confirmation'
-end
-
-get '/commit_confirmation' do
-    erb :commit_confirmation, locals:{clients:session[:clients],non_committed:session[:non_committed], commits_info:session[:commits_info]}
 end
