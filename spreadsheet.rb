@@ -14,6 +14,11 @@ class InvoiceSpreadsheet
     # p "#{x[loc[0]][loc[1]].value} after"
     end
 
+    def show_data(location)
+        loc = RubyXL::Reference.ref2ind(location)
+        p @worksheet[loc[0]][loc[1]]
+        @worksheet[loc[0]][loc[1]]
+    end
 end
 
-InvoiceSpreadsheet.new().input_data("A1",1)
+
