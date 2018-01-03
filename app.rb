@@ -469,7 +469,11 @@ end
 # returns from git_login with github password
 post "/from_git_login" do
     session[:git_pass] = params[:pass]
-    redirect "/to_github_page"
+    redirect "/to_git_clients"
+end
+
+get "/to_get_clients" do
+    erb :git_clients
 end
 
 get '/to_github_page' do   
