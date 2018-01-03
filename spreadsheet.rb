@@ -29,7 +29,7 @@ class InvoiceSpreadsheet
        File.delete(name + " " + date + " " + "invoice.xlsx")
     end
 
-    def mail_invoice(email,name,date)
+    def mail_invoice(to_email,name,date)
         generate_new_file(name,date)
         path = File.absolute_path(name + " " + date + " " + "invoice.xlsx")
         p path
