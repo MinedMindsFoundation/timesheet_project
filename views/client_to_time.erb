@@ -11,15 +11,31 @@
         <%clients.each do |client|%>
             <tr>
             <td><%=client%></td>
-            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-            <td><input type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input onblur='getTotal()' id = 'hours' type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input onblur='getTotal()' id = 'hours' type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input onblur='getTotal()' id = 'hours' type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input onblur='getTotal()' id = 'hours' type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input onblur='getTotal()' id = 'hours' type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input onblur='getTotal()' id = 'hours' type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+            <td><input onblur='getTotal()' id = 'hours' type="number" name="hours_day[]" value="0" style = "width: 3em" min="0" max="24" required></td>
             </tr>
         <%end%>
     </table>
+    <input type = 'hidden' id ='total'>
+    Total:<div id ='totalbox'>
+    </div>
     <input type="submit">
 </form>
+<button onclick = 'getTotal()' type = button>run function</button>
+<script>
+  function getTotal(){
+    var arr = document.getElementsByName('hours_day[]');
+    var tot=0;
+    for(var i=0;i<arr.length;i++){
+        if(parseInt(arr[i].value))
+            tot += parseInt(arr[i].value);
+    }
+    document.getElementById('total').value = tot;
+    document.getElementById('totalbox').innerHTML = tot;
+}
+</script>
