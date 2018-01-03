@@ -472,8 +472,8 @@ post "/from_git_login" do
     redirect "/to_git_clients"
 end
 
-get "/to_get_clients" do
-    erb :git_clients
+get "/to_git_clients" do
+    erb :git_client
 end
 
 get '/to_github_page' do   

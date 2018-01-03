@@ -1,15 +1,28 @@
 Who Needs to give us money
-<form id= "clientform" method = 'post' action = "got_clients">
-<input id= 'clientbox' type = "text" name = "client[]"><button onclick='add_box'>+</button>
+<form method = 'post' action = "got_clients">
+<button type = 'button' onclick='add_box()'>+</button><button type = 'button' onclick='subtract_box()'>-</button> <input type = 'submit' >
+    <div id = "clientbox">
+        <input id= 'clientbox' placeholder="Client Name" type = "text" name = "client[]">
+    </div>
 </form>
 
+
+
 <script>
-function add_box(){
-var form = document.getElementById('clientform'):
-input = document.createElement('input');
-input.name = "client[]";
-input.type = "text";
-input.placeholder = "Client Name";
-form.appendChild(input);
-}
+    function add_box(){
+        br = document.createElement('br');
+        input = document.createElement('input');
+        input.name = "client[]";
+        input.type = "text";
+        input.placeholder = "Client Name";
+        document.getElementById('clientbox').appendChild(input);
+
+    }
+
+    function subtract_box(){
+        x = document.getElementById('clientbox');
+        if (x.children.length > 1){
+            x.removeChild(x.lastChild);
+        }
+    }
 </script>
