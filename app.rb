@@ -496,7 +496,7 @@ post '/client_hours' do
     for count in [1,2] do
         hours = hour["hours#{count}"]
         hours = hours.each_slice(7).to_a
-        p "after each slice#{hours}"
+        # p "after each slice#{hours}"
         client_to_hour = {}
         day_arr = ["0","0","0","0","0","0","0"]
         hours.each do |days|
@@ -521,7 +521,7 @@ post '/client_hours' do
     session[:total_hours1] = total_hours['day_arr1']
     session[:total_hours2] =  total_hours['day_arr2']
     session[:client_to_hour] = client_to_hour
-    p session[:total_hours]
+    # p session[:total_hours]
     redirect '/to_github_page'
 end
 
@@ -558,45 +558,50 @@ get '/callback' do
 end
 
 post "/commits_to_send" do
-    info = params[:info]
+    comments = params[:comment]
+    p "comments are here #{comments}"
+    # info = params[:info]
+    info = params[:stuff]
+    p "info is here #{info}"
     client_repo = {}
     # non_committed = params[:ncommit]
-    session[:repo_names].each_with_index do |repos, index|
-        repos = params[:"#{repos}_client"]
-        if client_repo.has_key?(repos) == true
-            repo_list = client_repo[repos]
-            repo_list << session[:repo_names][index]
-        else
-            repo_list = [session[:repo_names][index]]
-            client_repo["#{repos}"] = repo_list
-        end
-    end
-    p client_repo
-    p session[:repo_names]
-    p info
-    git_api = Git_api_class.new(session[:git_user],session[:git_pass])
-    git_commits = git_api.get_api_data(pay_period(Time.now)[0])
-    git_commits.each do |repo|
-        p repo[0]
-        repo[1].each do |dates|
-            # p dates[0]
-            # p dates[1]
-            dates[1].each_with_index do |information, index|
-                # p information["sha"]
-                # p index
-                if info.include?(information["sha"])
-                else
-                    dates[1].delete(information)
-                end
-                # p information["sha"]
-                # p index
-            end
-            # p dates
-        end
-    end
-    p git_commits
+    # session[:repo_names].each_with_index do |repos, index|
+    #     repos = params[:"#{repos}_client"]
+    #     if client_repo.has_key?(repos) == true
+    #         repo_list = client_repo[repos]
+    #         repo_list << session[:repo_names][index]
+    #     else
+    #         repo_list = [session[:repo_names][index]]
+    #         client_repo["#{repos}"] = repo_list
+    #     end
+    # end
+    # p client_repo
+    # p session[:repo_names]
+    # p info
+    # git_api = Git_api_class.new(session[:git_user],session[:git_pass])
+    # git_commits = git_api.get_api_data(pay_period(Time.now)[0])
+    # git_commits.each do |repo|
+    #     p repo[0]
+    #     repo[1].each do |dates|
+    #         # p dates[0]
+    #         # p dates[1]
+    #         dates[1].each_with_index do |information, index|
+    #             # p information["sha"]
+    #             # p index
+    #             if info.include?(information["sha"])
+    #             else
+    #                 dates[1].delete(information)
+    #             end
+    #             # p information["sha"]
+    #             # p index
+    #         end
+    #         # p dates
+    #     end
+    # end
+    # p git_commits
 
     # p client_repo
     # p session[:repo_names]
     # p info
+    "info = #{info}"
 end

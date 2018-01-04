@@ -124,10 +124,21 @@ iframe[seamless] {
     background-color: var(--box-bg-color);
 }
 
-#gitbox_2{
+#comment_box{
     float: right;
+    border-radius: 3vh;
+    border-style: solid;
+    border-color: gray;
+    padding: 1rem;
+    display: inline-grid;
+    width: min-content;
+    background-color:var(--box-bg-color);
+}
+
+#gitbox_2{
+    float: left;
     display: grid;
-    width: 92%;
+    width: fit-content;
     font-size: 60%;
     text-align: center;
     border-style: solid;
