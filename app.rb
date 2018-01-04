@@ -516,8 +516,8 @@ post '/client_hours' do
         session[:final_clients].each_with_index do |client, index|
             client_to_hour["#{client}"] = hours[index]
         end
-        p total_hours['day_arr1']
-        p total_hours['day_arr2']
+        # p total_hours['day_arr1']
+        # p total_hours['day_arr2']
     session[:total_hours1] = total_hours['day_arr1']
     session[:total_hours2] =  total_hours['day_arr2']
     session[:client_to_hour] = client_to_hour
