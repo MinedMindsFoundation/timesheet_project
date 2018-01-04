@@ -1,31 +1,39 @@
 <form method="post" action="client_hours">
     <%count = 1%>
     <%2.times do%>
-        week <%=count%>
-        <table>
-            <th>Clients</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-            <th>Sunday</th>
-            <%clients.each do |client|%>
-                <tr>
-                <td><%=client%></td>
-                <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-                <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-                <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-                <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-                <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-                <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-                <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-                </tr>
-            <%end%>
-        </table>
-        <input type = 'hidden' id ='total'>
-        Total:<div id ='totalbox<%=count%>'>
+        <div id = "week_box">
+            week <%=count%>
+            <table>
+
+                <th>Clients</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th></th>
+                <%clients.each do |client|%>
+                    <tr>
+                        <td><%=client%></td>
+                        <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+                        <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+                        <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+                        <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+                        <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+                        <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+                        <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
+                        <td><input type = 'checkbox' value = "<%=client%> billed <%=count%>" name = 'billed'>Billed</td>
+                    </tr>
+                <%end%>
+            </table>
+            <input type = 'hidden' id ='total'>
+            <div id= 'total'>
+                Total:
+                <div id ='totalbox<%=count%>'>
+                </div>
+            </div>
         </div>
         <%count +=1%>
     <%end%>    

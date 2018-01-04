@@ -489,7 +489,11 @@ post '/got_clients' do
 end
 
 post '/client_hours' do
-    hours = params[:hours_day].each_slice(7).to_a
+    hours1 = params[:hours_day1]
+    hours2 = params[:hours_day2]
+    hours = hours2 + hours1
+    hours.each_slice(7)
+    p "hours is here #{hours}"
     client_to_hour = {}
     day_arr = ["0","0","0","0","0","0","0"]
     hours.each do |days|
