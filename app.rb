@@ -548,13 +548,17 @@ end
 post "/commits_to_send" do
     info = params[:info]
     client_repo = {}
-    repo_list = []
     # non_committed = params[:ncommit]
     p session[:repo_names]
     session[:repo_names].each_with_index do |repos, index|
         repos = params[:"#{repos}_client"]
-            client_repo["#{repos}"] = session[:repo_names][index]
-            repo_list << client_repo
+        if client_repo.has_key?(repos) == true
+            repo_list = client_repo[repos]
+            repo_list << session[:repo_names][index]
+        else
+            repo_list = [session[:repo_names][index]]
+            client_repo["#{repos}"] = repo_list
+        end
     end
     p client_repo
     p session[:repo_names]
