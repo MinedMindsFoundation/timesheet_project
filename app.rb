@@ -489,12 +489,14 @@ post '/got_clients' do
 end
 
 post '/client_hours' do
-    hours1 = params[:hours_day1]
-    hours2 = params[:hours_day2]
-
-    for count 1,2 do
-        "hours#{count}".to_s.each_slice(7)
-        p "hours is here #{hours}"
+    hour = {}
+    hour["hours1"] = params[:hours_day1]
+    hour["hours2"] = params[:hours_day2]
+    total_hours = {}
+    for count in [1,2] do
+        hours = hour["hours#{count}"]
+        hours = hours.each_slice(7).to_a
+        p "after each slice#{hours}"
         client_to_hour = {}
         day_arr = ["0","0","0","0","0","0","0"]
         hours.each do |days|
@@ -509,15 +511,15 @@ post '/client_hours' do
                 day_arr[index] = num_total.to_s
             end
         end
-        "day_arr#{count}".to_s = day_arr
+        total_hours["day_arr#{count}"] = day_arr
     end
         session[:final_clients].each_with_index do |client, index|
             client_to_hour["#{client}"] = hours[index]
         end
-        p day_arr1
-        p day_arr2
-    session[:total_hours1] = day_arr1
-    session[:total_hours2] = day_arr2
+        p total_hours['day_arr1']
+        p total_hours['day_arr2']
+    session[:total_hours1] = total_hours['day_arr1']
+    session[:total_hours2] =  total_hours['day_arr2']
     session[:client_to_hour] = client_to_hour
     p session[:total_hours]
     redirect '/to_github_page'
