@@ -549,7 +549,6 @@ post "/commits_to_send" do
     info = params[:info]
     client_repo = {}
     # non_committed = params[:ncommit]
-    p session[:repo_names]
     session[:repo_names].each_with_index do |repos, index|
         repos = params[:"#{repos}_client"]
         if client_repo.has_key?(repos) == true
@@ -563,4 +562,29 @@ post "/commits_to_send" do
     p client_repo
     p session[:repo_names]
     p info
+    git_api = Git_api_class.new(session[:git_user],session[:git_pass])
+    git_commits = git_api.get_api_data(pay_period(Time.now)[0])
+    git_commits.each do |repo|
+        p repo[0]
+        repo[1].each do |dates|
+            # p dates[0]
+            # p dates[1]
+            dates[1].each_with_index do |information, index|
+                # p information["sha"]
+                # p index
+                if info.include?(information["sha"])
+                else
+                    dates[1].delete(information)
+                end
+                # p information["sha"]
+                # p index
+            end
+            # p dates
+        end
+    end
+    p git_commits
+
+    # p client_repo
+    # p session[:repo_names]
+    # p info
 end
