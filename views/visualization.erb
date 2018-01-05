@@ -1,0 +1,158 @@
+<%weeks.each_with_index do |week, week_index|%>
+<h2>Weekly Invoice</h2>
+    <table>
+        <th>NAME:</th>
+        <th><%=name[0]%> <%=name[1]%></th>
+        <th>WEEK COMENCING:</th>
+        <th><%=week[0]%></th>
+        <th>HOURLY RATE:</th>
+        <th></th>
+    </table><br><br>
+    <table>
+        <th>Client Name</th>
+        <th>Description</th>
+        <th>Monday</th>
+        <%monday_total = []%>
+        <th>Tuesday</th>
+        <%tuesday_total = []%>
+        <th>Wednesday</th>
+        <%wednesday_total = []%>
+        <th>Thursday</th>
+        <%thursday_total = []%>
+        <th>Friday</th>
+        <%friday_total = []%>
+        <th>Saturday</th>
+        <%saturday_total = []%>
+        <th>Sunday</th>
+        <%sunday_total = []%>
+        <th>Total(Hours)</th>
+        <%total_total = []%>
+            <%clients.each_with_index do |client, client_index|%>
+            <%client_hour_con = hours[client[0]]%>
+            <%week_hour_con = client_hour_con[week_index]%>
+            <tr>
+                <td><%=client[0]%></td>
+                    <td>
+                    <%client[1].each do |repos|%>
+                        <strong><%=repos%></strong><br><br>
+                        <%info.each do |commits|%>
+                            <%if commits[0] == repos%>
+                                <%commits[1].each do |commits|%>
+                                    <strong><%=commits[0]%></strong><br>
+                                    <%commits[1].each do |info|%>
+                                        <%details = info.split(",")%>
+                                        Branch: <%=details[0]%><br>
+                                        SHA: <%=details[1]%><br>
+                                        Message: <%=details[2]%><br><br>
+                                    <%end%>
+                                <%end%>
+                            <%end%>
+                        <%end%>
+                    <%end%>
+                    </td>
+                <td><%=week_hour_con[0]%></td>
+                <%monday_total << week_hour_con[0]%>
+                <td><%=week_hour_con[1]%></td>
+                <%tuesday_total << week_hour_con[1]%>
+                <td><%=week_hour_con[2]%></td>
+                <%wednesday_total << week_hour_con[2]%>
+                <td><%=week_hour_con[3]%></td>
+                <%thursday_total << week_hour_con[3]%>
+                <td><%=week_hour_con[4]%></td>
+                <%friday_total << week_hour_con[4]%>
+                <td><%=week_hour_con[5]%></td>
+                <%saturday_total << week_hour_con[5]%>
+                <td><%=week_hour_con[6]%></td>
+                <%sunday_total << week_hour_con[6]%>
+                <td><%=week_hour_con.sum%></td>
+                <%total_total << week_hour_con.sum%>
+            </tr>
+            <%end%>
+            <tr>
+                <td><strong>TOTALS</strong></td>
+                <td></td>
+                <td><%=monday_total.sum%></td>
+                <td><%=tuesday_total.sum%></td>
+                <td><%=wednesday_total.sum%></td>
+                <td><%=thursday_total.sum%></td>
+                <td><%=friday_total.sum%></td>
+                <td><%=saturday_total.sum%></td>
+                <td><%=sunday_total.sum%></td>
+                <td><%=total_total.sum%></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><strong>Total Services</strong></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>$ <%=total_total.sum%></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><strong>Expenses(General)</strong></td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><strong>Expenses(Milage)</strong></td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><strong>Milage Description</strong></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><strong>Expenses(Tolls)</strong></td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><strong>Other</strong></td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+                <td>$-</td>
+            </tr>
+    </table><br>
+    <h3>Total Due: $ -</h3><br>
+
+<%end%>

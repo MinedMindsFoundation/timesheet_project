@@ -98,6 +98,7 @@ get "/to_landing" do
     time_hash = user_class.get_last_times(user_list)
     # p time_hash
     user_info =  database_info(session[:user_id])
+    session[:users_fullname] = user_info
     # p user_info
     user_email = database_email_check(session[:user_id])
     # pay_period = pay_period(Time.now.utc)
@@ -497,6 +498,7 @@ post '/client_hours' do
         hours = hour["hours#{count}"]
         hours = hours.each_slice(7).to_a
         # p "after each slice#{hours}"
+        client_final_hour = {}
         client_to_hour = {}
         day_arr = ["0","0","0","0","0","0","0"]
         hours.each do |days|
@@ -508,19 +510,34 @@ post '/client_hours' do
                 # p num_day
                 num_total = num_day + num_hour
                 # p num_total.to_s
-                day_arr[index] = num_total.to_s
+                day_arr[index] = num_total.to_i
             end
         end
         total_hours["day_arr#{count}"] = day_arr
     end
-        session[:final_clients].each_with_index do |client, index|
-            client_to_hour["#{client}"] = hours[index]
-        end
+    # p hour["hours1"]
+    # p hour["hours2"]
+    week_1_hours_a = []
+    week_2_hours_a = []
+    hour["hours1"].each do |day|
+        week_1_hours_a << day.to_i
+    end
+    hour["hours2"].each do |day|
+        week_2_hours_a << day.to_i
+    end
+    week_1_hours = week_1_hours_a.each_slice(7).to_a
+    week_2_hours = week_2_hours_a.each_slice(7).to_a
         # p total_hours['day_arr1']
         # p total_hours['day_arr2']
+    session[:final_clients].each_with_index do |client, index|
+        client_to_hour["#{client}"] = [week_1_hours[index]]
+        client_to_hour["#{client}"] << week_2_hours[index]
+    end
+    p client_to_hour
     session[:total_hours1] = total_hours['day_arr1']
     session[:total_hours2] =  total_hours['day_arr2']
     session[:client_to_hour] = client_to_hour
+    session[:weeks_total] = total_hours
     # p session[:total_hours]
     redirect '/to_github_page'
 end
@@ -560,48 +577,25 @@ end
 post "/commits_to_send" do
     comments = params[:comment]
     p "comments are here #{comments}"
-    # info = params[:info]
     info = params[:stuff]
     p "info is here #{info}"
     client_repo = {}
     # non_committed = params[:ncommit]
-    # session[:repo_names].each_with_index do |repos, index|
-    #     repos = params[:"#{repos}_client"]
-    #     if client_repo.has_key?(repos) == true
-    #         repo_list = client_repo[repos]
-    #         repo_list << session[:repo_names][index]
-    #     else
-    #         repo_list = [session[:repo_names][index]]
-    #         client_repo["#{repos}"] = repo_list
-    #     end
-    # end
-    # p client_repo
-    # p session[:repo_names]
-    # p info
-    # git_api = Git_api_class.new(session[:git_user],session[:git_pass])
-    # git_commits = git_api.get_api_data(pay_period(Time.now)[0])
-    # git_commits.each do |repo|
-    #     p repo[0]
-    #     repo[1].each do |dates|
-    #         # p dates[0]
-    #         # p dates[1]
-    #         dates[1].each_with_index do |information, index|
-    #             # p information["sha"]
-    #             # p index
-    #             if info.include?(information["sha"])
-    #             else
-    #                 dates[1].delete(information)
-    #             end
-    #             # p information["sha"]
-    #             # p index
-    #         end
-    #         # p dates
-    #     end
-    # end
-    # p git_commits
-
+    session[:repo_names].each_with_index do |repos, index|
+        repos = params[:"#{repos}_client"]
+        if client_repo.has_key?(repos) == true
+            repo_list = client_repo[repos]
+            repo_list << session[:repo_names][index]
+        else
+            repo_list = [session[:repo_names][index]]
+            client_repo["#{repos}"] = repo_list
+        end
+    end
     # p client_repo
     # p session[:repo_names]
     # p info
     "info = #{info["timesheet_project"]["2018-01-04"]}"
+
+    session[:client_to_hour]
+    erb :visualization, locals:{info:info, clients:client_repo, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total]}
 end
