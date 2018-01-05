@@ -1118,7 +1118,7 @@ def comment_filter(comments)
     p info
     p info[1].values
         info[1].values.each do |item|
-            if item == "" || item == " "
+            if item.gsub(/\s+/, "") == ""
             comments.delete(info[0])
             end
         end

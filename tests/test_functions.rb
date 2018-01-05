@@ -1677,5 +1677,34 @@ class Test_funcs < Minitest::Test
         }
         assert_equal(comments,comment_filter(comments))
     end
+
+    def test_comment_filters_2_comments_both_blanks
+        comments = {"comment1" => {
+            'date' => "12-20-2017",
+            'client' => "woo",
+            'comment' => "   "},
+
+            "comment2" => {
+            'date' => "",
+            'client' => "woo",
+            'comment' => "test2"}
+        }
+        assert_equal("empty",comment_filter(comments))
+    end
+
+    def test_comment_filters_2_comments_first_blank
+        comments = {"comment1" => {
+            'date' => "12-20-2017",
+            'client' => "woo",
+            'comment' => "   "},
+
+            "comment2" => {
+            'date' => "11-12-2018",
+            'client' => "woo",
+            'comment' => "test2"}
+        }
+        answer = {"comment2" => {'date' => "11-12-2018",'client' => "woo",'comment' => "test2"}}
+        assert_equal(answer,comment_filter(comments)) 
+    end
 end
 
