@@ -1113,10 +1113,10 @@ end
 
 #comment_filter removes all sets of comments that contain blanks
 def comment_filter(comments)
-    p comments
+    # p comments
     comments.each do |info|
-    p info
-    p info[1].values
+    # p info
+    # p info[1].values
         info[1].values.each do |item|
             if item.gsub(/\s+/, "") == ""
             comments.delete(info[0])
@@ -1128,4 +1128,23 @@ def comment_filter(comments)
     else
         comments
     end
+end
+
+# makes comments into nested hash of client_name=>date=>[comment] 
+def comment_reformat(comments)
+    p comments
+    info = {}
+    comments.each_pair do |key,value|
+        p "#{key},#{value}"
+        if info[value['client']] == nil
+            info={value['client']=>[{value['date'] => [value['comment']]}]}
+        #    p "#{info={value['client']=>[{value['date'] => [value['comment']]}}} line 1 of conditional"
+        elsif info[value['client']][value['date']] == nil
+            info[value['client']] < {value['date'] => value["comment"]}
+           p "#{info={value['client']=>{value['date'] => [value['comment']]}}} line 2 of conditional"
+        else
+            info[value['client']][value['date']].push(value['comment'])
+        end 
+    end
+    p info
 end

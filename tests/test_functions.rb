@@ -1645,66 +1645,81 @@ class Test_funcs < Minitest::Test
 #         assert_equal("Yes",x)
 #     end
 
-    #--------------------tests for Comments_filter----------------------
-    def test_comment_filters_no_blanks
-        comments = {"comment1" => {
-            'date' => "12-20-2017",
-            'client' => "Woo",
-            'comment' => "test"}
-        }
-        assert_equal(comments,comment_filter(comments))
-    end
+    # #--------------------tests for Comments_filter----------------------
+    # def test_comment_filters_no_blanks
+    #     comments = {"comment1" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "Woo",
+    #         'comment' => "test"}
+    #     }
+    #     assert_equal(comments,comment_filter(comments))
+    # end
 
-    def test_comment_filters_1_comment_1_blank
-        comments = {"comment1" => {
-            'date' => "12-20-2017",
-            'client' => "",
-            'comment' => "test"}
-        }
-        assert_equal("empty",comment_filter(comments))
-    end
+    # def test_comment_filters_1_comment_1_blank
+    #     comments = {"comment1" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "",
+    #         'comment' => "test"}
+    #     }
+    #     assert_equal("empty",comment_filter(comments))
+    # end
 
-    def test_comment_filters_2_comments_no_blank
-        comments = {"comment1" => {
+    # def test_comment_filters_2_comments_no_blank
+    #     comments = {"comment1" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo",
+    #         'comment' => "test"},
+
+    #         "comment2" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo",
+    #         'comment' => "test2"}
+    #     }
+    #     assert_equal(comments,comment_filter(comments))
+    # end
+
+    # def test_comment_filters_2_comments_both_blanks
+    #     comments = {"comment1" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo",
+    #         'comment' => "   "},
+
+    #         "comment2" => {
+    #         'date' => "",
+    #         'client' => "woo",
+    #         'comment' => "test2"}
+    #     }
+    #     assert_equal("empty",comment_filter(comments))
+    # end
+
+    # def test_comment_filters_2_comments_first_blank
+    #     comments = {"comment1" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo",
+    #         'comment' => "   "},
+
+    #         "comment2" => {
+    #         'date' => "11-12-2018",
+    #         'client' => "woo",
+    #         'comment' => "test2"}
+    #     }
+    #     answer = {"comment2" => {'date' => "11-12-2018",'client' => "woo",'comment' => "test2"}}
+    #     assert_equal(answer,comment_filter(comments)) 
+    # end
+    #-----------------------tests for comment_reformat()-----------------------
+    def test_comment_reformat_1_comment
+              comments = {"comment1" => {
             'date' => "12-20-2017",
             'client' => "woo",
-            'comment' => "test"},
-
-            "comment2" => {
-            'date' => "12-20-2017",
-            'client' => "woo",
-            'comment' => "test2"}
-        }
-        assert_equal(comments,comment_filter(comments))
-    end
-
-    def test_comment_filters_2_comments_both_blanks
-        comments = {"comment1" => {
-            'date' => "12-20-2017",
-            'client' => "woo",
-            'comment' => "   "},
-
-            "comment2" => {
-            'date' => "",
-            'client' => "woo",
-            'comment' => "test2"}
-        }
-        assert_equal("empty",comment_filter(comments))
-    end
-
-    def test_comment_filters_2_comments_first_blank
-        comments = {"comment1" => {
-            'date' => "12-20-2017",
-            'client' => "woo",
-            'comment' => "   "},
+            'comment' => "comment test"},
 
             "comment2" => {
             'date' => "11-12-2018",
             'client' => "woo",
             'comment' => "test2"}
         }
-        answer = {"comment2" => {'date' => "11-12-2018",'client' => "woo",'comment' => "test2"}}
-        assert_equal(answer,comment_filter(comments)) 
+        assert_equal(comments,comment_reformat(comments))
     end
+    
 end
 

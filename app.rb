@@ -578,6 +578,7 @@ end
 post "/commits_to_send" do
     comments = params[:comment]
     comments = comment_filter(comments)
+    comments = comment_reformat(comments)
     p "comments are here #{comments}"
     info = params[:stuff]
     p "info is here #{info}"
