@@ -603,5 +603,5 @@ post "/commits_to_send" do
     # p client_repo
     # p session[:repo_names]
     # p info
-    "info = #{info}"
+    "info = #{info["timesheet_project"]["2018-01-04"]}"
 end
