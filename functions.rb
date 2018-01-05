@@ -1116,9 +1116,16 @@ def comment_filter(comments)
     p comments
     comments.each do |info|
     p info
-        if info[1].values.include?(" ")
-            comments.delete(info)
+    p info[1].values
+        info[1].values.each do |item|
+            if item == "" || item == " "
+            comments.delete(info[0])
+            end
         end
-    comments    
+    end
+    if comments.empty?
+        "empty"
+    else
+        comments
     end
 end
