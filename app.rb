@@ -559,6 +559,7 @@ end
 
 post "/commits_to_send" do
     comments = params[:comment]
+    comments = comment_filter(comments)
     p "comments are here #{comments}"
     # info = params[:info]
     info = params[:stuff]
@@ -603,5 +604,5 @@ post "/commits_to_send" do
     # p client_repo
     # p session[:repo_names]
     # p info
-    "info = #{info[]}"
+    "info = #{info}"
 end

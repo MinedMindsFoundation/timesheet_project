@@ -1110,3 +1110,12 @@ def invoice_mail(email, name, start_date)
         end
         mail.deliver!
 end
+
+def comment_filter(comments)
+    comments.each do |info|
+        if info.values.include("")
+            comments[info].delete
+        end
+    comments    
+    end
+end
