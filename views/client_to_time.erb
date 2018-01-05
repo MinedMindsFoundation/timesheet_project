@@ -1,8 +1,11 @@
 <form method="post" action="client_hours">
+    <h2>Hourly Rate:</h2>
+        <input type='number' step='0.01' value='0.00' placeholder='0.00' min="0.00" name="hourly_wage"><br><br>
+
     <%count = 1%>
     <%2.times do%>
         <div id = "week_box">
-            week <%=count%>
+            Week <%=count%>
             <table>
 
                 <th>Clients</th>
@@ -24,7 +27,7 @@
                         <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
                         <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
                         <td><input onblur='getTotal(<%=count%>)' id = 'hours<%=count%>' type="number" name="hours_day<%=count%>[]" value="0" style = "width: 3em" min="0" max="24" required></td>
-                        <td><input type = 'checkbox' value = "<%=client%> billed <%=count%>" name = 'billed'>Billed</td>
+                        <td><input type = 'checkbox' value = "<%=client%>_billed_<%=count%>" name = 'billed'>Billed</td>
                     </tr>
                 <%end%>
             </table>
@@ -34,9 +37,9 @@
                 <div id ='totalbox<%=count%>'>
                 </div>
             </div>
-        </div>
+        </div><br><br>
         <%count +=1%>
-    <%end%>    
+    <%end%>
 
     <input type="submit">
 </form>

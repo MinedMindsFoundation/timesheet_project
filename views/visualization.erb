@@ -1,8 +1,9 @@
+<form method="post" action="finalization">
 <%weeks.each_with_index do |week, week_index|%>
 <h2>Weekly Invoice</h2>
     <table>
         <th>NAME:</th>
-        <th><%=name[0]%> <%=name[1]%></th>
+        <th><%=name.join(" ")%></th>
         <th>WEEK COMENCING:</th>
         <th><%=week[0]%></th>
         <th>HOURLY RATE:</th>
@@ -38,12 +39,14 @@
                         <%info.each do |commits|%>
                             <%if commits[0] == repos%>
                                 <%commits[1].each do |commits|%>
-                                    <strong><%=commits[0]%></strong><br>
-                                    <%commits[1].each do |info|%>
-                                        <%details = info.split(",")%>
-                                        Branch: <%=details[0]%><br>
-                                        SHA: <%=details[1]%><br>
-                                        Message: <%=details[2]%><br><br>
+                                    <%if week.include?(commits[0])%>
+                                        <strong><%=commits[0]%></strong><br>
+                                        <%commits[1].each do |info|%>
+                                            <%details = info.split(",")%>
+                                            Branch: <%=details[0]%><br>
+                                            SHA: <%=details[1]%><br>
+                                            Message: <%=details[2]%><br><br>
+                                        <%end%>
                                     <%end%>
                                 <%end%>
                             <%end%>
@@ -156,3 +159,4 @@
     <h3>Total Due: $ -</h3><br>
 
 <%end%>
+</form>

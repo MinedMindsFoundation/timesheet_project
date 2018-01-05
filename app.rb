@@ -493,6 +493,7 @@ post '/client_hours' do
     hour = {}
     hour["hours1"] = params[:hours_day1]
     hour["hours2"] = params[:hours_day2]
+    session[:hourly_rate] = params[:hourly_wage]
     total_hours = {}
     for count in [1,2] do
         hours = hour["hours#{count}"]
