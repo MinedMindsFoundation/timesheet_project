@@ -24,7 +24,7 @@
                     <th>Commit</th>
                     <%dates[1].each do |info|%>
                         <tr align ="left">
-                        <td><input type = "checkbox" name = "stuff[<%=repo[0]%>][<%=dates[0]%>][]" value = "[<%=info["branch"]%>,<%=info["sha"]%>,<%=info["message"]%>]"  checked></td>
+                        <td><input type = "checkbox" name = "stuff[<%=repo[0]%>][<%=dates[0]%>][]" value = "<%=info["branch"]%>,<%=info["sha"]%>,<%=info["message"]%>"  checked></td>
                         <td><%=info["branch"]%></td>
                         <td><%=info["sha"]%></td>
                         <td><%=info["message"]%></td>
