@@ -4,7 +4,9 @@
 <input type = 'hidden' id = 'counter' value = '1'>
 <button type = 'button' onclick ="more_boxes()">More Comments</button> 
     <input type = "date" name ="comment['comment1']['date']">
-    <input list="clients" name="comment['comment1']['client']">
+    <div id ="dropdown">
+        <input list="clients" name="comment['comment1']['client']">
+    </div>
    <textarea name="comment['comment1']['comment']" placeholder = "Comment Here.."></textarea>
 </div>
 
@@ -49,11 +51,24 @@ function more_boxes(){
         input.name="comment['comment"+counter+"']['date']";
         input.type = 'date';
         document.getElementById('comment_box').appendChild(input);
-        input = document.createElement('select')
-        input.type = 
-        input.name ="comment['comment"+counter+"']['comment']";
-        console.log(input);
-        document.getElementById('comment_box').appendChild(input);
+    var list = document.getElementById('clients').options;
+    var drop = document.createElement("select");
+        var option = document.createElement('option');
+            option.value = " ";
+            option.text = " ";
+            drop.appendChild(option);
+        for (var i = 0; i < list.length; i++) {
+            option = document.createElement("option");
+            option.value = list[i].value;
+            option.text = list[i].value;
+            drop.appendChild(option);
+        };
+        drop.name ="comment['comment"+counter+"']['client']";
+        document.getElementById('comment_box').appendChild(drop);
+    var comment = document.createElement("textarea")
+        comment.name = "comment['comment"+counter+"']['comment']"
+        comment.placeholder = "comment here"
+        document.getElementById('comment_box').appendChild(comment)
         document.getElementById('counter').value = counter;
 }
 </script>
