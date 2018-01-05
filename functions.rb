@@ -1111,10 +1111,13 @@ def invoice_mail(email, name, start_date)
         mail.deliver!
 end
 
+#comment_filter removes all sets of comments that contain blanks
 def comment_filter(comments)
+    p comments
     comments.each do |info|
-        if info.values.include("")
-            comments[info].delete
+    p info
+        if info[1].values.include?(" ")
+            comments.delete(info)
         end
     comments    
     end
