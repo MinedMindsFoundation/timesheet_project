@@ -588,9 +588,9 @@ post "/commits_to_send" do
     if comments != 'empty'
         comments = comment_reformat(comments)
     end
-    p "comments are here #{comments}"
+    # p "comments are here #{comments}"
     info = params[:stuff]
-    p "info is here #{info}"
+    # p "info is here #{info}"
     client_repo = {}
     # non_committed = params[:ncommit]
     session[:repo_names].each_with_index do |repos, index|
@@ -611,5 +611,5 @@ post "/commits_to_send" do
     # p session[:repo_names]
     # p info
     session[:client_to_hour]
-    erb :visualization, locals:{info:info, clients:final_client_hash, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
+    erb :visualization, locals:{comments:comments,info:info, clients:final_client_hash, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
