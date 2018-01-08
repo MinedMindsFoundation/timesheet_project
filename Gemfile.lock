@@ -7,6 +7,8 @@ GEM
       ffi (~> 1.0, >= 1.0.11)
     declarative (0.0.10)
     declarative-option (0.1.0)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18-x64-mingw32)
@@ -26,6 +28,8 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     httpclient (2.8.3)
     jwt (2.1.0)
     little-plugger (1.1.4)
@@ -39,10 +43,18 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     mini_mime (1.0.0)
+    mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
     multipart-post (2.0.0)
     mustermann (1.0.1)
+    netrc (0.11.0)
+    nokogiri (1.8.1-x64-mingw32)
+      mini_portile2 (~> 2.3.0)
+    nokogiri (1.8.1-x86-mingw32)
+      mini_portile2 (~> 2.3.0)
+    octokit (4.8.0)
+      sawyer (~> 0.8.0, >= 0.5.3)
     os (0.9.6)
     pg (0.21.0-x64-mingw32)
     pg (0.21.0-x86-mingw32)
@@ -56,8 +68,24 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
+    rest-client (2.0.2-x64-mingw32)
+      ffi (~> 1.9)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
+    rest-client (2.0.2-x86-mingw32)
+      ffi (~> 1.9)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     retriable (3.1.1)
+    rubyXL (3.3.26)
+      nokogiri (>= 1.4.4)
+      rubyzip (>= 1.1.6)
     rubyzip (1.2.1)
+    sawyer (0.8.1)
+      addressable (>= 2.3.5, < 2.6)
+      faraday (~> 0.8, < 1.0)
     selenium-webdriver (3.7.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
@@ -75,6 +103,10 @@ GEM
       power_assert
     tilt (2.0.8)
     uber (0.1.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.4-x64-mingw32)
+    unf_ext (0.0.7.4-x86-mingw32)
 
 PLATFORMS
   x64-mingw32
@@ -84,8 +116,11 @@ DEPENDENCIES
   google-api-client (~> 0.9)
   mail
   minitest
+  octokit
   pg
   rake
+  rest-client
+  rubyXL
   selenium-webdriver
   sinatra
   test-unit
