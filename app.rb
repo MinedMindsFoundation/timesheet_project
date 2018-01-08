@@ -494,6 +494,9 @@ post '/client_hours' do
     hour["hours1"] = params[:hours_day1]
     hour["hours2"] = params[:hours_day2]
     session[:hourly_rate] = params[:hourly_wage]
+    billed = params[:billed]
+    session[:billed] = billed
+    p billed
     total_hours = {}
     for count in [1,2] do
         hours = hour["hours#{count}"]
@@ -596,7 +599,7 @@ post "/commits_to_send" do
     # p client_repo
     # p session[:repo_names]
     # p info
-
+    p session[:billed]
     session[:client_to_hour]
-    erb :visualization, locals:{info:info, clients:client_repo, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total]}
+    erb :visualization, locals:{info:info, clients:client_repo, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:session[:billed]}
 end
