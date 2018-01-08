@@ -1148,7 +1148,7 @@ def comment_reformat(comments)
 end
 
 #Makes clients match their count for billing
-def billable_hasing(billable, clients)
+def billable_hashing(billable, clients)
     week_client = []
     2.times do
         clients.each do |client|
@@ -1160,10 +1160,22 @@ def billable_hasing(billable, clients)
     week_client.each do |client|
         client_has = {}
         if billable.include?(count.to_s)
-        client_has["#{count}"] = client
-        client_arr << client_has
+            client_has["#{count}"] = "Yes"
+            client_arr << client_has
+        else
+            client_has["#{count}"] = "No"
+            client_arr << client_has
         end
         count += 1
     end
     client_arr
+end
+
+def adding_blank_clients(clients, cli_to_rep)
+    clients.each do |client|
+        if cli_to_rep.has_key?(client) == false
+            cli_to_rep["#{client}"] = []
+        end
+    end
+    cli_to_rep
 end

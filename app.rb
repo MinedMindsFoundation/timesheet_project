@@ -599,11 +599,13 @@ post "/commits_to_send" do
             client_repo["#{repos}"] = repo_list
         end
     end
-    client_billing = billable_hasing(session[:billed], session[:final_clients])
+    final_client_hash = adding_blank_clients(session[:final_clients], client_repo)
+    client_billing = billable_hashing(session[:billed], session[:final_clients])
     p client_billing
+    p final_client_hash
     # p client_repo
     # p session[:repo_names]
     # p info
     session[:client_to_hour]
-    erb :visualization, locals:{info:info, clients:client_repo, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
+    erb :visualization, locals:{info:info, clients:final_client_hash, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
