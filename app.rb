@@ -581,6 +581,9 @@ end
 post "/commits_to_send" do
     comments = params[:comment]
     comments = comment_filter(comments)
+    if comments != 'empty'
+        comments = comment_reformat(comments)
+    end
     p "comments are here #{comments}"
     info = params[:stuff]
     p "info is here #{info}"
