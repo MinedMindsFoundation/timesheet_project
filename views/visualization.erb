@@ -1,4 +1,5 @@
 <form method="post" action="finalization">
+<%=billed%>
 <%bill_count = 1%>
 <%weeks.each_with_index do |week, week_index|%>
 <h2>Weekly Invoice</h2>
@@ -76,11 +77,10 @@
                 <%sunday_total << week_hour_con[6]%>
                 <td><%=week_hour_con.sum%></td>
                 <%total_total << week_hour_con.sum%>
-                <td><%if billed.include?(bill_count.to_s)%>
-                        Yes
-                    <%else%>
-                        No
+                <td><%billed.each do |bills|%>
+                        <%=bills[bill_count.to_s]%>
                     <%end%>
+                    </td>
             </tr>
                 <%bill_count += 1%>
                 <%end%>
