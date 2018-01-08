@@ -1718,7 +1718,38 @@ class Test_funcs < Minitest::Test
             'client' => "woo",
             'comment' => "test2"}
         }
-        assert_equal(comments,comment_reformat(comments))
+        answer = {"woo"=>{"12-20-2017"=>["comment test"], "11-12-2018"=>["test2"]}}
+        assert_equal(answer,comment_reformat(comments))
+    end
+
+    def test_comment_reformat_2_comments_same_date
+        comments = {"comment1" => {
+            'date' => "12-20-2017",
+            'client' => "woo",
+            'comment' => "comment test"},
+
+            "comment2" => {
+            'date' => "12-20-2017",
+            'client' => "woo",
+            'comment' => "test2"}
+        }
+        answer = {"woo"=>{"12-20-2017"=>["comment test",'test2']}}
+        assert_equal(answer,comment_reformat(comments))
+    end
+
+    def test_comment_reformat_2_clients_same_dates
+        comments = {"comment1" => {
+            'date' => "12-20-2017",
+            'client' => "woo",
+            'comment' => "comment test"},
+
+            "comment2" => {
+            'date' => "12-20-2017",
+            'client' => "woo2",
+            'comment' => "test2"}
+        }
+        answer = {"woo"=>{"12-20-2017"=>["comment test"]}, "woo2"=>{"12-20-2017"=>["test2"]}}
+        assert_equal(answer,comment_reformat(comments))
     end
     
 end

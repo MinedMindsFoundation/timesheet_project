@@ -1136,15 +1136,13 @@ def comment_reformat(comments)
     info = {}
     comments.each_pair do |key,value|
         p "#{key},#{value}"
-        if info[value['client']] == nil
-            info={value['client']=>{value['date'] => [value['comment']]}
-        #    p "#{info={value['client']=>[{value['date'] => [value['comment']]}}} line 1 of conditional"
-        elsif info[value['client']][value['date']] != nil
-            info[value['client']] => {value['date'] => [value["comment"]]}
-           p "#{info={value['client']=>{value['date'] => [value['comment']]}}} line 2 of conditional"
-        else
+       if info[value['client']] == nil
+        info[value['client']] = {value['date']=>[value['comment']]}
+       elsif info[value['client']].keys.include?(value['date'])
             info[value['client']][value['date']].push(value['comment'])
-        end 
+       else
+            info[value['client']][value['date']] = [value['comment']]
+       end
     end
     p info
 end
