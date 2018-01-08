@@ -9,7 +9,7 @@ class Git_api_class
         @password = password
     end
 
-    def get_api_data(date)
+    def get_api_data(start_date,end_date)
         client = Octokit::Client.new(:login => @username, :password => @password)
         # p client.user
         # p client.user.email
@@ -19,7 +19,7 @@ class Git_api_class
             # p repo.full_name
             commit_date = {}
             client.branches("#{repo.full_name}").each do |branch|
-                commits = client.commits_since("#{repo.full_name}" ,date ,branch['name'])
+                commits = client.commits_between("#{repo.full_name}" ,start_date ,end_date,branch['name'])
                 # p commits
                 # p branch['name']
                 # p commits.first

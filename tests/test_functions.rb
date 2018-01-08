@@ -1752,5 +1752,17 @@ class Test_funcs < Minitest::Test
         assert_equal(answer,comment_reformat(comments))
     end
     
+        # ---------------tests for end_of_week----------------------
+        def test_end_of_week_1
+            date = '01-01-2018'
+            assert_equal('01-07-2018',end_of_week(date))
+        end
+
+        def test_end_of_week_2
+            date = '01-08-2018'
+            assert_equal('01-14-2018',end_of_week(date))
+        end
+
+
 end
 

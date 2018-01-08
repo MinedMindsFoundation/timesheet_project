@@ -3,9 +3,8 @@
         <input type='number' step='0.01' value='0.00' placeholder='0.00' min="0.00" name="hourly_wage"><br><br>
     <%client_count = 1%>
     <%count = 1%>
-    <%2.times do%>
         <div id = "week_box">
-            Week <%=count%>
+            Week <%=filing_week%>
             <table>
 
                 <th>Clients</th>
@@ -40,7 +39,6 @@
             </div>
         </div><br><br>
         <%count +=1%>
-    <%end%>
 
     <input type="submit">
 </form>

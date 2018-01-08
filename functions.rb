@@ -1197,3 +1197,9 @@ def billable_nil(clients)
     end
     client_arr
 end
+
+
+def end_of_week(date)
+    result = Date.strptime(date, "%m-%d-%Y")  + (6)
+    result.strftime("%m-%d-%Y")
+end
