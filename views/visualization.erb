@@ -56,6 +56,9 @@
                             <%end%>
                         <%end%>
                     <%end%>
+                    <%comments.each_pair do |key,value|%>
+                       <%=value%>
+                    <%end%>
                     </td>
                 <td><%=week_hour_con[0]%></td>
                 <%monday_total << week_hour_con[0]%>

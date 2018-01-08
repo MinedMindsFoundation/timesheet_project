@@ -1135,7 +1135,7 @@ def comment_reformat(comments)
     p comments
     info = {}
     comments.each_pair do |key,value|
-        p "#{key},#{value}"
+        # p "#{key},#{value}"
        if info[value['client']] == nil
         info[value['client']] = {value['date']=>[value['comment']]}
        elsif info[value['client']].keys.include?(value['date'])
