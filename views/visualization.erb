@@ -7,7 +7,7 @@
         <th>WEEK COMENCING:</th>
         <th><%=week[0]%></th>
         <th>HOURLY RATE:</th>
-        <th></th>
+        <th><%=wage%></th>
     </table><br><br>
     <table>
         <th>Client Name</th>
@@ -28,6 +28,7 @@
         <%sunday_total = []%>
         <th>Total(Hours)</th>
         <%total_total = []%>
+        <%if clients != {}%>
             <%clients.each_with_index do |client, client_index|%>
             <%client_hour_con = hours[client[0]]%>
             <%week_hour_con = client_hour_con[week_index]%>
@@ -70,6 +71,20 @@
                 <td><%=week_hour_con.sum%></td>
                 <%total_total << week_hour_con.sum%>
             </tr>
+                <%end%>
+            <%else%>
+                <tr>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             <%end%>
             <tr>
                 <td><strong>TOTALS</strong></td>
@@ -93,7 +108,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>$ <%=total_total.sum%></td>
+                <td>$ <%=total_total.sum * wage.to_i%></td>
             </tr>
             <tr>
                 <td></td>
@@ -156,7 +171,7 @@
                 <td>$-</td>
             </tr>
     </table><br>
-    <h3>Total Due: $ -</h3><br>
+    <h3>Total Due: $ <%=total_total.sum * wage.to_i%></h3><br>
 
 <%end%>
 </form>
