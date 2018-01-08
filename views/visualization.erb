@@ -1,5 +1,4 @@
 <form method="post" action="finalization">
-<%=billed%>
 <%bill_count = 1%>
 <%weeks.each_with_index do |week, week_index|%>
 <h2>Weekly Invoice</h2>
@@ -57,8 +56,13 @@
                             <%end%>
                         <%end%>
                     <%end%>
-                    <%comments.each_pair do |key,value|%>
-                       <%=value%>
+                    <%comments[client[0]].each_pair do |key,value|%>
+                        <%if week.include?(key)%>
+                            <strong><%=key%></strong><br>
+                            <%value.each do |comment|%>
+                                <%=comment%><br>
+                            <%end%>
+                        <%end%>
                     <%end%>
                     </td>
                 <td><%=week_hour_con[0]%></td>
