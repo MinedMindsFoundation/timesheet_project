@@ -56,11 +56,13 @@
                             <%end%>
                         <%end%>
                     <%end%>
-                    <%comments[client[0]].each_pair do |key,value|%>
-                        <%if week.include?(key)%>
-                            <strong><%=key%></strong><br>
-                            <%value.each do |comment|%>
-                                <%=comment%><br>
+                    <%if comments != 'empty'%>
+                        <%comments[client[0]].each_pair do |key,value|%>
+                            <%if week.include?(key)%>
+                                <strong><%=key%></strong><br>
+                                <%value.each do |comment|%>
+                                    <%=comment%><br>
+                                <%end%>
                             <%end%>
                         <%end%>
                     <%end%>
