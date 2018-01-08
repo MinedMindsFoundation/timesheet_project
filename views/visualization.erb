@@ -1,4 +1,5 @@
 <form method="post" action="finalization">
+<%bill_count = 1%>
 <%weeks.each_with_index do |week, week_index|%>
 <h2>Weekly Invoice</h2>
     <table>
@@ -28,12 +29,14 @@
         <%sunday_total = []%>
         <th>Total(Hours)</th>
         <%total_total = []%>
+        <th>Billable</th>
         <%if clients != {}%>
             <%clients.each_with_index do |client, client_index|%>
             <%client_hour_con = hours[client[0]]%>
             <%week_hour_con = client_hour_con[week_index]%>
             <tr>
                 <td><%=client[0]%></td>
+                    
                     <td>
                     <%client[1].each do |repos|%>
                         <strong><%=repos%></strong><br><br>
@@ -70,11 +73,17 @@
                 <%sunday_total << week_hour_con[6]%>
                 <td><%=week_hour_con.sum%></td>
                 <%total_total << week_hour_con.sum%>
+                <td><%if billed.include?(bill_count.to_s)%>
+                        Yes
+                    <%else%>
+                        No
+                    <%end%>
             </tr>
+                <%bill_count += 1%>
                 <%end%>
             <%else%>
                 <tr>
-                    <td> </td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
