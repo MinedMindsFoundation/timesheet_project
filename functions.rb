@@ -1179,3 +1179,21 @@ def adding_blank_clients(clients, cli_to_rep)
     end
     cli_to_rep
 end
+
+def billable_nil(clients)
+    week_client = []
+    2.times do
+        clients.each do |client|
+            week_client << client
+        end
+    end
+    client_arr = []
+    count = 1
+    week_client.count.times do
+        client_has = {}
+        client_has["#{count}"] = "No"
+        client_arr << client_has
+        count += 1
+    end
+    client_arr
+end

@@ -495,7 +495,11 @@ post '/client_hours' do
     hour["hours2"] = params[:hours_day2]
     session[:hourly_rate] = params[:hourly_wage]
     billed = params[:billed]
-    session[:billed] = billed
+    if billed != nil
+        session[:billed] = billed
+    else
+        session[:billed] = billable_nil(session[:final_clients])
+    end
     p billed
     total_hours = {}
     for count in [1,2] do
