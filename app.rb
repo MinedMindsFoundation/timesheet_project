@@ -610,7 +610,7 @@ post "/commits_to_send" do
     # p session[:repo_names]
     # p info
     session[:client_to_hour]
-    erb :visualization, locals:{comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
+    erb :visualization, locals:{filing_week:session[:filing_week],comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
 
 get '/finalization' do
