@@ -615,7 +615,7 @@ post "/commits_to_send" do
     erb :visualization, locals:{filing_week:session[:filing_week],comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
 
-get '/finalization' do
+post '/finalization' do
     paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
 
 
@@ -629,8 +629,10 @@ post '/to_users_hours' do
     start_date = params[:start_date]
     if monday_check?(start_date) == true
         user_hours = display_admin_hours(start_date)
+        # p user_hours
+        erb :supervisor_weekly, locals:{user_hours:user_hours}
     else
-        session[:monday_msg] = "Please Select a Monday"
+        session[:monday_msg] = "Please Select the Start of the Work Week"
         redirect '/check_user_hours'
     end
 end

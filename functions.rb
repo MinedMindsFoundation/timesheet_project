@@ -1205,6 +1205,7 @@ def end_of_week(date)
     result = Date.strptime(date, "%Y-%m-%d")  + (6)
     result.strftime("%Y-%m-%d")
 end
+
 #To Add Hours Per Week
 def paycycle_hours(user_id, hours, start_date)
     db_params = {
@@ -1225,7 +1226,19 @@ def paycycle_hours(user_id, hours, start_date)
     db.close
 end
 
-
+#For Deleting any Extra Hours(Dev Purpose Only)
+def delete_paycycle_hours(user_id, start_date)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+    db.exec("DELETE FROM payperiod_hours WHERE user_id = '#{user_id}' AND start_date = '#{start_date}'")
+    db.close
+end
 
 #For users to see hours from the current paycycle(USERS)
 def display_user_hours_date(user_id, start_date)
@@ -1308,4 +1321,4 @@ def supervisor_check?(user_id)
     end
 end
 
-# p monday_check?("2018-01-09")
+paycycle_hours("billyjid", ["8","8","8","8","8","8","8"], "2018-01-08")
