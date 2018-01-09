@@ -616,7 +616,7 @@ post "/commits_to_send" do
     erb :visualization, locals:{filing_week:session[:filing_week],comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
 
-get '/finalization' do
+post '/finalization' do
     paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
 
 
