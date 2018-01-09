@@ -184,15 +184,13 @@ def database_info(user_id)
         dbname: ENV['dbname'],
         user: ENV['user'],
         password: ENV['password']
-            }
-        db = PG::Connection.new(db_params)
-        user_first = db.exec("SELECT first_name FROM info_new WHERE user_id = '#{user_id}'").values
-        user_last = db.exec("SELECT last_name FROM info_new WHERE user_id = '#{user_id}'").values
-        db.close            
-        user_name = []
-        user_name << user_first.flatten.first
-        user_name << user_last.flatten.first
-        user_name
+        }
+    user_name = []
+    db = PG::Connection.new(db_params)
+    user_name << db.exec("SELECT first_name FROM info_new WHERE user_id = '#{user_id}'").values
+    user_name << db.exec("SELECT last_name FROM info_new WHERE user_id = '#{user_id}'").values
+    db.close
+    user_name.join(" ")
 end
 
 def database_admin_check(user_id)
@@ -1172,6 +1170,7 @@ def billable_hashing(billable, clients)
     client_arr
 end
 
+#To add a blank array to show clients, even if you've worked, but no commits for them
 def adding_blank_clients(clients, cli_to_rep)
     clients.each do |client|
         if cli_to_rep.has_key?(client) == false
@@ -1181,6 +1180,7 @@ def adding_blank_clients(clients, cli_to_rep)
     cli_to_rep
 end
 
+#To make sure when billed isn't check for any client, it stops nil from breaking app
 def billable_nil(clients)
     week_client = []
     2.times do
@@ -1204,4 +1204,47 @@ def end_of_week(date)
     p date
     result = Date.strptime(date, "%Y-%m-%d")  + (6)
     result.strftime("%Y-%m-%d")
+end
+#To Add Hours Per Week
+def paycycle_hours(user_id, hours, start_date)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+        db.exec("INSERT INTO payperiod_hours(user_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date)VALUES('#{user_id}','#{hours[0]}','#{hours[1]}','#{hours[2]}','#{hours[3]}','#{hours[4]}','#{hours[5]}','#{hours[6]}','#{start_date}')")
+    db.close
+end
+
+#For users to see hours from the current paycycle(USERS)
+def display_user_hours(user_id, start_date)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+        week_hours = db.exec("SELECT * FROM payperiod_hours WHERE user_id = '#{user_id}' AND start_date = '#{start_date}'").values
+    db.close
+    week_hours
+end
+
+#For admins to see hours from all users
+def display_admin_hours(start_date)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+    week_hours = db.exec("SELECT * FROM payperiod_hours WHERE start_date = '#{start_date}'").values
+    db.close
+    week_hours
 end
