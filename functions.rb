@@ -1218,12 +1218,14 @@ def paycycle_hours(user_id, hours, start_date)
     check = db.exec("SELECT * FROM payperiod_hours WHERE user_id = '#{user_id}' AND start_date = '#{start_date}'")
     if check.num_tuples.zero? == true  
         db.exec("INSERT INTO payperiod_hours(user_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date)VALUES('#{user_id}','#{hours[0]}','#{hours[1]}','#{hours[2]}','#{hours[3]}','#{hours[4]}','#{hours[5]}','#{hours[6]}','#{start_date}')")
-        p true
+        true
     else
-        p false
+        false
     end
     db.close
 end
+
+
 
 #For users to see hours from the current paycycle(USERS)
 def display_user_hours_date(user_id, start_date)
@@ -1274,3 +1276,36 @@ def display_admin_hours(start_date)
     week_hours
 end
 
+#To check for if the date is a monday(start of the business week)
+def monday_check?(start_date)
+    new_week = Date.parse(start_date)
+    if new_week.strftime('%A') == "Monday"
+        true
+    else
+        false
+    end
+end
+
+#To check if the person is a supervisor logging in.
+def supervisor_check?(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+    supervisors = db.exec("SELECT supervisor FROM supervisor").values
+    alt_supervisors = db.exec("SELECT alt_supervisor FROM supervisor").values
+    supervisor_list = supervisors.flatten
+    alt_supervisor_list = alt_supervisors.flatten
+    db.close
+    if supervisor_list.include?(user_id) || alt_supervisor_list.include?(user_id)
+        true
+    else
+        false
+    end
+end
+
+# p monday_check?("2018-01-09")

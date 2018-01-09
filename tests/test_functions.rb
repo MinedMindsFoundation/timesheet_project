@@ -1776,5 +1776,11 @@ class Test_funcs < Minitest::Test
         assert_equal(answer,one_week_days(date))
     end
 
+    #============================Test For Weekly Hours===================
+        def test_add_week_hours
+            time = ["8","8","8","8","8","8","8"]
+            user_id = "Tester_id"
+            paycycle_hours(user_id, hours, start_date)
+        end
 end
 
