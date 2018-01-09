@@ -609,11 +609,6 @@ post "/commits_to_send" do
     # p client_repo
     # p session[:repo_names]
     # p info
-<<<<<<< HEAD
-    p session[:split_weeks]
-    p "#{session[:client_to_hour]} client to hour is here"
-    erb :visualization, locals:{filing_week:session[:filing_week],info:info, clients:final_client_hash, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
-=======
     session[:client_to_hour]
     erb :visualization, locals:{comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
@@ -621,12 +616,12 @@ end
 get '/finalization' do
     paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
 
+
 end
 
 post '/to_users_hours' do
     start_date = params[:date]
     
-    erb: 
+    # erb: 
 
->>>>>>> 84fc19e586177e24c5e2bb8eafa97861cae4c9a9
 end
