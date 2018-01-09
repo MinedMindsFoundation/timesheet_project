@@ -1754,15 +1754,27 @@ class Test_funcs < Minitest::Test
     
         # ---------------tests for end_of_week----------------------
         def test_end_of_week_1
-            date = '01-01-2018'
-            assert_equal('01-07-2018',end_of_week(date))
+            date = '2018-01-01'
+            assert_equal('2018-01-07',end_of_week(date))
         end
 
         def test_end_of_week_2
-            date = '01-08-2018'
-            assert_equal('01-14-2018',end_of_week(date))
+            date = '2018-01-08'
+            assert_equal('2018-01-14',end_of_week(date))
         end
+        #--------------------test one week days-------------------------
+    
+    def test_one_week_days
+        date = '2018-01-08'
+        answer = ['2018-01-08','2018-01-09','2018-01-10','2018-01-11','2018-01-12','2018-01-13','2018-01-14']
+        assert_equal(answer,one_week_days(date))
+    end
 
+    def test_one_week_day_2
+        date = '2018-01-15'
+        answer = ['2018-01-15','2018-01-16','2018-01-17','2018-01-18','2018-01-19','2018-01-20','2018-01-21']
+        assert_equal(answer,one_week_days(date))
+    end
 
 end
 

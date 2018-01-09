@@ -418,9 +418,10 @@ def pay_period(now)
     arr
 end
 
-def two_week_days(now)
-    add_2weeks = (14 * 60 * 60 * 24)
-    endday = (13 * 60 * 60 * 24)  + (23 * 60 *60 ) +(59*60) + 59
+def one_week_days(now)
+    now = Time.parse(now)
+    add_2weeks = (7 * 60 * 60 * 24)
+    endday = (6 * 60 * 60 * 24)  + (23 * 60 *60 ) +(59*60) + 59
 
     start_date = Time.utc(2017,10,30)
     end_date = start_date + endday
@@ -429,7 +430,7 @@ def two_week_days(now)
             end_date = start_date + endday
         end
     arr = []
-        14.times do
+        7.times do
             # p start_date
             arr << start_date.strftime('%Y-%m-%d')
             start_date += (60 * 60 * 24)

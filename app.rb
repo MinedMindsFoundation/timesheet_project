@@ -558,7 +558,7 @@ get '/to_github_page' do
     end
     # p pay_period(Time.now)
     # p Time.now
-    session[:two_weeks] = two_week_days(Time.now)
+    session[:two_weeks] = one_week_days(session[:filing_week])
 
     session[:split_weeks] = session[:two_weeks].each_slice(7).to_a
     erb :client_to_project, locals:{git_commits:git_commits, two_weeks:session[:split_weeks], clients:session[:final_clients]}
@@ -609,6 +609,7 @@ post "/commits_to_send" do
     # p client_repo
     # p session[:repo_names]
     # p info
-    session[:client_to_hour]
-    erb :visualization, locals:{,info:info, clients:final_client_hash, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
+    p session[:split_weeks]
+    p "#{session[:client_to_hour]} client to hour is here"
+    erb :visualization, locals:{filing_week:session[:filing_week],info:info, clients:final_client_hash, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
