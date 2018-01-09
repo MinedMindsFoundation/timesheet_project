@@ -617,9 +617,20 @@ post "/commits_to_send" do
 end
 
 post '/finalization' do
-    paycycle_hours(session[:user_id],session[:total_hours1],session[:filing_week])
-    spreadsheet_filler(session[:filing_week],session[:client_to_hour])
+    comments = params[:comments]
+    info = params[:info]
+    billed = params[:billed]
+    clients = params[:clients]
 
+    sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week],billed,clients,info,comments)
+    if sent_in == true
+        session[:message] = "Invoice Sent!"
+        spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],)
+        redirect '/to_landing'
+    else
+        session[:message] = "Invoice Already Sent In!"
+        redirect '/to_landing'
+    end
 end
 
 get '/check_user_hours' do
