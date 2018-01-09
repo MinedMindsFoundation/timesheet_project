@@ -6,6 +6,7 @@ require 'mail'
 require 'googleauth'
 require 'google/apis/calendar_v3'
 require_relative "g_calendar"
+require_relative "spreadsheet.rb"
 
 load './local_env.rb' if File.exist?('./local_env.rb')
 
@@ -1308,4 +1309,6 @@ def supervisor_check?(user_id)
     end
 end
 
-# p monday_check?("2018-01-09")
+# applies data to the spreadsheet template
+    def spreadsheet_filler(hash)
+    end
