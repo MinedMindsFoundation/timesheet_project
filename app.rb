@@ -617,8 +617,8 @@ post "/commits_to_send" do
 end
 
 post '/finalization' do
-    paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
-
+    paycycle_hours(session[:user_id],session[:total_hours1],session[:filing_week])
+    spreadsheet_filler(session[:filing_week],session[:client_to_hour])
 
 end
 
