@@ -1215,12 +1215,18 @@ def paycycle_hours(user_id, hours, start_date)
         password: ENV['password']
         }
     db = PG::Connection.new(db_params)
+    check = db.exec("SELECT * FROM payperiod_hours WHERE user_id = '#{user_id}' AND start_date = '#{start_date}'")
+    if check.num_tuples.zero? == true  
         db.exec("INSERT INTO payperiod_hours(user_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date)VALUES('#{user_id}','#{hours[0]}','#{hours[1]}','#{hours[2]}','#{hours[3]}','#{hours[4]}','#{hours[5]}','#{hours[6]}','#{start_date}')")
+        p true
+    else
+        p false
+    end
     db.close
 end
 
 #For users to see hours from the current paycycle(USERS)
-def display_user_hours(user_id, start_date)
+def display_user_hours_date(user_id, start_date)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -1230,6 +1236,21 @@ def display_user_hours(user_id, start_date)
         }
     db = PG::Connection.new(db_params)
         week_hours = db.exec("SELECT * FROM payperiod_hours WHERE user_id = '#{user_id}' AND start_date = '#{start_date}'").values
+    db.close
+    week_hours
+end
+
+#Checks for all weeks from the user who logs into 
+def display_user_hours_all(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+    week_hours = db.exec("SELECT * FROM payperiod_hours WHERE user_id = '#{user_id}'").values
     db.close
     week_hours
 end
@@ -1244,7 +1265,12 @@ def display_admin_hours(start_date)
         password: ENV['password']
         }
     db = PG::Connection.new(db_params)
-    week_hours = db.exec("SELECT * FROM payperiod_hours WHERE start_date = '#{start_date}'").values
+    week_hours = []
+    new_week = Date.parse("#{start_date}")
+    next_week = new_week += 7
+    week_hours << db.exec("SELECT * FROM payperiod_hours WHERE start_date = '#{start_date}'").values
+    week_hours << db.exec("SELECT * FROM payperiod_hours WHERE start_date = '#{next_week.strftime('%Y-%m-%d')}'").values
     db.close
     week_hours
 end
+
