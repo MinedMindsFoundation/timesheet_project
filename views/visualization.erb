@@ -83,8 +83,14 @@
                 <%saturday_total << week_hour_con[5]%>
                 <td><%=week_hour_con[6]%></td>
                 <%sunday_total << week_hour_con[6]%>
-                <td><%=week_hour_con.sum%></td>
-                <%total_total << week_hour_con.sum%>
+                <td>
+                    <%num = 0%>
+                    <%for value in week_hour_con do%>
+                        <%num += value%>
+                    <%end%>
+                    <%=num%>
+                </td>
+                <%total_total << num%>
                 <td><%billed.each do |bills|%>
                         <%=bills[bill_count.to_s]%>
                     <%end%>

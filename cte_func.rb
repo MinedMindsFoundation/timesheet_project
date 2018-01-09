@@ -21,7 +21,7 @@ def get_supervisees(user_id)
         WHERE  g.supervisor = sg.user_id
 )
 SELECT * FROM search_graph;")
-
+    p users.values
     last_num = users.values.last.last.to_i
     db.close
     num = ""
