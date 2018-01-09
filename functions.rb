@@ -1200,6 +1200,7 @@ end
 
 
 def end_of_week(date)
-    result = Date.strptime(date, "%m-%d-%Y")  + (6)
-    result.strftime("%m-%d-%Y")
+    p date
+    result = Date.strptime(date, "%Y-%m-%d")  + (6)
+    result.strftime("%Y-%m-%d")
 end
