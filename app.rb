@@ -609,12 +609,7 @@ post "/commits_to_send" do
     # p client_repo
     # p session[:repo_names]
     # p info
-<<<<<<< HEAD
     p session[:split_weeks]
     p "#{session[:client_to_hour]} client to hour is here"
     erb :visualization, locals:{filing_week:session[:filing_week],info:info, clients:final_client_hash, comments:comments, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
-=======
-    session[:client_to_hour]
-    erb :visualization, locals:{comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
->>>>>>> 29e53282f0f932aeb10450f05f27261a776e3ef2
 end

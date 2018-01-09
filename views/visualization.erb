@@ -4,7 +4,7 @@
 <h2>Weekly Invoice</h2>
     <table>
         <th>NAME:</th>
-        <th><%=name.join(" ")%></th>
+        <th><%=name%></th>
         <th>WEEK COMENCING:</th>
         <th><%=filing_week%></th>
         <th>HOURLY RATE:</th>
@@ -57,11 +57,13 @@
                         <%end%>
                     <%end%>
                     <%if comments != 'empty'%>
-                        <%comments[client[0]].each_pair do |key,value|%>
-                            <%if week.include?(key)%>
-                                <strong><%=key%></strong><br>
-                                <%value.each do |comment|%>
-                                    <%=comment%><br>
+                        <%if comments[client[0]] != nil%>
+                            <%comments[client[0]].each_pair do |key,value|%>
+                                <%if week.include?(key)%>
+                                    <strong><%=key%></strong><br>
+                                    <%value.each do |comment|%>
+                                        <%=comment%><br>
+                                    <%end%>
                                 <%end%>
                             <%end%>
                         <%end%>
