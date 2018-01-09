@@ -89,6 +89,8 @@ end
 
 # leads to landing page 
 get "/to_landing" do
+    session[:supervisor_check] = supervisor_check?(session[:user_id])
+    session[:monday_msg] = ""
     session[:employees] = get_supervisees(session[:user_id])
     names_to_use = session[:employees]
     user_list = get_names(names_to_use)
@@ -619,9 +621,16 @@ get '/finalization' do
 
 end
 
-post '/to_users_hours' do
-    start_date = params[:date]
-    
-    # erb: 
+get '/check_user_hours' do
+    erb :hours_date, locals:{msg:session[:monday_msg]}
+end
 
+post '/to_users_hours' do
+    start_date = params[:start_date]
+    if monday_check?(start_date) == true
+        user_hours = display_admin_hours(start_date)
+    else
+        session[:monday_msg] = "Please Select a Monday"
+        redirect '/check_user_hours'
+    end
 end

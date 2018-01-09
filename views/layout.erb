@@ -14,6 +14,9 @@
     <a href="/add_user">Add User</a>
     <a href="/edit_user">Edit</a>
     <a href="/github">Github</a>
+    <% if session[:supervisor_check] == true %>
+        <a href="/check_user_hours">Check Hours</a>
+    <%end%>
     <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">Menu</a>
 <%else%>
     <a href="/to_landing">Home</a>
