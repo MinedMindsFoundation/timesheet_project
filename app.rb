@@ -617,9 +617,14 @@ post "/commits_to_send" do
 end
 
 post '/finalization' do
-    paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
-
-
+    sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
+    if sent_in == true
+        session[:message] = "Invoice Sent!"
+        redirect '/to_landing'
+    else
+        session[:message] = "Invoice Already Sent In!"
+        redirect '/to_landing'
+    end
 end
 
 get '/check_user_hours' do

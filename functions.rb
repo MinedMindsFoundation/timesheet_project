@@ -1323,5 +1323,5 @@ def supervisor_check?(user_id)
 end
 
 # applies data to the spreadsheet template
-    def spreadsheet_filler(hash)
-    end
+def spreadsheet_filler(hash)
+end
