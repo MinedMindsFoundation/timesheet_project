@@ -627,9 +627,9 @@ post '/finalization' do
     #  p "#{billed} billed is here"
 
     sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
+    spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],billed,clients,session[:info],comments)
     if sent_in == true
         session[:message] = "Invoice Sent!"
-        spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],billed,clients,session[:info],comments)
         redirect '/to_landing'
     else
         session[:message] = "Invoice Already Sent In!"
