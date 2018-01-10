@@ -1323,5 +1323,13 @@ def supervisor_check?(user_id)
 end
 
 # applies data to the spreadsheet template
-def spreadsheet_filler(hash)
+def spreadsheet_filler(filing_week,hours,name,hours_total,wage,billed,clients,info,comments)
+    sheet = InvoiceSpreadsheet.new
+    sheet.generate_new_file(name,filing_week)
+    sheet.input_data('4C',name)
+    sheet.input_data('4G',filing_week)
+    sheet.input_data('4K',wage)
+    clients.each do |client|
+        p "#{client}"
+    end
 end
