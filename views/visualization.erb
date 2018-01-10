@@ -200,5 +200,8 @@
     <h3>Total Due: $ <%=total_total.sum * wage.to_i%></h3><br>
 
 <%end%>
+<input type = "hidden" name = "billed" value = '<%=billed%>'>
+<input type = "hidden" name = "comments" value = '<%=comments%>'>
+<input type = "hidden" name = "clients" value = '<%=clients%>'>
 <input type = 'submit'>
 </form>
