@@ -2,6 +2,7 @@ require "minitest/autorun"
 require_relative 'spreadsheet.rb'
 
 class Test_spreadsheet < Minitest::Test
+    
     def test_1_and_1
         assert_equal(1,1)
     end
@@ -69,11 +70,11 @@ class Test_spreadsheet < Minitest::Test
     # end
 
 
-    def test_for_mail_invoice
-        x = InvoiceSpreadsheet.new()
-        x.input_data("A1","TEST WOO")
-        x.mail_invoice("TEST@test.com", "TEST","1-1-2018")
-        p "it did it"
-    end
+    # def test_for_mail_invoice
+    #     x = InvoiceSpreadsheet.new()
+    #     x.input_data("A1","TEST WOO")
+    #     x.mail_invoice("TEST@test.com", "TEST","1-1-2018")
+    #     p "it did it"
+    # end
 
 end

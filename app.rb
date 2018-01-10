@@ -611,21 +611,25 @@ post "/commits_to_send" do
     # p final_client_hash
     # p client_repo
     # p session[:repo_names]
-    # p info
-    session[:client_to_hour]
+    session[:info] = info
+    # session[:client_to_hour]
     erb :visualization, locals:{filing_week:session[:filing_week],comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
 
 post '/finalization' do
     comments = params[:comments]
-    info = params[:info]
+    
     billed = params[:billed]
     clients = params[:clients]
 
-    sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week],billed,clients,info,comments)
+    #  p "#{comments} comments here"
+    #  p "#{clients} clients here"
+    #  p "#{billed} billed is here"
+
+    sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
     if sent_in == true
         session[:message] = "Invoice Sent!"
-        spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],)
+        spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],billed,clients,session[:info],comments)
         redirect '/to_landing'
     else
         session[:message] = "Invoice Already Sent In!"
