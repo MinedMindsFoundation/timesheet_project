@@ -1,27 +1,29 @@
-<%user_hours.each do |week|%>
-    <table>
-        <th>Name</th>
-        <th>Start Date</th>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-        <th>Sunday</th>
-        
-        <%week.each do |hours|%>
-        <tr>
-            <td><%=database_info("#{hours[0]}")%></td>
-            <td><%=hours[8]%></td>
-            <td><%=hours[1]%></td>
-            <td><%=hours[2]%></td>
-            <td><%=hours[3]%></td>
-            <td><%=hours[4]%></td>
-            <td><%=hours[5]%></td>
-            <td><%=hours[6]%></td>
-            <td><%=hours[7]%></td>
-        </tr>
-        <%end%>
-    </table>
-<%end%>
+<div id = "box5">
+    <%user_hours.each do |week|%>
+        <table>
+            <th>Name</th>
+            <th>Start Date</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+            
+            <%week.each do |hours|%>
+            <tr>
+                <td><%=database_info("#{hours[0]}")%></td>
+                <td><%=hours[8]%></td>
+                <td><%=hours[1]%></td>
+                <td><%=hours[2]%></td>
+                <td><%=hours[3]%></td>
+                <td><%=hours[4]%></td>
+                <td><%=hours[5]%></td>
+                <td><%=hours[6]%></td>
+                <td><%=hours[7]%></td>
+            </tr>
+            <%end%>
+        </table>
+    <%end%>
+</div>

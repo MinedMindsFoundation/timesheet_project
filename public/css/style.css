@@ -124,6 +124,16 @@ iframe[seamless] {
     background-color: var(--box-bg-color);
 }
 
+#box5 {
+    width: fit-content;
+    margin: auto;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    background-color: var(--box-bg-color);
+    border-radius: 3vh;
+}
+
 #comment_box{
     float: right;
     border-radius: 3vh;

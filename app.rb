@@ -638,7 +638,7 @@ post '/to_users_hours' do
         # p user_hours
         erb :supervisor_weekly, locals:{user_hours:user_hours}
     else
-        session[:monday_msg] = "Please Select the Start of the Work Week"
+        session[:monday_msg] = "Please Select the Start of the Work Week(Monday)"
         redirect '/check_user_hours'
     end
 end
