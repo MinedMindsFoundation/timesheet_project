@@ -110,7 +110,7 @@ get "/to_landing" do
     pay_period = pay_period(Time.new)
     times = pull_in_and_out_times(session[:user_id],pay_period)
     todays_time = pull_in_and_out_times(session[:user_id],[DateTime.now.strftime('%Y-%m-%d'),DateTime.now.strftime('%Y-%m-%d')])
-    p user_list
+    # p user_list
     erb :landing, locals:{user_list:user_list,time_hash:time_hash,todays_time:todays_time,pay_period:pay_period,times:times,user_info:user_info, user_email:user_email, admin_check: session[:admin_check],}
 end
 
@@ -503,7 +503,7 @@ post '/client_hours' do
     else
         session[:billed] = billable_nil(session[:final_clients])
     end
-    p billed
+    # p billed
     total_hours = {}
 
         hours = hour["hours1"]
@@ -611,23 +611,21 @@ post "/commits_to_send" do
     # p final_client_hash
     # p client_repo
     # p session[:repo_names]
-    session[:info] = info
     # session[:client_to_hour]
     erb :visualization, locals:{filing_week:session[:filing_week],comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
 
 post '/finalization' do
     comments = params[:comments]
-    
-    billed = params[:billed]
-    clients = params[:clients]
+    info = params[:info]
+    # clients = params[:clients]
 
-    #  p "#{comments} comments here"
-    #  p "#{clients} clients here"
-    #  p "#{billed} billed is here"
+     p "#{comments} comments here"
+    # p "#{clients} clients here"
+    # p "#{info} info is here"
 
     sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
-    spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],billed,clients,session[:info],comments)
+    spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,comments)
     if sent_in == true
         session[:message] = "Invoice Sent!"
         redirect '/to_landing'

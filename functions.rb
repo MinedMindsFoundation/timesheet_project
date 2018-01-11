@@ -1323,13 +1323,41 @@ def supervisor_check?(user_id)
 end
 
 # applies data to the spreadsheet template
-def spreadsheet_filler(filing_week,hours,name,hours_total,wage,billed,clients,info,comments)
+def spreadsheet_filler(filing_week,hours,name,hours_total,wage,info,comments)
     sheet = InvoiceSpreadsheet.new
     sheet.generate_new_file(name,filing_week)
     sheet.input_data('4C',name)
     sheet.input_data('4G',filing_week)
     sheet.input_data('4K',wage)
-    clients.each do |client|
-        p "#{client}"
+    count = 8 
+    info_string = ""
+    info.each_pair do |client,repo|
+        sheet.input_data(("#{count}"+'B'),client)
+        repo.each_pair do |repo,date|
+            info_string << "#{repo}"
+            info_string << "/n"
+
+            date.each_pair do |date,info|
+                info_string << "#{date}"
+                info_string << "/n"
+                info.each do |git_info|
+                    git_info.each do |key,value|
+                        info_string << "#{key}: #{value}"
+                        info_string << "/n"
+                    end
+                    info_string << "/n"
+                end
+                p comments
+                comments["#{client}"].each_pair do |date,comment|
+                    info_string << "#{date}"
+                    info_string << "/n"
+                    comment.each do |comment|
+                        info_string << "#{comment}"
+                        info_string << "/n"
+                    end
+                end
+            end
+        end
+        p "info_string is here #{info_string}"
     end
 end
