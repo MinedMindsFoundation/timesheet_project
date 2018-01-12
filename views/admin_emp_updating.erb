@@ -4,6 +4,7 @@
 <strong><%=msg%></strong><br><br>
 <%names_arr = []%>
 <%current_sup = ""%>
+<%current_sup_id = ""%>
 <%users.each_with_index do |user, index|%>
 <div class="center_text">
 <strong><center>Employee info of <%=user[1].capitalize%> <%=user[2].capitalize%>:</center></strong><br>
@@ -11,32 +12,34 @@
 <strong>Employee ID:</strong> <input type = "text" name = info[] value = "<%=user[0]%>" size="10" id="right_align" ><br><br>
 <strong>First Name:</strong> <input type = "text" name = info[] value = "<%=user[1]%>" size="10" id="right_align" ><br><br>
 <strong>Last Name:</strong> <input type = "text" name = info[] value = "<%=user[2]%>" size="10" id="right_align" ><br><br>
-<strong>Business Email:</strong> <input type = "email" name = info[] value = "<%=user[3]%>" id="right_align" ><br><br>
-<strong>PTO:</strong> <input type = "number" name = info[] value = "<%=user[4]%>" style = "width: 4em" id="right_align" ><br><br>
-<strong>Vacation:</strong> <input type = "number" name = info[] value = "<%=user[5]%>" style = "width: 4em" id="right_align" ><br><br>
-<strong>Sick Days:</strong> <input type = "number" name = info[] value = "<%=user[6]%>" style = "width: 4em" id="right_align" ><br><br>
-<strong>Date Of Hire:</strong> <input type = "date" name = info[] value = "<%=user[7]%>" style = "width: 10em" id="right_align" ><br><br>
-<strong>Job Title:</strong> <input type = "text" name = info[] value = "<%=user[8]%>" size="10" id="right_align" ><br><br>
-<strong>Department:</strong> <input type = "text" name = info[] value = "<%=user[9]%>" size="10" id="right_align"><br><br>
+<strong>Hourly Rate:</strong> <input type='number' step='0.01' name = info[]  value='<%=user[3]%>' min="0.00" id="right_align"><br><br>
+<strong>Business Email:</strong> <input type = "email" name = info[] value = "<%=user[4]%>" id="right_align" ><br><br>
+<strong>PTO:</strong> <input type = "number" name = info[] value = "<%=user[5]%>" style = "width: 4em" id="right_align" ><br><br>
+<strong>Vacation:</strong> <input type = "number" name = info[] value = "<%=user[6]%>" style = "width: 4em" id="right_align" ><br><br>
+<strong>Sick Days:</strong> <input type = "number" name = info[] value = "<%=user[7]%>" style = "width: 4em" id="right_align" ><br><br>
+<strong>Date Of Hire:</strong> <input type = "date" name = info[] value = "<%=user[8]%>" style = "width: 10em" id="right_align" ><br><br>
+<strong>Job Title:</strong> <input type = "text" name = info[] value = "<%=user[9]%>" size="10" id="right_align" ><br><br>
+<strong>Department:</strong> <input type = "text" name = info[] value = "<%=user[10]%>" size="10" id="right_align"><br><br>
 <strong>Admin Access:</strong>
 <select name=info[]>
-<option value ="<%=user[10]%>" selected><%=user[10]%></option>
-<%if user[10] == "Yes"%>
+<option value ="<%=user[11]%>" selected><%=user[11]%></option>
+<%if user[11] == "Yes"%>
     <option value="No">No</option>
-<%elsif user[10] == "No"%>
+<%elsif user[11] == "No"%>
     <option value="Yes">Yes</option>
 <%end%></select>
 <br><br>
 <%sup_arr.each do |superv|%>
     <%if superv[0] == user[0] %>
-    <%elsif superv[0] == user[11]%>
+    <%elsif superv[0] == user[12]%>
         <%current_sup = "#{superv[1]} #{superv[2]}"%>
+        <%current_sup_id = superv[0]%>
     <%else%>
         <%names_arr << superv%>
     <%end%>
 <%end%>
 <strong>Supervisor:</strong><select  name = info[]>
-<option value ='<%=current_sup%>' selected><%=current_sup%></option>
+<option selected value ='<%=current_sup_id%>' ><%=current_sup%></option>
 <%names_arr.each do |name|%>
     <option value=<%="#{name[0]}"%>><%="#{name[1]} #{name[2]}"%></option>
 <%end%><br></select>

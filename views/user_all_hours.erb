@@ -1,0 +1,26 @@
+<div id = "box5">
+    <table>
+        <th>Name</th>
+        <th>Start Date</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+        <%all_hours.each do |week|%>
+            <tr>
+                <td><%=database_info("#{week[0]}")%></td>
+                <td><%=week[8]%></td>
+                <td><%=week[1]%></td>
+                <td><%=week[2]%></td>
+                <td><%=week[3]%></td>
+                <td><%=week[4]%></td>
+                <td><%=week[5]%></td>
+                <td><%=week[6]%></td>
+                <td><%=week[7]%></td>
+            </tr>
+        <%end%>
+    </table>
+</div>
