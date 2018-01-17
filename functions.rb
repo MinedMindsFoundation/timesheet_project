@@ -1362,16 +1362,16 @@ def spreadsheet_filler(filing_week,hours,name,hours_total,wage,info,comments)
                     end
                     info_string << "/n"
                 end
-                p comments
-                p client_name = remove_quotes(client)
-                comments[client_name].each_pair do |date,comment|
-                    info_string << "#{date}"
-                    info_string << "/n"
-                    comment.each do |comment|
-                        info_string << "#{comment}"
-                        info_string << "/n"
-                    end
-                end
+            end
+        end
+        p comments
+        p client_name = remove_quotes(client)
+        comments[client_name].each_pair do |date,comment|
+            info_string << "#{date}"
+            info_string << "/n"
+            comment.each do |comment|
+                info_string << "#{comment}"
+                info_string << "/n"
             end
         end
         p "info_string is here #{info_string}"
