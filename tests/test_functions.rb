@@ -1783,5 +1783,12 @@ class Test_funcs < Minitest::Test
             assert_equal('Mined Minds',remove_quotes(word))
         end
 
+    #------------------------tests for get monday()--------------------
+        
+        def test_get_monday()
+            date = "2018-1-10"
+            assert_equal("2018-1-08",get_monday(date))
+        end
+
 end
 
