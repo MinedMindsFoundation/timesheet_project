@@ -1348,8 +1348,8 @@ def spreadsheet_filler(filing_week,hours,name,hours_total,wage,info,comments)
                     info_string << "/n"
                 end
                 p comments
-                p "#{client} CLIENT IS HERE"
-                comments["#{client}"].each_pair do |date,comment|
+                p "#{client}"
+                comments[client].each_pair do |date,comment|
                     info_string << "#{date}"
                     info_string << "/n"
                     comment.each do |comment|

@@ -588,7 +588,7 @@ post "/commits_to_send" do
     comments = params[:comment]
     comments = comment_filter(comments)
     if comments != 'empty'
-        comments = comment_reformat(comments)
+        session[:comments] = comment_reformat(comments)
     end
     # p "comments are here #{comments}"
     info = params[:stuff]
@@ -612,20 +612,17 @@ post "/commits_to_send" do
     # p client_repo
     # p session[:repo_names]
     # session[:client_to_hour]
-    erb :visualization, locals:{filing_week:session[:filing_week],comments:comments,info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
+    erb :visualization, locals:{filing_week:session[:filing_week],comments:session[:comments],info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
 
 post '/finalization' do
-    comments = params[:comments]
     info = params[:info]
     # clients = params[:clients]
-
-     p "#{comments} comments here"
     # p "#{clients} clients here"
     # p "#{info} info is here"
 
     sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
-    spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,comments)
+    spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,session[:comments])
     if sent_in == true
         session[:message] = "Invoice Sent!"
         redirect '/to_landing'
