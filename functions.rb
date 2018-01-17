@@ -1363,8 +1363,8 @@ def spreadsheet_filler(filing_week,hours,name,hours_total,wage,info,comments)
                     info_string << "/n"
                 end
                 p comments
-                p "#{client}"
-                comments[client].each_pair do |date,comment|
+                p client_name = remove_quotes(client)
+                comments[client_name].each_pair do |date,comment|
                     info_string << "#{date}"
                     info_string << "/n"
                     comment.each do |comment|
@@ -1376,4 +1376,12 @@ def spreadsheet_filler(filing_week,hours,name,hours_total,wage,info,comments)
         end
         p "info_string is here #{info_string}"
     end
+end
+
+
+def remove_quotes(word)
+   word = word.split('').to_a
+   word.pop
+    word.shift
+    word.join
 end

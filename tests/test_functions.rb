@@ -1707,73 +1707,81 @@ class Test_funcs < Minitest::Test
     #     assert_equal(answer,comment_filter(comments)) 
     # end
     #-----------------------tests for comment_reformat()-----------------------
-    def test_comment_reformat_1_comment
-              comments = {"comment1" => {
-            'date' => "12-20-2017",
-            'client' => "woo",
-            'comment' => "comment test"},
+    # def test_comment_reformat_1_comment
+    #           comments = {"comment1" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo",
+    #         'comment' => "comment test"},
 
-            "comment2" => {
-            'date' => "11-12-2018",
-            'client' => "woo",
-            'comment' => "test2"}
-        }
-        answer = {"woo"=>{"12-20-2017"=>["comment test"], "11-12-2018"=>["test2"]}}
-        assert_equal(answer,comment_reformat(comments))
-    end
+    #         "comment2" => {
+    #         'date' => "11-12-2018",
+    #         'client' => "woo",
+    #         'comment' => "test2"}
+    #     }
+    #     answer = {"woo"=>{"12-20-2017"=>["comment test"], "11-12-2018"=>["test2"]}}
+    #     assert_equal(answer,comment_reformat(comments))
+    # end
 
-    def test_comment_reformat_2_comments_same_date
-        comments = {"comment1" => {
-            'date' => "12-20-2017",
-            'client' => "woo",
-            'comment' => "comment test"},
+    # def test_comment_reformat_2_comments_same_date
+    #     comments = {"comment1" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo",
+    #         'comment' => "comment test"},
 
-            "comment2" => {
-            'date' => "12-20-2017",
-            'client' => "woo",
-            'comment' => "test2"}
-        }
-        answer = {"woo"=>{"12-20-2017"=>["comment test",'test2']}}
-        assert_equal(answer,comment_reformat(comments))
-    end
+    #         "comment2" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo",
+    #         'comment' => "test2"}
+    #     }
+    #     answer = {"woo"=>{"12-20-2017"=>["comment test",'test2']}}
+    #     assert_equal(answer,comment_reformat(comments))
+    # end
 
-    def test_comment_reformat_2_clients_same_dates
-        comments = {"comment1" => {
-            'date' => "12-20-2017",
-            'client' => "woo",
-            'comment' => "comment test"},
+    # def test_comment_reformat_2_clients_same_dates
+    #     comments = {"comment1" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo",
+    #         'comment' => "comment test"},
 
-            "comment2" => {
-            'date' => "12-20-2017",
-            'client' => "woo2",
-            'comment' => "test2"}
-        }
-        answer = {"woo"=>{"12-20-2017"=>["comment test"]}, "woo2"=>{"12-20-2017"=>["test2"]}}
-        assert_equal(answer,comment_reformat(comments))
-    end
+    #         "comment2" => {
+    #         'date' => "12-20-2017",
+    #         'client' => "woo2",
+    #         'comment' => "test2"}
+    #     }
+    #     answer = {"woo"=>{"12-20-2017"=>["comment test"]}, "woo2"=>{"12-20-2017"=>["test2"]}}
+    #     assert_equal(answer,comment_reformat(comments))
+    # end
     
-        # ---------------tests for end_of_week----------------------
-        def test_end_of_week_1
-            date = '2018-01-01'
-            assert_equal('2018-01-07',end_of_week(date))
+    #     # ---------------tests for end_of_week----------------------
+    #     def test_end_of_week_1
+    #         date = '2018-01-01'
+    #         assert_equal('2018-01-07',end_of_week(date))
+    #     end
+
+    #     def test_end_of_week_2
+    #         date = '2018-01-08'
+    #         assert_equal('2018-01-14',end_of_week(date))
+    #     end
+    #     #--------------------test one week days-------------------------
+    
+    # def test_one_week_days
+    #     date = '2018-01-08'
+    #     answer = ['2018-01-08','2018-01-09','2018-01-10','2018-01-11','2018-01-12','2018-01-13','2018-01-14']
+    #     assert_equal(answer,one_week_days(date))
+    # end
+
+    # def test_one_week_day_2
+    #     date = '2018-01-15'
+    #     answer = ['2018-01-15','2018-01-16','2018-01-17','2018-01-18','2018-01-19','2018-01-20','2018-01-21']
+    #     assert_equal(answer,one_week_days(date))
+    # end
+
+    #-------------------------test for remove_quotes()---------------
+
+        def test_remove_quotes()
+            word = "'Mined Minds'"
+            assert_equal('Mined Minds',remove_quotes(word))
         end
 
-        def test_end_of_week_2
-            date = '2018-01-08'
-            assert_equal('2018-01-14',end_of_week(date))
-        end
-        #--------------------test one week days-------------------------
-    
-    def test_one_week_days
-        date = '2018-01-08'
-        answer = ['2018-01-08','2018-01-09','2018-01-10','2018-01-11','2018-01-12','2018-01-13','2018-01-14']
-        assert_equal(answer,one_week_days(date))
-    end
-
-    def test_one_week_day_2
-        date = '2018-01-15'
-        answer = ['2018-01-15','2018-01-16','2018-01-17','2018-01-18','2018-01-19','2018-01-20','2018-01-21']
-        assert_equal(answer,one_week_days(date))
-    end
 end
 
