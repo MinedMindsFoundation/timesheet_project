@@ -12,28 +12,28 @@
 
 
 <div id="gitbox_2">
-<div style="float:right;width: 50%;">
-<%git_commits.each do |repo|%>
-    <p class="repo_name"><%=repo[0]%> <input list="clients" name="<%=repo[0]%>_client"></p>
-            <%repo[1].each do |dates|%>
-                <table class="web_fill">
-                <p class = 'git_dates'><%=dates[0]%></p>
-                    <th></th>
-                    <th>Branch</th>
-                    <th>SHA Key</th>
-                    <th>Commit</th>
-                    <%dates[1].each do |info|%>
-                        <tr align ="left">
-                        <td><input type = "checkbox" name = "stuff[<%=repo[0]%>][<%=dates[0]%>][]" value = "<%=info["branch"]%>,<%=info["sha"]%>,<%=info["message"]%>"  checked></td>
-                        <td><%=info["branch"]%></td>
-                        <td><%=info["sha"]%></td>
-                        <td><%=info["message"]%></td>
-                        </tr>
-                    <%end%>
-                </table>
+    <div style="float:right;width: 50%;">
+    <%git_commits.each do |repo|%>
+        <p class="repo_name"><%=repo[0]%> <input list="clients" name="<%=repo[0]%>_client"></p>
+                <%repo[1].each do |dates|%>
+                    <table class="web_fill">
+                    <p class = 'git_dates'><%=dates[0]%></p>
+                        <th></th>
+                        <th>Branch</th>
+                        <th>SHA Key</th>
+                        <th>Commit</th>
+                        <%dates[1].each do |info|%>
+                            <tr align ="left">
+                            <td><input type = "checkbox" name = "stuff[<%=repo[0]%>][<%=dates[0]%>][]" value = "<%=info["branch"]%>,<%=info["sha"]%>,<%=info["message"]%>"  checked></td>
+                            <td><%=info["branch"]%></td>
+                            <td><%=info["sha"]%></td>
+                            <td><%=info["message"]%></td>
+                            </tr>
+                        <%end%>
+                    </table>
+                <%end%>
             <%end%>
         </div>
-    <%end%>
     <datalist id="clients">
         <%clients.each do |client|%>
             <option value="<%=client%>">

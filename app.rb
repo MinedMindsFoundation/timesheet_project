@@ -585,9 +585,9 @@ get '/callback' do
 end
 
 post "/commits_to_send" do
-    comments = params[:comment]
-    comments = comment_filter(comments)
-    if comments != 'empty'
+    session[:comments] = params[:comment]
+    session[:comments] = comment_filter(session[:comments])
+    if session[:comments] != 'empty'
         session[:comments] = comment_reformat(comments)
     end
     # p "comments are here #{comments}"
@@ -608,11 +608,12 @@ post "/commits_to_send" do
     final_client_hash = adding_blank_clients(session[:final_clients], client_repo)
     client_billing = billable_hashing(session[:billed], session[:final_clients])
     # p client_billing
-    # p final_client_hash
+     p "#{final_client_hash} hash here"
     # p client_repo
     # p session[:repo_names]
     # session[:client_to_hour]
-    erb :visualization, locals:{filing_week:session[:filing_week],comments:session[:comments],info:info, clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
+    # p "#{session[:client_to_hour]}hours are here"
+    erb :visualization, locals:{filing_week:session[:filing_week],comments:session[:comments],info:info,final_clients:session[:final_clients],clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
 end
 
 post '/finalization' do

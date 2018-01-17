@@ -32,76 +32,78 @@
         <th>Billable</th>
         <%if clients != {}%>
             <%clients.each_with_index do |client, client_index|%>
-            <%client_hour_con = hours[client[0]]%>
-            <%week_hour_con = client_hour_con[week_index]%>
-            <tr>
-                <td><%=client[0]%></td>
-                    
-                    <td>
-                    <%client[1].each do |repos|%>
-                        <strong><%=repos%></strong><br><br>
-                        <%info.each do |commits|%>
-                            <%if commits[0] == repos%>
-                                <%commits[1].each do |commits|%>
-                                    <%if week.include?(commits[0])%>
-                                        <strong><%=commits[0]%></strong><br>
-                                        <%commits[1].each do |info|%>
-                                            <%details = info.split(",")%>
-                                            Branch: <%=details[0]%><br>
-                                            SHA: <%=details[1]%><br>
-                                            Message: <%=details[2]%><br><br>
-                                            <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['Branch']" value = '<%=details[0]%>'>
-                                            <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['SHA']" value = '<%=details[1]%>'>
-                                            <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['Message']" value = '<%=details[2]%>'>
+                <%if final_clients.include?(client[0])%>
+                    <%client_hour_con = hours[client[0]]%>
+                    <%week_hour_con = client_hour_con[week_index]%>
+                    <tr>
+                    <td><%=client[0]%></td>
+                        
+                        <td>
+                        <%client[1].each do |repos|%>
+                            <strong><%=repos%></strong><br><br>
+                            <%info.each do |commits|%>
+                                <%if commits[0] == repos%>
+                                    <%commits[1].each do |commits|%>
+                                        <%if week.include?(commits[0])%>
+                                            <strong><%=commits[0]%></strong><br>
+                                            <%commits[1].each do |info|%>
+                                                <%details = info.split(",")%>
+                                                Branch: <%=details[0]%><br>
+                                                SHA: <%=details[1]%><br>
+                                                Message: <%=details[2]%><br><br>
+                                                <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['Branch']" value = '<%=details[0]%>'>
+                                                <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['SHA']" value = '<%=details[1]%>'>
+                                                <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['Message']" value = '<%=details[2]%>'>
+                                            <%end%>
                                         <%end%>
                                     <%end%>
                                 <%end%>
                             <%end%>
                         <%end%>
-                    <%end%>
-                    <%if comments != 'empty'%>
-                        <%if comments[client[0]] != nil%>
-                            <%comments[client[0]].each_pair do |key,value|%>
-                                <%if week.include?(key)%>
-                                    <strong><%=key%></strong><br>
-                                    <%value.each do |comment|%>
-                                        <%=comment%><br>
+                        <%if comments != 'empty'%>
+                            <%if comments[client[0]] != nil%>
+                                <%comments[client[0]].each_pair do |key,value|%>
+                                    <%if week.include?(key)%>
+                                        <strong><%=key%></strong><br>
+                                        <%value.each do |comment|%>
+                                            <%=comment%><br>
+                                        <%end%>
                                     <%end%>
                                 <%end%>
                             <%end%>
                         <%end%>
-                    <%end%>
+                        </td>
+                    <td><%=week_hour_con[0]%></td>
+                    <%monday_total << week_hour_con[0]%>
+                    <td><%=week_hour_con[1]%></td>
+                    <%tuesday_total << week_hour_con[1]%>
+                    <td><%=week_hour_con[2]%></td>
+                    <%wednesday_total << week_hour_con[2]%>
+                    <td><%=week_hour_con[3]%></td>
+                    <%thursday_total << week_hour_con[3]%>
+                    <td><%=week_hour_con[4]%></td>
+                    <%friday_total << week_hour_con[4]%>
+                    <td><%=week_hour_con[5]%></td>
+                    <%saturday_total << week_hour_con[5]%>
+                    <td><%=week_hour_con[6]%></td>
+                    <%sunday_total << week_hour_con[6]%>
+                    <td>
+                        <%num = 0%>
+                        <%for value in week_hour_con do%>
+                            <%num += value%>
+                        <%end%>
+                        <%=num%>
                     </td>
-                <td><%=week_hour_con[0]%></td>
-                <%monday_total << week_hour_con[0]%>
-                <td><%=week_hour_con[1]%></td>
-                <%tuesday_total << week_hour_con[1]%>
-                <td><%=week_hour_con[2]%></td>
-                <%wednesday_total << week_hour_con[2]%>
-                <td><%=week_hour_con[3]%></td>
-                <%thursday_total << week_hour_con[3]%>
-                <td><%=week_hour_con[4]%></td>
-                <%friday_total << week_hour_con[4]%>
-                <td><%=week_hour_con[5]%></td>
-                <%saturday_total << week_hour_con[5]%>
-                <td><%=week_hour_con[6]%></td>
-                <%sunday_total << week_hour_con[6]%>
-                <td>
-                    <%num = 0%>
-                    <%for value in week_hour_con do%>
-                        <%num += value%>
-                    <%end%>
-                    <%=num%>
-                </td>
-                <%total_total << num%>
-                <td><%billed.each do |bills|%>
-                        <%=bills[bill_count.to_s]%>
-                    <%end%>
-                    </td>
-            </tr>
-                <%bill_count += 1%>
+                    <%total_total << num%>
+                    <td><%billed.each do |bills|%>
+                            <%=bills[bill_count.to_s]%>
+                        <%end%>
+                        </td>
+                    </tr>
                 <%end%>
-            <%else%>
+                <%bill_count += 1%>
+            <%end%>
+        <%else%>
                 <tr>
                     <td></td>
                     <td></td>
