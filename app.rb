@@ -237,6 +237,7 @@ post "/add_to_user_list" do
     email=params[:email]
     supervisor=params[:supervisor]
     department=params[:department]
+    hourly_rate = params[:hourly_wage]
     job=params[:job]
     doh=params[:doh]
     pto=params[:pto]
@@ -247,7 +248,7 @@ post "/add_to_user_list" do
     user_info << first_name
     user_info << last_name
     send_email_for_adding_a_new_user(user_info, email)
-    add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+    add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,department,job,vacation,sick,hourly_rate)
     pto_time_stamp(user_id)
     erb :admin_emplist, locals:{names_arr:session[:names_arr],msg:msg}
     # erb :admin_emplist, locals:{msg:msg}
@@ -307,7 +308,7 @@ get "/update_emp_page" do
 end
 
 post "/emp_updated" do
-    new_info = params[:info].each_slice(12).to_a
+    new_info = params[:info].each_slice(13).to_a
     other_info = params[:info]
     p new_info
     p session[:edit_user]
@@ -496,7 +497,6 @@ end
 post '/client_hours' do
     hour = {}
     hour["hours1"] = params[:hours_day1]
-    session[:hourly_rate] = params[:hourly_wage]
     billed = params[:billed]
     if billed != nil
         session[:billed] = billed
@@ -640,10 +640,32 @@ post '/to_users_hours' do
     start_date = params[:start_date]
     if monday_check?(start_date) == true
         user_hours = display_admin_hours(start_date)
+        supervised_users = supervisees_check?(session[:user_id])
         # p user_hours
-        erb :supervisor_weekly, locals:{user_hours:user_hours}
+        # p supervised_users
+        erb :supervisor_weekly, locals:{user_hours:user_hours, supervised_users:session[:employees]}
     else
         session[:monday_msg] = "Please Select the Start of the Work Week(Monday)"
         redirect '/check_user_hours'
     end
+end
+
+get '/previous_hours' do
+    erb :user_weekly, locals:{msg:session[:monday_msg]}
+end
+
+post '/week_choice' do
+    chosen_week = params[:chosen_week]
+    if monday_check?(chosen_week) == true
+        user_hours = display_user_hours_date(session[:user_id], chosen_week)
+        erb :user_chosen_week, locals: {user_hours:user_hours, chosen_week:chosen_week}
+    else
+        session[:monday_msg] = "Please Select the Start of the Work Week(Monday)"
+        redirect '/previous_hours'
+    end
+end
+
+post '/all_choice' do
+    all_hours = display_user_hours_all(session[:user_id])
+    erb :user_all_hours, locals:{all_hours:all_hours}
 end

@@ -93,7 +93,7 @@ def get_names(arr)
         db = PG::Connection.new(db_params)
         names = []
         arr.each do |id|
-        names  <<  db.exec("SELECT * FROM info_new WHERE user_id = '#{id}'").values.flatten
+        names  <<  db.exec("SELECT user_id,first_name,last_name FROM info_new WHERE user_id = '#{id}'").values.flatten
         end
     db.close
     names    

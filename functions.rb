@@ -121,7 +121,7 @@ end
 
 # end
 # adds user to database
-def add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,department,job,vacation,sick)
+def add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,department,job,vacation,sick,hourly_rate)
     db_params = {
         host: ENV['host'],
         port: ENV['port'],
@@ -130,7 +130,7 @@ def add_user(user_id,email,first_name,last_name,pto,supervisor,admin_access,doh,
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    db.exec("insert into info_new(user_id,first_name,last_name)VALUES('#{user_id}','#{first_name}','#{last_name}')")
+    db.exec("insert into info_new(user_id,first_name,last_name,hourly_rate)VALUES('#{user_id}','#{first_name}','#{last_name}','#{hourly_rate}')")
     db.exec("insert into pto(user_id,pto,vacation,sick)VALUES('#{user_id}','#{pto}','#{vacation}','#{sick}')")
     db.exec("insert into admin_status(user_id,admin)VALUES('#{user_id}','#{admin_access}')")
     db.exec("INSERT into supervisor(user_id,supervisor)VALUES('#{user_id}','#{supervisor}')")
@@ -273,7 +273,7 @@ def emp_info(user_id)
     }
     db = PG::Connection.new(db_params)
     data = []
-    users = db.exec("SELECT user_id, first_name, last_name FROM info_new WHERE user_id = '#{user_id}'").values
+    users = db.exec("SELECT user_id, first_name, last_name, hourly_rate FROM info_new WHERE user_id = '#{user_id}'").values
     emails = db.exec("SELECT email FROM email WHERE user_id = '#{user_id}'").values
     admins = db.exec("SELECT admin FROM admin_status WHERE user_id = '#{user_id}'").values
     supervisor = db.exec("SELECT supervisor FROM supervisor WHERE user_id = '#{user_id}'").values
@@ -330,12 +330,12 @@ def update_user(user_id, new_info)
         password: ENV['password']
     }
     db = PG::Connection.new(db_params)
-    db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE email SET email = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE pto SET pto = '#{new_info[4]}', vacation = '#{new_info[5]}', sick = '#{new_info[6]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[7]}', job_title = '#{new_info[8]}', department = '#{new_info[9]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE admin_status SET admin ='#{new_info[10]}' WHERE user_id = '#{user_id}'")
-    db.exec("UPDATE supervisor SET supervisor = '#{new_info[11]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE info_new SET user_id = '#{new_info[0]}' ,first_name = '#{new_info[1]}' ,last_name = '#{new_info[2]}', hourly_rate = '#{new_info[3]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE email SET email = '#{new_info[4]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE pto SET pto = '#{new_info[5]}', vacation = '#{new_info[6]}', sick = '#{new_info[7]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE title_and_doh SET date_of_hire = '#{new_info[8]}', job_title = '#{new_info[9]}', department = '#{new_info[10]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE admin_status SET admin ='#{new_info[11]}' WHERE user_id = '#{user_id}'")
+    db.exec("UPDATE supervisor SET supervisor = '#{new_info[12]}' WHERE user_id = '#{user_id}'")
     db.close
 end
 
@@ -1320,6 +1320,21 @@ def supervisor_check?(user_id)
     else
         false
     end
+end
+
+#checks for anyone being supervised from the user checking in
+def supervisees_check?(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+        }
+    db = PG::Connection.new(db_params)
+        supervisees = db.exec("SELECT user_id FROM supervisor WHERE supervisor = '#{user_id}'").values
+    db.close
+    supervisees.flatten
 end
 
 # applies data to the spreadsheet template

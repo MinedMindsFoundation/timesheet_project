@@ -1,0 +1,35 @@
+<div id = "box5">
+    <h1>Hours for <%=chosen_week%></h1>
+    <%user_hours.each do |week|%>
+        <%hours_total = []%>
+        <table>
+            <th>Name</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+            <th>Hours Total</th>
+            <tr>
+                <td><%=database_info("#{week[0]}")%></td>
+                <td><%=week[1]%></td>
+                <%hours_total << week[1].to_i%>
+                <td><%=week[2]%></td>
+                <%hours_total << week[2].to_i%>
+                <td><%=week[3]%></td>
+                <%hours_total << week[3].to_i%>
+                <td><%=week[4]%></td>
+                <%hours_total << week[4].to_i%>
+                <td><%=week[5]%></td>
+                <%hours_total << week[5].to_i%>
+                <td><%=week[6]%></td>
+                <%hours_total << week[6].to_i%>
+                <td><%=week[7]%></td>
+                <%hours_total << week[7].to_i%>
+                <td><%=hours_total.sum%></td>
+            </tr>
+        </table>
+    <%end%>
+</div>
