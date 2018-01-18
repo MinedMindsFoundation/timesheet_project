@@ -144,62 +144,42 @@
             <tr>
                 <td></td>
                 <td><strong>Expenses(General)</strong></td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
+                <%expenses[0].each do |num|%>
+                    <td>$<%=num%></td>
+                <%end%>
+                <td><%expenses[0].sum%></td>
             </tr>
             <tr>
                 <td></td>
                 <td><strong>Expenses(Milage)</strong></td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
+                <%expenses[1].each do |num|%>
+                    <td>$<%=num%></td>
+                <%end%>
+                <td><%expenses[1].sum%></td>
             </tr>
             <tr>
                 <td></td>
                 <td><strong>Milage Description</strong></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <%expenses[2].each do |num|%>
+                    <td>$<%=num%></td>
+                <%end%>
+                
             </tr>
             <tr>
                 <td></td>
                 <td><strong>Expenses(Tolls)</strong></td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
+                <%expenses[3].each do |num|%>
+                    <td>$<%=num%></td>
+                <%end%>
+                    <td><%expenses[3].sum%></td>
             </tr>
             <tr>
                 <td></td>
                 <td><strong>Other</strong></td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
-                <td>$-</td>
+                        <%expenses[4].each do |num|%>
+                    <td>$<%=num%></td>
+                <%end%>
+                <td><%expenses[4].sum%></td>
             </tr>
     </table><br>
     <h3>Total Due: $ <%=total_total.sum * wage.to_i%></h3><br>
