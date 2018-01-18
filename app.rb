@@ -495,6 +495,9 @@ post '/got_clients' do
 end
 
 post '/client_hours' do
+    expenses = params[:expenses]
+    expenses = expenses.each_slice(7).to_a
+    p "#{expenses}expenses here"
     hour = {}
     hour["hours1"] = params[:hours_day1]
     billed = params[:billed]
