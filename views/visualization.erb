@@ -147,7 +147,11 @@
                 <%expenses[0].each do |num|%>
                     <td>$<%=num%></td>
                 <%end%>
-                <td><%expenses[0].sum%></td>
+                <%count =0%>
+                <%for num in expenses[0] do%>
+                        <%count += num.to_i%>
+                <%end%>
+                <td><%=count%></td>
             </tr>
             <tr>
                 <td></td>
@@ -155,7 +159,11 @@
                 <%expenses[1].each do |num|%>
                     <td>$<%=num%></td>
                 <%end%>
-                <td><%expenses[1].sum%></td>
+                <%count =0%>
+                <%for num in expenses[1] do%>
+                        <%count += num.to_i%>
+                <%end%>
+                <td><%=count%></td>
             </tr>
             <tr>
                 <td></td>
@@ -171,7 +179,11 @@
                 <%expenses[3].each do |num|%>
                     <td>$<%=num%></td>
                 <%end%>
-                    <td><%expenses[3].sum%></td>
+                    <%count =0%>
+                <%for num in expenses[3] do%>
+                        <%count += num.to_i%>
+                <%end%>
+                <td><%=count%></td>
             </tr>
             <tr>
                 <td></td>
@@ -179,7 +191,11 @@
                         <%expenses[4].each do |num|%>
                     <td>$<%=num%></td>
                 <%end%>
-                <td><%expenses[4].sum%></td>
+                <%count =0%>
+                <%for num in expenses[4] do%>
+                        <%count += num.to_i%>
+                <%end%>
+                <td><%=count%></td>
             </tr>
     </table><br>
     <h3>Total Due: $ <%=total_total.sum * wage.to_i%></h3><br>
