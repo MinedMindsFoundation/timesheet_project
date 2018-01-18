@@ -45,32 +45,36 @@
         <th>Friday</th>
         <th>Saturday</th>
         <th>Sunday</th>
-        <td>Expenses (general)</td>
-        <%7.times do%>
-            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
-        <%end%>
-        <td>Expenses (general)</td>
-        <%7.times do%>
-            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
-        <%end%>
-        <td>Expenses (Mileage)</td>
-        <%7.times do%>
-            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
-        <%end%>
-        <td>Mileage discription</td>
-        <%7.times do%>
-            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
-        <%end%>
-
-        <td>Expenses(tolls)</td>
-        <%7.times do%>
-            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
-        <%end%>
-
-        <td>other(tolls)</td>
-        <%7.times do%>
-            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
-        <%end%>
+        <tr>
+            <td>Expenses (general)</td>
+            <%7.times do%>
+                <td><input type = "number" name = 'expenses[]' style ="width:3em;" step='0.01' value='0.00' placeholder='0.00' ></td>
+            <%end%>
+        </tr>
+        <tr>
+            <td>Expenses (Mileage)</td>
+            <%7.times do%>
+                <td><input type = "number" name = 'expenses[]' style ="width:3em;" step='0.01' value='0.00' placeholder='0.00' ></td>
+            <%end%>
+        </tr>
+        <tr>
+            <td>Mileage discription</td>
+            <%7.times do%>
+                <td><input type = "number" name = 'expenses[]' style ="width:3em;" step='0.01' value='0.00' placeholder='0.00' ></td>
+            <%end%>
+        </tr>
+        <tr>
+            <td>Expenses(tolls)</td>
+            <%7.times do%>
+                <td><input type = "number" name = 'expenses[]' style ="width:3em;" step='0.01' value='0.00' placeholder='0.00' ></td>
+            <%end%>
+        </tr>
+        <tr>
+            <td>other(tolls)</td>
+            <%7.times do%>
+                <td><input type = "number" name = 'expenses[]' style ="width:3em;" step='0.01' value='0.00' placeholder='0.00' ></td>
+            <%end%>
+        </tr>
         </table>
         
         <%count +=1%>
