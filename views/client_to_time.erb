@@ -36,6 +36,43 @@
                 </div>
             </div>
         </div><br><br>
+        <table>
+        <th>Expenses</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+        <td>Expenses (general)</td>
+        <%7.times do%>
+            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
+        <%end%>
+        <td>Expenses (general)</td>
+        <%7.times do%>
+            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
+        <%end%>
+        <td>Expenses (Mileage)</td>
+        <%7.times do%>
+            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
+        <%end%>
+        <td>Mileage discription</td>
+        <%7.times do%>
+            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
+        <%end%>
+
+        <td>Expenses(tolls)</td>
+        <%7.times do%>
+            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
+        <%end%>
+
+        <td>other(tolls)</td>
+        <%7.times do%>
+            <td><input type = "number" name = 'expenses[]' step='0.01' value='0.00' placeholder='0.00' ></td>
+        <%end%>
+        </table>
+        
         <%count +=1%>
 
     <input type="submit">

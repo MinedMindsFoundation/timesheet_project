@@ -1,5 +1,5 @@
 <form method = 'post' action = "got_clients">
-Filing Week<input type = "date" name = "filing_week"><br>
+Filing Week<input type = "date" value = "<%=get_monday(Date.today.strftime)%>" name = "filing_week"><br>
 Client Names
 <button type = 'button' onclick='add_box()'>+</button><button type = 'button' onclick='subtract_box()'>-</button> <input type = 'submit' >
     <div id = "clientbox">
