@@ -1087,6 +1087,20 @@ def todays_month_stamp()
     c
 end
   
+def rate_check(user_id)
+    db_params = {
+        host: ENV['host'],
+        port: ENV['port'],
+        dbname: ENV['dbname'],
+        user: ENV['user'],
+        password: ENV['password']
+            }
+        db = PG::Connection.new(db_params)
+        check = db.exec("SELECT hourly_rate FROM info_new WHERE user_id = '#{user_id}'").values
+        db.close
+    rate = check.flatten
+    rate[0]
+end
 
 def invoice_mail(email, name, start_date)
     Mail.defaults do

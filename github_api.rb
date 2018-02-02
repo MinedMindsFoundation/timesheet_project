@@ -29,7 +29,7 @@ class Git_api_class
                 # p client.branches("#{repo.full_name}")
                 arr = []
                 commits.each do |x|
-                    # p x.author.login
+                    p x.author.login
                     if x.author.login == client.user.login || x.commit.author.email == client.user.email
                         new_time= x.commit.author.date
                         dtime = new_time.localtime("-05:00")
@@ -42,7 +42,7 @@ class Git_api_class
                         data['branch'] = branch['name']
                         data['message'] = x.commit.message
                         data['sha'] = x.sha
-                        # p "#{data} data is here"
+                        p "#{data} data is here"
                         commit_date["#{time}"].push(data)
                     end    
                 end
