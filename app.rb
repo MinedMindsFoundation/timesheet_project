@@ -590,6 +590,8 @@ end
 post "/commits_to_send" do
     session[:comments] = params[:comment]
     session[:comments] = comment_filter(session[:comments])
+    session[:hourly_rate] = rate_check(session[:user_id])
+    p session[:hourly_rate]
     if session[:comments] != 'empty'
         session[:comments] = comment_reformat(comments)
     end

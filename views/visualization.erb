@@ -143,6 +143,8 @@
             </tr>
             <tr>
                 <td></td>
+                <%expenses_total = []%>
+                <%expenses_total << total_total.sum * wage.to_i%>
                 <td><strong>Expenses(General)</strong></td>
                 <%expenses[0].each do |num|%>
                     <td>$<%=num%></td>
@@ -151,6 +153,7 @@
                 <%for num in expenses[0] do%>
                         <%count += num.to_i%>
                 <%end%>
+                <%expenses_total << count%>
                 <td><%=count%></td>
             </tr>
             <tr>
@@ -163,13 +166,14 @@
                 <%for num in expenses[1] do%>
                         <%count += num.to_i%>
                 <%end%>
+                <%expenses_total << count%>
                 <td><%=count%></td>
             </tr>
             <tr>
                 <td></td>
                 <td><strong>Milage Description</strong></td>
                 <%expenses[2].each do |num|%>
-                    <td>$<%=num%></td>
+                    <td><%=num%></td>
                 <%end%>
                 
             </tr>
@@ -183,6 +187,7 @@
                 <%for num in expenses[3] do%>
                         <%count += num.to_i%>
                 <%end%>
+                <%expenses_total << count%>
                 <td><%=count%></td>
             </tr>
             <tr>
@@ -195,10 +200,11 @@
                 <%for num in expenses[4] do%>
                         <%count += num.to_i%>
                 <%end%>
+                <%expenses_total << count%>
                 <td><%=count%></td>
             </tr>
     </table><br>
-    <h3>Total Due: $ <%=total_total.sum * wage.to_i%></h3><br>
+    <h3>Total Due: $ <%=expenses_total.sum%></h3><br>
 
 <%end%>
 <input type = "hidden" name = "comments" value = '<%=comments%>'>
