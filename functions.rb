@@ -1102,29 +1102,6 @@ def rate_check(user_id)
     rate[0]
 end
 
-def invoice_mail(email, name, start_date)
-    Mail.defaults do
-        delivery_method :smtp,
-        address: "email-smtp.us-east-1.amazonaws.com",
-        port: 587,
-        :user_name  => ENV['a3smtpuser'],
-        :password   => ENV['a3smtppass'],
-        :enable_ssl => true
-        end
-        email_body = ""
-        mail = Mail.new do
-            from         ENV['from']
-            to           email
-            subject      "Invoice for #{name} from #{start_date}"
-    
-            html_part do
-                content_type 'text/html'
-                body       email_body
-            end
-        end
-        mail.deliver!
-end
-
 #comment_filter removes all sets of comments that contain blanks
 def comment_filter(comments)
     # p comments
@@ -1351,50 +1328,32 @@ def supervisees_check?(user_id)
     supervisees.flatten
 end
 
-# applies data to the spreadsheet template
-def spreadsheet_filler(filing_week,hours,name,hours_total,wage,info,comments)
-    sheet = InvoiceSpreadsheet.new
-    sheet.input_data('4G',filing_week)
-    sheet.input_data('4C',name)
-    sheet.input_data('4K',wage)
-    count = 8 
-    sheet.generate_new_file(name,filing_week)
-    info_string = ""
-    if info != nil
-        info.each_pair do |client,repo|
-            sheet.input_data(("#{count}"+'B'),client)
-
-            repo.each_pair do |repo,date|
-                info_string << "#{repo}"
-                info_string << "/n"
-
-                date.each_pair do |date,info|
-                    info_string << "#{date}"
-                    info_string << "/n"
-                    info.each do |git_info|
-                        git_info.each do |key,value|
-                            info_string << "#{key}: #{value}"
-                            info_string << "/n"
-                        end
-                        info_string << "/n"
-                    end
-                end
-            end
-            p comments
-            p client_name = remove_quotes(client)
-            comments[client_name].each_pair do |date,comment|
-                info_string << "#{date}"
-                info_string << "/n"
-                comment.each do |comment|
-                    info_string << "#{comment}"
-                    info_string << "/n"
-                end
-            end
-            p "info_string is here #{info_string}"
-        end
-    end
+#Writing all commit data to a csv file
+def csv_filler(filing_week,hours,name,hours_total,wage,info,comments)
+    p filing_week
+    p hours
+    p name
+    p hours_total
+    p wage
+    p info
+    p comments
+    p info.keys
+    p info.values
+    # csv.open("#{name}" + '_' + "#{filing_week}", "wb") do |csv|
+    #     csv << ["","","","","","","","","","",""]
+    #     csv << ["","WEEKLY INVOICE","","","","","","","","",""]
+    #     csv << ["","","","","","","","","","",""]
+    #     csv << ["","Name:","#{name}","","WEEK COMMENCING:","","#{filing_week}","","HOURLY RATE:","","$ #{wage}"]
+    #     csv << ["","","","","","","","","","",""]
+    #     csv << ["","","","Hours spent","","","","","","",""]
+    #     csv << ["","Client Name","Description","Mo","Tu","We","Th","Fr","Sa","Su","Total (Hours)"]
+    #     info.each do |commits|
+    #         comments.each do |times|
+    #             p times
+    #         end
+    #     end
+    # end
 end
-
 
 def get_monday(date_string)
     date = Date.parse(date_string)
@@ -1403,6 +1362,10 @@ def get_monday(date_string)
         p date
     end
     date.strftime()
+end
+
+def double_to_single(word)
+    word.gsub(/"/, "'")
 end
 
 def remove_quotes(word)

@@ -6,6 +6,7 @@ require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
 require_relative 'user_id.rb'
 require_relative 'cte_func.rb'
+require_relative 'spreadsheet.rb'
 require 'net/smtp'
 # require_relative 'login_func'
 enable :sessions 
@@ -589,11 +590,11 @@ end
 
 post "/commits_to_send" do
     session[:comments] = params[:comment]
-    session[:comments] = comment_filter(session[:comments])
+    session[:comment_flux] = comment_filter(session[:comments])
     session[:hourly_rate] = rate_check(session[:user_id])
     p session[:hourly_rate]
-    if session[:comments] != 'empty'
-        session[:comments] = comment_reformat(comments)
+    if session[:comment_flux] != 'empty'
+        session[:comments] = comment_reformat(session[:comment_flux])
     end
     # p "comments are here #{comments}"
     info = params[:stuff]
@@ -626,9 +627,8 @@ post '/finalization' do
     # clients = params[:clients]
     # p "#{clients} clients here"
     # p "#{info} info is here"
-
     sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
-    spreadsheet_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,session[:comments])
+    csv_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,session[:comments])
     if sent_in == true
         session[:message] = "Invoice Sent!"
         redirect '/to_landing'
