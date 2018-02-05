@@ -1336,8 +1336,18 @@ def csv_filler(filing_week,hours,name,hours_total,wage,info,comments)
     p hours_total
     p wage
     p info
-    p comments
-  
+    info.each_pair do |key, value|
+        p key
+        # p value
+        value.each_pair do |repo, commits|
+            p repo
+            # p commits
+            commits.each_pair do |date, details|
+                p date
+                p details
+            end
+        end
+    end
     # csv.open("#{name}" + '_' + "#{filing_week}", "wb") do |csv|
     #     csv << ["","","","","","","","","","",""]
     #     csv << ["","WEEKLY INVOICE","","","","","","","","",""]
@@ -1346,10 +1356,13 @@ def csv_filler(filing_week,hours,name,hours_total,wage,info,comments)
     #     csv << ["","","","","","","","","","",""]
     #     csv << ["","","","Hours spent","","","","","","",""]
     #     csv << ["","Client Name","Description","Mo","Tu","We","Th","Fr","Sa","Su","Total (Hours)"]
-    #     info.each do |commits|
-    #         comments.each do |times|
-    #             p times
-    #         end
+    #     info.each_pair do |key, value|
+    #         csv << ["","#{remove_quotes(key)}",
+    #         value.each_with do |repo, commits|
+
+    #         ]
+    #         p remove_quotes(key)
+    #         p value
     #     end
     # end
 end
