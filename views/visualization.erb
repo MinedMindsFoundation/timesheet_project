@@ -29,7 +29,6 @@
         <%sunday_total = []%>
         <th>Total(Hours)</th>
         <%total_total = []%>
-        <th>Billable</th>
         <%if clients != {}%>
             <%clients.each_with_index do |client, client_index|%>
                 <%if final_clients.include?(client[0])%>
@@ -95,10 +94,6 @@
                         <%=num%>
                     </td>
                     <%total_total << num%>
-                    <td><%billed.each do |bills|%>
-                            <%=bills[bill_count.to_s]%>
-                        <%end%>
-                        </td>
                     </tr>
                 <%end%>
                 <%bill_count += 1%>

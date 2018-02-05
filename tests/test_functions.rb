@@ -1789,6 +1789,12 @@ class Test_funcs < Minitest::Test
             date = "2018-1-10"
             assert_equal("2018-1-08",get_monday(date))
         end
-
+    
+    #--------Test for Checking Weekly Rate-----
+        
+        def test_weekly_rate
+            user_id = bossid
+            assert_equal("13.00", rate_check(user_id))
+        end
 end
 
