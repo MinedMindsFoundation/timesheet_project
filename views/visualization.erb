@@ -50,9 +50,9 @@
                                                 Branch: <%=details[0]%><br>
                                                 SHA: <%=details[1]%><br>
                                                 Message: <%=details[2]%><br><br>
-                                                <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['Branch']" value = '<%=details[0]%>'>
-                                                <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['SHA']" value = '<%=details[1]%>'>
-                                                <input type = 'hidden' name = "info['<%=client[0]%>']['<%=repos%>']['<%=commits[0]%>'][]['Message']" value = '<%=details[2]%>'>
+                                                <input type = 'hidden' name = "info[<%=client[0]%>][<%=repos%>][<%=commits[0]%>][][Branch]" value = '<%=details[0]%>'>
+                                                <input type = 'hidden' name = "info[<%=client[0]%>][<%=repos%>][<%=commits[0]%>][][SHA]" value = '<%=details[1]%>'>
+                                                <input type = 'hidden' name = "info[<%=client[0]%>][<%=repos%>][<%=commits[0]%>][][Message]" value = '<%=details[2]%>'>
                                             <%end%>
                                         <%end%>
                                     <%end%>
@@ -65,6 +65,7 @@
                                     <%if week.include?(key)%>
                                         <strong><%=key%></strong><br>
                                         <%value.each do |comment|%>
+                                            <input type='hidden' name="info[<%=client[0]%>][OTHER COMMENTS][<%=key%>]" value = '<%=comment%>'>
                                             <%=comment%><br>
                                         <%end%>
                                     <%end%>
