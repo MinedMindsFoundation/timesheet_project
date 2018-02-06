@@ -1330,14 +1330,14 @@ end
 
 #Writing all commit data to a csv file
 def csv_filler(filing_week,hours,name,hours_total,wage,info,comments)
-    p filing_week
-    p hours
-    p name
-    p hours_total
-    p wage
-    p info
+    # p filing_week
+    # p hours
+    # p name
+    # p hours_total
+    # p wage
+    # p info
     info.each_pair do |key, value|
-        p key
+        # p key
         # p value
         value.each_pair do |repo, commits|
             p repo

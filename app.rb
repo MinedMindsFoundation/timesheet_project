@@ -614,7 +614,7 @@ post "/commits_to_send" do
     final_client_hash = adding_blank_clients(session[:final_clients], client_repo)
     client_billing = billable_hashing(session[:billed], session[:final_clients])
     # p client_billing
-     p "#{final_client_hash} hash here"
+    # p "#{final_client_hash} hash here"
     # p client_repo
     # p session[:repo_names]
     # session[:client_to_hour]
