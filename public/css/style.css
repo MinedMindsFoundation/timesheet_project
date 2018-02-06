@@ -890,3 +890,18 @@ tr {
     padding: 0.5em 1em;
     border: 1px solid black;
 }
+
+.gitbutton{
+    height: 16vh;
+    width: 40vh;
+    background-image: url("/img/github3.png");
+    background-size: 96%;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 6vh;
+    border: #000000;
+    border-width: .5vh;
+    border-style: groove;
+    border-radius: 3rem;
+    box-shadow: 5px 10px #708090;
+}

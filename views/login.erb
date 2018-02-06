@@ -22,16 +22,16 @@
 <center><meta name="google-signin-client_id" content="529014474103-64pofb78h79be0rblagq6cil53svu4qb.apps.googleusercontent.com"><center>
 <!-- github oAuth login-->
 <script src=../../js/git_api.js></script>
-<button onclick="gitSignOn('<%=git_id%>')">Github</button>
+<button class="gitbutton"  onclick="gitSignOn('<%=git_id%>')"></button>
 <form id = "myform" method = "post" action = "login">
-<!--FaceBook Button -->
-<div class="social-login">
-<img src="img/fb_button.png" class="social_button shadow" id="facebook_btn" onclick="fbLogin()">
-</div>
-<!--google button-->
- <image id="googleSignIn" class = "social_button shadow" src="img/google_sign_in.png"></image>
-    <script src="https://apis.google.com/js/platform.js?onload=onLoadGoogleCallback" async defer></script>
-<!-- <div class="social_button g-signin2" onclick="onSignIn"></div> -->
+<!--# <!--FaceBook Button -->
+<!--# <div class="social-login">
+<!--# <img src="img/fb_button.png" class="social_button shadow" id="facebook_btn" onclick="fbLogin()">
+<!--# </div>
+<!--# <!--google button-->
+<!--#  <image id="googleSignIn" class = "social_button shadow" src="img/google_sign_in.png"></image>
+<!--#     <script src="https://apis.google.com/js/platform.js?onload=onLoadGoogleCallback" async defer></script>
+<!--# <!-- <div class="social_button g-signin2" onclick="onSignIn"></div> -->
 
 <!--- brings first name, last name, and email to check if in database --->
 <input type = "hidden" id = 'first_name' name = "first_name">
