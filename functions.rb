@@ -1334,49 +1334,57 @@ def csv_filler(filing_week,hours,name,hours_total,wage,info,comments,expenses)
         info.each_pair do |key, value|
             value.each_pair do |repo, commits|
                 commits.each_pair do |date, details|
+                    client_hours_total = 0
                     client_hours = hours[key][0]
+                    client_hours.each do |day_hours|
+                        client_hours_total = client_hours_total + day_hours
+                    end
                     if details.class == Array
                         details.each do |d|
-                            csv << ["","","","#{key}","#{repo}","#{d["Message"]} \n #{d["SHA"]}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours.sum}"]
+                            csv << ["","","","#{key}","#{repo}","#{d["Message"]} \n #{d["SHA"]}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours_total}"]
                         end
                     else
-                        csv << ["","","","#{key}","#{repo}","#{details}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours.sum}"]
+                        csv << ["","","","#{key}","#{repo}","#{details}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours_total}"]
                     end
                 end
             end
         end
+        week_hours_total = 0
         week_hours = hours_total.values[0]
         wage_number = wage.to_i
-        csv <<  ["","","","","","","Total Hours","#{week_hours[0]}","#{week_hours[1]}","#{week_hours[2]}","#{week_hours[3]}","#{week_hours[4]}","#{week_hours[5]}","#{week_hours[6]}","#{week_hours.sum}"]
-        csv <<  ["","","","","","","Total Services","","","","","","","","#{week_hours.sum * wage_number}"]
-        total_general = []
+        week_hours.each do |week_hours|
+            week_hours_total = week_hours_total + week_hours
+        end
+        csv <<  ["","","","","","","Total Hours","#{week_hours[0]}","#{week_hours[1]}","#{week_hours[2]}","#{week_hours[3]}","#{week_hours[4]}","#{week_hours[5]}","#{week_hours[6]}","#{week_hours_total}"]
+        csv <<  ["","","","","","","Total Services","","","","","","","","#{week_hours_total * wage_number}"]
+        total_general = 0
         expenses.each_with_index do |expense_type, index|
             if index != 2
-                expense_total = []
-                expense_total << expense_type[0].to_i
-                expense_total << expense_type[1].to_i
-                expense_total << expense_type[2].to_i
-                expense_total << expense_type[3].to_i
-                expense_total << expense_type[4].to_i
-                expense_total << expense_type[5].to_i
-                expense_total << expense_type[6].to_i
-                total_general << expense_total.sum
+                expense_total = 0
+                expense_total = expense_total + expense_type[0].to_i
+                expense_total = expense_total + expense_type[1].to_i
+                expense_total = expense_total + expense_type[2].to_i
+                expense_total = expense_total + expense_type[3].to_i
+                expense_total = expense_total + expense_type[4].to_i
+                expense_total = expense_total + expense_type[5].to_i
+                expense_total = expense_total + expense_type[6].to_i
+                total_general = total_general + expense_total
             end
             if index == 0
-                csv << ["","","","","","","Expenses(General)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total.sum}"]
+                csv << ["","","","","","","Expenses(General)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total}"]
             elsif index == 1
-                csv << ["","","","","","","Expenses(Milage)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total.sum}"]
+                csv << ["","","","","","","Expenses(Milage)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total}"]
             elsif index == 2
                 csv << ["","","","","","","Milage Description","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", ""]
             elsif index == 3
-                csv << ['',"","","","","","Expenses(Tolls)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total.sum}"]
+                csv << ['',"","","","","","Expenses(Tolls)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total}"]
             elsif index == 4
-                csv << ["","","","","","","Expenses(Other)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total.sum}"]
+                csv << ["","","","","","","Expenses(Other)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total}"]
             end
         end
         wage_hours = week_hours.sum * wage.to_i
         # p total_general
-        csv << ["","","","","","","TOTAL","","","","","","","","#{wage_hours + total_general.sum}"]
+        csv << ["","","","","","","TOTAL","","","","","","","","#{wage_hours + total_general}"]
     end
 end
 
@@ -1396,7 +1404,7 @@ def mail_invoice(to_email,name,date)
         email_body = "#{name} Invoice for #{date}" 
             mail = Mail.new do
             from         ENV['from']
-            to           "#{to_email}, info@minedminds.org"
+            to           "#{to_email}"
             subject      "#{name} Invoice for #{date}"
             add_file    "#{name}_#{date}.csv"
     
