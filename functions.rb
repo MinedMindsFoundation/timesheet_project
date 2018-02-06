@@ -1382,7 +1382,7 @@ def csv_filler(filing_week,hours,name,hours_total,wage,info,comments,expenses)
                 csv << ["","","","","","","Expenses(Other)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total}"]
             end
         end
-        wage_hours = week_hours.sum * wage.to_i
+        wage_hours = week_hours_total * wage.to_i
         # p total_general
         csv << ["","","","","","","TOTAL","","","","","","","","#{wage_hours + total_general}"]
     end
