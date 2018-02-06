@@ -134,18 +134,29 @@ iframe[seamless] {
     border-radius: 3vh;
 }
 
-#comment_box{
-    float: right;
+#comment_box {
+    float: center;
     border-radius: 3vh;
     border-style: solid;
     border-color: gray;
     padding: 1rem;
     display: inline-grid;
     width: min-content;
-    background-color:var(--box-bg-color);
+    background-color: var(--box-bg-color);
 }
 
-#gitbox_2{
+#unseen_commit_box {
+    float: center;
+    border-radius: 3vh;
+    border-style: solid;
+    border-color: black;
+    padding: 1rem;
+    display: inline-grid;
+    width: fit-content;
+    background-color: var(--box-bg-color);
+}
+
+#gitbox_2 {
     float: left;
     display: grid;
     width: fit-content;
@@ -159,9 +170,11 @@ iframe[seamless] {
     border-radius: 3vh;
     background-color: var(--box-bg-color);
 }
-.web_fill{
+
+.web_fill {
     width: -webkit-fill-available;
 }
+
 #gitbox {
     float: left;
     width: 95%;
@@ -175,24 +188,24 @@ iframe[seamless] {
     border-radius: 3vh;
     background-color: var(--box-bg-color);
 }
-.git_dates{
+
+.git_dates {
     text-align: left;
     font-size: 2vw;
     border-bottom: black;
     border-bottom-style: solid;
     padding-left: 1vw;
     margin-top: 2vh;
-
 }
 
-.left{
+.left {
     float: left;
     width: 48%;
     display: grid;
     margin-right: auto;
 }
 
-.repo_name{
+.repo_name {
     text-align: center;
     font-size: 3vw;
     margin-top: 0;
@@ -200,30 +213,30 @@ iframe[seamless] {
     width: -webkit-fill-available;
 }
 
-#git_submit{
+#git_submit {
     border-radius: 33%;
     border-style: solid;
     padding: 1rem;
-    font-size: 8vw;
+    font-size: 4vw;
+    float: right;
     margin: auto;
     margin-top: 5vh;
     margin-left: 10%;
     border-color: black;
 }
 
-
-#login_git_box{
+#login_git_box {
     border-color: var(--box-bdr-color);
     background-color: var(--box-bg-color);
-    margin:auto;
-    margin-top:1vh;
-    padding:3rem;
+    margin: auto;
+    margin-top: 1vh;
+    padding: 3rem;
     border-radius: 5rem;
     border-width: 1vw;
     width: fit-content;
 }
 
-#client_box{
+#client_box {
     width: 94%;
     margin: 0vh;
     /* position: relative; */
@@ -234,7 +247,6 @@ iframe[seamless] {
     background-color: var(--box-bg-color);
     display: table-caption;
 }
-
 
 #datebox {
     width: fit-content;

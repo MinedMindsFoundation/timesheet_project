@@ -72,6 +72,18 @@
                                 <%end%>
                             <%end%>
                         <%end%>
+                        <%if unseen_commits != 'empty'%>
+                            <%unseen_commits.each_pair do |commit_num, commit|%>
+                                <%if commit["client"] == client[0]%>
+                                    <strong><%=commit["repo"]%></strong><br><br>
+                                    <strong><%=commit["date"]%></strong><br>
+                                    SHA: <%=commit["sha"]%><br>
+                                    Message: <%=commit["commit"]%><br>
+                                    <input type = 'hidden' name = "info[<%=client[0]%>][<%=commit["repo"]%>][<%=commit["date"]%>][][SHA]" value = '<%=commit["sha"]%>'>
+                                    <input type = 'hidden' name = "info[<%=client[0]%>][<%=commit["repo"]%>][<%=commit["date"]%>][][Message]" value = '<%=commit["commit"]%>'>
+                                <%end%>
+                            <%end%>
+                        <%end%>
                         </td>
                     <td><%=week_hour_con[0]%></td>
                     <%monday_total << week_hour_con[0]%>

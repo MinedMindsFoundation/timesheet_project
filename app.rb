@@ -591,12 +591,19 @@ end
 
 post "/commits_to_send" do
     session[:comments] = params[:comment]
+    session[:unseen_commits] = params[:commit]
+    # p session[:unseen_commits]
+    session[:unseen_filter] = comment_filter(session[:unseen_commits])
     session[:comment_flux] = comment_filter(session[:comments])
     session[:hourly_rate] = rate_check(session[:user_id])
     #p session[:hourly_rate]
     if session[:comment_flux] != 'empty'
         session[:comments] = comment_reformat(session[:comment_flux])
     end
+    if session[:unseen_filter] != 'empty'
+        session[:unseen_commits] = comment_reformat(session[:unseen_filter])
+    end
+    p session[:comments]
     # p "comments are here #{comments}"
     info = params[:stuff]
     # p "info is here #{info}"
@@ -620,7 +627,7 @@ post "/commits_to_send" do
     # p session[:repo_names]
     # session[:client_to_hour]
     # p "#{session[:client_to_hour]}hours are here"
-    erb :visualization, locals:{expenses:session[:expenses],filing_week:session[:filing_week],comments:session[:comments],info:info,final_clients:session[:final_clients],clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing}
+    erb :visualization, locals:{expenses:session[:expenses],filing_week:session[:filing_week],comments:session[:comments],info:info,final_clients:session[:final_clients],clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing, unseen_commits:session[:unseen_commits]}
 end
 
 post '/finalization' do

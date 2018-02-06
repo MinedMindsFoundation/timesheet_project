@@ -1,5 +1,17 @@
 <form method="post" action="commits_to_send">
 
+<div id = 'unseen_commit_box'>
+<input type = 'hidden' id = 'counter' value = '1'>
+<button type = 'button' onclick ="commit_more_boxes()">More Commits</button> 
+    <input type = "date" name ="commit[commit1][date]">
+    <div id ="dropdown">
+        <input list="clients" name= "commit[commit1][client]">
+    </div>
+   <input type="text" name="commit[commit1][repo]" placeholder = "Type Repository Here">
+   <input type="text" name="commit[commit1][sha]" placeholder = "Type SHA Key Here">
+   <input type="text" name="commit[commit1][commit]" placeholder = "Type Commit Message Here"><br>
+</div>
+
 <div id = 'comment_box'>
 <input type = 'hidden' id = 'counter' value = '1'>
 <button type = 'button' onclick ="more_boxes()">More Comments</button> 
@@ -54,7 +66,6 @@ function more_boxes(){
     var list = document.getElementById('clients').options;
     var drop = document.createElement("select");
         var option = document.createElement('option');
-            option.value = " ";
             option.text = " ";
             drop.appendChild(option);
         for (var i = 0; i < list.length; i++) {
@@ -67,8 +78,42 @@ function more_boxes(){
         document.getElementById('comment_box').appendChild(drop);
     var comment = document.createElement("textarea")
         comment.name = "comment[comment"+counter+"][comment]"
-        comment.placeholder = "comment here"
+        comment.placeholder = "Comment Here.."
         document.getElementById('comment_box').appendChild(comment)
+        document.getElementById('counter').value = counter;
+}
+function commit_more_boxes(){
+    var counter = document.getElementById('counter').value;
+        counter++;
+    var input = document.createElement('input');
+        input.name="commit[commit"+counter+"][date]";
+        input.type = 'date';
+        document.getElementById('unseen_commit_box').appendChild(input);
+    var list = document.getElementById('clients').options;
+    var drop = document.createElement("select");
+        var option = document.createElement('option');
+            option.text = " ";
+            drop.appendChild(option);
+        for (var i = 0; i < list.length; i++) {
+            option = document.createElement("option");
+            option.value = list[i].value;
+            option.text = list[i].value;
+            drop.appendChild(option);
+        };
+        drop.name ="commit[commit"+counter+"][client]";
+        document.getElementById('unseen_commit_box').appendChild(drop);
+    var repo = document.createElement('input')
+        repo.name = "commit[commit"+counter+"][repo]"
+        repo.placeholder = "Type Repository Here"
+        document.getElementById('unseen_commit_box').appendChild(repo)
+    var sha = document.createElement('input')
+        sha.name = "commit[commit"+counter+"][sha]"
+        sha.placeholder = "Type SHA Key Here"
+        document.getElementById('unseen_commit_box').appendChild(sha)
+    var commit = document.createElement('input')
+        commit.name = "commit[commit"+counter+"][commit]"
+        commit.placeholder = "Type Commit Message Here"
+        document.getElementById('unseen_commit_box').appendChild(commit)
         document.getElementById('counter').value = counter;
 }
 </script>
