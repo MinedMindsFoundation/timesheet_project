@@ -33,9 +33,7 @@
             <%clients.each_with_index do |client, client_index|%>
                 <%if final_clients.include?(client[0])%>
                     <%client_hour_con = hours[client[0]]%>
-                    <%week_hour_con = client_hour_con[0]%>
-                    <%=client_hour_con%>
-                    <%=week_hour_con%>
+                    <%week_hour_con = client_hour_con.flatten%>
                     <tr>
                     <td><%=client[0]%></td>
                         
@@ -130,14 +128,46 @@
             <tr>
                 <td><strong>TOTALS</strong></td>
                 <td></td>
-                <td><%=monday_total.sum%></td>
-                <td><%=tuesday_total.sum%></td>
-                <td><%=wednesday_total.sum%></td>
-                <td><%=thursday_total.sum%></td>
-                <td><%=friday_total.sum%></td>
-                <td><%=saturday_total.sum%></td>
-                <td><%=sunday_total.sum%></td>
-                <td><%=total_total.sum%></td>
+                <%monday_sum = 0 %>
+                <%tuesday_sum = 0 %>
+                <%wednesday_sum = 0 %>
+                <%thursday_sum = 0 %>
+                <%friday_sum = 0 %>
+                <%saturday_sum = 0 %>
+                <%sunday_sum = 0 %>
+                <%total_day_sum = 0 %>
+                <%monday_total.each do |client|%>
+                    <%monday_sum = monday_sum + client%>
+                <%end%>
+                <%tuesday_total.each do |client|%>
+                    <%tuesday_sum = tuesday_sum + client%>
+                <%end%>
+                <%wednesday_total.each do |client|%>
+                    <%wednesday_sum = wednesday_sum + client%>
+                <%end%>
+                <%thursday_total.each do |client|%>
+                    <%thursday_sum = thursday_sum + client%>
+                <%end%>
+                <%friday_total.each do |client|%>
+                    <%friday_sum = friday_sum + client%>
+                <%end%>
+                <%saturday_total.each do |client|%>
+                    <%saturday_sum = saturday_sum + client%>
+                <%end%>
+                <%sunday_total.each do |client|%>
+                    <%sunday_sum = sunday_sum + client%>
+                <%end%>
+                <%total_total.each do |client|%>
+                    <%total_day_sum = total_day_sum + client%>
+                <%end%>
+                <td><%=monday_sum%></td>
+                <td><%=tuesday_sum%></td>
+                <td><%=wednesday_sum%></td>
+                <td><%=thursday_sum%></td>
+                <td><%=friday_sum%></td>
+                <td><%=saturday_sum%></td>
+                <td><%=sunday_sum%></td>
+                <td><%=total_day_sum%></td>
             </tr>
             <tr>
                 <td></td>
@@ -149,12 +179,12 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>$ <%=total_total.sum * wage.to_i%></td>
+                <td>$ <%=total_day_sum * wage.to_i%></td>
             </tr>
             <tr>
                 <td></td>
                 <%expenses_total = []%>
-                <%expenses_total << total_total.sum * wage.to_i%>
+                <%expenses_total << total_day_sum * wage.to_i%>
                 <td><strong>Expenses(General)</strong></td>
                 <%expenses[0].each do |num|%>
                     <td>$<%=num%></td>
@@ -214,7 +244,11 @@
                 <td><%=count%></td>
             </tr>
     </table><br>
-    <h3>Total Due: $ <%=expenses_total.sum%></h3><br>
+    <%expenses_count = 0%>
+    <%expenses_total.each do |expense|%>
+        <%expenses_count = expenses_count + expense%>
+    <%end%>
+    <h3>Total Due: $ <%=expenses_count%></h3><br>
 
 <%end%>
 <input type = "hidden" name = "comments" value = '<%=comments%>'>
