@@ -1331,26 +1331,6 @@ end
 
 #Writing all commit data to a csv file
 def csv_filler(filing_week,hours,name,hours_total,wage,info,comments,expenses)
-    p expenses
-    # info.each_pair do |key, value|
-    #     detail = "#{key}" + "\n" 
-    #     value.each_pair do |repo, commits|
-    #         detail << +" #{repo}" + "\n" + "\n"
-    #         commits.each_pair do |date, details|
-    #             detail << +" #{date}" + "\n" + "\n"
-    #             # p details.class
-    #             if details.class == Array
-    #                 details.each do |d|
-    #                     # p d
-    #                     detail << + " #{d["Message"]}" + "\n" + " #{d["SHA"]}" + "\n"
-    #                 end
-    #             else
-    #                 # p details
-    #                 detail << details + "\n"
-    #             end
-    #         end
-    #     end
-    # end
     CSV.open("#{name}" + '_' + "#{filing_week}.csv", "wb") do |csv|
         csv << ["Name","Week","Hourly Wage","Client","Repo","Commits","Type","Mon","Tue","Wed","Thurs","Fri","Sat","Sun","Total"]
         csv << ["#{name}", "#{filing_week}", "#{wage}","", "", "", "", "", "", "", "", "", "", "", ""]
@@ -1360,7 +1340,7 @@ def csv_filler(filing_week,hours,name,hours_total,wage,info,comments,expenses)
                     client_hours = hours[key][0]
                     if details.class == Array
                         details.each do |d|
-                            csv << ["","","","#{key}","#{repo}","#{d["Message"]} #{d["SHA"]}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours.sum}"]
+                            csv << ["","","","#{key}","#{repo}","#{d["Message"]} \n #{d["SHA"]}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours.sum}"]
                         end
                     else
                         csv << ["","","","#{key}","#{repo}","#{details}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours.sum}"]
@@ -1403,6 +1383,10 @@ def csv_filler(filing_week,hours,name,hours_total,wage,info,comments,expenses)
     end
 end
 
+def remove_file(name,date)
+    File.delete(name + "_" + date + ".csv")
+end
+
 def mail_invoice(to_email,name,date)
     Mail.defaults do
         delivery_method :smtp,
@@ -1415,9 +1399,9 @@ def mail_invoice(to_email,name,date)
         email_body = "#{name} Invoice for #{date}" 
             mail = Mail.new do
             from         ENV['from']
-            to           '@gmail.com'
+            to           "#{to_email}"
             subject      "#{name} Invoice for #{date}"
-            add_file path
+            add_file    "#{name}_#{date}.csv"
     
         html_part do
             content_type 'text/html'
@@ -1425,7 +1409,7 @@ def mail_invoice(to_email,name,date)
         end
     end
       mail.deliver!
-
+    remove_file(name,date)
 end
 
 def get_monday(date_string)
