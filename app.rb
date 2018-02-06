@@ -9,8 +9,6 @@ require_relative 'user_id.rb'
 require_relative 'cte_func.rb'
 require_relative 'spreadsheet.rb'
 require 'net/smtp'
-require 'active_support'
-require 'active_support/core_ext'
 # require_relative 'login_func'
 enable :sessions 
 load './local_ENV.rb' if File.exist?('./local_ENV.rb')
