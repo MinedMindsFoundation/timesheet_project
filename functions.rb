@@ -669,7 +669,7 @@ def ssologin_check?(username,password)
         db = PG::Connection.new(db_params)
     a = db.exec("SELECT pass FROM pass WHERE user_id = '#{username}'")
     db.close
-    p "#{a.values.first.first} looooooook hererererererer"
+    #p "#{a.values.first.first} looooooook hererererererer"
     if a.num_tuples.zero? == false
         if password == a.values.flatten.first
             true
@@ -1028,13 +1028,13 @@ def update_pto_time(user_id,new_pto,new_vacation,new_sick,page)
             db.exec("UPDATE pto SET sick = '#{new_sick}' WHERE user_id = '#{user_id}'")
         else    
             if new_pto != ""
-                p "....................PTO........................"
+               # p "....................PTO........................"
                 db.exec("UPDATE pto SET pto = '#{new_pto}' WHERE user_id = '#{user_id}'")
             elsif new_vacation != ""  
-                p "....................VAC........................"
+               # p "....................VAC........................"
                 db.exec("UPDATE pto SET vacation = '#{new_vacation}' WHERE user_id = '#{user_id}'")
             elsif new_sick != ""  
-                p "....................SIC........................"  
+               # p "....................SIC........................"  
                 db.exec("UPDATE pto SET sick = '#{new_sick}' WHERE user_id = '#{user_id}'")  
             end
         end    
@@ -1124,7 +1124,7 @@ end
 
 # makes comments into nested hash of client_name=>date=>[comment] 
 def comment_reformat(comments)
-    p comments
+   # p comments
     info = {}
     comments.each_pair do |key,value|
         # p "#{key},#{value}"
@@ -1136,7 +1136,7 @@ def comment_reformat(comments)
             info[value['client']][value['date']] = [value['comment']]
        end
     end
-    p info
+   # p info
 end
 
 #Makes clients match their count for billing
@@ -1194,7 +1194,7 @@ end
 
 
 def end_of_week(date)
-    p date
+    #p date
     result = Date.strptime(date, "%Y-%m-%d")  + (6)
     result.strftime("%Y-%m-%d")
 end
@@ -1432,7 +1432,7 @@ def get_monday(date_string)
     date = Date.parse(date_string)
     until date.monday? == true
         date = date - 1
-        p date
+       # p date
     end
     date.strftime()
 end

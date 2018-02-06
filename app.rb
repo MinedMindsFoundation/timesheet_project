@@ -312,9 +312,9 @@ end
 post "/emp_updated" do
     new_info = params[:info].each_slice(13).to_a
     other_info = params[:info]
-    p new_info
-    p session[:edit_user]
-    p other_info
+    #p new_info
+    #p session[:edit_user]
+    #p other_info
     new_info.each_with_index do |info, index|
         # p session[:edit_user][index]
         # p info
@@ -499,7 +499,7 @@ end
 post '/client_hours' do
     expenses = params[:expenses]
     session[:expenses] = expenses.each_slice(7).to_a
-    p "#{expenses}expenses here"
+    #p "#{expenses}expenses here"
     hour = {}
     hour["hours1"] = params[:hours_day1]
     billed = params[:billed]
@@ -548,7 +548,7 @@ post '/client_hours' do
         client_to_hour["#{client}"] = [week_1_hours[index]]
         # client_to_hour["#{client}"] << week_2_hours[index]
     end
-    p client_to_hour
+    #p client_to_hour
     session[:total_hours1] = total_hours['day_arr1']
     # session[:total_hours2] =  total_hours['day_arr2']
     session[:client_to_hour] = client_to_hour
@@ -582,7 +582,7 @@ get '/callback' do
                              :code => session_code},
                              :accept => :json)
     # extract the token and granted scopes
-    p JSON.parse(result)['scope']
+    #p JSON.parse(result)['scope']
     session[:access_token] = JSON.parse(result)['access_token']
     session[:git_user] = JSON.parse(RestClient.get('https://api.github.com/user?access_token=' + session[:access_token]))['login']
     email = JSON.parse(RestClient.get('https://api.github.com/user/emails?access_token=' + session[:access_token])).first['email']
@@ -593,7 +593,7 @@ post "/commits_to_send" do
     session[:comments] = params[:comment]
     session[:comment_flux] = comment_filter(session[:comments])
     session[:hourly_rate] = rate_check(session[:user_id])
-    p session[:hourly_rate]
+    #p session[:hourly_rate]
     if session[:comment_flux] != 'empty'
         session[:comments] = comment_reformat(session[:comment_flux])
     end
