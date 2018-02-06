@@ -128,22 +128,14 @@
             <tr>
                 <td><strong>TOTALS</strong></td>
                 <td></td>
-                <%monday_total_sum = monday_total[0] + monday_total[1] + monday_total[2] + monday_total[3] + monday_total[4] + monday_total[5] + monday_total[6]%>
-                <%tuesday_total_sum = tuesday_total[0] + tuesday_total[1] + tuesday_total[2] + tuesday_total[3] + tuesday_total[4] + tuesday_total[5] + tuesday_total[6]%>
-                <%wednesday_total_sum = wednesday_total[0] + wednesday_total[1] + wednesday_total[2] + wednesday_total[3] + wednesday_total[4] + wednesday_total[5] + wednesday_total[6]%>
-                <%thursday_total_sum = thursday_total[0] + thursday_total[1] + thursday_total[2] + thursday_total[3] + thursday_total[4] + thursday_total[5] + thursday_total[6]%>
-                <%friday_total_sum = friday_total[0] + friday_total[1] + friday_total[2] + friday_total[3] + friday_total[4] + friday_total[5] + friday_total[6]%>
-                <%saturday_total_sum = saturday_total[0] + saturday_total[1] + saturday_total[2] + saturday_total[3] + saturday_total[4] + saturday_total[5] + saturday_total[6]%>
-                <%sunday_total_sum = sunday_total[0] + sunday_total[1] + sunday_total[2] + sunday_total[3] + sunday_total[4] + sunday_total[5] + sunday_total[6]%>
-                <%total_total_sum = total_total[0] + total_total[1] + total_total[2] + total_total[3] + total_total[4] + total_total[5] + total_total[6]%>
-                <td><%=monday_total_sum%></td>
-                <td><%=tuesday_total_sum%></td>
-                <td><%=wednesday_total_sum%></td>
-                <td><%=thursday_total_sum%></td>
-                <td><%=friday_total_sum%></td>
-                <td><%=saturday_total_sum%></td>
-                <td><%=sunday_total_sum%></td>
-                <td><%=total_total_sum%></td>
+                <td><%=monday_total.sum%></td>
+                <td><%=tuesday_total.sum%></td>
+                <td><%=wednesday_total.sum%></td>
+                <td><%=thursday_total.sum%></td>
+                <td><%=friday_total.sum%></td>
+                <td><%=saturday_total.sum%></td>
+                <td><%=sunday_total.sum%></td>
+                <td><%=total_total.sum%></td>
             </tr>
             <tr>
                 <td></td>
@@ -155,12 +147,12 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>$ <%=total_total_sum * wage.to_i%></td>
+                <td>$ <%=total_total.sum * wage.to_i%></td>
             </tr>
             <tr>
                 <td></td>
                 <%expenses_total = []%>
-                <%expenses_total << total_total_sum * wage.to_i%>
+                <%expenses_total << total_total.sum * wage.to_i%>
                 <td><strong>Expenses(General)</strong></td>
                 <%expenses[0].each do |num|%>
                     <td>$<%=num%></td>
@@ -220,11 +212,7 @@
                 <td><%=count%></td>
             </tr>
     </table><br>
-    expenses_count = 0
-    <%expenses_total.each do |num|%>
-        expenses_count + num
-    <%end%>
-    <h3>Total Due: $ <%=expenses_count%></h3><br>
+    <h3>Total Due: $ <%=expenses_total.sum%></h3><br>
 
 <%end%>
 <input type = "hidden" name = "comments" value = '<%=comments%>'>
