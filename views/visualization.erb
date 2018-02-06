@@ -33,7 +33,9 @@
             <%clients.each_with_index do |client, client_index|%>
                 <%if final_clients.include?(client[0])%>
                     <%client_hour_con = hours[client[0]]%>
-                    <%week_hour_con = client_hour_con[week_index]%>
+                    <%week_hour_con = client_hour_con[0]%>
+                    <%=client_hour_con%>
+                    <%=week_hour_con%>
                     <tr>
                     <td><%=client[0]%></td>
                         

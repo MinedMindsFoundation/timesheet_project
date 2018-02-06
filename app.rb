@@ -625,7 +625,7 @@ post "/commits_to_send" do
     # p "#{final_client_hash} hash here"
     # p client_repo
     # p session[:repo_names]
-    # session[:client_to_hour]
+    p session[:client_to_hour]
     # p "#{session[:client_to_hour]}hours are here"
     erb :visualization, locals:{expenses:session[:expenses],filing_week:session[:filing_week],comments:session[:comments],info:info,final_clients:session[:final_clients],clients:final_client_hash, hours:session[:client_to_hour], name:session[:users_fullname], weeks:session[:split_weeks], hours_total:session[:weeks_total], wage:session[:hourly_rate], billed:client_billing, unseen_commits:session[:unseen_commits]}
 end
