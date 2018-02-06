@@ -22,7 +22,7 @@ class Git_api_class
             commit_date = {}
             client.branches("#{repo.full_name}").each do |branch|
                 commits = client.commits_between("#{repo.full_name}" ,start_date ,end_date,branch['name'])
-                 p commits
+                #  p commits
                 # p branch['name']
                 # p commits.first
                 # p commits.first.sha

@@ -1274,10 +1274,7 @@ def display_admin_hours(start_date)
         }
     db = PG::Connection.new(db_params)
     week_hours = []
-    new_week = Date.parse("#{start_date}")
-    next_week = new_week += 7
     week_hours << db.exec("SELECT * FROM payperiod_hours WHERE start_date = '#{start_date}'").values
-    week_hours << db.exec("SELECT * FROM payperiod_hours WHERE start_date = '#{next_week.strftime('%Y-%m-%d')}'").values
     db.close
     week_hours
 end

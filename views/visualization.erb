@@ -60,14 +60,12 @@
                             <%end%>
                         <%end%>
                         <%if comments != 'empty'%>
-                            <%if comments[client[0]] != nil%>
-                                <%comments[client[0]].each_pair do |key,value|%>
-                                    <%if week.include?(key)%>
-                                        <strong><%=key%></strong><br>
-                                        <%value.each do |comment|%>
-                                            <input type='hidden' name="info[<%=client[0]%>][OTHER COMMENTS][<%=key%>]" value = '<%=comment%>'>
-                                            <%=comment%><br>
-                                        <%end%>
+                            <%comments.each_pair do |commit_num, comment|%>
+                                <%if comment["client"] == client[0]%>
+                                    <%if week.include?(comment["date"])%>
+                                        <strong><%=comment["date"]%></strong><br>
+                                        <%=comment["comment"]%>
+                                        <input type='hidden' name="info[<%=client[0]%>][Other Comments][<%=comment["date"]%>]" value = '<%=comment["comment"]%>'>
                                     <%end%>
                                 <%end%>
                             <%end%>
@@ -75,12 +73,14 @@
                         <%if unseen_commits != 'empty'%>
                             <%unseen_commits.each_pair do |commit_num, commit|%>
                                 <%if commit["client"] == client[0]%>
-                                    <strong><%=commit["repo"]%></strong><br><br>
-                                    <strong><%=commit["date"]%></strong><br>
-                                    SHA: <%=commit["sha"]%><br>
-                                    Message: <%=commit["commit"]%><br>
-                                    <input type = 'hidden' name = "info[<%=client[0]%>][<%=commit["repo"]%>][<%=commit["date"]%>][][SHA]" value = '<%=commit["sha"]%>'>
-                                    <input type = 'hidden' name = "info[<%=client[0]%>][<%=commit["repo"]%>][<%=commit["date"]%>][][Message]" value = '<%=commit["commit"]%>'>
+                                    <%if week.include?(commit["date"])%>
+                                        <br><strong><%=commit["repo"]%></strong><br><br>
+                                        <strong><%=commit["date"]%></strong><br>
+                                        SHA: <%=commit["sha"]%><br>
+                                        Message: <%=commit["commit"]%><br>
+                                        <input type = 'hidden' name = "info[<%=client[0]%>][<%=commit["repo"]%>][<%=commit["date"]%>][][SHA]" value = '<%=commit["sha"]%>'>
+                                        <input type = 'hidden' name = "info[<%=client[0]%>][<%=commit["repo"]%>][<%=commit["date"]%>][][Message]" value = '<%=commit["commit"]%>'>
+                                    <%end%>
                                 <%end%>
                             <%end%>
                         <%end%>
