@@ -1,6 +1,7 @@
 require 'date'
 require "time"
 require 'pg'
+require 'csv'
 require 'net/smtp'
 require 'mail'
 require 'googleauth'
@@ -1329,42 +1330,102 @@ def supervisees_check?(user_id)
 end
 
 #Writing all commit data to a csv file
-def csv_filler(filing_week,hours,name,hours_total,wage,info,comments)
-    p filing_week
-    p hours
-    p name
-    p hours_total
-    p wage
-    p info
-    info.each_pair do |key, value|
-        p key
-        # p value
-        value.each_pair do |repo, commits|
-            p repo
-            # p commits
-            commits.each_pair do |date, details|
-                p date
-                p details
-            end
-        end
-    end
-    # csv.open("#{name}" + '_' + "#{filing_week}", "wb") do |csv|
-    #     csv << ["","","","","","","","","","",""]
-    #     csv << ["","WEEKLY INVOICE","","","","","","","","",""]
-    #     csv << ["","","","","","","","","","",""]
-    #     csv << ["","Name:","#{name}","","WEEK COMMENCING:","","#{filing_week}","","HOURLY RATE:","","$ #{wage}"]
-    #     csv << ["","","","","","","","","","",""]
-    #     csv << ["","","","Hours spent","","","","","","",""]
-    #     csv << ["","Client Name","Description","Mo","Tu","We","Th","Fr","Sa","Su","Total (Hours)"]
-    #     info.each_pair do |key, value|
-    #         csv << ["","#{remove_quotes(key)}",
-    #         value.each_with do |repo, commits|
-
-    #         ]
-    #         p remove_quotes(key)
-    #         p value
+def csv_filler(filing_week,hours,name,hours_total,wage,info,comments,expenses)
+    p expenses
+    # info.each_pair do |key, value|
+    #     detail = "#{key}" + "\n" 
+    #     value.each_pair do |repo, commits|
+    #         detail << +" #{repo}" + "\n" + "\n"
+    #         commits.each_pair do |date, details|
+    #             detail << +" #{date}" + "\n" + "\n"
+    #             # p details.class
+    #             if details.class == Array
+    #                 details.each do |d|
+    #                     # p d
+    #                     detail << + " #{d["Message"]}" + "\n" + " #{d["SHA"]}" + "\n"
+    #                 end
+    #             else
+    #                 # p details
+    #                 detail << details + "\n"
+    #             end
+    #         end
     #     end
     # end
+    CSV.open("#{name}" + '_' + "#{filing_week}.csv", "wb") do |csv|
+        csv << ["Name","Week","Hourly Wage","Client","Repo","Commits","Type","Mon","Tue","Wed","Thurs","Fri","Sat","Sun","Total"]
+        csv << ["#{name}", "#{filing_week}", "#{wage}","", "", "", "", "", "", "", "", "", "", "", ""]
+        info.each_pair do |key, value|
+            value.each_pair do |repo, commits|
+                commits.each_pair do |date, details|
+                    client_hours = hours[key][0]
+                    if details.class == Array
+                        details.each do |d|
+                            csv << ["","","","#{key}","#{repo}","#{d["Message"]} #{d["SHA"]}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours.sum}"]
+                        end
+                    else
+                        csv << ["","","","#{key}","#{repo}","#{details}","Commits","#{client_hours[0]}","#{client_hours[1]}","#{client_hours[2]}","#{client_hours[3]}","#{client_hours[4]}","#{client_hours[5]}","#{client_hours[6]}","#{client_hours.sum}"]
+                    end
+                end
+            end
+        end
+        week_hours = hours_total.values[0]
+        wage_number = wage.to_i
+        csv <<  ["","","","","","","Total Hours","#{week_hours[0]}","#{week_hours[1]}","#{week_hours[2]}","#{week_hours[3]}","#{week_hours[4]}","#{week_hours[5]}","#{week_hours[6]}","#{week_hours.sum}"]
+        csv <<  ["","","","","","","Total Services","","","","","","","","#{week_hours.sum * wage_number}"]
+        total_general = []
+        expenses.each_with_index do |expense_type, index|
+            if index != 2
+                expense_total = []
+                expense_total << expense_type[0].to_i
+                expense_total << expense_type[1].to_i
+                expense_total << expense_type[2].to_i
+                expense_total << expense_type[3].to_i
+                expense_total << expense_type[4].to_i
+                expense_total << expense_type[5].to_i
+                expense_total << expense_type[6].to_i
+                total_general << expense_total.sum
+            end
+            if index == 0
+                csv << ["","","","","","","Expenses(General)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total.sum}"]
+            elsif index == 1
+                csv << ["","","","","","","Expenses(Milage)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total.sum}"]
+            elsif index == 2
+                csv << ["","","","","","","Milage Description","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", ""]
+            elsif index == 3
+                csv << ['',"","","","","","Expenses(Tolls)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total.sum}"]
+            elsif index == 4
+                csv << ["","","","","","","Expenses(Other)","#{expense_type[0]}","#{expense_type[1]}","#{expense_type[2]}","#{expense_type[3]}","#{expense_type[4]}","#{expense_type[5]}","#{expense_type[6]}", "#{expense_total.sum}"]
+            end
+        end
+        wage_hours = week_hours.sum * wage.to_i
+        # p total_general
+        csv << ["","","","","","","TOTAL","","","","","","","","#{wage_hours + total_general.sum}"]
+    end
+end
+
+def mail_invoice(to_email,name,date)
+    Mail.defaults do
+        delivery_method :smtp,
+        address: "email-smtp.us-east-1.amazonaws.com",
+        port: 587,
+        :user_name  => ENV['a3smtpuser'],
+        :password   => ENV['a3smtppass'],
+        :enable_ssl => true
+      end
+        email_body = "#{name} Invoice for #{date}" 
+            mail = Mail.new do
+            from         ENV['from']
+            to           '@gmail.com'
+            subject      "#{name} Invoice for #{date}"
+            add_file path
+    
+        html_part do
+            content_type 'text/html'
+            body       email_body
+        end
+    end
+      mail.deliver!
+
 end
 
 def get_monday(date_string)

@@ -1,6 +1,7 @@
 require "sinatra"
 require 'pg'
 require 'rest-client'
+require 'csv'
 require_relative 'github_api.rb'
 require_relative 'g_calendar.rb'
 require_relative 'functions.rb'
@@ -628,7 +629,7 @@ post '/finalization' do
     # p "#{clients} clients here"
     # p "#{info} info is here"
     sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
-    csv_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,session[:comments])
+    csv_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,session[:comments], session[:expenses])
     if sent_in == true
         session[:message] = "Invoice Sent!"
         redirect '/to_landing'
