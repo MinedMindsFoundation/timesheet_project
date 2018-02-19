@@ -1331,7 +1331,9 @@ def csv_filler(filing_week,hours,name,hours_total,wage,info,comments,expenses)
     CSV.open("#{name}" + '_' + "#{filing_week}.csv", "wb") do |csv|
         csv << ["Name","Week","Hourly Wage","Client","Repo","Commits","Type","Mon","Tue","Wed","Thurs","Fri","Sat","Sun","Total"]
         csv << ["#{name}", "#{filing_week}", "#{wage}","", "", "", "", "", "", "", "", "", "", "", ""]
+        p info
         info.each_pair do |key, value|
+            p value
             value.each_pair do |repo, commits|
                 commits.each_pair do |date, details|
                     client_hours_total = 0
@@ -1383,8 +1385,14 @@ def csv_filler(filing_week,hours,name,hours_total,wage,info,comments,expenses)
             end
         end
         wage_hours = week_hours_total * wage.to_i
+        p wage_hours
+        p total_general
+        p week_hours_total
+        p wage.to_i
         # p total_general
-        csv << ["","","","","","","TOTAL","","","","","","","","#{wage_hours + total_general}"]
+        total_total = wage_hours + total_general
+        p total_total
+        csv << ["","","","","","","TOTAL","","","","","","","","#{total_total}"]
     end
 end
 
@@ -1404,7 +1412,8 @@ def mail_invoice(to_email,name,date)
         email_body = "#{name} Invoice for #{date}" 
             mail = Mail.new do
             from         ENV['from']
-            to           "#{to_email}, info@minedminds.org"
+            to           "#{to_email}"
+            # info@minedminds.org
             subject      "#{name} Invoice for #{date}"
             add_file    "#{name}_#{date}.csv"
     

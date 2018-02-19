@@ -592,7 +592,7 @@ end
 post "/commits_to_send" do
     session[:comments] = params[:comment]
     session[:unseen_commits] = params[:commit]
-    # p session[:unseen_commits]
+    p session[:unseen_commits]
     session[:unseen_filter] = comment_filter(session[:unseen_commits])
     session[:comment_flux] = comment_filter(session[:comments])
     session[:hourly_rate] = rate_check(session[:user_id])
@@ -635,7 +635,7 @@ post '/finalization' do
     # clients = params[:clients]
     # p "#{clients} clients here"
     # p "#{info} info is here"
-    sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
+    # sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
     csv_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,session[:comments], session[:expenses])
     mail_invoice(session[:email],session[:users_fullname],session[:filing_week])
     if sent_in == true
