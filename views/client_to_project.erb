@@ -87,6 +87,10 @@ function more_boxes(){
 function commit_more_boxes(){
     var counter = document.getElementById('counter').value;
         counter++;
+    var input = document.createElement('input');
+        input.name="commit[commit"+counter+"][date]";
+        input.type = 'date';
+        document.getElementById('unseen_commit_box').appendChild(input);
     var list = document.getElementById('clients').options;
     var drop = document.createElement("select");
         var option = document.createElement('option');
@@ -106,7 +110,7 @@ function commit_more_boxes(){
         document.getElementById('unseen_commit_box').appendChild(repo)
     var commits = document.createElement("textarea")
         commits.name = "commit[commit"+counter+"][commit]"
-        commits.placeholder = "Type Repository Here"
+        commits.placeholder = "Paste Commits Here!"
         commits.rows = "10"
         commits.cols = "25"
         document.getElementById('unseen_commit_box').appendChild(commits);
