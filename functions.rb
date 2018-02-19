@@ -1412,7 +1412,7 @@ def mail_invoice(to_email,name,date)
         email_body = "#{name} Invoice for #{date}" 
             mail = Mail.new do
             from         ENV['from']
-            to           "#{to_email}"
+            to           "#{to_email}, info@minedminds.org"
             # info@minedminds.org
             subject      "#{name} Invoice for #{date}"
             add_file    "#{name}_#{date}.csv"
