@@ -635,7 +635,7 @@ post '/finalization' do
     # clients = params[:clients]
     # p "#{clients} clients here"
     # p "#{info} info is here"
-    # sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
+    sent_in = paycycle_hours(session[:user_id], session[:total_hours1], session[:filing_week])
     csv_filler(session[:filing_week],session[:client_to_hour],session[:users_fullname],session[:weeks_total],session[:hourly_rate],info,session[:comments], session[:expenses])
     mail_invoice(session[:email],session[:users_fullname],session[:filing_week])
     if sent_in == true
