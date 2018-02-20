@@ -57,6 +57,13 @@
 <input type= "submit" id = "git_submit">
 </form>
 
+<div id="result" style='display:none;'>
+-
+</div>
+<script>
+setInterval('autoRefresh_div()', 5000);
+</script>
+
 <script>
 function more_boxes(){
     var counter = document.getElementById('counter').value;
@@ -116,4 +123,8 @@ function commit_more_boxes(){
         document.getElementById('unseen_commit_box').appendChild(commits);
         document.getElementById('counter').value = counter;
 }
+function autoRefresh_div(){  
+    $("#result").load("/commit_reload");// a function which will load data from other file after x
+};
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

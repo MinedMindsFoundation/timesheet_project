@@ -684,3 +684,7 @@ post '/all_choice' do
     all_hours = display_user_hours_all(session[:user_id])
     erb :user_all_hours, locals:{all_hours:all_hours}
 end
+
+get "/commit_reload" do
+    erb :commit_reload, :layout => :post
+end
