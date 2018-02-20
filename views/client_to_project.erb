@@ -1,30 +1,26 @@
 <form method="post" action="commits_to_send">
 
 <div id = 'unseen_commit_box'>
-<div id="unseen_commits">
 <input type = 'hidden' id = 'counter' value = '1'>
-<h3>Unseen Commits</h3>
-    <input type = "date" name ="commit[commit1][date]">
-    <div id ="dropdown">
-        <input list="clients" name= "commit[commit1][client]">
-    </div>
-   <input type="text" name="commit[commit1][repo]" placeholder = "Type Repository Here">
-   <textarea  style="align:left" rows="10" cols="25" name="commit[commit1][commit]" placeholder = "Paste Commits Here!"></textarea><br>
-</div>
+<center><h3>Unseen Commits</h3></center>
 <button type = 'button' onclick ="commit_more_boxes()">More Commits</button>
+    <input type = "date" name ="commit[commit1][date]">
+    <center><div id ="dropdown">
+        <input list="clients" name= "commit[commit1][client]">
+    </div></center>
+   <input type="text" name="commit[commit1][repo]" placeholder = "Type Repository Here">
+   <textarea rows="10" cols="25" name="commit[commit1][commit]" placeholder = "Paste Commits Here!"></textarea><br>
 </div>
 
 <div id = 'comment_box'>
-<div id="comments">
 <input type = 'hidden' id = 'counter' value = '1'>
-<h3>Other Comments</h3>
+<center><h3>Other Comments</h3></center>
+<button type = 'button' onclick ="more_boxes()">More Comments</button> 
     <input type = "date" name ="comment[comment1][date]">
     <div id ="dropdown">
         <input list="clients" name= "comment[comment1][client]">
     </div>
    <textarea name="comment[comment1][comment]" placeholder = "Comment Here.."></textarea>
-</div>
-<button type = 'button' onclick ="more_boxes()">More Comments</button> 
 </div>
 
 <%if git_commits != {}%>
@@ -75,7 +71,7 @@ function more_boxes(){
     var input = document.createElement('input');
         input.name="comment[comment"+counter+"][date]";
         input.type = 'date';
-        document.getElementById('comments').appendChild(input);
+        document.getElementById('comment_box').appendChild(input);
     var list = document.getElementById('clients').options;
     var drop = document.createElement("select");
         var option = document.createElement('option');
@@ -88,11 +84,11 @@ function more_boxes(){
             drop.appendChild(option);
         };
         drop.name ="comment[comment"+counter+"][client]";
-        document.getElementById('comments').appendChild(drop);
+        document.getElementById('comment_box').appendChild(drop);
     var comment = document.createElement("textarea")
         comment.name = "comment[comment"+counter+"][comment]"
         comment.placeholder = "Comment Here.."
-        document.getElementById('comments').appendChild(comment)
+        document.getElementById('comment_box').appendChild(comment)
         document.getElementById('counter').value = counter;
 }
 function commit_more_boxes(){
@@ -101,7 +97,7 @@ function commit_more_boxes(){
     var input = document.createElement('input');
         input.name="commit[commit"+counter+"][date]";
         input.type = 'date';
-        document.getElementById('unseen_commits').appendChild(input);
+        document.getElementById('unseen_commit_box').appendChild(input);
     var list = document.getElementById('clients').options;
     var drop = document.createElement("select");
         var option = document.createElement('option');
@@ -114,18 +110,17 @@ function commit_more_boxes(){
             drop.appendChild(option);
         };
         drop.name ="commit[commit"+counter+"][client]";
-        document.getElementById('unseen_commits').appendChild(drop);
+        document.getElementById('unseen_commit_box').appendChild(drop);
     var repo = document.createElement('input')
         repo.name = "commit[commit"+counter+"][repo]"
         repo.placeholder = "Type Repository Here"
-        document.getElementById('unseen_commits').appendChild(repo)
+        document.getElementById('unseen_commit_box').appendChild(repo)
     var commits = document.createElement("textarea")
         commits.name = "commit[commit"+counter+"][commit]"
         commits.placeholder = "Paste Commits Here!"
         commits.rows = "10"
         commits.cols = "25"
-        commits.style = "align:left"
-        document.getElementById('unseen_commits').appendChild(commits);
+        document.getElementById('unseen_commit_box').appendChild(commits);
         document.getElementById('counter').value = counter;
 }
 function autoRefresh_div(){  
