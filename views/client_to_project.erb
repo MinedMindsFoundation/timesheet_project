@@ -8,7 +8,7 @@
     <div id ="dropdown">
         <input list="clients" name= "commit[commit1][client]">
     </div>
-   <input type="text" name="commit[commit1][repo]" placeholder = "Type Repository Here">
+   <input style="align:left" type="text" name="commit[commit1][repo]" placeholder = "Type Repository Here">
    <textarea rows="10" cols="25" name="commit[commit1][commit]" placeholder = "Paste Commits Here!"></textarea><br>
 </div>
 <button type = 'button' onclick ="commit_more_boxes()">More Commits</button>
@@ -124,6 +124,7 @@ function commit_more_boxes(){
         commits.placeholder = "Paste Commits Here!"
         commits.rows = "10"
         commits.cols = "25"
+        commits.style = "align:left"
         document.getElementById('unseen_commits').appendChild(commits);
         document.getElementById('counter').value = counter;
 }
