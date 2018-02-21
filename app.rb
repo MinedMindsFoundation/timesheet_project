@@ -520,10 +520,10 @@ post '/client_hours' do
         hours.each do |days|
             # p days
             days.each_with_index do |hours, index|
-                num_hour = hours.to_i
-                num_day = day_arr[index].to_i
-                # p num_hour
-                # p num_day
+                num_hour = hours.abs
+                num_day = day_arr[index].abs
+                p num_hour
+                p num_day
                 num_total = num_day + num_hour
                 # p num_total.to_s
                 day_arr[index] = num_total.to_i
