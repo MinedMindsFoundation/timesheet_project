@@ -592,7 +592,7 @@ end
 post "/commits_to_send" do
     session[:comments] = params[:comment]
     session[:unseen_commits] = params[:commit]
-    # p session[:unseen_commits]
+    p session[:unseen_commits]
     session[:unseen_filter] = comment_filter(session[:unseen_commits])
     session[:comment_flux] = comment_filter(session[:comments])
     session[:hourly_rate] = rate_check(session[:user_id])
@@ -683,4 +683,8 @@ end
 post '/all_choice' do
     all_hours = display_user_hours_all(session[:user_id])
     erb :user_all_hours, locals:{all_hours:all_hours}
+end
+
+get "/commit_reload" do
+    erb :commit_reload, :layout => :post
 end

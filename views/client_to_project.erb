@@ -2,18 +2,19 @@
 
 <div id = 'unseen_commit_box'>
 <input type = 'hidden' id = 'counter' value = '1'>
-<button type = 'button' onclick ="commit_more_boxes()">More Commits</button> 
+<center><h3>Unseen Commits</h3></center>
+<button type = 'button' onclick ="commit_more_boxes()">More Commits</button>
     <input type = "date" name ="commit[commit1][date]">
-    <div id ="dropdown">
+    <center><div id ="dropdown">
         <input list="clients" name= "commit[commit1][client]">
-    </div>
+    </div></center>
    <input type="text" name="commit[commit1][repo]" placeholder = "Type Repository Here">
-   <input type="text" name="commit[commit1][sha]" placeholder = "Type SHA Key Here">
-   <input type="text" name="commit[commit1][commit]" placeholder = "Type Commit Message Here"><br>
+   <textarea rows="10" cols="25" name="commit[commit1][commit]" placeholder = "Paste Commits Here!"></textarea><br>
 </div>
 
 <div id = 'comment_box'>
 <input type = 'hidden' id = 'counter' value = '1'>
+<center><h3>Other Comments</h3></center>
 <button type = 'button' onclick ="more_boxes()">More Comments</button> 
     <input type = "date" name ="comment[comment1][date]">
     <div id ="dropdown">
@@ -22,7 +23,7 @@
    <textarea name="comment[comment1][comment]" placeholder = "Comment Here.."></textarea>
 </div>
 
-
+<%if git_commits != {}%>
 <div id="gitbox_2">
     <div style="float:right;width: 50%;">
     <%git_commits.each do |repo|%>
@@ -46,14 +47,22 @@
                 <%end%>
             <%end%>
         </div>
+        <%end%>
     <datalist id="clients">
         <%clients.each do |client|%>
             <option value="<%=client%>">
         <%end%>
     </datalist>
-</div>    
+</div>
 <input type= "submit" id = "git_submit">
 </form>
+
+<div id="result" style='display:none;'>
+-
+</div>
+<script>
+setInterval('autoRefresh_div()', 5000);
+</script>
 
 <script>
 function more_boxes(){
@@ -92,7 +101,7 @@ function commit_more_boxes(){
     var list = document.getElementById('clients').options;
     var drop = document.createElement("select");
         var option = document.createElement('option');
-            option.text = " ";
+            option.text = "Select Client...";
             drop.appendChild(option);
         for (var i = 0; i < list.length; i++) {
             option = document.createElement("option");
@@ -106,14 +115,16 @@ function commit_more_boxes(){
         repo.name = "commit[commit"+counter+"][repo]"
         repo.placeholder = "Type Repository Here"
         document.getElementById('unseen_commit_box').appendChild(repo)
-    var sha = document.createElement('input')
-        sha.name = "commit[commit"+counter+"][sha]"
-        sha.placeholder = "Type SHA Key Here"
-        document.getElementById('unseen_commit_box').appendChild(sha)
-    var commit = document.createElement('input')
-        commit.name = "commit[commit"+counter+"][commit]"
-        commit.placeholder = "Type Commit Message Here"
-        document.getElementById('unseen_commit_box').appendChild(commit)
+    var commits = document.createElement("textarea")
+        commits.name = "commit[commit"+counter+"][commit]"
+        commits.placeholder = "Paste Commits Here!"
+        commits.rows = "10"
+        commits.cols = "25"
+        document.getElementById('unseen_commit_box').appendChild(commits);
         document.getElementById('counter').value = counter;
 }
+function autoRefresh_div(){  
+    $("#result").load("/commit_reload");// a function which will load data from other file after x
+};
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
